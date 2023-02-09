@@ -1,0 +1,103 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.uhf"
+4    android:versionCode="1"
+5    android:versionName="1.3.3" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="19"
+8-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+11-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:7:5-80
+11-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:7:22-77
+12    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+12-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:8:5-81
+12-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:8:22-78
+13    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+13-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:9:5-82
+13-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:9:22-79
+14    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+14-->[DeviceAPI_ver20220518_release.aar] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\caf159fc57991986811df3565d6f4389\DeviceAPI_ver20220518_release\AndroidManifest.xml:11:5-79
+14-->[DeviceAPI_ver20220518_release.aar] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\caf159fc57991986811df3565d6f4389\DeviceAPI_ver20220518_release\AndroidManifest.xml:11:22-76
+15    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+15-->[DeviceAPI_ver20220518_release.aar] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\caf159fc57991986811df3565d6f4389\DeviceAPI_ver20220518_release\AndroidManifest.xml:12:5-74
+15-->[DeviceAPI_ver20220518_release.aar] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\caf159fc57991986811df3565d6f4389\DeviceAPI_ver20220518_release\AndroidManifest.xml:12:22-71
+16    <uses-permission android:name="android.permission.CAMERA" />
+16-->[DeviceAPI_ver20220518_release.aar] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\caf159fc57991986811df3565d6f4389\DeviceAPI_ver20220518_release\AndroidManifest.xml:13:5-65
+16-->[DeviceAPI_ver20220518_release.aar] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\caf159fc57991986811df3565d6f4389\DeviceAPI_ver20220518_release\AndroidManifest.xml:13:22-62
+17    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+17-->[DeviceAPI_ver20220518_release.aar] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\caf159fc57991986811df3565d6f4389\DeviceAPI_ver20220518_release\AndroidManifest.xml:14:5-76
+17-->[DeviceAPI_ver20220518_release.aar] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\caf159fc57991986811df3565d6f4389\DeviceAPI_ver20220518_release\AndroidManifest.xml:14:22-73
+18
+19    <application
+19-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:11:5-42:19
+20        android:allowBackup="true"
+20-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:12:9-35
+21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+21-->[androidx.core:core:1.5.0] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\ccda7c91241756df5412dcd8cef3ccf7\core-1.5.0\AndroidManifest.xml:24:18-86
+22        android:debuggable="true"
+23        android:icon="@drawable/ic_launcher"
+23-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:13:9-45
+24        android:label="@string/app_name"
+24-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:14:9-41
+25        android:testOnly="true"
+26        android:theme="@style/CustomTheme" >
+26-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:15:9-43
+27        <activity
+27-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:16:9-21:20
+28            android:name="com.example.uhf.ui.login.LoginActivityMain"
+28-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:16:19-61
+29            android:label="@string/title_activity_login" >
+29-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:16:62-106
+30            <intent-filter>
+30-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:17:13-20:29
+31                <action android:name="android.intent.action.MAIN" />
+31-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:18:17-69
+31-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:18:25-66
+32
+33                <category android:name="android.intent.category.LAUNCHER" />
+33-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:19:17-77
+33-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:19:27-74
+34            </intent-filter>
+35        </activity>
+36        <activity
+36-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:23:9-33:20
+37            android:name="com.example.uhf.activity.UHFMainActivity"
+37-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:24:13-53
+38            android:configChanges="orientation|screenSize"
+38-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:25:13-59
+39            android:label="@string/app_name"
+39-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:26:13-45
+40            android:screenOrientation="portrait" >
+40-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:27:13-49
+41
+42            <!--
+43            <intent-filter>
+44                <action android:name="android.intent.action.MAIN" />
+45
+46                <category android:name="android.intent.category.LAUNCHER" />
+47            </intent-filter>
+48            -->
+49        </activity>
+50
+51        <receiver android:name="com.example.uhf.BootBroadcastReceiver" >
+51-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:35:9-41:20
+51-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:35:19-56
+52            <intent-filter android:priority="1000" >
+52-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:36:13-40:29
+52-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:36:28-51
+53                <action android:name="android.intent.action.BOOT_COMPLETED" />
+53-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:37:17-79
+53-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:37:25-76
+54
+55                <category android:name="android.intent.category.LAUNCHER" />
+55-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:19:17-77
+55-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:19:27-74
+56            </intent-filter>
+57        </receiver>
+58    </application>
+59
+60</manifest>
