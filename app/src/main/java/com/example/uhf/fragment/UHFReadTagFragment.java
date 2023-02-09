@@ -349,10 +349,10 @@ public class UHFReadTagFragment extends KeyDwonFragment {
                         mContext.playSound(1);
                     } else {
                         UIHelper.ToastMessage(mContext, R.string.uhf_msg_inventory_fail);
-//					mContext.playSound(2);
+    //					mContext.playSound(2);
                     }
                     break;
-                case 1:// 单标签循环
+                case 1:// 单标签循环 //
                     if (mContext.mReader.startInventoryTag()) {
                         BtInventory.setText(mContext.getString(R.string.title_stop_Inventory));
                         loopFlag = true;
@@ -362,13 +362,13 @@ public class UHFReadTagFragment extends KeyDwonFragment {
                     } else {
                         stopInventory();
                         UIHelper.ToastMessage(mContext, R.string.uhf_msg_inventory_open_fail);
-//					mContext.playSound(2);
+    //					mContext.playSound(2);
                     }
                     break;
                 default:
                     break;
             }
-        } else {// 停止识别
+        } else { // 停止识别
             stopInventory();
             setTotalTime();
         }
