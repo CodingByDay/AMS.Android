@@ -1914,6 +1914,7 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable logo
 drawable material_cursor_drawable
 drawable material_ic_calendar_black_24dp
 drawable material_ic_clear_black_24dp
@@ -1950,6 +1951,7 @@ drawable notify_panel_notification_icon_bg
 drawable rb_bg
 drawable rectangle_bg
 drawable rectangle_bg2
+drawable sync
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -2042,7 +2044,6 @@ id accessibility_custom_action_6
 id accessibility_custom_action_7
 id accessibility_custom_action_8
 id accessibility_custom_action_9
-id action_Deactivate
 id action_bar
 id action_bar_activity_content
 id action_bar_container
@@ -2501,6 +2502,7 @@ id stop
 id stretch
 id submenuarrow
 id submit_area
+id sync
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans

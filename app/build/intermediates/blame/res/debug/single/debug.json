@@ -48,12 +48,12 @@
         "source": "C:\\Users\\janko\\.gradle\\caches\\transforms-2\\files-2.1\\c1210059822c0f4a6a60a6d67e3f9ee5\\appcompat-1.2.0\\res\\drawable-xxxhdpi-v4\\abc_ic_menu_copy_mtrl_am_alpha.png"
     },
     {
-        "merged": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_btn_ripple_color.xml.flat",
-        "source": "C:\\Users\\janko\\.gradle\\caches\\transforms-2\\files-2.1\\be85f8f34d2782f481421a4cde6d8b78\\material-1.5.0-alpha02\\res\\color\\mtrl_btn_ripple_color.xml"
-    },
-    {
         "merged": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher.png.flat",
         "source": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\src\\main\\res\\drawable-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_btn_ripple_color.xml.flat",
+        "source": "C:\\Users\\janko\\.gradle\\caches\\transforms-2\\files-2.1\\be85f8f34d2782f481421a4cde6d8b78\\material-1.5.0-alpha02\\res\\color\\mtrl_btn_ripple_color.xml"
     },
     {
         "merged": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_notification_bg_low_normal.9.png.flat",
@@ -304,6 +304,10 @@
         "source": "C:\\Users\\janko\\.gradle\\caches\\transforms-2\\files-2.1\\c1210059822c0f4a6a60a6d67e3f9ee5\\appcompat-1.2.0\\res\\drawable-xhdpi-v4\\abc_popup_background_mtrl_mult.9.png"
     },
     {
+        "merged": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_logo.png.flat",
+        "source": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\src\\main\\res\\drawable\\logo.png"
+    },
+    {
         "merged": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\build\\intermediates\\res\\merged\\debug\\layout_design_layout_tab_text.xml.flat",
         "source": "C:\\Users\\janko\\.gradle\\caches\\transforms-2\\files-2.1\\be85f8f34d2782f481421a4cde6d8b78\\material-1.5.0-alpha02\\res\\layout\\design_layout_tab_text.xml"
     },
@@ -410,6 +414,10 @@
     {
         "merged": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\build\\intermediates\\res\\merged\\debug\\layout_mtrl_picker_header_selection_text.xml.flat",
         "source": "C:\\Users\\janko\\.gradle\\caches\\transforms-2\\files-2.1\\be85f8f34d2782f481421a4cde6d8b78\\material-1.5.0-alpha02\\res\\layout\\mtrl_picker_header_selection_text.xml"
+    },
+    {
+        "merged": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_sync.png.flat",
+        "source": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\src\\main\\res\\drawable\\sync.png"
     },
     {
         "merged": "C:\\Users\\janko\\OneDrive - in-sist.si\\Desktop\\Scanner\\uhf-uart-demo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_avd_show_password.xml.flat",

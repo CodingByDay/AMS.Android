@@ -85,7 +85,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\ja
 	android:label
 		ADDED from C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:14:9-41
 	android:icon
-		ADDED from C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:13:9-45
+		ADDED from C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:13:9-38
 	android:allowBackup
 		ADDED from C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:12:9-35
 	android:theme

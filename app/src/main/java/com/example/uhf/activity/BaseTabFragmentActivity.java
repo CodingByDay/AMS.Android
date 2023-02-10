@@ -11,9 +11,11 @@ import android.view.MenuInflater;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.uhf.R;
 import com.example.uhf.fragment.KeyDwonFragment;
+import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.tools.UIHelper;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.utility.StringUtility;
@@ -27,10 +29,18 @@ public class BaseTabFragmentActivity extends FragmentActivity {
 	public RFIDWithUHFUART mReader;
 	public KeyDwonFragment currentFragment=null;
 	public int TidLen=6;
+	private ProgressDialog mypDialogSync;
+	private ItemViewModel itemViewModel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
+
 		super.onCreate(savedInstanceState);
+
+
+		itemViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
+		Log.i("BaseTabFragmentActivity", "ItemViewModel initialized");
 	}
 
 	public void initUHF() {
@@ -79,6 +89,11 @@ public class BaseTabFragmentActivity extends FragmentActivity {
 
 	// This is the method for syncing database information
 	private void SyncData() {
+		mypDialogSync = new ProgressDialog(BaseTabFragmentActivity.this);
+		mypDialogSync.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		mypDialogSync.setMessage("Prenos podatkov...");
+		mypDialogSync.setCanceledOnTouchOutside(false);
+		mypDialogSync.show();
 	}
 
 	@Override

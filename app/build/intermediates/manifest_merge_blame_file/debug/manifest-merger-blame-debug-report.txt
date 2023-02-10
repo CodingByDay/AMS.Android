@@ -39,8 +39,8 @@
 21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 21-->[androidx.core:core:1.5.0] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\ccda7c91241756df5412dcd8cef3ccf7\core-1.5.0\AndroidManifest.xml:24:18-86
 22        android:debuggable="true"
-23        android:icon="@drawable/ic_launcher"
-23-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:13:9-45
+23        android:icon="@drawable/logo"
+23-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:13:9-38
 24        android:label="@string/app_name"
 24-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:14:9-41
 25        android:testOnly="true"

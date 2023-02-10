@@ -8,7 +8,7 @@
     <!-- https://asrt.gluege.boerde.de -->
 
 
-    <string name="app_name">UHF</string>
+    <string name="app_name"></string>
 
     <string name="action_settings">Nastavitve</string>
 
@@ -1901,7 +1901,7 @@
 
     <string name="button_search_book_contents">Iskanje vsebine</string>
 
-    <string name="button_share_app">Aplikacija</string>
+    <string name="button_share_app">InventoryExpert</string>
 
     <string name="button_share_bookmark">Zaznamek</string>
 
@@ -2495,7 +2495,7 @@
 
     <string name="location">Lociranje</string>
 
-    <string name="title_activity_login">Aplikacija</string>
+    <string name="title_activity_login">InventoryExpert</string>
 
     <string name="prompt_email">E-naslov</string>
 
