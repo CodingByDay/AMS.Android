@@ -22,6 +22,7 @@
         android:showAsAction="always"
         android:title="@string/uhf_msg_tab_write"/>
     -->
+
     <item
         android:id="@+id/action_kill"
         android:showAsAction="never"
@@ -38,9 +39,10 @@
         android:visible="false"
         android:title="@string/uhf_msg_tab_set"/>
     <item
-        android:id="@+id/action_Deactivate"
-        android:showAsAction="never"
-        android:visible="false"
+        android:id="@+id/sync"
+        android:showAsAction="always"
+        android:visible="true"
+        android:icon="@drawable/sync"
         android:title="BlockPermalock"/>
     <item
         android:id="@+id/UHF_ver"

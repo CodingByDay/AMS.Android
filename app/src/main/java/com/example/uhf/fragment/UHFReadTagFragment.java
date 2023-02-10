@@ -47,6 +47,8 @@ import java.util.List;
 
 
 public class UHFReadTagFragment extends KeyDwonFragment {
+
+    private String data;
     private static final String TAG = "UHFReadTagFragment";
     private boolean loopFlag = false;
     private int inventoryFlag = 1;
@@ -270,6 +272,7 @@ public class UHFReadTagFragment extends KeyDwonFragment {
             if (index == -1) {
                 mContext.tagList.add(map);
                 tempDatas.add(epc);
+                data += epc + ",";
                 tv_count.setText(String.valueOf(adapter.getCount()));
             } else {
                 int tagCount = Integer.parseInt(mContext.tagList.get(index).get(TAG_COUNT), 10) + 1;
@@ -369,6 +372,7 @@ public class UHFReadTagFragment extends KeyDwonFragment {
                     break;
             }
         } else { // 停止识别
+            String datax = data;
             stopInventory();
             setTotalTime();
         }

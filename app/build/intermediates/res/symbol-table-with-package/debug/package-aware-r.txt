@@ -3243,7 +3243,6 @@ string lp_btn_auto
 string lp_btn_close
 string lp_btn_open
 string lp_btn_stop
-string lp_title_b
 string lp_title_brightness
 string lp_title_compass
 string lp_title_g
@@ -3253,6 +3252,7 @@ string lp_title_lightsensor
 string lp_title_psensor
 string lp_title_r
 string lp_title_sensor
+string lp_titlye_b
 string m1_title_block
 string m1_title_key_type
 string m1_title_key_value

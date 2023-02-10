@@ -69,10 +69,16 @@ public class BaseTabFragmentActivity extends FragmentActivity {
 			case R.id.UHF_ver:
 				getUHFVersion();
 				break;
+			case R.id.sync:
+				SyncData();
 			default:
 				break;
 		}
 		return true;
+	}
+
+	// This is the method for syncing database information
+	private void SyncData() {
 	}
 
 	@Override
