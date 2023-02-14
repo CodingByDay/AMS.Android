@@ -17,15 +17,27 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
+        android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:testOnly="true"
-        android:theme="@style/CustomTheme" >
+        android:theme="@style/Theme.AppCompat.Light" >
+        <activity
+            android:name="com.example.uhf.MainFragmentHolder"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name="com.example.uhf.EntryInitial"
+            android:exported="false" />
+        <activity
+            android:name="com.example.uhf.Entry"
+            android:exported="false" />
         <activity
             android:name="com.example.uhf.ui.login.LoginActivityMain"
+            android:exported="true"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,6 +67,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name="androidx.room.MultiInstanceInvalidationService"
+            android:directBootAware="true"
+            android:exported="false" />
     </application>
 
 </manifest>

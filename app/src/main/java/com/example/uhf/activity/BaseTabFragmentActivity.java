@@ -30,7 +30,7 @@ public class BaseTabFragmentActivity extends FragmentActivity {
 	public KeyDwonFragment currentFragment=null;
 	public int TidLen=6;
 	private ProgressDialog mypDialogSync;
-	private ItemViewModel itemViewModel;
+	//private ItemViewModel itemViewModel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class BaseTabFragmentActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 
 
-		itemViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
+		//itemViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
 		Log.i("BaseTabFragmentActivity", "ItemViewModel initialized");
 	}
 

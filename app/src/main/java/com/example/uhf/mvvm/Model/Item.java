@@ -1,12 +1,13 @@
 package com.example.uhf.mvvm.Model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "item")
 public class Item {
 
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = false) @NonNull
     private String ecd;
 
     private String ident;

@@ -27,6 +27,7 @@ anim design_bottom_sheet_slide_in
 anim design_bottom_sheet_slide_out
 anim design_snackbar_in
 anim design_snackbar_out
+anim fragment_fast_out_extra_slow_in
 anim grow_from_topleft_to_bottomright
 anim mtrl_bottom_sheet_slide_in
 anim mtrl_bottom_sheet_slide_out
@@ -38,6 +39,12 @@ anim slide_right_out
 animator design_appbar_state_list_animator
 animator design_fab_hide_motion_spec
 animator design_fab_show_motion_spec
+animator fragment_close_enter
+animator fragment_close_exit
+animator fragment_fade_enter
+animator fragment_fade_exit
+animator fragment_open_enter
+animator fragment_open_exit
 animator linear_indeterminate_line1_head_interpolator
 animator linear_indeterminate_line1_tail_interpolator
 animator linear_indeterminate_line2_head_interpolator
@@ -1897,16 +1904,20 @@ drawable button_bg_gray
 drawable button_bg_up
 drawable button_bg_up2
 drawable button_bg_up3
+drawable car
 drawable card_normal
 drawable card_press
 drawable check_text_color
 drawable check_text_color2
+drawable clipboard
 drawable close
+drawable data_transfer
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable export
 drawable ic_clock_black_24dp
 drawable ic_keyboard_black_24dp
 drawable ic_launcher
@@ -1914,6 +1925,9 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable inventory
+drawable inventory_entry
+drawable list
 drawable logo
 drawable material_cursor_drawable
 drawable material_ic_calendar_black_24dp
@@ -1953,6 +1967,8 @@ drawable rectangle_bg
 drawable rectangle_bg2
 drawable sync
 drawable test_custom_background
+drawable tick
+drawable to_do_list
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 drawable webtext
@@ -2067,6 +2083,7 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
+id airplane
 id alertTitle
 id aligned
 id all
@@ -2112,6 +2129,8 @@ id btnSetQTParams
 id btnSetSession
 id btnWorkWait
 id btn_deactivate
+id bus
+id bus1
 id buttonPanel
 id cancel_button
 id cbAccess
@@ -2178,6 +2197,7 @@ id counterclockwise
 id custom
 id customPanel
 id cut
+id cycle
 id date_picker_actions
 id decelerate
 id decelerateAndComplete
@@ -2255,6 +2275,8 @@ id fixed
 id flip
 id floating
 id forever
+id fragment_container_view_tag
+id frame
 id ghost_view
 id ghost_view_holder
 id gone
@@ -2275,6 +2297,9 @@ id ifRoom
 id ignore
 id ignoreRequest
 id image
+id imageView
+id imageView2
+id imageView3
 id info
 id invisible
 id inward
@@ -2283,6 +2308,9 @@ id item_touch_helper_previous_elevation
 id iv_dismissDialog
 id jumpToEnd
 id jumpToStart
+id l_item
+id l_location
+id l_qty
 id labeled
 id launch_product_query
 id layout
@@ -2295,6 +2323,8 @@ id leftToRight
 id line1
 id line3
 id linear
+id linearLayout
+id linearLayout2
 id listMode
 id listView_frequency
 id list_item
@@ -2482,6 +2512,7 @@ id spInventoried
 id spPower
 id spSessionID
 id spacer
+id special_effects_controller_view_tag
 id spline
 id splinkParams
 id split_action_bar
@@ -2517,6 +2548,11 @@ id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
 id tag_window_insets_animation_callback
+id tbConfirm
+id tbExit
+id tbItem
+id tbLocation
+id tbQty
 id test_checkbox_android_button_tint
 id test_checkbox_app_button_tint
 id test_radiobutton_android_button_tint
@@ -2528,6 +2564,13 @@ id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
 id textTop
+id textView
+id textView3
+id textView4
+id textView6
+id textView7
+id textView8
+id textView9
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
@@ -2542,9 +2585,11 @@ id title
 id titleDividerNoCustom
 id title_template
 id toggle
+id toolbar
 id top
 id topPanel
 id touch_outside
+id train
 id transitionToEnd
 id transitionToStart
 id transition_current_scene
@@ -2566,8 +2611,11 @@ id up
 id useLogo
 id username
 id view_offset_helper
+id view_tree_lifecycle_owner
+id view_tree_saved_state_registry_owner
 id view_tree_view_model_store_owner
 id visible
+id visible_removing_fragment_view_tag
 id withText
 id withinBounds
 id wrap
@@ -2644,9 +2692,12 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_entry
+layout activity_entry_initial
 layout activity_login_insist
 layout activity_login_main
 layout activity_main
+layout activity_main_fragment_holder
 layout activity_uhfset
 layout custom_dialog
 layout design_bottom_navigation_item
@@ -2668,7 +2719,10 @@ layout fragment_blank
 layout fragment_block_permalock
 layout fragment_block_write
 layout fragment_deactivate
+layout fragment_entry_menu
+layout fragment_inventory
 layout fragment_main
+layout fragment_main_menu
 layout fragment_temperature
 layout fragment_uhflocation
 layout item_text1
@@ -2950,12 +3004,14 @@ string button_add_contact
 string button_back
 string button_book_search
 string button_cancel
+string button_confirm
 string button_custom_product_search
 string button_dial
 string button_disable
 string button_done
 string button_email
 string button_enable
+string button_exit
 string button_get_directions
 string button_google_shopper
 string button_mms
@@ -3099,6 +3155,7 @@ string er_dsoft_tab_set
 string erd_title
 string error_icon_content_description
 string exit
+string export_inventory
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
@@ -3214,7 +3271,10 @@ string icon_content_description
 string inputData
 string invalid_password
 string invalid_username
+string inventory
 string io_exception_error
+string item_field
+string item_hint
 string item_view_role_description
 string kettest_msg_broadcast_tip
 string keyboard_title_multiple
@@ -3234,12 +3294,16 @@ string lf_title_data
 string lf_title_pageid
 string lf_title_read
 string lf_title_write
+string listing
 string load_empty
 string load_error
 string load_full
 string load_ing
 string load_more
 string location
+string location_field
+string location_hint
+string location_listing
 string login_failed
 string lp_btn_auto
 string lp_btn_close
@@ -3424,6 +3488,7 @@ string none_paired
 string normal_set
 string not_connected
 string num
+string objects_listing
 string ok
 string password_toggle_content_description
 string path_password_eye
@@ -3486,6 +3551,8 @@ string psam_title_set
 string psam_title_tips
 string psam_title_voltage
 string publishing
+string qty_field
+string qty_hint
 string rbErase
 string rbInventoryAnti
 string rbInventoryLoop
@@ -3581,6 +3648,7 @@ string strUpload
 string submit_report
 string sure
 string switch_cam
+string sync
 string tagFocus
 string tagFocus_off
 string tel_title_NetworkType
@@ -3693,6 +3761,9 @@ string title_succ_count
 string title_succ_rate
 string title_wait_time
 string title_work_time
+string transfer_inventory
+string transfer_locations
+string transfer_objects
 string tvAccessPwd
 string tvAccess_Lock
 string tvBank
@@ -4661,6 +4732,8 @@ styleable FlowLayout itemSpacing lineSpacing
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery fontProviderSystemFontFamily
 styleable FontFamilyFont android_font android_fontWeight android_fontStyle android_ttcIndex android_fontVariationSettings font fontStyle fontVariationSettings fontWeight ttcIndex
 styleable ForegroundLinearLayout android_foreground android_foregroundGravity foregroundInsidePadding
+styleable Fragment android_name android_id android_tag
+styleable FragmentContainerView android_name android_tag
 styleable GradientColor android_startColor android_endColor android_type android_centerX android_centerY android_gradientRadius android_tileMode android_centerColor android_startX android_startY android_endX android_endY
 styleable GradientColorItem android_color android_offset
 styleable ImageFilterView altSrc brightness contrast crossfade overlay round roundPercent saturation warmth

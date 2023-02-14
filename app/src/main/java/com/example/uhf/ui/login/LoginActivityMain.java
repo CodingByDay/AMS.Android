@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.uhf.MainFragmentHolder;
 import com.example.uhf.R;
 import com.example.uhf.activity.BaseTabFragmentActivity;
 import com.example.uhf.activity.UHFMainActivity;
@@ -55,7 +56,8 @@ private Button login;
 
 
 
-                Intent myIntent = new Intent(getApplicationContext(), UHFMainActivity.class);
+                Intent myIntent = new Intent(getApplicationContext(), MainFragmentHolder.class);
+                myIntent.putExtra("fragment", "entry_menu");
                 startActivity(myIntent);
 
 
