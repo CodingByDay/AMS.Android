@@ -2559,6 +2559,13 @@
     <string name="inventory">Popis</string>
     <string name="listing">Pregled</string>
     <string name="sync">Sinhronizacija</string>
-
+    <string name="item_field">Sredstvo</string>
+    <string name="location_field">Lokacija</string>
+    <string name="qty_field">Količina</string>
+    <string name="button_exit">Izhod</string>
+    <string name="button_confirm">Potrdi</string>
+    <string name="item_hint">I34113431</string>
+    <string name="location_hint">01</string>
+    <string name="qty_hint">29,7</string>
 
 </resources>
