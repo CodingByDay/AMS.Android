@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
-            android:layout_height="160dp"
+            android:layout_height="100dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,6 +34,8 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView">
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
+                android:id="@+id/transferLocations"
+
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1">
@@ -64,6 +66,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
+                android:id="@+id/transferItems"
+
                 android:layout_weight="1">
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -103,6 +107,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
+                android:id="@+id/listingLocations"
+
                 android:layout_weight="1">
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -131,6 +137,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
+                android:id="@+id/listingItems"
+
                 android:layout_weight="1">
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -169,6 +177,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
+                android:id="@+id/exportListing"
                 android:layout_weight="1">
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -197,6 +206,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
+                android:id="@+id/transferListing"
+
                 android:layout_weight="1">
                 <RelativeLayout
                     android:layout_width="match_parent"
