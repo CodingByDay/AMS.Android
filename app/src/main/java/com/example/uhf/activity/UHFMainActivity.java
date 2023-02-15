@@ -15,6 +15,9 @@ import android.util.Log;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTabHost;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 
 import com.example.uhf.R;
@@ -28,9 +31,12 @@ import com.example.uhf.fragment.UHFReadFragment;
 import com.example.uhf.fragment.UHFReadTagFragment;
 import com.example.uhf.fragment.UHFSetFragment;
 import com.example.uhf.fragment.UHFWriteFragment;
+import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * UHF使用demo
@@ -46,17 +52,24 @@ public class UHFMainActivity extends BaseTabFragmentActivity {
     private FragmentTabHost mTabHost;
     private FragmentManager fm;
     public UhfInfo uhfInfo=new UhfInfo();
-    public ArrayList<HashMap<String, String>> tagList = new ArrayList<HashMap<String, String>>();;
+    public ArrayList<HashMap<String, String>> tagList = new ArrayList<HashMap<String, String>>();
+    private ItemViewModel itemViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkReadWritePermission();
-      //  setTitle(String.format(getString(R.string.app_name) + "(v%s)", getVerName()));
+        // setTitle(String.format(getString(R.string.app_name) + "(v%s)", getVerName()));
         initSound();
         initUHF();
         initViewPageData();
-
+        itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
+        itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
+            @Override
+            public void onChanged(List<Item> items) {
+                String Jesus = "Lord!";
+            }
+        });
     }
 
     protected void initViewPageData() {

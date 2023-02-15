@@ -131,6 +131,17 @@
 74-->[androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3bff79dcf3871cb5fa33cb117ab5876\room-runtime-2.4.1\AndroidManifest.xml:27:13-43
 75            android:exported="false" />
 75-->[androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3bff79dcf3871cb5fa33cb117ab5876\room-runtime-2.4.1\AndroidManifest.xml:28:13-37
-76    </application>
-77
-78</manifest>
+76
+77        <provider
+77-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3c088406576b03c69a90621925ddf75\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
+78            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+78-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3c088406576b03c69a90621925ddf75\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
+79            android:authorities="com.example.uhf.lifecycle-process"
+79-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3c088406576b03c69a90621925ddf75\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
+80            android:exported="false"
+80-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3c088406576b03c69a90621925ddf75\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
+81            android:multiprocess="true" />
+81-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3c088406576b03c69a90621925ddf75\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
+82    </application>
+83
+84</manifest>

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.uhf.activity.UHFMainActivity;
+
 public class Entry extends AppCompatActivity {
     private CardView btTransferLocations;
     private CardView btTransferItems;
@@ -33,7 +35,8 @@ public class Entry extends AppCompatActivity {
         btTransferLocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent myIntent = new Intent(getApplicationContext(), UHFMainActivity.class);
+                startActivity(myIntent);
             }
         });
         btTransferItems.setOnClickListener(new View.OnClickListener() {
