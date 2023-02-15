@@ -33,7 +33,7 @@
 17-->[DeviceAPI_ver20220518_release.aar] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\caf159fc57991986811df3565d6f4389\DeviceAPI_ver20220518_release\AndroidManifest.xml:14:22-73
 18
 19    <application
-19-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:11:5-59:19
+19-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:11:5-62:19
 20        android:name="androidx.multidex.MultiDexApplication"
 21        android:allowBackup="true"
 21-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:12:9-35
@@ -43,93 +43,94 @@
 24        android:icon="@drawable/logo"
 24-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:13:9-38
 25        android:label="@string/app_name"
-25-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:14:9-41
+25-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:16:9-41
 26        android:testOnly="true"
-27        android:theme="@style/Theme.AppCompat.Light" >
-27-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:15:9-53
-28        <activity
-28-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:17:9-20:40
-29            android:name="com.example.uhf.MainFragmentHolder"
-29-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:18:13-47
-30            android:exported="false"
-30-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:20:13-37
-31            android:theme="@style/Theme.AppCompat.Light" />
-31-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:19:13-57
-32        <activity
-32-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:21:9-23:40
-33            android:name="com.example.uhf.EntryInitial"
-33-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:22:13-41
-34            android:exported="false" />
-34-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:23:13-37
-35        <activity
-35-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:24:9-26:40
-36            android:name="com.example.uhf.Entry"
-36-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:25:13-34
-37            android:exported="false" />
-37-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:26:13-37
-38        <activity
-38-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:27:9-36:20
-39            android:name="com.example.uhf.ui.login.LoginActivityMain"
-39-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:28:13-55
-40            android:exported="true"
-40-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:30:13-36
-41            android:label="@string/title_activity_login" >
-41-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:29:13-57
-42            <intent-filter>
-42-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:31:13-35:29
-43                <action android:name="android.intent.action.MAIN" />
-43-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:32:17-69
-43-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:32:25-66
-44
-45                <category android:name="android.intent.category.LAUNCHER" />
-45-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:34:17-77
-45-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:34:27-74
-46            </intent-filter>
-47        </activity>
-48        <activity
-48-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:37:9-50:20
-49            android:name="com.example.uhf.activity.UHFMainActivity"
-49-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:38:13-53
-50            android:configChanges="orientation|screenSize"
-50-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:39:13-59
-51            android:label="@string/app_name"
-51-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:40:13-45
-52            android:screenOrientation="portrait" >
-52-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:41:13-49
-53
-54            <!--
-55            <intent-filter>
-56                <action android:name="android.intent.action.MAIN" />
-57
-58                <category android:name="android.intent.category.LAUNCHER" />
-59            </intent-filter>
-60            -->
-61        </activity>
-62
-63        <receiver android:name="com.example.uhf.BootBroadcastReceiver" >
-63-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:52:9-58:20
-63-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:52:19-56
-64            <intent-filter android:priority="1000" >
-64-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:53:13-57:29
-64-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:53:28-51
-65                <action android:name="android.intent.action.BOOT_COMPLETED" />
-65-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:54:17-79
-65-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:54:25-76
-66
-67                <category android:name="android.intent.category.LAUNCHER" />
-67-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:34:17-77
-67-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:34:27-74
-68            </intent-filter>
-69        </receiver>
-70
-71        <service
-71-->[androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3bff79dcf3871cb5fa33cb117ab5876\room-runtime-2.4.1\AndroidManifest.xml:25:9-28:40
-72            android:name="androidx.room.MultiInstanceInvalidationService"
-72-->[androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3bff79dcf3871cb5fa33cb117ab5876\room-runtime-2.4.1\AndroidManifest.xml:26:13-74
-73            android:directBootAware="true"
-73-->[androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3bff79dcf3871cb5fa33cb117ab5876\room-runtime-2.4.1\AndroidManifest.xml:27:13-43
-74            android:exported="false" />
-74-->[androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3bff79dcf3871cb5fa33cb117ab5876\room-runtime-2.4.1\AndroidManifest.xml:28:13-37
-75    </application>
-76
-77</manifest>
+27        android:theme="@style/CustomTheme" >
+27-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:14:9-43
+28    >
+29        <activity
+29-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:20:9-23:40
+30            android:name="com.example.uhf.MainFragmentHolder"
+30-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:21:13-47
+31            android:exported="false"
+31-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:23:13-37
+32            android:theme="@style/Theme.AppCompat.Light" />
+32-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:22:13-57
+33        <activity
+33-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:24:9-26:40
+34            android:name="com.example.uhf.EntryInitial"
+34-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:25:13-41
+35            android:exported="false" />
+35-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:26:13-37
+36        <activity
+36-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:27:9-29:40
+37            android:name="com.example.uhf.Entry"
+37-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:28:13-34
+38            android:exported="false" />
+38-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:29:13-37
+39        <activity
+39-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:30:9-39:20
+40            android:name="com.example.uhf.ui.login.LoginActivityMain"
+40-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:31:13-55
+41            android:exported="true"
+41-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:33:13-36
+42            android:label="@string/title_activity_login" >
+42-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:32:13-57
+43            <intent-filter>
+43-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:34:13-38:29
+44                <action android:name="android.intent.action.MAIN" />
+44-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:35:17-69
+44-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:35:25-66
+45
+46                <category android:name="android.intent.category.LAUNCHER" />
+46-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:37:17-77
+46-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:37:27-74
+47            </intent-filter>
+48        </activity>
+49        <activity
+49-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:40:9-53:20
+50            android:name="com.example.uhf.activity.UHFMainActivity"
+50-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:41:13-53
+51            android:configChanges="orientation|screenSize"
+51-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:42:13-59
+52            android:label="@string/app_name"
+52-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:43:13-45
+53            android:screenOrientation="portrait" >
+53-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:44:13-49
+54
+55            <!--
+56            <intent-filter>
+57                <action android:name="android.intent.action.MAIN" />
+58
+59                <category android:name="android.intent.category.LAUNCHER" />
+60            </intent-filter>
+61            -->
+62        </activity>
+63
+64        <receiver android:name="com.example.uhf.BootBroadcastReceiver" >
+64-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:55:9-61:20
+64-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:55:19-56
+65            <intent-filter android:priority="1000" >
+65-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:56:13-60:29
+65-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:56:28-51
+66                <action android:name="android.intent.action.BOOT_COMPLETED" />
+66-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:57:17-79
+66-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:57:25-76
+67
+68                <category android:name="android.intent.category.LAUNCHER" />
+68-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:37:17-77
+68-->C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:37:27-74
+69            </intent-filter>
+70        </receiver>
+71
+72        <service
+72-->[androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3bff79dcf3871cb5fa33cb117ab5876\room-runtime-2.4.1\AndroidManifest.xml:25:9-28:40
+73            android:name="androidx.room.MultiInstanceInvalidationService"
+73-->[androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3bff79dcf3871cb5fa33cb117ab5876\room-runtime-2.4.1\AndroidManifest.xml:26:13-74
+74            android:directBootAware="true"
+74-->[androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3bff79dcf3871cb5fa33cb117ab5876\room-runtime-2.4.1\AndroidManifest.xml:27:13-43
+75            android:exported="false" />
+75-->[androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\transforms-2\files-2.1\b3bff79dcf3871cb5fa33cb117ab5876\room-runtime-2.4.1\AndroidManifest.xml:28:13-37
+76    </application>
+77
+78</manifest>

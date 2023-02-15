@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Entry">
+    tools:context=".MainFragmentHolder">
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
         app:srcCompat="@drawable/logo" />
 
     <FrameLayout
@@ -17,8 +20,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/imageView2"
         android:layout_alignParentBottom="true"
-
-
         android:layout_marginBottom="0dp"></FrameLayout>
 
 </RelativeLayout>

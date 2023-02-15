@@ -2727,6 +2727,7 @@ layout fragment_temperature
 layout fragment_uhflocation
 layout item_text1
 layout listtag_items
+layout main
 layout material_chip_input_combo
 layout material_clock_display
 layout material_clock_display_divider

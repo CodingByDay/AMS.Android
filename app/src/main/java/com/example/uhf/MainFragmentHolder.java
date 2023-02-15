@@ -13,6 +13,10 @@ public class MainFragmentHolder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_fragment_holder);
+
+        // For now hide the action bar to get more space.
+        getSupportActionBar().hide();
+
         Intent intent = getIntent();
         String fragment = intent.getStringExtra("fragment");
         initializeFragment(fragment);
