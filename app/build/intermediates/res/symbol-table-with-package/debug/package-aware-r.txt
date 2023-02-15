@@ -2104,10 +2104,13 @@ id beginning
 id blocking
 id bottom
 id bounce
+id btInventory
+id btListing
 id btOK
 id btSet
 id btStart
 id btStop
+id btSync
 id btnDisable
 id btnGBLock
 id btnGetInventory
@@ -2265,6 +2268,7 @@ id et_worktime
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
+id exportListing
 id fade
 id fill
 id fill_horizontal
@@ -2328,6 +2332,8 @@ id linearLayout2
 id listMode
 id listView_frequency
 id list_item
+id listingItems
+id listingLocations
 id llChart
 id llFilter
 id llSession
@@ -2590,6 +2596,9 @@ id top
 id topPanel
 id touch_outside
 id train
+id transferItems
+id transferListing
+id transferLocations
 id transitionToEnd
 id transitionToStart
 id transition_current_scene

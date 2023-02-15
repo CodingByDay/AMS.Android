@@ -16,6 +16,10 @@ private CardView btSync;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_initial);
+
+        getSupportActionBar().hide();
+
+
         btInventory = (CardView) findViewById(R.id.btInventory);
         btListing = (CardView) findViewById(R.id.btListing);
         btSync = (CardView) findViewById(R.id.btSync);
@@ -34,7 +38,7 @@ private CardView btSync;
         btSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(getApplicationContext(), EntryMenu.class);
+                Intent myIntent = new Intent(getApplicationContext(), Entry.class);
                 startActivity(myIntent);
             }
         });

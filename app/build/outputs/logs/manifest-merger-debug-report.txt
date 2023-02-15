@@ -103,7 +103,7 @@ MERGED from [androidx.room:room-runtime:2.4.1] C:\Users\janko\.gradle\caches\tra
 	android:allowBackup
 		ADDED from C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:12:9-35
 	android:theme
-		ADDED from C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:14:9-43
+		ADDED from C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:14:9-53
 activity#com.example.uhf.MainFragmentHolder
 ADDED from C:\Users\janko\OneDrive - in-sist.si\Desktop\Scanner\uhf-uart-demo\app\src\main\AndroidManifest.xml:20:9-23:40
 	android:exported
