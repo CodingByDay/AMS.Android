@@ -9,11 +9,12 @@ import android.os.Bundle;
 
 import com.example.uhf.R;
 import com.example.uhf.fragment.FixedAssetsFragment;
+import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 
 import java.util.Objects;
 
 public class InventoryActivity extends AppCompatActivity {
-
+private ItemViewModel itemViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

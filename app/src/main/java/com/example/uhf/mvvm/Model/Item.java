@@ -10,48 +10,60 @@ public class Item {
     @PrimaryKey(autoGenerate = false) @NonNull
     private String ecd;
 
-    private String ident;
-
+    private String item;
     private String name;
 
     private int location;
 
-    public Item(String ecd, String ident, String name, int location) {
+    private double qty;
+
+    public Item(@NonNull String ecd, String item, String name, int location, double qty) {
         this.ecd = ecd;
-        this.ident = ident;
+        this.item = item;
         this.name = name;
         this.location = location;
+        this.qty = qty;
     }
 
-    public void setEcd(String ecd) {
-        this.ecd = ecd;
-    }
 
-    public void setIdent(String ident) {
-        this.ident = ident;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLocation(int location) {
-        this.location = location;
-    }
-
+    @NonNull
     public String getEcd() {
         return ecd;
     }
 
-    public String getIdent() {
-        return ident;
+    public void setEcd(@NonNull String ecd) {
+        this.ecd = ecd;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getLocation() {
         return location;
+    }
+
+    public void setLocation(int location) {
+        this.location = location;
+    }
+
+    public Double getQty() {
+        return this.qty;
+    }
+
+    public void setQty(double qty) {
+        this.qty = qty;
     }
 }
