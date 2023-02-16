@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import com.example.uhf.item.ItemRepository;
 import com.example.uhf.mvvm.Model.Item;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ItemViewModel extends AndroidViewModel {
@@ -25,6 +26,7 @@ public class ItemViewModel extends AndroidViewModel {
     }
 
 
+
     public void update (Item item) {
         repository.update(item);
     }
@@ -36,4 +38,6 @@ public class ItemViewModel extends AndroidViewModel {
     public LiveData<List<Item>> getAllItems() {
         return allItems;
     }
+
+
 }

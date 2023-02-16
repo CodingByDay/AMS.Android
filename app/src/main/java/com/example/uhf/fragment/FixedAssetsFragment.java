@@ -64,5 +64,11 @@ private ItemViewModel itemViewModel;
             Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.BLUE);
         }
         selected = position;
+
+
+        // Testing sorting
+        final ItemAdapter adapter = new ItemAdapter(this);
+        adapter.sortBasedOnLocation("25");
+        recycler.setAdapter(adapter);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.uhf.ui.login;
+package com.example.uhf.activity;
 
 import android.app.Activity;
 
@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.uhf.activity.EntryInitialActivity;
 import com.example.uhf.R;
 
 public class LoginActivityMain extends Activity {

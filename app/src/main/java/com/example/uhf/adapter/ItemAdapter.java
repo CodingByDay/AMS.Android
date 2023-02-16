@@ -15,6 +15,10 @@ import com.example.uhf.mvvm.Model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import one.util.streamex.StreamEx;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
 private List<Item> items = new ArrayList<Item>();
@@ -24,7 +28,31 @@ private final RecyclerViewInterface recyclerViewInterface;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
+    // Here is the sorting method
+    public void sortBasedOnLocation(String location) {
 
+
+            List<Item> correctItems = new ArrayList<Item>();
+            List<Item> wrongItems = new ArrayList<Item>();
+            List<Item> emptyItems = new ArrayList<Item>();
+
+        for (Item item :items) {
+            if (item.getLocation().equals(location)) {
+                correctItems.add(item);
+            } else if (!item.getLocation().equals(location) && !item.getLocation().equals("")) {
+                wrongItems.add(item);
+            } else if (item.getLocation().equals("")) {
+                emptyItems.add(item);
+            }
+          }
+            ArrayList<Item> sorted = new ArrayList<Item>();
+            sorted.addAll(correctItems);
+            sorted.addAll(wrongItems);
+            sorted.addAll(emptyItems);
+            this.items = sorted;
+            notifyDataSetChanged();
+
+    }
     @NonNull
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
