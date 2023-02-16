@@ -1,4 +1,4 @@
-package com.example.uhf;
+package com.example.uhf.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -7,10 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.uhf.activity.InventoryActivity;
-import com.example.uhf.activity.UHFMainActivity;
+import com.example.uhf.R;
 
-public class Entry extends AppCompatActivity {
+public class EntryActivity extends AppCompatActivity {
     private CardView btTransferLocations;
     private CardView btTransferItems;
     private CardView btListingLocations;

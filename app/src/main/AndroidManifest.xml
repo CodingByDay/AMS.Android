@@ -17,14 +17,14 @@
             android:name=".activity.InventoryActivity"
             android:exported="false" />
         <activity
-            android:name=".MainFragmentHolder"
+            android:name=".activity.MainFragmentHolderActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
-            android:name=".EntryInitial"
+            android:name=".activity.EntryInitialActivity"
             android:exported="false" />
         <activity
-            android:name=".Entry"
+            android:name=".activity.EntryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivityMain"
@@ -51,7 +51,7 @@
             -->
         </activity>
 
-        <receiver android:name=".BootBroadcastReceiver">
+        <receiver android:name=".reading.BootBroadcastReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
 

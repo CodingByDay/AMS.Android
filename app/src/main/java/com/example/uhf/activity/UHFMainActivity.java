@@ -16,12 +16,11 @@ import android.util.Log;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTabHost;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 
 import com.example.uhf.R;
-import com.example.uhf.UhfInfo;
+import com.example.uhf.reading.UhfInfo;
 import com.example.uhf.fragment.BlockPermalockFragment;
 import com.example.uhf.fragment.BlockWriteFragment;
 import com.example.uhf.fragment.UHFKillFragment;

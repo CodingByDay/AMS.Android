@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uhf.R;
-import com.example.uhf.RecyclerViewInterface;
+import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.mvvm.Model.Item;
 
 import java.util.ArrayList;

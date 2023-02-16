@@ -1,4 +1,4 @@
-package com.example.uhf;
+package com.example.uhf.reading;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

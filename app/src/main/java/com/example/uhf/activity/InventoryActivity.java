@@ -18,7 +18,7 @@ private ItemViewModel itemViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inventory);
+        setContentView(R.layout.activity_inventory);
         Objects.requireNonNull(getSupportActionBar()).hide();
         initializeFragment();
     }

@@ -2,34 +2,15 @@ package com.example.uhf.ui.login;
 
 import android.app.Activity;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.uhf.EntryInitial;
-import com.example.uhf.MainFragmentHolder;
+import com.example.uhf.activity.EntryInitialActivity;
 import com.example.uhf.R;
-import com.example.uhf.activity.BaseTabFragmentActivity;
-import com.example.uhf.activity.UHFMainActivity;
-import com.example.uhf.ui.login.LoginViewModel;
-import com.example.uhf.ui.login.LoginViewModelFactory;
 
 public class LoginActivityMain extends Activity {
 private Button login;
@@ -57,7 +38,7 @@ private Button login;
 
 
 
-                Intent myIntent = new Intent(getApplicationContext(), EntryInitial.class);
+                Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
                 //myIntent.putExtra("fragment", "entry_menu");
                 startActivity(myIntent);
 

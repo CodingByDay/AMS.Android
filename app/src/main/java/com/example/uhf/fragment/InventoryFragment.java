@@ -1,16 +1,18 @@
-package com.example.uhf;
+package com.example.uhf.fragment;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MainMenuFragment extends Fragment {
+import com.example.uhf.R;
+import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 
-
+public class InventoryFragment extends Fragment {
 
 
 
@@ -18,7 +20,8 @@ public class MainMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_main_menu, container, false);
-        return inflater.inflate(R.layout.fragment_main_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_inventory, container, false);
+
+        return view;
     }
 }

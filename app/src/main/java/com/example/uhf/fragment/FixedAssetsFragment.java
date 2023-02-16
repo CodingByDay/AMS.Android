@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.uhf.R;
-import com.example.uhf.RecyclerViewInterface;
+import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.adapter.ItemAdapter;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;

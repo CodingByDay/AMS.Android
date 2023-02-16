@@ -1,4 +1,4 @@
-package com.example.uhf;
+package com.example.uhf.database;
 
 import android.content.Context;
 import android.os.AsyncTask;

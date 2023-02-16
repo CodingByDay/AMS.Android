@@ -1,14 +1,15 @@
-package com.example.uhf;
+package com.example.uhf.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.CarrierConfigManager;
 import android.view.View;
 
-public class EntryInitial extends AppCompatActivity {
+import com.example.uhf.R;
+
+public class EntryInitialActivity extends AppCompatActivity {
 private CardView btInventory;
 private CardView btListing;
 private CardView btSync;
@@ -38,7 +39,7 @@ private CardView btSync;
         btSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(getApplicationContext(), Entry.class);
+                Intent myIntent = new Intent(getApplicationContext(), EntryActivity.class);
                 startActivity(myIntent);
             }
         });

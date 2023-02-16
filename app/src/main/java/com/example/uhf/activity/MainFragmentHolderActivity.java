@@ -1,4 +1,4 @@
-package com.example.uhf;
+package com.example.uhf.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,9 +8,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.uhf.R;
+
 import java.util.Objects;
 
-public class MainFragmentHolder extends AppCompatActivity {
+public class MainFragmentHolderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,7 @@ public class MainFragmentHolder extends AppCompatActivity {
     private void initializeFragment(String fragment) {
         switch (fragment) {
             case "entry_menu":
-                replaceFragment(new EntryMenu());
+                //replaceFragment(new Entry);
                 break;
         }
     }
