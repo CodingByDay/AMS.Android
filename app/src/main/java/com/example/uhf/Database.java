@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemDAO;
 
-@androidx.room.Database(entities = {Item.class}, version = 2)
+@androidx.room.Database(entities = {Item.class}, version = 3)
 public abstract class Database extends RoomDatabase {
 
     private static Database instance;
@@ -48,24 +48,24 @@ public abstract class Database extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            itemDAO.insert(new Item("E280116060000213B8204D0F",",ID63230",",Novi motor",25,3));
-            itemDAO.insert(new Item("E28011606000021185EFE55D",",ID48139",",Industrijska stiskalnica",46, 5));
-            itemDAO.insert(new Item("E28011606000021185EFD24C",",ID81392",",Učinkovita plazemska reza",67, 5));
-            itemDAO.insert(new Item("E280116060000213B81FD548",",ID99076",",Preizkušeni generator za električno energijo",30, 5));
-            itemDAO.insert(new Item("E280116060000213B8201128",",ID82256",",Kompaktni laserski gravirnik",89, 5));
-            itemDAO.insert(new Item("E280116060000213B8209B45",",ID48002",",Visokokakovostna vijačna matrica",39, 5));
-            itemDAO.insert(new Item("E280116060000213B820349E",",ID69811",",Digitalna tiskalna naprava",20, 5));
-            itemDAO.insert(new Item("E280116060000213B81FA1CD",",ID75467",",Zmogljiv kompresor zraka",65, 5));
-            itemDAO.insert(new Item("E280116060000213B8204D28",",ID75677",",Robustna kroglična obdelovalna masina",8, 5));
-            itemDAO.insert(new Item("E280116060000213B81F43FA",",ID18472",",Profesionalna stacionarna sesalna naprava",6, 5));
-            itemDAO.insert(new Item("E280116060000213B81F3155",",ID23530",",Napredna stiskalnica za plastiko",81, 5));
-            itemDAO.insert(new Item("E280116060000213B820B518",",ID59175",",Nakladalna tehnika za materiale",77, 5));
-            itemDAO.insert(new Item("E28011606000021185EFA96A",",ID95494",",Procesna oprema za kemične procese",30, 5));
-            itemDAO.insert(new Item("E28011606000021185EF4B5F",",ID76224",", Učinkovit kotlični pritisk",43, 5));
-            itemDAO.insert(new Item("E280116060000213B81F543C",",ID86653",", Zmogljivi rezalni stroj",18, 5));
-            itemDAO.insert(new Item("E28011606000021185EF4B9D",",ID84966",",Avtomatizirani transportni sistemi",95, 5));
-            itemDAO.insert(new Item("E280116060000213B820AC10",",ID53827",",Merilne naprave za natančno mjerenje",10, 5));
-            itemDAO.insert(new Item("E280116060000213B820B53D",",ID91839",",Avtomatsko testiranje elektronske opreme",62, 5));
+            itemDAO.insert(new Item("E280116060000213B8204D0F",",ID63230",",Novi motor","25",3));
+            itemDAO.insert(new Item("E28011606000021185EFE55D",",ID48139",",Industrijska stiskalnica","25", 5));
+            itemDAO.insert(new Item("E28011606000021185EFD24C",",ID81392",",Učinkovita plazemska reza","67", 5));
+            itemDAO.insert(new Item("E280116060000213B81FD548",",ID99076",",Preizkušeni generator za električno energijo","25", 5));
+            itemDAO.insert(new Item("E280116060000213B8201128",",ID82256",",Kompaktni laserski gravirnik","25", 5));
+            itemDAO.insert(new Item("E280116060000213B8209B45",",ID48002",",Visokokakovostna vijačna matrica","25", 5));
+            itemDAO.insert(new Item("E280116060000213B820349E",",ID69811",",Digitalna tiskalna naprava","25", 5));
+            itemDAO.insert(new Item("E280116060000213B81FA1CD",",ID75467",",Zmogljiv kompresor zraka","25", 5));
+            itemDAO.insert(new Item("E280116060000213B8204D28",",ID75677",",Robustna kroglična obdelovalna masina","25", 5));
+            itemDAO.insert(new Item("E280116060000213B81F43FA",",ID18472",",Profesionalna stacionarna sesalna naprava","25", 5));
+            itemDAO.insert(new Item("E280116060000213B81F3155",",ID23530",",Napredna stiskalnica za plastiko","25", 5));
+            itemDAO.insert(new Item("E280116060000213B820B518",",ID59175",",Nakladalna tehnika za materiale","25", 5));
+            itemDAO.insert(new Item("E28011606000021185EFA96A",",ID95494",",Procesna oprema za kemične procese","25", 5));
+            itemDAO.insert(new Item("E28011606000021185EF4B5F",",ID76224",", Učinkovit kotlični pritisk","25", 5));
+            itemDAO.insert(new Item("E280116060000213B81F543C",",ID86653",", Zmogljivi rezalni stroj","25", 5));
+//            itemDAO.insert(new Item("E28011606000021185EF4B9D",",ID84966",",Avtomatizirani transportni sistemi",95, 5));
+//            itemDAO.insert(new Item("E280116060000213B820AC10",",ID53827",",Merilne naprave za natančno mjerenje",10, 5));
+//            itemDAO.insert(new Item("E280116060000213B820B53D",",ID91839",",Avtomatsko testiranje elektronske opreme",62, 5));
 //            itemDAO.insert(new Item("E280116060000213B8202B46",",ID89259",",CNC obdelovalni stroji",87, 5));
 //            itemDAO.insert(new Item("E28011606000021185F021AC",",ID74007",",Profesionalne stiskalnice za metal",9, 5));
 //            itemDAO.insert(new Item("E280116060000213B81FD5BB",",ID63491",",Zmogljive pnevmatske vijačne matrice",69, 5));
