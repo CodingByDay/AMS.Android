@@ -31,7 +31,7 @@ private List<Item> items = new ArrayList<Item>();
         Item current = items.get(position);
         holder.tbItem.setText(current.getItem());
         holder.tbName.setText(current.getName());
-        //holder.tbLocation.setText(current.getLocation());
+        holder.tbLocation.setText(current.getLocation());
         String qty = String.valueOf(current.getQty());
         holder.tbQty.setText(qty);
     }

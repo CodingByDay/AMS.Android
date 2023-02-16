@@ -13,11 +13,11 @@ public class Item {
     private String item;
     private String name;
 
-    private int location;
+    private String location;
 
     private double qty;
 
-    public Item(@NonNull String ecd, String item, String name, int location, double qty) {
+    public Item(@NonNull String ecd, String item, String name, String location, double qty) {
         this.ecd = ecd;
         this.item = item;
         this.name = name;
@@ -51,11 +51,11 @@ public class Item {
         this.name = name;
     }
 
-    public int getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(int location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
