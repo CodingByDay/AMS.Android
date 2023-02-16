@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.util.Objects;
+
 public class MainFragmentHolder extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +17,7 @@ public class MainFragmentHolder extends AppCompatActivity {
         setContentView(R.layout.activity_main_fragment_holder);
 
         // For now hide the action bar to get more space.
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         Intent intent = getIntent();
         String fragment = intent.getStringExtra("fragment");

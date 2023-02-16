@@ -2575,6 +2575,8 @@
     <string name="name_inventory">Naziv</string>
     <string name="location_inventory">Lokacija</string>
     <string name="qty_inventory">Kol</string>
+    <string name="scanning_inventory">Skeniraj</string>
+
 
 
 </resources>

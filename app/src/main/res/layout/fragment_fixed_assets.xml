@@ -53,10 +53,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rwItems"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        tools:layout_editor_absoluteX="186dp" >
+        tools:listitem="@layout/item">
 
 
     </androidx.recyclerview.widget.RecyclerView>
