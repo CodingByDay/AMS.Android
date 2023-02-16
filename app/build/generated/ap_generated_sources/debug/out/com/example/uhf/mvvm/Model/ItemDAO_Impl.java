@@ -116,11 +116,11 @@ public final class ItemDAO_Impl implements ItemDAO {
   }
 
   @Override
-  public void insert(final Item item) {
+  public void insert(final Item arg0) {
     __db.assertNotSuspendingTransaction();
     __db.beginTransaction();
     try {
-      __insertionAdapterOfItem.insert(item);
+      __insertionAdapterOfItem.insert(arg0);
       __db.setTransactionSuccessful();
     } finally {
       __db.endTransaction();
@@ -128,11 +128,11 @@ public final class ItemDAO_Impl implements ItemDAO {
   }
 
   @Override
-  public void delete(final Item item) {
+  public void delete(final Item arg0) {
     __db.assertNotSuspendingTransaction();
     __db.beginTransaction();
     try {
-      __deletionAdapterOfItem.handle(item);
+      __deletionAdapterOfItem.handle(arg0);
       __db.setTransactionSuccessful();
     } finally {
       __db.endTransaction();
@@ -140,11 +140,11 @@ public final class ItemDAO_Impl implements ItemDAO {
   }
 
   @Override
-  public void update(final Item item) {
+  public void update(final Item arg0) {
     __db.assertNotSuspendingTransaction();
     __db.beginTransaction();
     try {
-      __updateAdapterOfItem.handle(item);
+      __updateAdapterOfItem.handle(arg0);
       __db.setTransactionSuccessful();
     } finally {
       __db.endTransaction();
