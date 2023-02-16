@@ -106,7 +106,6 @@ public class UHFMainActivity extends BaseTabFragmentActivity {
         mTabHost.addTab(mTabHost.newTabSpec("BlockPermalock").setIndicator("BlockPermalock"),
                 BlockPermalockFragment.class, null);
 
-
     }
 
     @Override
