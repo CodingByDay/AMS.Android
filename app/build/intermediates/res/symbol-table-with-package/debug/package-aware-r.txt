@@ -1965,6 +1965,7 @@ drawable notify_panel_notification_icon_bg
 drawable rb_bg
 drawable rectangle_bg
 drawable rectangle_bg2
+drawable small_logo
 drawable sync
 drawable test_custom_background
 drawable tick
@@ -2134,6 +2135,8 @@ id btnWorkWait
 id btn_deactivate
 id bus
 id bus1
+id button
+id button2
 id buttonPanel
 id cancel_button
 id cbAccess
@@ -2232,6 +2235,7 @@ id dropdown_menu
 id easeIn
 id easeInOut
 id easeOut
+id editTextTextPersonName
 id edit_query
 id elastic
 id end
@@ -2279,6 +2283,7 @@ id fixed
 id flip
 id floating
 id forever
+id fragment_container
 id fragment_container_view_tag
 id frame
 id ghost_view
@@ -2290,6 +2295,7 @@ id group_divider
 id groups
 id guideline
 id hScroller_mytabhostactivity
+id header
 id header_title
 id hideable
 id home
@@ -2304,6 +2310,7 @@ id image
 id imageView
 id imageView2
 id imageView3
+id imageView4
 id info
 id invisible
 id inward
@@ -2573,6 +2580,7 @@ id textTop
 id textView
 id textView3
 id textView4
+id textView5
 id textView6
 id textView7
 id textView8
@@ -2734,6 +2742,7 @@ layout fragment_main
 layout fragment_main_menu
 layout fragment_temperature
 layout fragment_uhflocation
+layout inventory
 layout item_text1
 layout listtag_items
 layout main

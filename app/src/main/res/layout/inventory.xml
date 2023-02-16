@@ -18,6 +18,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_weight="1"
+            android:visibility="gone"
             app:srcCompat="@drawable/small_logo" />
 
         <LinearLayout
@@ -27,19 +28,19 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/location_inventory" />
+
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/tbLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
         </LinearLayout>
     </LinearLayout>
 
@@ -47,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@id/header"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="600dp">
+        android:layout_height="300dp">
 
     </FrameLayout>
 
@@ -59,18 +60,19 @@
         app:layout_constraintTop_toBottomOf="@id/fragment_container">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btExit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="@string/exit_inventory" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btConfirm"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
+
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="@string/confirm_inventory" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

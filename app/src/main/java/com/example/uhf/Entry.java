@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.uhf.activity.InventoryActivity;
 import com.example.uhf.activity.UHFMainActivity;
 
 public class Entry extends AppCompatActivity {
@@ -35,7 +36,7 @@ public class Entry extends AppCompatActivity {
         btTransferLocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(getApplicationContext(), UHFMainActivity.class);
+                Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
                 startActivity(myIntent);
             }
         });

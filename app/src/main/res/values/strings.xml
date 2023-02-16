@@ -2568,4 +2568,15 @@
     <string name="location_hint">01</string>
     <string name="qty_hint">29,7</string>
 
+
+
+
+    <string name="exit_inventory">Izhod</string>
+    <string name="confirm_inventory">Potrdi</string>
+    <string name="item_inventory">Sredstvo</string>
+    <string name="name_inventory">Naziv</string>
+    <string name="location_inventory">Lokacija</string>
+    <string name="qty_inventory">Kol</string>
+
+
 </resources>
