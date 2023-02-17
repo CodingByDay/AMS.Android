@@ -47,9 +47,12 @@ private EditText tbLocation;
         // Initialize the Fixed Assets Fragment
         replaceFragment(new FixedAssetsFragment());
     }
-
+    // Replaces a fragment
     private void replaceFragment(Fragment fragment) {
-        // Replaces a fragment
+        // Data for knowing who is the caller
+        Bundle arguments = new Bundle();
+        arguments.putString( "callerID" , "InventoryActivity");
+        fragment.setArguments(arguments);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);

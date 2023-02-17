@@ -39,8 +39,23 @@ private ItemViewModel itemViewModel;
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_fixed_assets, container, false);
-        inits(view);
+
+        // Getting the caller information
+        Bundle arguments = getArguments();
+        assert arguments != null;
+        String callerID = arguments.getString("callerID");
+        switch (callerID) {
+            case "InventoryActivity":
+                initEmpty();
+                break;
+            case "ListingActivity":
+                inits(view);
+                break;
+        }
         return view;
+    }
+
+    private void initEmpty() {
     }
 
     private void inits(View view) {
