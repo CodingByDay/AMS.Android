@@ -20,6 +20,7 @@ import com.example.uhf.adapter.ItemAdapter;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 
+import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,12 +28,16 @@ public class FixedAssetsFragment extends Fragment implements RecyclerViewInterfa
 private ItemViewModel itemViewModel;
     private RecyclerView recycler;
     private int selected = -1;
+    private List<Item> itemsClassLevel;
+    private ItemAdapter adapter;
 
+    private static FixedAssetsFragment instance;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        instance = this;
         View view = inflater.inflate(R.layout.fragment_fixed_assets, container, false);
         inits(view);
         return view;
@@ -42,13 +47,14 @@ private ItemViewModel itemViewModel;
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        final ItemAdapter adapter = new ItemAdapter(this);
+        adapter = new ItemAdapter(this);
         recycler.setAdapter(adapter);
         itemViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemViewModel.class);
         itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
 
             @Override
             public void onChanged(List<Item> items) {
+                itemsClassLevel = items;
                 adapter.setItems(items);
             }
         });
@@ -64,11 +70,15 @@ private ItemViewModel itemViewModel;
             Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.BLUE);
         }
         selected = position;
-
-
-        // Testing sorting
-        final ItemAdapter adapter = new ItemAdapter(this);
-        adapter.sortBasedOnLocation("25");
-        recycler.setAdapter(adapter);
     }
+    public static FixedAssetsFragment getInstance() {
+        return instance;
+    }
+
+    // This is a method to be called from the parent activity
+    public void sortBasedOnLocation(String location) {
+        adapter.sortBasedOnLocation(itemsClassLevel, location);
+    }
+
+
 }

@@ -29,7 +29,7 @@ private final RecyclerViewInterface recyclerViewInterface;
     }
 
     // Here is the sorting method
-    public void sortBasedOnLocation(String location) {
+    public void sortBasedOnLocation(List<Item> items, String location) {
 
 
             List<Item> correctItems = new ArrayList<Item>();
