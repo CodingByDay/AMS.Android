@@ -49,7 +49,7 @@ private ItemViewModel itemViewModel;
                 initEmpty();
                 break;
             case "ListingActivity":
-                inits(view);
+                init(view);
                 break;
         }
         return view;
@@ -58,7 +58,7 @@ private ItemViewModel itemViewModel;
     private void initEmpty() {
     }
 
-    private void inits(View view) {
+    private void init(View view) {
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);

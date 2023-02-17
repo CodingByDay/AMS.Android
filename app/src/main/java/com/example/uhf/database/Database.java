@@ -10,13 +10,16 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemDAO;
+import com.example.uhf.mvvm.Model.ItemTemporary;
+import com.example.uhf.mvvm.Model.ItemTemporaryDAO;
 
-@androidx.room.Database(entities = {Item.class}, version = 3)
+@androidx.room.Database(entities = {Item.class, ItemTemporary.class}, version = 4)
 public abstract class Database extends RoomDatabase {
 
     private static Database instance;
 
     public abstract ItemDAO itemDAO();
+    public abstract ItemTemporaryDAO itemTemporaryDAO();
 
     public static synchronized Database getInstance(Context context) {
         if(instance == null) {
@@ -41,8 +44,10 @@ public abstract class Database extends RoomDatabase {
     private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void> {
 
         private ItemDAO itemDAO;
+        private ItemTemporaryDAO itemTemporaryDAO;
         private PopulateDbAsyncTask(Database db) {
             itemDAO = db.itemDAO();
+            itemTemporaryDAO = db.itemTemporaryDAO();
         }
 
 
