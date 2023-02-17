@@ -1,5 +1,7 @@
 package com.example.uhf.fragment;
 
+import static android.app.ProgressDialog.show;
+
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.uhf.R;
 import com.example.uhf.interfaces.RecyclerViewInterface;
@@ -95,5 +98,14 @@ private ItemViewModel itemViewModel;
         adapter.sortBasedOnLocation(itemsClassLevel, location);
     }
 
+    // Method to be called from the parent activity and a method that starts the scanning process
+    public void startScanning() {
+        Toast.makeText(this.getContext(), "Started scanning", Toast.LENGTH_SHORT).show();
+    }
+
+    // Method to be called from the parent activity and a method that stops the scanning process
+    public void stopScanning ()  {
+        Toast.makeText(this.getContext(), "Stopped scanning", Toast.LENGTH_SHORT).show();
+    }
 
 }

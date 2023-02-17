@@ -14,12 +14,14 @@ import com.example.uhf.R;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 
+import java.io.File;
 import java.util.Objects;
 
 public class InventoryActivity extends AppCompatActivity {
 private ItemViewModel itemViewModel;
 private Button btConfirm;
 private EditText tbLocation;
+private Button btToggleScanning;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ private EditText tbLocation;
     private void initViews() {
         btConfirm = findViewById(R.id.btConfirm);
         tbLocation = findViewById(R.id.tbLocation);
+        btToggleScanning = findViewById(R.id.btToggleScanning);
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,6 +43,22 @@ private EditText tbLocation;
 
             }
         });
+        btToggleScanning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String btText = btToggleScanning.getText().toString();
+                if (btText.equals("Skeniraj")) {
+                    FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                    fixedAssetsFragment.startScanning();
+                    btToggleScanning.setText("Nehaj");
+                } else {
+                    FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                    fixedAssetsFragment.stopScanning();
+                    btToggleScanning.setText("Skeniraj");
+                }
+            }
+        });
+
 
     }
 
