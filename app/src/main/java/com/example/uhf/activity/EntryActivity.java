@@ -42,7 +42,8 @@ public class EntryActivity extends AppCompatActivity {
         btTransferItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent myIntent = new Intent(getApplicationContext(),  UHFMainActivity.class);
+                startActivity(myIntent);
             }
         });
         btListingLocations.setOnClickListener(new View.OnClickListener() {

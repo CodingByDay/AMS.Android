@@ -2,6 +2,7 @@ package com.example.uhf.fragment;
 
 import static android.app.ProgressDialog.show;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,28 +13,75 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uhf.R;
+import com.example.uhf.activity.InventoryActivity;
+import com.example.uhf.activity.UHFMainActivity;
 import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.adapter.ItemAdapter;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
+import com.example.uhf.tools.StringUtils;
+import com.example.uhf.tools.UIHelper;
+import com.rscja.deviceapi.RFIDWithUHFUART;
+import com.rscja.deviceapi.entity.UHFTAGInfo;
+import com.rscja.deviceapi.exception.ConfigurationException;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class FixedAssetsFragment extends Fragment implements RecyclerViewInterface {
+public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerViewInterface {
 private ItemViewModel itemViewModel;
     private RecyclerView recycler;
     private int selected = -1;
     private List<Item> itemsClassLevel;
     private ItemAdapter adapter;
+    private String data;
+    private static final String TAG = "UHFReadTagFragment";
+    private boolean loopFlag = false;
+    private int inventoryFlag = 1;
+    private List<String> tempDatas = new ArrayList<>();
 
+    Button BtClear;
+    TextView tvTime;
+    TextView tv_count;
+    TextView tv_total;
+    RadioGroup RgInventory;
+    RadioButton RbInventorySingle;
+    RadioButton RbInventoryLoop;
+
+    Button BtInventory;
+    ListView LvTags;
+    private InventoryActivity mContext;
+    private HashMap<String, String> map;
+
+    private int total;
+    private long time;
+
+    private CheckBox cbFilter;
+    private ViewGroup layout_filter;
+
+    public static final String TAG_EPC = "tagEPC";
+    public static final String TAG_EPC_TID = "tagEpcTID";
+    public static final String TAG_COUNT = "tagCount";
+    public static final String TAG_RSSI = "tagRssi";
     private static FixedAssetsFragment instance;
 
     @Override
@@ -42,7 +90,8 @@ private ItemViewModel itemViewModel;
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_fixed_assets, container, false);
-
+        mContext = (InventoryActivity) getActivity();
+        mContext.currentFragment = this;
         // Getting the caller information
         Bundle arguments = getArguments();
         assert arguments != null;
@@ -57,6 +106,30 @@ private ItemViewModel itemViewModel;
         }
         return view;
     }
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            UHFTAGInfo info = (UHFTAGInfo) msg.obj;
+        }
+    };
+
+    class TagThread extends Thread {
+        public void run() {
+            UHFTAGInfo uhftagInfo;
+            Message msg;
+            while (!loopFlag) {
+
+                uhftagInfo = mContext.mReader.readTagFromBuffer();
+                if (uhftagInfo != null) {
+                    msg = handler.obtainMessage();
+                    msg.obj = uhftagInfo;
+                    handler.sendMessage(msg);
+                    // mContext.playSound(1);
+                }
+            }
+        }
+    }
+
 
     private void initEmpty() {
     }
@@ -101,6 +174,8 @@ private ItemViewModel itemViewModel;
     // Method to be called from the parent activity and a method that starts the scanning process
     public void startScanning() {
         Toast.makeText(this.getContext(), "Started scanning", Toast.LENGTH_SHORT).show();
+        new TagThread().start();
+
     }
 
     // Method to be called from the parent activity and a method that stops the scanning process
