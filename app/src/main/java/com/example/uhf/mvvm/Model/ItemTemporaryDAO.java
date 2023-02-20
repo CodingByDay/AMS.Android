@@ -20,4 +20,8 @@ public interface ItemTemporaryDAO {
     void deleteAllItems();
     @Query("SELECT * FROM item_temp")
     LiveData<List<ItemTemporary>> getAllItems();
+
+
+    @Query("SELECT * FROM item_temp")
+    List<ItemTemporary> getAllItemsList();
 }

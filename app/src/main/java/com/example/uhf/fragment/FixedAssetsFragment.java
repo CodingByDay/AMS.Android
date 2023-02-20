@@ -1,12 +1,16 @@
 package com.example.uhf.fragment;
 
 import static android.app.ProgressDialog.show;
+import static android.content.Context.AUDIO_SERVICE;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -95,6 +99,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     public static final String TAG_RSSI = "tagRssi";
     private static FixedAssetsFragment instance;
     private RFIDWithUHFUART mReader;
+    private List<ItemTemporary> itemsTemporary;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,7 +108,10 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         instance = this;
         View view = inflater.inflate(R.layout.fragment_fixed_assets, container, false);
 
+        // Initialization
+        initSound();
         initUHF();
+
         // Getting the caller information
         Bundle arguments = getArguments();
         assert arguments != null;
@@ -118,6 +126,23 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         }
         return view;
     }
+
+    public void playSound(int id) {
+        float audioMaxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC); // 返回当前AudioManager对象的最大音量值
+        float audioCurrentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);// 返回当前AudioManager对象的音量值
+        volumnRatio = audioCurrentVolume / audioMaxVolume;
+        try {
+            soundPool.play(soundMap.get(id), volumnRatio, // 左声道音量
+                    volumnRatio, // 右声道音量
+                    1, // 优先级，0为最低
+                    0, // 循环次数，0不循环，-1永远循环
+                    1 // 回放速度 ，该值在0.5-2.0之间，1为正常速度
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public class InitTask extends AsyncTask<String, Integer, Boolean> {
         ProgressDialog mypDialog;
 
@@ -170,12 +195,39 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         public void handleMessage(Message msg) {
             UHFTAGInfo info = (UHFTAGInfo) msg.obj;
 
-            temporaryViewModel.insert(new ItemTemporary("test", "test", "test", "01", 3));
+
+            // TODO if the id does not exist
+            if(!temporaryViewModel.primaryKeyExists(itemsTemporary, info.getEPC())) {
+                playSound(1);
+                temporaryViewModel.insert(new ItemTemporary(String.valueOf(Math.random()), "test", "test", "01", 3));
+            }
+
+
             // Testing the scanning process
 
             count += 1 ;
         }
     };
+    private SoundPool soundPool;
+    private float volumnRatio;
+    private AudioManager am;
+
+    private void initSound() {
+        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 5);
+        soundMap.put(1, soundPool.load(getActivity(), R.raw.barcodebeep, 1));
+        soundMap.put(2, soundPool.load(getActivity(), R.raw.serror, 1));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            am = (AudioManager) Objects.requireNonNull(getActivity()).getSystemService(AUDIO_SERVICE);// 实例化AudioManager对象
+        }
+    }
+    HashMap<Integer, Integer> soundMap = new HashMap<Integer, Integer>();
+
+    private void releaseSoundPool() {
+        if(soundPool != null) {
+            soundPool.release();
+            soundPool = null;
+        }
+    }
 
     class TagThread extends Thread {
         public void run() {
@@ -208,7 +260,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         temporaryViewModel.getAllItems().observe(this, new Observer<List<ItemTemporary>>() {
             @Override
             public void onChanged(List<ItemTemporary> items) {
+                itemsTemporary = items;
                 temporaryAdapter.setItems(items);
+
             }
         });
     }

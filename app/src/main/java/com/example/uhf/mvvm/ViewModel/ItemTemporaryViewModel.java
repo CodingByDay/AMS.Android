@@ -12,6 +12,7 @@ import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ItemTemporaryViewModel extends AndroidViewModel {
 
@@ -28,6 +29,21 @@ public class ItemTemporaryViewModel extends AndroidViewModel {
     }
 
 
+    /**
+     *
+     * @param key
+     * @return true if the key is already present
+     */
+    public boolean primaryKeyExists(List<ItemTemporary> items, String key) {
+        boolean result = false;
+        for (ItemTemporary item : items) {
+            if(item.getEcd().equals(key)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
 
     public void update (ItemTemporary item) {
         repository.update(item);

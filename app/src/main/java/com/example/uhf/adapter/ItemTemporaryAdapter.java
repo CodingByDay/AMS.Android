@@ -70,6 +70,9 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
 
     }
 
+    public List<ItemTemporary> getItems() {
+        return items;
+    }
     @Override
     public int getItemCount() {
         return items.size();
