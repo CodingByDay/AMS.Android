@@ -2,8 +2,10 @@ package com.example.uhf.fragment;
 
 import static android.app.ProgressDialog.show;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uhf.R;
+import com.example.uhf.activity.BaseTabFragmentActivity;
 import com.example.uhf.activity.InventoryActivity;
 import com.example.uhf.activity.UHFMainActivity;
 import com.example.uhf.interfaces.RecyclerViewInterface;
@@ -83,6 +86,7 @@ private ItemViewModel itemViewModel;
     public static final String TAG_COUNT = "tagCount";
     public static final String TAG_RSSI = "tagRssi";
     private static FixedAssetsFragment instance;
+    private RFIDWithUHFUART mReader;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,8 +94,8 @@ private ItemViewModel itemViewModel;
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_fixed_assets, container, false);
-        mContext = (InventoryActivity) getActivity();
-        mContext.currentFragment = this;
+
+        initUHF();
         // Getting the caller information
         Bundle arguments = getArguments();
         assert arguments != null;
@@ -106,6 +110,52 @@ private ItemViewModel itemViewModel;
         }
         return view;
     }
+    public class InitTask extends AsyncTask<String, Integer, Boolean> {
+        ProgressDialog mypDialog;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            // TODO Auto-generated method stub
+            mReader.free();
+            return mReader.init();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+           // mypDialog.cancel();
+            if (!result) {
+               // Toast.makeText(this.co, "init fail", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+      /*      mypDialog = new ProgressDialog(this;
+            mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mypDialog.setMessage("init...");
+            mypDialog.setCanceledOnTouchOutside(false);
+            mypDialog.show();*/
+        }
+    }
+
+    private void initUHF() {
+
+            try {
+                mReader = RFIDWithUHFUART.getInstance();
+            } catch (Exception ex) {
+
+                return;
+            }
+
+            if (mReader != null) {
+               new InitTask().execute();
+            }
+
+    }
+
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -119,7 +169,7 @@ private ItemViewModel itemViewModel;
             Message msg;
             while (!loopFlag) {
 
-                uhftagInfo = mContext.mReader.readTagFromBuffer();
+                uhftagInfo = mReader.readTagFromBuffer();
                 if (uhftagInfo != null) {
                     msg = handler.obtainMessage();
                     msg.obj = uhftagInfo;
@@ -174,7 +224,10 @@ private ItemViewModel itemViewModel;
     // Method to be called from the parent activity and a method that starts the scanning process
     public void startScanning() {
         Toast.makeText(this.getContext(), "Started scanning", Toast.LENGTH_SHORT).show();
-        new TagThread().start();
+
+        if (mReader.startInventoryTag()) {
+            new TagThread().start();
+        }
 
     }
 
