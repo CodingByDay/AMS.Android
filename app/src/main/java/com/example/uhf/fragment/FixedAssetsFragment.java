@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,15 +132,15 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     // TODO translate
     public void playSound(int id) {
-        float audioMaxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC); // 返回当前AudioManager对象的最大音量值
-        float audioCurrentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);// 返回当前AudioManager对象的音量值
+        float audioMaxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        float audioCurrentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
         volumnRatio = audioCurrentVolume / audioMaxVolume;
         try {
-            soundPool.play(soundMap.get(id), volumnRatio, // 左声道音量
-                    volumnRatio, // 右声道音量
-                    1, // 优先级，0为最低
-                    0, // 循环次数，0不循环，-1永远循环
-                    1 // 回放速度 ，该值在0.5-2.0之间，1为正常速度
+            soundPool.play(soundMap.get(id), volumnRatio,
+                    volumnRatio,
+                    1,
+                    0,
+                    1
             );
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,7 +191,16 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     private List<String> cache;
     private boolean preventDuplicate = false;
-
+    /*
+    * Turn scanning on and off from the activity
+    * */
+    public void toggleScanning(boolean enable) {
+        if (enable) {
+            startScanning();
+        } else {
+            stopScanning();
+        }
+    }
     // TODO: Handlers should be static lest they can have leaks.
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
@@ -222,9 +232,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         return binarySearch(tempDatas, epc);
     }
 
-    /**
-     * 二分查找，找到该值在数组中的下标，否则为-1
-     */
+
     static int binarySearch(List<String> array, String src) {
         int left = 0;
         int right = array.size() - 1;
@@ -290,7 +298,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                     msg = handler.obtainMessage();
                     msg.obj = uhftagInfo;
                     handler.sendMessage(msg);
-                    // mContext.playSound(1);
                 }
             }
         }

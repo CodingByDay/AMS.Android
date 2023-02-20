@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +48,14 @@ public RFIDWithUHFUART mReader;
 
 
 
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(keyCode == 296) {
+            // This is the hardware start button
+            FixedAssetsFragment.getInstance().toggleScanning(btToggleScanning.getText().equals("Skeniraj"));
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     private void initViews() {
         btConfirm = findViewById(R.id.btConfirm);
