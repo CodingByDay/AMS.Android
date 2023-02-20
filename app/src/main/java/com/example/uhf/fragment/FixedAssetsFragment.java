@@ -2,6 +2,7 @@ package com.example.uhf.fragment;
 
 import static android.app.ProgressDialog.show;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -34,9 +35,12 @@ import com.example.uhf.R;
 import com.example.uhf.activity.BaseTabFragmentActivity;
 import com.example.uhf.activity.InventoryActivity;
 import com.example.uhf.activity.UHFMainActivity;
+import com.example.uhf.adapter.ItemTemporaryAdapter;
 import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.adapter.ItemAdapter;
 import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.Model.ItemTemporary;
+import com.example.uhf.mvvm.ViewModel.ItemTemporaryViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.tools.StringUtils;
 import com.example.uhf.tools.UIHelper;
@@ -51,11 +55,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerViewInterface {
-private ItemViewModel itemViewModel;
+    private ItemViewModel itemViewModel;
+    private ItemTemporaryViewModel temporaryViewModel;
     private RecyclerView recycler;
     private int selected = -1;
+
+    private int count = 0;
     private List<Item> itemsClassLevel;
     private ItemAdapter adapter;
+    private ItemTemporaryAdapter temporaryAdapter;
     private String data;
     private static final String TAG = "UHFReadTagFragment";
     private boolean loopFlag = false;
@@ -102,7 +110,7 @@ private ItemViewModel itemViewModel;
         String callerID = arguments.getString("callerID");
         switch (callerID) {
             case "InventoryActivity":
-                initEmpty();
+                initEmpty(view);
                 break;
             case "ListingActivity":
                 init(view);
@@ -123,43 +131,49 @@ private ItemViewModel itemViewModel;
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-           // mypDialog.cancel();
+            mypDialog.cancel();
             if (!result) {
-               // Toast.makeText(this.co, "init fail", Toast.LENGTH_SHORT).show();
+               Toast.makeText(getActivity(), "init fail", Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
         protected void onPreExecute() {
-            // TODO Auto-generated method stub
+
             super.onPreExecute();
-      /*      mypDialog = new ProgressDialog(this;
+            mypDialog = new ProgressDialog(getActivity());
             mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             mypDialog.setMessage("init...");
             mypDialog.setCanceledOnTouchOutside(false);
-            mypDialog.show();*/
+            mypDialog.show();
         }
     }
 
     private void initUHF() {
-
             try {
                 mReader = RFIDWithUHFUART.getInstance();
             } catch (Exception ex) {
-
                 return;
             }
-
             if (mReader != null) {
                new InitTask().execute();
             }
-
     }
 
+
+
+    // TODO: Handlers should be static lest they can have leaks.
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
+        @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
             UHFTAGInfo info = (UHFTAGInfo) msg.obj;
+
+            temporaryViewModel.insert(new ItemTemporary("test", "test", "test", "01", 3));
+            // Testing the scanning process
+
+            count += 1 ;
         }
     };
 
@@ -181,7 +195,22 @@ private ItemViewModel itemViewModel;
     }
 
 
-    private void initEmpty() {
+    private void initEmpty(View view) {
+        temporaryAdapter = new ItemTemporaryAdapter(this);
+        recycler = (RecyclerView) view.findViewById(R.id.rwItems);
+        recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recycler.setHasFixedSize(true);
+        temporaryAdapter = new ItemTemporaryAdapter(this);
+        recycler.setAdapter(temporaryAdapter);
+        temporaryViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemTemporaryViewModel.class);
+
+        temporaryViewModel.deleteAllItems();
+        temporaryViewModel.getAllItems().observe(this, new Observer<List<ItemTemporary>>() {
+            @Override
+            public void onChanged(List<ItemTemporary> items) {
+                temporaryAdapter.setItems(items);
+            }
+        });
     }
 
     private void init(View view) {
@@ -199,6 +228,10 @@ private ItemViewModel itemViewModel;
                 adapter.setItems(items);
             }
         });
+
+
+
+
 
     }
 

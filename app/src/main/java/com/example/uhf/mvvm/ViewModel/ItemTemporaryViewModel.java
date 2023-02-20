@@ -41,4 +41,8 @@ public class ItemTemporaryViewModel extends AndroidViewModel {
         return allItems;
     }
 
+    public void deleteAllItems() {
+        repository.deleteAllItems();
+    }
+
 }
