@@ -33,6 +33,8 @@ private Button login;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        supportInvalidateOptionsMenu();
+        invalidateOptionsMenu();
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
