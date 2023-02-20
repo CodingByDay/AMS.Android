@@ -238,7 +238,6 @@ public class UHFReadTagFragment extends KeyDwonFragment {
             }
         });
     }
-
     @Override
     public void onPause() {
         Log.i(TAG, "UHFReadTagFragment.onPause");
@@ -247,7 +246,6 @@ public class UHFReadTagFragment extends KeyDwonFragment {
         // 停止识别
         stopInventory();
     }
-
     /**
      * 添加数据到列表中
      *

@@ -3,6 +3,8 @@ package com.example.uhf.fragment;
 import static android.app.ProgressDialog.show;
 import static android.content.Context.AUDIO_SERVICE;
 
+import static java.util.Objects.checkIndex;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -70,7 +72,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private ItemTemporaryAdapter temporaryAdapter;
     private String data;
     private static final String TAG = "UHFReadTagFragment";
-    private boolean loopFlag = false;
+    private boolean loopFlag = true;
     private int inventoryFlag = 1;
     private List<String> tempDatas = new ArrayList<>();
 
@@ -127,6 +129,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         return view;
     }
 
+    // TODO translate
     public void playSound(int id) {
         float audioMaxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC); // 返回当前AudioManager对象的最大音量值
         float audioCurrentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);// 返回当前AudioManager对象的音量值
@@ -185,6 +188,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             }
     }
 
+    private List<String> cache;
     private boolean preventDuplicate = false;
 
     // TODO: Handlers should be static lest they can have leaks.
@@ -193,18 +197,68 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
-            if(!preventDuplicate) {
-                preventDuplicate = true;
-            UHFTAGInfo info = (UHFTAGInfo) msg.obj;
-            // TODO binary search
-            if(!temporaryViewModel.primaryKeyExists(itemsTemporary, info.getEPC())) {
+               preventDuplicate = true;
+               UHFTAGInfo info = (UHFTAGInfo) msg.obj;
+               // Binary search check for duplicates
+            if(!StringUtils.isEmpty(info.getEPC())) {
+                int index = checkIfExist(info.getEPC());
+                if(index == -1) {
                 playSound(1);
                 temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3));
+                tempDatas.add(info.getEPC());
                 }
             }
-            preventDuplicate = false;
+            // TODO cleanup button
         }
     };
+
+
+
+
+    public int checkIfExist(String epc) {
+        if (StringUtils.isEmpty(epc)) {
+            return -1;
+        }
+        return binarySearch(tempDatas, epc);
+    }
+
+    /**
+     * 二分查找，找到该值在数组中的下标，否则为-1
+     */
+    static int binarySearch(List<String> array, String src) {
+        int left = 0;
+        int right = array.size() - 1;
+        // 这里必须是 <=
+        while (left <= right) {
+            if (compareString(array.get(left), src)) {
+                return left;
+            } else if (left != right) {
+                if (compareString(array.get(right), src))
+                    return right;
+            }
+            left++;
+            right--;
+        }
+        return -1;
+    }
+
+    static boolean compareString(String str1, String str2) {
+        if (str1.length() != str2.length()) {
+            return false;
+        } else if (str1.hashCode() != str2.hashCode()) {
+            return false;
+        } else {
+            char[] value1 = str1.toCharArray();
+            char[] value2 = str2.toCharArray();
+            int size = value1.length;
+            for (int k = 0; k < size; k++) {
+                if (value1[k] != value2[k]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
     private SoundPool soundPool;
     private float volumnRatio;
     private AudioManager am;
@@ -230,8 +284,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         public void run() {
             UHFTAGInfo uhftagInfo;
             Message msg;
-            while (!loopFlag) {
-
+            while (loopFlag) {
                 uhftagInfo = mReader.readTagFromBuffer();
                 if (uhftagInfo != null) {
                     msg = handler.obtainMessage();
@@ -252,7 +305,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         temporaryAdapter = new ItemTemporaryAdapter(this);
         recycler.setAdapter(temporaryAdapter);
         temporaryViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemTemporaryViewModel.class);
-
         temporaryViewModel.deleteAllItems();
         temporaryViewModel.getAllItems().observe(this, new Observer<List<ItemTemporary>>() {
             @Override
@@ -272,18 +324,12 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler.setAdapter(adapter);
         itemViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemViewModel.class);
         itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
-
             @Override
             public void onChanged(List<Item> items) {
                 itemsClassLevel = items;
                 adapter.setItems(items);
             }
         });
-
-
-
-
-
     }
 
     @Override
@@ -308,15 +354,15 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     // Method to be called from the parent activity and a method that starts the scanning process
     public void startScanning() {
         Toast.makeText(this.getContext(), "Started scanning", Toast.LENGTH_SHORT).show();
-
+        loopFlag = true;
         if (mReader.startInventoryTag()) {
             new TagThread().start();
         }
-
     }
 
     // Method to be called from the parent activity and a method that stops the scanning process
     public void stopScanning ()  {
+        loopFlag = false;
         Toast.makeText(this.getContext(), "Stopped scanning", Toast.LENGTH_SHORT).show();
     }
 
