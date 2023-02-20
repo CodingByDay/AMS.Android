@@ -17,13 +17,19 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
-    <style name="ActionBarBaseTheme" parent="android:style/Theme.Holo.Light"> </style>
+    <style name="ActionBarBaseTheme" parent="android:style/Theme.Holo.Light">
+
+
+    </style>
     
     <style name="ActionBarBaseTheme1" parent="android:style/Theme.Holo.Light">
         <item name="android:background">@color/white1</item>
         <item name="android:textColor">@drawable/check_text_color</item>
     </style>
-    
+
+    <style name="Toolbar" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">#33b5e5</item>
+    </style>
     
      <!-- 将自定义的style取名为CustomTheme，父类为Theme.Holo.Light，也就是说默认背景是白底黑字（如果是Theme.Holo，则默认是黑底白字） -->
      <style name="CustomTheme" parent="android:style/Theme.Holo.Light">
