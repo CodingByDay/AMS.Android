@@ -185,7 +185,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             }
     }
 
-
+    private boolean preventDuplicate = false;
 
     // TODO: Handlers should be static lest they can have leaks.
     @SuppressLint("HandlerLeak")
@@ -193,19 +193,16 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
+            if(!preventDuplicate) {
+                preventDuplicate = true;
             UHFTAGInfo info = (UHFTAGInfo) msg.obj;
-
-
-            // TODO if the id does not exist
+            // TODO binary search
             if(!temporaryViewModel.primaryKeyExists(itemsTemporary, info.getEPC())) {
                 playSound(1);
-                temporaryViewModel.insert(new ItemTemporary(String.valueOf(Math.random()), "test", "test", "01", 3));
+                temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3));
+                }
             }
-
-
-            // Testing the scanning process
-
-            count += 1 ;
+            preventDuplicate = false;
         }
     };
     private SoundPool soundPool;
