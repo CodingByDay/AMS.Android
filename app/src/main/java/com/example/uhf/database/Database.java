@@ -12,14 +12,18 @@ import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemDAO;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.ItemTemporaryDAO;
+import com.example.uhf.settings.Setting;
+import com.example.uhf.settings.SettingDAO;
 
-@androidx.room.Database(entities = {Item.class, ItemTemporary.class}, version = 4)
+@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class}, version = 5)
 public abstract class Database extends RoomDatabase {
 
     private static Database instance;
 
     public abstract ItemDAO itemDAO();
     public abstract ItemTemporaryDAO itemTemporaryDAO();
+
+    public abstract SettingDAO settingDAO();
 
     public static synchronized Database getInstance(Context context) {
         if(instance == null) {
@@ -45,9 +49,12 @@ public abstract class Database extends RoomDatabase {
 
         private ItemDAO itemDAO;
         private ItemTemporaryDAO itemTemporaryDAO;
+
+        private SettingDAO  settingDAO;
         private PopulateDbAsyncTask(Database db) {
             itemDAO = db.itemDAO();
             itemTemporaryDAO = db.itemTemporaryDAO();
+            settingDAO = db.settingDAO();
         }
 
 

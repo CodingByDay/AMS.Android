@@ -31,6 +31,29 @@ private Button login;
 
 
     }
+
+
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                break;
+            case R.id.UHF_ver:
+               // getUHFVersion();
+                break;
+            case R.id.sync:
+               // SyncData();
+                break;
+            case R.id.settings:
+                Toast.makeText(this, "Nastavitve", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                //myIntent.putExtra("fragment", "entry_menu");
+                startActivity(myIntent);
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         supportInvalidateOptionsMenu();
@@ -48,8 +71,6 @@ private Button login;
             @Override
             public void onClick(View view) {
                 Toast.makeText(LoginActivityMain.this, "Prijava!", Toast.LENGTH_SHORT).show();
-
-
 
                 Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
                 //myIntent.putExtra("fragment", "entry_menu");
