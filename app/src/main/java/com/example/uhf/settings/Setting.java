@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "settings")
 public class Setting {
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = false) @NonNull
     private String key;
     private String value;
 
@@ -16,6 +16,7 @@ public class Setting {
     }
 
     public Setting() {
+        key = "";
     }
 
     public String getKey() {

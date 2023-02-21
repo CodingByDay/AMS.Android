@@ -8,35 +8,37 @@ import androidx.lifecycle.LiveData;
 
 import com.example.uhf.item.ItemRepository;
 import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.settings.Setting;
+import com.example.uhf.settings.SettingsRepository;
 
 import java.util.List;
 
 public class SettingsViewModel extends AndroidViewModel {
     public SettingsViewModel(@NonNull Application application) {
         super(application);
-        repository = new ItemRepository(application);
+        repository = new SettingsRepository(application);
         allItems = repository.getAllItems();
     }
 
-    private ItemRepository repository;
-    private LiveData<List<Item>> allItems;
+    private SettingsRepository repository;
+    private LiveData<List<Setting>> allItems;
 
 
-    public void insert(Item item) {
+    public void insert(Setting item) {
         repository.insert(item);
     }
 
 
 
-    public void update (Item item) {
+    public void update (Setting item) {
         repository.update(item);
     }
 
-    public void delete (Item item) {
+    public void delete (Setting item) {
         repository.delete(item);
     }
 
-    public LiveData<List<Item>> getAllItems() {
+    public LiveData<List<Setting>> getAllItems() {
         return allItems;
     }
 

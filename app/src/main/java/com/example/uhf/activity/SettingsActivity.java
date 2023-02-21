@@ -5,13 +5,18 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.uhf.R;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
+import com.example.uhf.settings.SettingsHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,20 +24,46 @@ import java.util.List;
 public class SettingsActivity extends AppCompatActivity {
 private SettingsViewModel settingsView;
 private List<Setting> settingsClass  = new ArrayList<Setting>();
+private Button btSave;
+    private EditText tbUrl;
+    private SettingsHelper settingsHelper = new SettingsHelper();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         initActivity();
+        initUI();
     }
 
+    private void initUI() {
+        btSave = (Button) findViewById(R.id.btSave);
+        tbUrl = (EditText) findViewById(R.id.tbUrl);
+        btSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    settingsView.insert(new Setting("url", "test"));
+                } catch (Exception e) {
+                    // Does not exist yet
+                    // TODO improve the process
+                    settingsView.update(new Setting("url", tbUrl.getText().toString()));
+                }
+            }
+        });
+    }
+    private void updateUI(List<Setting> settings) {
+        tbUrl.setText(settingsHelper.findSetting(settings, "url").getValue());
+    }
     private void initActivity() {
-        settingsView = ViewModelProviders.of((SettingsActivity) this).get(SettingsViewModel.class);
-        /*settingsView.getAllItems().observe(SettingsActivity.this.cp, new Observer<List<Setting>>() {
+        settingsView = ViewModelProviders.of(this).get(SettingsViewModel.class);
+        settingsView.getAllItems().observe(this, new Observer<List<Setting>>() {
+
             @Override
             public void onChanged(List<Setting> settings) {
-                settings = settings;
+                updateUI(settings);
             }
-        });*/
+
+
+        });
     }
 }
