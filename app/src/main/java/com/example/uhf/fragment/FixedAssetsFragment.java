@@ -128,11 +128,18 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             case "ListingActivity":
                 init(view);
                 break;
+            case "RegistrationActivity":
+                initRegistration(view);
+                break;
         }
         return view;
     }
 
-    // TODO translate
+    // Init the registration logic
+    private void initRegistration(View view) {
+    }
+
+
     public void playSound(int id) {
         float audioMaxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         float audioCurrentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);

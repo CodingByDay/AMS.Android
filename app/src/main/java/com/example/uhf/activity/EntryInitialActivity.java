@@ -10,6 +10,10 @@ import android.view.View;
 import com.example.uhf.R;
 
 public class EntryInitialActivity extends AppCompatActivity {
+
+
+
+private CardView btRegistration;
 private CardView btInventory;
 private CardView btListing;
 private CardView btSync;
@@ -17,13 +21,18 @@ private CardView btSync;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_initial);
-
         getSupportActionBar().hide();
-
-
+        btRegistration = (CardView) findViewById(R.id.btRegistration);
         btInventory = (CardView) findViewById(R.id.btInventory);
         btListing = (CardView) findViewById(R.id.btListing);
         btSync = (CardView) findViewById(R.id.btSync);
+        btRegistration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
+                startActivity(myIntent);
+            }
+        });
         btInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

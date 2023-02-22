@@ -68,7 +68,7 @@ private final RecyclerViewInterface recyclerViewInterface;
         holder.tbName.setText(current.getName());
         holder.tbLocation.setText(current.getLocation());
         String qty = String.valueOf(current.getQty());
-        holder.tbQty.setText(qty);
+        holder.tbECD.setText(current.getEcd());
     }
 
     @Override
@@ -84,7 +84,7 @@ private final RecyclerViewInterface recyclerViewInterface;
         private TextView tbItem;
         private TextView tbName;
         private TextView tbLocation;
-        private TextView tbQty;
+        private TextView tbECD;
 
         private LinearLayout linearLayout;
 
@@ -93,7 +93,7 @@ private final RecyclerViewInterface recyclerViewInterface;
             tbItem = (TextView) itemView.findViewById(R.id.tbItem);
             tbName = (TextView) itemView.findViewById(R.id.tbName);
             tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
-            tbQty = (TextView) itemView.findViewById(R.id.tbQty);
+            tbECD = (TextView) itemView.findViewById(R.id.tbECD);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

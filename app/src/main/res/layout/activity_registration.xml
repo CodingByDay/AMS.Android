@@ -33,9 +33,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/registration" />
-
-
-
         </LinearLayout>
     </LinearLayout>
 
@@ -44,7 +41,6 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="280dp">
-
     </FrameLayout>
 
     <LinearLayout
@@ -56,31 +52,21 @@
 
         <Button
             android:backgroundTint="@android:color/holo_blue_bright"
-
             android:id="@+id/btExit"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_weight="1"
             android:text="@string/exit_inventory" />
 
-        <Button
-            android:backgroundTint="@android:color/holo_blue_bright"
 
-            android:id="@+id/btToggleScanning"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:layout_weight="1"
-            android:text="@string/scanning_inventory" />
 
         <Button
             android:backgroundTint="@android:color/holo_blue_bright"
-
-            android:id="@+id/btConfirm"
+            android:id="@+id/btRequest"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
-
             android:layout_weight="1"
-            android:text="@string/confirm_inventory" />
+            android:text="@string/registration" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,4 +13,53 @@ public class ItemLocation {
     private String code;
     private String location;
     private String ecd;
+
+
+    public ItemLocation(String item, String code, String location, String ecd) {
+        this.item = item;
+        this.code = code;
+        this.location = location;
+        this.ecd = ecd;
+    }
+
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getEcd() {
+        return ecd;
+    }
+
+    public void setEcd(String ecd) {
+        this.ecd = ecd;
+    }
 }
