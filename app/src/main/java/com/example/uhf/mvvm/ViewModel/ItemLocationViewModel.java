@@ -17,7 +17,6 @@ import java.util.List;
 public class ItemLocationViewModel extends AndroidViewModel {
     private ItemLocationRepository repository;
     private LiveData<List<ItemLocation>> allItems;
-
     public ItemLocationViewModel(@NonNull Application application) {
         super(application);
         repository = new ItemLocationRepository(application);
@@ -26,15 +25,12 @@ public class ItemLocationViewModel extends AndroidViewModel {
     public void insert(ItemLocation item) {
         repository.insert(item);
     }
-
     public void update (ItemLocation item) {
         repository.update(item);
     }
-
     public void delete (ItemLocation item) {
         repository.delete(item);
     }
-
     public LiveData<List<ItemLocation>> getAllItems() {
         return allItems;
     }
