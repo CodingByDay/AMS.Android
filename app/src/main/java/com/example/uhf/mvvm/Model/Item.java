@@ -7,40 +7,41 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "item")
 public class Item {
 
-    @PrimaryKey(autoGenerate = false) @NonNull
+    @PrimaryKey(autoGenerate = true)
+    private int ID;
+
+
     private String ecd;
 
-    private String item;
     private String name;
 
+    private String code;
     private String location;
 
     private double qty;
 
-    public Item(@NonNull String ecd, String item, String name, String location, double qty) {
+    public Item(String ecd, String name, String code, String location, double qty) {
         this.ecd = ecd;
-        this.item = item;
         this.name = name;
+        this.code = code;
         this.location = location;
         this.qty = qty;
     }
 
+    public int getID() {
+        return ID;
+    }
 
-    @NonNull
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     public String getEcd() {
         return ecd;
     }
 
-    public void setEcd(@NonNull String ecd) {
+    public void setEcd(String ecd) {
         this.ecd = ecd;
-    }
-
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
     }
 
     public String getName() {
@@ -51,6 +52,14 @@ public class Item {
         this.name = name;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getLocation() {
         return location;
     }
@@ -59,8 +68,8 @@ public class Item {
         this.location = location;
     }
 
-    public Double getQty() {
-        return this.qty;
+    public double getQty() {
+        return qty;
     }
 
     public void setQty(double qty) {

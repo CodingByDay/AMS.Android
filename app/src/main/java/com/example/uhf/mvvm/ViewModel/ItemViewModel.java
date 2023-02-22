@@ -6,10 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.uhf.item.ItemRepository;
+import com.example.uhf.repository.ItemRepository;
 import com.example.uhf.mvvm.Model.Item;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class ItemViewModel extends AndroidViewModel {

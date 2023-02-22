@@ -56,6 +56,8 @@ import com.rscja.deviceapi.entity.UHFTAGInfo;
 import com.rscja.deviceapi.exception.ConfigurationException;
 
 import java.io.File;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -214,8 +216,11 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 int index = checkIfExist(info.getEPC());
                 if(index == -1) {
                 playSound(1);
-                temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3));
-                tempDatas.add(info.getEPC());
+                // TODO fix date time to work with earlier versions
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now() .toString() , "Janko"));
+                    }
+                    tempDatas.add(info.getEPC());
                 }
             }
             // TODO cleanup button

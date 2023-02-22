@@ -1,4 +1,4 @@
-package com.example.uhf.item;
+package com.example.uhf.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;

@@ -57,12 +57,10 @@ private Button btSave;
     private void initActivity() {
         settingsView = ViewModelProviders.of(this).get(SettingsViewModel.class);
         settingsView.getAllItems().observe(this, new Observer<List<Setting>>() {
-
             @Override
             public void onChanged(List<Setting> settings) {
                 updateUI(settings);
             }
-
 
         });
     }

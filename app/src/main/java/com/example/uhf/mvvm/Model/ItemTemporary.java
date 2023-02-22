@@ -1,47 +1,53 @@
 package com.example.uhf.mvvm.Model;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.uhf.converter.TimeStampConverter;
+
+import java.time.LocalDateTime;
 
 @Entity(tableName = "item_temp")
 public class ItemTemporary {
 
-    @PrimaryKey(autoGenerate = false) @NonNull
+
+    @PrimaryKey(autoGenerate = true)
+    private int ID;
     private String ecd;
-
-    private String item;
     private String name;
-
+    private String code;
     private String location;
-
-
     private double qty;
+    private String timestamp;
+    private String user;
 
-    public ItemTemporary(@NonNull String ecd, String item, String name, String location, double qty) {
+    public ItemTemporary(@NonNull String ecd, String name, String code, String location, double qty, String timestamp, String user) {
         this.ecd = ecd;
-        this.item = item;
         this.name = name;
+        this.code = code;
         this.location = location;
         this.qty = qty;
+        this.timestamp = timestamp;
+        this.user = user;
     }
 
+    public int getID() {
+        return ID;
+    }
 
-    @NonNull
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     public String getEcd() {
         return ecd;
     }
 
-    public void setEcd(@NonNull String ecd) {
+    public void setEcd(String ecd) {
         this.ecd = ecd;
-    }
-
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
     }
 
     public String getName() {
@@ -52,6 +58,14 @@ public class ItemTemporary {
         this.name = name;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getLocation() {
         return location;
     }
@@ -60,11 +74,27 @@ public class ItemTemporary {
         this.location = location;
     }
 
-    public Double getQty() {
-        return this.qty;
+    public double getQty() {
+        return qty;
     }
 
     public void setQty(double qty) {
         this.qty = qty;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

@@ -48,7 +48,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        // 自定义apk名称
+
         android.applicationVariants.all { variant ->
             variant.outputs.all {
                 outputFileName = "UHF-serial_v${defaultConfig.versionName}.apk"

@@ -10,18 +10,26 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemDAO;
+import com.example.uhf.mvvm.Model.ItemLocation;
+import com.example.uhf.mvvm.Model.ItemLocationDAO;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.ItemTemporaryDAO;
+import com.example.uhf.mvvm.Model.Location;
+import com.example.uhf.mvvm.Model.LocationDAO;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.settings.SettingDAO;
 
-@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class}, version = 5)
+@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class, Location.class, ItemLocation.class}, version = 7)
 public abstract class Database extends RoomDatabase {
 
     private static Database instance;
 
     public abstract ItemDAO itemDAO();
     public abstract ItemTemporaryDAO itemTemporaryDAO();
+
+    public abstract LocationDAO locationDAO();
+
+    public abstract ItemLocationDAO itemlocationDAO();
 
     public abstract SettingDAO settingDAO();
 

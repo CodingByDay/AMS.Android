@@ -60,6 +60,8 @@
         app:layout_constraintTop_toBottomOf="@id/fragment_container">
 
         <Button
+            android:backgroundTint="@android:color/holo_blue_bright"
+
             android:id="@+id/btExit"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
@@ -67,6 +69,8 @@
             android:text="@string/exit_inventory" />
 
         <Button
+            android:backgroundTint="@android:color/holo_blue_bright"
+
             android:id="@+id/btToggleScanning"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
@@ -74,6 +78,8 @@
             android:text="@string/scanning_inventory" />
 
         <Button
+            android:backgroundTint="@android:color/holo_blue_bright"
+
             android:id="@+id/btConfirm"
             android:layout_width="wrap_content"
             android:layout_height="80dp"

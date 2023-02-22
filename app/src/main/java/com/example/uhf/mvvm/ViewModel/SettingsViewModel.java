@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.uhf.item.ItemRepository;
-import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.settings.SettingsRepository;
 

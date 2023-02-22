@@ -2,7 +2,10 @@ package com.example.uhf.activity;
 
 import android.app.Activity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -16,9 +19,11 @@ import android.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.uhf.R;
+import com.example.uhf.api.Communicator;
 
 public class LoginActivityMain extends AppCompatActivity {
 private Button login;
+    private ProgressDialog mypDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,10 +43,23 @@ private Button login;
             case android.R.id.home:
                 break;
             case R.id.UHF_ver:
-               // getUHFVersion();
+                String versionName = "";
+                try {
+                    versionName = this.getPackageManager()
+                            .getPackageInfo(this.getPackageName(), 0).versionName;
+                } catch (PackageManager.NameNotFoundException e) {
+                    break;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("O aplikaciji");
+                builder.setMessage("Inventura verzija: " + versionName);
+                builder.setPositiveButton("Zapri", ((dialogInterface, i) -> {
+
+                }));
+                builder.show();
                 break;
             case R.id.sync:
-               // SyncData();
+                 SyncData();
                 break;
             case R.id.settings:
                 Toast.makeText(this, "Nastavitve", Toast.LENGTH_SHORT).show();
@@ -54,6 +72,20 @@ private Button login;
         }
         return true;
     }
+
+    private void SyncData() {
+        boolean connected = Communicator.CommunicatorAPI.isDeviceConnected(this);
+        if(!connected) {
+        Toast.makeText(this, "Ni povezave!", Toast.LENGTH_SHORT).show();
+         return;
+        }
+        mypDialog = new ProgressDialog(this);
+        mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mypDialog.setMessage("Pridobivanje podatkov...");
+        mypDialog.setCanceledOnTouchOutside(false);
+        mypDialog.show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         supportInvalidateOptionsMenu();

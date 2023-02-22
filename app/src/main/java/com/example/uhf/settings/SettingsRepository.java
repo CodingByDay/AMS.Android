@@ -6,9 +6,6 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import com.example.uhf.database.Database;
-import com.example.uhf.item.ItemRepository;
-import com.example.uhf.mvvm.Model.Item;
-import com.example.uhf.mvvm.Model.ItemDAO;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.uhf.item;
+package com.example.uhf.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import com.example.uhf.database.Database;
-import com.example.uhf.mvvm.Model.Item;
-import com.example.uhf.mvvm.Model.ItemDAO;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.ItemTemporaryDAO;
 
