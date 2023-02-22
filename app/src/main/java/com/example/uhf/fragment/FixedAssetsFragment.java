@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.example.uhf.R;
 import com.example.uhf.activity.BaseTabFragmentActivity;
 import com.example.uhf.activity.InventoryActivity;
+import com.example.uhf.activity.RegistrationActivity;
 import com.example.uhf.activity.UHFMainActivity;
 import com.example.uhf.adapter.ItemTemporaryAdapter;
 import com.example.uhf.interfaces.RecyclerViewInterface;
@@ -62,6 +63,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerViewInterface {
     private ItemViewModel itemViewModel;
@@ -89,7 +93,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     Button BtInventory;
     ListView LvTags;
-    private InventoryActivity mContext;
+    private RegistrationActivity mContext;
     private HashMap<String, String> map;
 
     private int total;
@@ -105,6 +109,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private static FixedAssetsFragment instance;
     private RFIDWithUHFUART mReader;
     private List<ItemTemporary> itemsTemporary;
+    private String callerID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,6 +118,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         instance = this;
         View view = inflater.inflate(R.layout.fragment_fixed_assets, container, false);
 
+
+
+
         // Initialization
         initSound();
         initUHF();
@@ -120,7 +128,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         // Getting the caller information
         Bundle arguments = getArguments();
         assert arguments != null;
-        String callerID = arguments.getString("callerID");
+        callerID = arguments.getString("callerID");
         switch (callerID) {
             case "InventoryActivity":
                 initEmpty(view);
@@ -130,6 +138,8 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 break;
             case "RegistrationActivity":
                 initRegistration(view);
+                mContext = (RegistrationActivity) getActivity();
+
                 break;
         }
         return view;
@@ -137,6 +147,30 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     // Init the registration logic
     private void initRegistration(View view) {
+        recycler = (RecyclerView) view.findViewById(R.id.rwItems);
+        recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recycler.setHasFixedSize(true);
+        adapter = new ItemAdapter(this);
+        recycler.setAdapter(adapter);
+        itemViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemViewModel.class);
+        itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
+            @Override
+            public void onChanged(List<Item> items) {
+                itemsClassLevel = items;
+                adapter.setItems(items);
+            }
+        });
+
+        temporaryViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemTemporaryViewModel.class);
+        temporaryViewModel.deleteAllItems();
+        temporaryViewModel.getAllItems().observe(this, new Observer<List<ItemTemporary>>() {
+            @Override
+            public void onChanged(List<ItemTemporary> items) {
+                itemsTemporary = items;
+                mContext.scannedItems = items;
+            }
+        });
+
     }
 
 
@@ -225,7 +259,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 playSound(1);
                 // TODO fix date time to work with earlier versions
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now() .toString() , "Janko"));
+                        temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now() .toString() , "Janko", info.getRssi()));
                     }
                     tempDatas.add(info.getEPC());
                 }
@@ -330,7 +364,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             public void onChanged(List<ItemTemporary> items) {
                 itemsTemporary = items;
                 temporaryAdapter.setItems(items);
-
             }
         });
     }
@@ -354,13 +387,23 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     @Override
     public void onItemClick(int position) {
         if(selected==-1) {
-            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.BLUE);
+            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#FFCCCB"));
         } else {
             Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(selected)).setBackgroundColor(Color.TRANSPARENT);
-            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.BLUE);
+            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#FFCCCB"));
         }
         selected = position;
+
+        if(callerID.equals("RegistrationActivity")) {
+        mContext.currentItem = itemsClassLevel.get(position);
+        }
     }
+
+    private void findTheClosestEPC() {
+        // TODO: Loading bar
+
+    }
+
     public static FixedAssetsFragment getInstance() {
         return instance;
     }
@@ -378,7 +421,19 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             new TagThread().start();
         }
     }
+    // Method to be called from the parent activity and a method that starts the scanning process for locating
+    public void startScanningBackground() {
+        Toast.makeText(this.getContext(), "Started scanning", Toast.LENGTH_SHORT).show();
+        loopFlag = true;
+        if (mReader.startInventoryTag()) {
+            new TagThread().start();
+        }
 
+        // Continue here
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
+        executorService.schedule(FixedAssetsFragment::startScanningBackground, 5, TimeUnit.SECONDS);
+    }
     // Method to be called from the parent activity and a method that stops the scanning process
     public void stopScanning ()  {
         loopFlag = false;

@@ -20,7 +20,7 @@ public class Item {
 
     private double qty;
 
-    public Item(String ecd, String name, String code, String location, double qty) {
+    public Item(String ecd,String code, String name , String location, double qty) {
         this.ecd = ecd;
         this.name = name;
         this.code = code;

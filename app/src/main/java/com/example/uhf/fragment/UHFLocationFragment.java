@@ -1,5 +1,7 @@
 package com.example.uhf.fragment;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,11 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.uhf.R;
+import com.example.uhf.activity.RegistrationActivity;
 import com.example.uhf.activity.UHFMainActivity;
 import com.example.uhf.tools.UIHelper;
 import com.example.uhf.view.UhfLocationCanvasView;
+import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.interfaces.IUHF;
 import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
 
@@ -23,31 +28,29 @@ import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
 public class UHFLocationFragment extends KeyDwonFragment {
 
     String TAG="UHF_LocationFragment";
-    private UHFMainActivity mContext;
+    private RegistrationActivity mContext;
     private UhfLocationCanvasView llChart;
     private EditText etEPC;
     private Button btStart,btStop;
     final int EPC=2;
+    private RFIDWithUHFUART mReader;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_uhflocation, container, false);
+        View view = inflater.inflate(R.layout.fragment_uhflocation, container, false);
+        initContext(view);
+        return view;
     }
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mContext = (UHFMainActivity) getActivity();
-        llChart=mContext.findViewById(R.id.llChart);
-        etEPC=mContext.findViewById(R.id.etEPC);
-        btStart=mContext.findViewById(R.id.btStart);
-        btStop=mContext.findViewById(R.id.btStop);
-
-
+    private void initContext(View view) {
+        mContext = (RegistrationActivity) getActivity();
+        llChart=view.findViewById(R.id.llChart);
+        etEPC=view.findViewById(R.id.etEPC);
+        btStart=view.findViewById(R.id.btStart);
+        btStop=view.findViewById(R.id.btStop);
         btStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,28 +64,18 @@ public class UHFLocationFragment extends KeyDwonFragment {
             }
         });
 
-        getView().post(new Runnable() {
+        view.post(new Runnable() {
             @Override
             public void run() {
-                llChart.clean();
-                if(mContext.uhfInfo.getSelectItem()!=null && !mContext.uhfInfo.getSelectItem().equals("")){
-                    etEPC.setText(mContext.uhfInfo.getSelectItem());
-                }else{
-                    etEPC.setText("");
-                }
+
             }
         });
-
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.i(TAG, "onDestroyView");
         stopLocation();
-        Log.i(TAG, "onDestroyView end");
     }
-
     @Override
     public void myOnKeyDwon() {
         if(btStart.isEnabled()) {
@@ -93,26 +86,62 @@ public class UHFLocationFragment extends KeyDwonFragment {
     }
     private void startLocation(){
        String epc=etEPC.getText().toString();
-       boolean result= mContext.mReader.startLocation(mContext,epc,IUHF.Bank_EPC,32,new IUHFLocationCallback(){
+       boolean result= mContext.mReader.startLocation(this.getContext(), epc,IUHF.Bank_EPC,32,new IUHFLocationCallback(){
             @Override
             public void getLocationValue(int Value) {
-                llChart.setData(Value);
+               llChart.setData(Value);
             }
         });
         if(!result){
-            UIHelper.ToastMessage(mContext, R.string.psam_msg_fail);
+           UIHelper.ToastMessage(getActivity(), R.string.psam_msg_fail);
             return;
         }
-        btStart.setEnabled(false);
-        etEPC.setEnabled(false);
+      btStart.setEnabled(false);
+      etEPC.setEnabled(false);
     }
+    private void initUHF() {
+        try {
+            mReader = RFIDWithUHFUART.getInstance();
+        } catch (Exception ex) {
+            return;
+        }
+        if (mReader != null) {
+            new InitTask().execute();
+        }
+    }
+    public class InitTask extends AsyncTask<String, Integer, Boolean> {
+        ProgressDialog mypDialog;
 
+        @Override
+        protected Boolean doInBackground(String... params) {
+            // TODO Auto-generated method stub
+            mReader.free();
+            return mReader.init();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            mypDialog.cancel();
+            if (!result) {
+                Toast.makeText(getActivity(), "init fail", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+            mypDialog = new ProgressDialog(getActivity());
+            mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mypDialog.setMessage("init...");
+            mypDialog.setCanceledOnTouchOutside(false);
+            mypDialog.show();
+        }
+    }
    public void stopLocation(){
-       mContext.mReader.stopLocation();
+       mReader.stopLocation();
        btStart.setEnabled(true);
        etEPC.setEnabled(true);
    }
-
-
-
 }

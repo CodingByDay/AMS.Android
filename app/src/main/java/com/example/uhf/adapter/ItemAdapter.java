@@ -64,7 +64,7 @@ private final RecyclerViewInterface recyclerViewInterface;
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         Item current = items.get(position);
-        holder.tbItem.setText(current.getEcd());
+        holder.tbItem.setText(current.getCode());
         holder.tbName.setText(current.getName());
         holder.tbLocation.setText(current.getLocation());
         String qty = String.valueOf(current.getQty());
