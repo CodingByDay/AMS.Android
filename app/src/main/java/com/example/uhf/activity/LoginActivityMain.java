@@ -40,6 +40,7 @@ private Button login;
     private List<Setting> settingsList = new ArrayList<Setting>();
     private Communicator client;
 
+    public String token = "";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,6 +152,9 @@ private Button login;
     @Override
     public void setResult(Boolean result) {
         if(result) {
+            if(!token.equals("")) {
+                // Commit token
+            }
             Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
             startActivity(myIntent);
         }

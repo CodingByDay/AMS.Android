@@ -67,6 +67,9 @@ public class Communicator {
                     String success = myMap.get("success");
                     String token = myMap.get("token");
                     String error = myMap.get("error");
+                    if(token!=null) {
+                        login.token = token;
+                    }
                     assert success != null;
                     if (!success.equals("true")) return false;
                     assert token != null;
