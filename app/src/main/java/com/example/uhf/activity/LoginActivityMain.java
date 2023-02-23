@@ -22,26 +22,29 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.uhf.R;
+import com.example.uhf.api.AsyncCallBack;
 import com.example.uhf.api.Communicator;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginActivityMain extends AppCompatActivity {
+public class LoginActivityMain extends AppCompatActivity implements AsyncCallBack {
 private Button login;
     private ProgressDialog mypDialog;
     private EditText tbCompany;
     private EditText tbUname;
     private EditText tbPassword;
-
     private List<Setting> settingsList = new ArrayList<Setting>();
+    private Communicator client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
+        client = new Communicator();
         getSupportActionBar().show();
         initSettings();
         initPageViews();
@@ -98,7 +101,7 @@ private Button login;
     }
 
     private void SyncData() {
-        boolean connected = Communicator.CommunicatorAPI.isDeviceConnected(this);
+        boolean connected = client.isDeviceConnected(this);
         if(!connected) {
         Toast.makeText(this, "Ni povezave!", Toast.LENGTH_SHORT).show();
          return;
@@ -123,9 +126,6 @@ private Button login;
         tbCompany = (EditText) findViewById(R.id.tbCompany);
         tbUname = (EditText) findViewById(R.id.tbUname);
         tbPassword = (EditText) findViewById(R.id.tbPassword);
-
-
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,15 +136,27 @@ private Button login;
                 if(company.isEmpty()||uname.isEmpty()||password.isEmpty()) {
                     return;
                 }
-
                 // Call the API
-                boolean success = Communicator.CommunicatorAPI.login(settingsList, company, uname, password);
+                boolean success = false;
+                try {
+                    success = client.login(LoginActivityMain.this, settingsList, company, uname, password);
 
-
-                boolean stop = true;
-
+                } catch (JsonProcessingException e) {
+                    // TODO handle exceptions better
+                    return;
+                }
+                if(success) {
+                Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
+                startActivity(myIntent);
+                } else {
+                    Toast.makeText(LoginActivityMain.this, "Napačni podatki.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
+    @Override
+    public void setResult(Boolean result) {
+        boolean jesus = true;
+    }
 }
