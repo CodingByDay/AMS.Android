@@ -2582,6 +2582,8 @@
     <string name="url">http://in-sist.si</string>
     <string name="registration">Registracija</string>
     <string name="epc">EPC</string>
+    <string name="prompt_uname">Uporabniško ime</string>
+    <string name="prompt_company">Podjetje</string>
 
 
 </resources>

@@ -13,28 +13,52 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.uhf.R;
 import com.example.uhf.api.Communicator;
+import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
+import com.example.uhf.settings.Setting;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivityMain extends AppCompatActivity {
 private Button login;
     private ProgressDialog mypDialog;
+    private EditText tbCompany;
+    private EditText tbUname;
+    private EditText tbPassword;
+
+    private List<Setting> settingsList = new ArrayList<Setting>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
         getSupportActionBar().show();
-
+        initSettings();
         initPageViews();
 
 
 
+    }
+
+    private void initSettings() {
+        SettingsViewModel settingsView = ViewModelProviders.of(this).get(SettingsViewModel.class);
+        settingsView.getAllItems().observe(this, new Observer<List<Setting>>() {
+            @Override
+            public void onChanged(List<Setting> settings) {
+                settingsList = settings;
+            }
+
+        });
     }
 
 
@@ -96,18 +120,28 @@ private Button login;
 
     private void initPageViews() {
         login = (Button) findViewById(R.id.login);
+        tbCompany = (EditText) findViewById(R.id.tbCompany);
+        tbUname = (EditText) findViewById(R.id.tbUname);
+        tbPassword = (EditText) findViewById(R.id.tbPassword);
 
 
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(LoginActivityMain.this, "Prijava!", Toast.LENGTH_SHORT).show();
+                // Data
+                String company = tbCompany.getText().toString();
+                String uname = tbUname.getText().toString();
+                String password = tbPassword.getText().toString();
+                if(company.isEmpty()||uname.isEmpty()||password.isEmpty()) {
+                    return;
+                }
 
-                Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
-                //myIntent.putExtra("fragment", "entry_menu");
-                startActivity(myIntent);
+                // Call the API
+                boolean success = Communicator.CommunicatorAPI.login(settingsList, company, uname, password);
 
+
+                boolean stop = true;
 
             }
         });

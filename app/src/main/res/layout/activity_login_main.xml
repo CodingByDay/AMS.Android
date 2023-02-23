@@ -21,11 +21,41 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:foregroundGravity="center_horizontal"
->
+        android:foregroundGravity="center_horizontal">
+
+
 
         <EditText
-            android:id="@+id/password"
+        android:id="@+id/tbCompany"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/prompt_company"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+        <EditText
+        android:id="@+id/tbUname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/prompt_uname"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionDone"
+            android:inputType="text"
+            android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <EditText
+            android:id="@+id/tbPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

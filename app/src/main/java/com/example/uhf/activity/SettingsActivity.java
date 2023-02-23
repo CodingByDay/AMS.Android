@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,17 +43,18 @@ private Button btSave;
             @Override
             public void onClick(View view) {
                 try {
-                    settingsView.insert(new Setting("url", "test"));
+                    settingsView.insert(new Setting("url", tbUrl.getText().toString()));
                 } catch (Exception e) {
-                    // Does not exist yet
-                    // TODO improve the process
-                    settingsView.update(new Setting("url", tbUrl.getText().toString()));
+                    // TODO application wide logging
+                } finally {
+                    Intent myIntent = new Intent(getApplicationContext(), LoginActivityMain.class);
+                    startActivity(myIntent);
                 }
             }
         });
     }
     private void updateUI(List<Setting> settings) {
-        tbUrl.setText(settingsHelper.findSetting(settings, "url").getValue());
+        tbUrl.setText(SettingsHelper.Helper.findSetting(settings, "url").getValue());
     }
     private void initActivity() {
         settingsView = ViewModelProviders.of(this).get(SettingsViewModel.class);
