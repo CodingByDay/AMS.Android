@@ -5,11 +5,11 @@ import androidx.annotation.Nullable;
 public class UserResponse {
     private boolean success;
     @Nullable
-    private Object error;
+    private String error;
     private String token;
 
 
-    public UserResponse(boolean success, @Nullable Object error, String token) {
+    public UserResponse(boolean success, @Nullable String error, String token) {
         this.success = success;
         this.error = error;
         this.token = token;
@@ -28,7 +28,7 @@ public class UserResponse {
         return error;
     }
 
-    public void setError(@Nullable Object error) {
+    public void setError(@Nullable String error) {
         this.error = error;
     }
 

@@ -139,24 +139,21 @@ private Button login;
                 // Call the API
                 boolean success = false;
                 try {
-                    success = client.login(LoginActivityMain.this, settingsList, company, uname, password);
-
+                    client.login(LoginActivityMain.this, settingsList, company, uname, password);
                 } catch (JsonProcessingException e) {
                     // TODO handle exceptions better
-                    return;
                 }
-                if(success) {
-                Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
-                startActivity(myIntent);
-                } else {
-                    Toast.makeText(LoginActivityMain.this, "Napačni podatki.", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
     }
 
     @Override
     public void setResult(Boolean result) {
-        boolean jesus = true;
+        if(result) {
+            Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
+            startActivity(myIntent);
+        }
+        Toast.makeText(this, "Napačni podatki.", Toast.LENGTH_SHORT).show();
     }
 }

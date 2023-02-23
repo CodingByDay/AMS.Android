@@ -11,11 +11,16 @@ import android.widget.ProgressBar;
 import com.example.uhf.activity.LoginActivityMain;
 import com.example.uhf.settings.Setting;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 
 public class Communicator {
@@ -39,12 +44,38 @@ public class Communicator {
                 String json = args[1];
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
                 conn.connect();
-                responseCode = conn.getResponseCode();
+                try(OutputStream os = conn.getOutputStream()) {
+                    byte[] input = json.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+                try(BufferedReader br = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                    StringBuilder response = new StringBuilder();
+                    String responseLine = null;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+                    // Converting to response object
+                    ObjectMapper mapper = new ObjectMapper();
+                    String json_c = response.toString();
+                    HashMap<String, String> myMap = mapper.readValue(json_c, new TypeReference<HashMap<String, String>>() {
+                    });
+                    String success = myMap.get("success");
+                    String token = myMap.get("token");
+                    String error = myMap.get("error");
+                    assert success != null;
+                    if (!success.equals("true")) return false;
+                    assert token != null;
+                    return !token.isEmpty();
+                }
             } catch (Exception e) {
                 return false;
             }
-            return responseCode == 200;
+
         }
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);

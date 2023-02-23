@@ -6,13 +6,11 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.uhf.R;
 
 public class EntryInitialActivity extends AppCompatActivity {
-
-
-
 private CardView btRegistration;
 private CardView btInventory;
 private CardView btListing;
@@ -52,5 +50,6 @@ private CardView btSync;
                 startActivity(myIntent);
             }
         });
+        Toast.makeText(this, "Uspešna prijava.", Toast.LENGTH_SHORT).show();
     }
 }
