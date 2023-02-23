@@ -19,6 +19,7 @@ import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.fragment.UHFLocationFragment;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemTemporary;
+import com.example.uhf.view.UhfLocationCanvasView;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import java.util.List;
 public class RegistrationActivity extends AppCompatActivity {
     private Button btExit;
     private Button btRequest;
-
+    public UhfLocationCanvasView llChart;
     public Item currentItem;
 
     private boolean fLocate;
@@ -40,9 +41,10 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         getSupportActionBar().hide();
+        initUHF();
         initializeFragment();
         initializeActivity();
-        initUHF();
+
     }
 
     private void initializeActivity() {
@@ -59,22 +61,16 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-
                 fixedAssetsFragment.startScanning();
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         fixedAssetsFragment.stopScanning();
-
-
-
-
                         replaceFragment(new UHFLocationFragment());
+                        UHFLocationFragment uhfLocationFragment = UHFLocationFragment.getInstance();
+
                     }
                 }, 5000);
-
-
             }
         });
     }
@@ -90,7 +86,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     public class InitTask extends AsyncTask<String, Integer, Boolean> {
         ProgressDialog mypDialog;
-
         @Override
         protected Boolean doInBackground(String... params) {
             // TODO Auto-generated method stub

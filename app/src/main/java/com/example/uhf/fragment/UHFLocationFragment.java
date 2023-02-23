@@ -28,9 +28,10 @@ import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
 
 public class UHFLocationFragment extends KeyDwonFragment {
 
+    private static UHFLocationFragment instance;
     String TAG="UHF_LocationFragment";
     private RegistrationActivity mContext;
-    private UhfLocationCanvasView llChart;
+    public UhfLocationCanvasView llChart;
     private EditText etEPC;
     private Button btStart,btStop;
     final int EPC=2;
@@ -44,7 +45,11 @@ public class UHFLocationFragment extends KeyDwonFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_uhflocation, container, false);
         initContext(view);
+        instance = this;
         return view;
+    }
+    public static UHFLocationFragment getInstance() {
+        return instance;
     }
     private void initContext(View view) {
         mContext = (RegistrationActivity) getActivity();
@@ -52,6 +57,8 @@ public class UHFLocationFragment extends KeyDwonFragment {
         etEPC=view.findViewById(R.id.etEPC);
         btStart=view.findViewById(R.id.btStart);
         btStop=view.findViewById(R.id.btStop);
+
+        mContext.llChart = llChart;
         btStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,23 +71,15 @@ public class UHFLocationFragment extends KeyDwonFragment {
                 stopLocation();
             }
         });
-
         view.post(new Runnable() {
             @Override
             public void run() {
-
+                llChart.clean();
+                ItemTemporary strongest = findStrongestSignal();
+                etEPC.setText(strongest.getEcd());
             }
         });
 
-
-
-
-        // Method to find the strongest signal
-
-        ItemTemporary strongest = findStrongestSignal();
-
-
-        boolean happiness = true;
     }
 
     private ItemTemporary findStrongestSignal() {
@@ -108,19 +107,18 @@ public class UHFLocationFragment extends KeyDwonFragment {
         }
     }
     private void startLocation(){
-       String epc=etEPC.getText().toString();
-       boolean result= mContext.mReader.startLocation(this.getContext(), epc,IUHF.Bank_EPC,32,new IUHFLocationCallback(){
+        String epc=etEPC.getText().toString();
+        boolean result= mContext.mReader.startLocation(requireContext(), epc,IUHF.Bank_EPC,32, new IUHFLocationCallback(){
             @Override
             public void getLocationValue(int Value) {
-               llChart.setData(Value);
+                llChart.setData(Value);
             }
         });
         if(!result){
-           UIHelper.ToastMessage(getActivity(), R.string.psam_msg_fail);
-            return;
+
         }
-      btStart.setEnabled(false);
-      etEPC.setEnabled(false);
+        btStart.setEnabled(false);
+        etEPC.setEnabled(false);
     }
     private void initUHF() {
         try {

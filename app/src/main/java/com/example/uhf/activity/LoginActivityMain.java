@@ -41,6 +41,8 @@ private Button login;
     private Communicator client;
 
     public String token = "";
+    private SettingsViewModel settingsView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +57,7 @@ private Button login;
     }
 
     private void initSettings() {
-        SettingsViewModel settingsView = ViewModelProviders.of(this).get(SettingsViewModel.class);
+        settingsView = ViewModelProviders.of(this).get(SettingsViewModel.class);
         settingsView.getAllItems().observe(this, new Observer<List<Setting>>() {
             @Override
             public void onChanged(List<Setting> settings) {
@@ -153,11 +155,11 @@ private Button login;
     public void setResult(Boolean result) {
         if(result) {
             if(!token.equals("")) {
-                // Commit token
+                settingsView.insert(new Setting("token", token));
             }
             Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
             startActivity(myIntent);
-        }
-        Toast.makeText(this, "Napačni podatki.", Toast.LENGTH_SHORT).show();
+        } else {
+        Toast.makeText(this, "Napačni podatki.", Toast.LENGTH_SHORT).show(); }
     }
 }
