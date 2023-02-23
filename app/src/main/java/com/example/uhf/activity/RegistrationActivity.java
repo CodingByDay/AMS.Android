@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -57,7 +58,23 @@ public class RegistrationActivity extends AppCompatActivity {
         btRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(new UHFLocationFragment());
+                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+
+                fixedAssetsFragment.startScanning();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        fixedAssetsFragment.stopScanning();
+
+
+
+
+                        replaceFragment(new UHFLocationFragment());
+                    }
+                }, 5000);
+
+
             }
         });
     }

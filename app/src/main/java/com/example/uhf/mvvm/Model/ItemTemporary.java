@@ -3,6 +3,7 @@ package com.example.uhf.mvvm.Model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -34,6 +35,12 @@ public class ItemTemporary {
         this.qty = qty;
         this.timestamp = timestamp;
         this.user = user;
+        this.rssi = rssi;
+    }
+
+
+    @Ignore
+    public ItemTemporary(String rssi) {
         this.rssi = rssi;
     }
 

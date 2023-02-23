@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.uhf.R;
 import com.example.uhf.activity.RegistrationActivity;
 import com.example.uhf.activity.UHFMainActivity;
+import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.tools.UIHelper;
 import com.example.uhf.view.UhfLocationCanvasView;
 import com.rscja.deviceapi.RFIDWithUHFUART;
@@ -70,7 +71,29 @@ public class UHFLocationFragment extends KeyDwonFragment {
 
             }
         });
+
+
+
+
+        // Method to find the strongest signal
+
+        ItemTemporary strongest = findStrongestSignal();
+
+
+        boolean happiness = true;
     }
+
+    private ItemTemporary findStrongestSignal() {
+        ItemTemporary itemStrongest = new ItemTemporary("-200");
+        for(ItemTemporary itemTemporary: mContext.scannedItems) {
+            float rssi = Float.parseFloat(itemTemporary.getRssi().replace(",", "."));
+            if (rssi > Float.parseFloat(itemStrongest.getRssi().replace(",", "."))) {
+                itemStrongest = itemTemporary;
+            }
+        }
+        return itemStrongest;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -137,8 +137,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 init(view);
                 break;
             case "RegistrationActivity":
-                initRegistration(view);
                 mContext = (RegistrationActivity) getActivity();
+
+                initRegistration(view);
 
                 break;
         }
@@ -429,10 +430,8 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             new TagThread().start();
         }
 
-        // Continue here
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        // Delay 5 seconds display the progress
 
-        executorService.schedule(FixedAssetsFragment::startScanningBackground, 5, TimeUnit.SECONDS);
     }
     // Method to be called from the parent activity and a method that stops the scanning process
     public void stopScanning ()  {
