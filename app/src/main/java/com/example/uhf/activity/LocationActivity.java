@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uhf.R;
+import com.example.uhf.barcode.Barcode;
+import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.tools.UIHelper;
@@ -33,7 +35,7 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import java.util.List;
 import java.util.Objects;
 
-public class LocationActivity extends AppCompatActivity {
+public class LocationActivity extends AppCompatActivity implements Barcode {
 
     String TAG="UHF_LocationFragment";
     private UHFMainActivity mContext;
@@ -48,11 +50,14 @@ public class LocationActivity extends AppCompatActivity {
     private int id;
     private Button btToggle;
 
+    private BarcodeUtility barcodeUtility;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
         initUHF();
+        barcodeUtility = new BarcodeUtility(this, this);
         llChart=findViewById(R.id.llChart);
         etEPC=findViewById(R.id.etEPC);
         btToggle=findViewById(R.id.btToggle);
@@ -121,6 +126,11 @@ public class LocationActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public String getResult(String result) {
+        return null;
     }
 
     public class LocationDialog {
