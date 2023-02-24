@@ -37,7 +37,7 @@ import java.util.Objects;
 
 public class LocationActivity extends AppCompatActivity implements Barcode {
 
-    String TAG="UHF_LocationFragment";
+    Dialog dialog;
     private UHFMainActivity mContext;
     private UhfLocationCanvasView llChart;
     private EditText etEPC;
@@ -129,13 +129,22 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     }
 
     @Override
-    public String getResult(String result) {
-        return null;
+    public void getResult(String result) {
+        if(result != null && !result.isEmpty()) {
+            if(dialog!=null && dialog.isShowing()) {
+                EditText tbLocationScan = dialog.findViewById(R.id.tbLocationScan);
+                if(tbLocationScan.hasFocus()) {
+                    // TODO: Check if the location is correct
+                    tbLocationScan.setText(result);
+                }
+            }
+        }
+
     }
 
     public class LocationDialog {
         public void showDialog(AppCompatActivity activity){
-            final Dialog dialog = new Dialog(activity);
+            dialog = new Dialog(activity);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.add_location_alert);
