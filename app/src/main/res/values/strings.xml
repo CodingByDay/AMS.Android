@@ -2586,6 +2586,7 @@
     <string name="prompt_company">Podjetje</string>
     <string name="stop">Pavza</string>
     <string name="stop_permanent">Prekini</string>
+    <string name="prompt_location">Ali želite dodati lokaciju?</string>
 
 
 </resources>
