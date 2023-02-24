@@ -416,7 +416,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     // Method to be called from the parent activity and a method that starts the scanning process
     public void startScanning() {
-        Toast.makeText(this.getContext(), "Started scanning", Toast.LENGTH_SHORT).show();
         loopFlag = true;
         if (mReader.startInventoryTag()) {
             new TagThread().start();
@@ -424,7 +423,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     }
     // Method to be called from the parent activity and a method that starts the scanning process for locating
     public void startScanningBackground() {
-        Toast.makeText(this.getContext(), "Started scanning", Toast.LENGTH_SHORT).show();
         loopFlag = true;
         if (mReader.startInventoryTag()) {
             new TagThread().start();
@@ -436,7 +434,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     // Method to be called from the parent activity and a method that stops the scanning process
     public void stopScanning ()  {
         loopFlag = false;
-        Toast.makeText(this.getContext(), "Stopped scanning", Toast.LENGTH_SHORT).show();
     }
 
 }

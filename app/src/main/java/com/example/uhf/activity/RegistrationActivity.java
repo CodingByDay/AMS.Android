@@ -36,6 +36,8 @@ public class RegistrationActivity extends AppCompatActivity {
     public RFIDWithUHFUART mReader;
 
     public List<ItemTemporary> scannedItems =  new ArrayList<ItemTemporary>();
+    private ProgressDialog mypDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,16 +63,31 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+
+                if(currentItem == null) {
+                    Toast.makeText(RegistrationActivity.this, "Sredstvo ni izbrano?!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+                mypDialog = new ProgressDialog(RegistrationActivity.this);
+                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mypDialog.setMessage("Iskanje najmočnejšega signala. Počakajte...");
+                mypDialog.setCanceledOnTouchOutside(false);
+                mypDialog.show();
+
                 fixedAssetsFragment.startScanning();
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         fixedAssetsFragment.stopScanning();
-                        // replaceFragment(new UHFLocationFragment());
-                        //UHFLocationFragment uhfLocationFragment = UHFLocationFragment.getInstance();
+
                         Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
                         String strongest = findStrongestSignal().getEcd();
                         myIntent.putExtra("epc", strongest);
+                        myIntent.putExtra("item_id", currentItem.getID());
+                        mypDialog.cancel();
                         startActivity(myIntent);
 
                     }

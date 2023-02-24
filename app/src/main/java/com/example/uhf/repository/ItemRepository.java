@@ -41,6 +41,12 @@ public class ItemRepository {
     }
 
 
+
+
+
+
+
+
     private static class InsertItemAsyncTask extends AsyncTask<Item, Void, Void> {
 
         private ItemDAO itemDAO;
@@ -54,6 +60,7 @@ public class ItemRepository {
             return null;
         }
     }
+
 
 
 
