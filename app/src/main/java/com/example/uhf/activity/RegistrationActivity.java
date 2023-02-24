@@ -66,13 +66,29 @@ public class RegistrationActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         fixedAssetsFragment.stopScanning();
-                        replaceFragment(new UHFLocationFragment());
-                        UHFLocationFragment uhfLocationFragment = UHFLocationFragment.getInstance();
+                        // replaceFragment(new UHFLocationFragment());
+                        //UHFLocationFragment uhfLocationFragment = UHFLocationFragment.getInstance();
+                        Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
+                        String strongest = findStrongestSignal().getEcd();
+                        myIntent.putExtra("epc", strongest);
+                        startActivity(myIntent);
 
                     }
                 }, 5000);
             }
         });
+    }
+
+
+        private ItemTemporary findStrongestSignal() {
+        ItemTemporary itemStrongest = new ItemTemporary("-200");
+        for(ItemTemporary itemTemporary: this.scannedItems) {
+            float rssi = Float.parseFloat(itemTemporary.getRssi().replace(",", "."));
+            if (rssi > Float.parseFloat(itemStrongest.getRssi().replace(",", "."))) {
+                itemStrongest = itemTemporary;
+            }
+        }
+        return itemStrongest;
     }
     private void initUHF() {
         try {
