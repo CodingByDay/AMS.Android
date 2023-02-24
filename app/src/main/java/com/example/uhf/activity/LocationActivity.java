@@ -2,19 +2,15 @@ package com.example.uhf.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,7 +18,6 @@ import android.widget.Toast;
 
 import com.example.uhf.R;
 import com.example.uhf.mvvm.Model.Item;
-import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.tools.UIHelper;
 import com.example.uhf.view.UhfLocationCanvasView;
@@ -30,8 +25,8 @@ import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.interfaces.IUHF;
 import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
 
-import java.sql.Array;
 import java.util.List;
+import java.util.Objects;
 
 public class LocationActivity extends AppCompatActivity {
 
@@ -42,11 +37,11 @@ public class LocationActivity extends AppCompatActivity {
     private Button btStart,btStop;
     final int EPC=2;
     private RFIDWithUHFUART mReader;
-
     private ItemViewModel itemViewModel;
     private List<Item> itemsClassLevel;
-
     private TextView lbItem;
+    private int id;
+    private Button btToggle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,36 +50,52 @@ public class LocationActivity extends AppCompatActivity {
         initUHF();
         llChart=findViewById(R.id.llChart);
         etEPC=findViewById(R.id.etEPC);
-        btStart=findViewById(R.id.btStart);
+        btToggle=findViewById(R.id.btToggle);
         btStop=findViewById(R.id.btStop);
         lbItem = findViewById(R.id.lbItem);
-        btStart.setOnClickListener(new View.OnClickListener() {
+        btToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startLocation();
+               toggleLocation(false);
             }
         });
+
         btStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopLocation();
+                Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
+                startActivity(myIntent);
             }
         });
+
         llChart.clean();
         initialize();
         // ItemTemporary strongest = findStrongestSignal();
         Bundle extras = getIntent().getExtras();
         String strongest =  extras.getString("epc");
-        int id = extras.getInt("item_id");
+        id = extras.getInt("item_id");
         etEPC.setText(strongest);
-        Item item = findById(id);
-        if(item!=null) {
-            lbItem.setText(item.getID());
-        }
+
     }
 
+
+
+    private void toggleLocation(boolean start) {
+        if(start) {
+            startLocation();
+            btToggle.setText("Pavza");
+        }
+        else {
+        if (btToggle.getText().equals("Pavza")) {
+            stopLocation();
+            btToggle.setText("Nadaljuj");
+        } else {
+            startLocation();
+            btToggle.setText("Pavza");
+        }}
+    }
     private Item findById(Integer id) {
-        for(Item item :  itemsClassLevel) {
+        for(Item item : Objects.requireNonNull(itemViewModel.getAllItems().getValue())) {
             if(item.getID()==id) {
                 return item;
             }
@@ -98,6 +109,11 @@ public class LocationActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Item> items) {
                 itemsClassLevel = items;
+                Item item = findById(id);
+                if(item!=null) {
+                    lbItem.setText(item.getName());
+                    toggleLocation(true);
+                }
             }
         });
     }
@@ -135,7 +151,6 @@ public class LocationActivity extends AppCompatActivity {
             UIHelper.ToastMessage(this, R.string.psam_msg_fail);
             return;
         }
-        btStart.setEnabled(false);
         etEPC.setEnabled(false);
     }
     private void initUHF() {
@@ -180,7 +195,6 @@ public class LocationActivity extends AppCompatActivity {
 
     public void stopLocation(){
         mReader.stopLocation();
-        btStart.setEnabled(true);
         etEPC.setEnabled(true);
     }
 

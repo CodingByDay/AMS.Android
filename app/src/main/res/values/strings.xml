@@ -2584,6 +2584,8 @@
     <string name="epc">EPC</string>
     <string name="prompt_uname">Uporabniško ime</string>
     <string name="prompt_company">Podjetje</string>
+    <string name="stop">Pavza</string>
+    <string name="stop_permanent">Prekini</string>
 
 
 </resources>

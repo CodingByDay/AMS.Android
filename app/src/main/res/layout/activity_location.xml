@@ -55,16 +55,15 @@
                 <Button
                     android:backgroundTint="@android:color/holo_blue_bright"
 
-                    android:id="@+id/btStart"
-                    android:text="@string/start_location"
+                    android:id="@+id/btToggle"
+                    android:text="@string/stop"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <Button
                     android:backgroundTint="@android:color/holo_blue_bright"
-
                     android:id="@+id/btStop"
-                    android:text="@string/stop_location"
+                    android:text="@string/stop_permanent"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
