@@ -58,11 +58,14 @@ public abstract class Database extends RoomDatabase {
         private ItemDAO itemDAO;
         private ItemTemporaryDAO itemTemporaryDAO;
 
+        private LocationDAO locationDAO;
+
         private SettingDAO  settingDAO;
         private PopulateDbAsyncTask(Database db) {
             itemDAO = db.itemDAO();
             itemTemporaryDAO = db.itemTemporaryDAO();
             settingDAO = db.settingDAO();
+            locationDAO = db.locationDAO();
         }
 
 
@@ -83,20 +86,15 @@ public abstract class Database extends RoomDatabase {
             itemDAO.insert(new Item("","ID95494","Procesna oprema za kemične procese","25", 5));
             itemDAO.insert(new Item("","ID76224","Učinkovit kotlični pritisk","225", 5));
             itemDAO.insert(new Item("","ID86653","Zmogljivi rezalni stroj","", 5));
-//            itemDAO.insert(new Item("E28011606000021185EF4B9D",",ID84966",",Avtomatizirani transportni sistemi",95, 5));
-//            itemDAO.insert(new Item("E280116060000213B820AC10",",ID53827",",Merilne naprave za natančno mjerenje",10, 5));
-//            itemDAO.insert(new Item("E280116060000213B820B53D",",ID91839",",Avtomatsko testiranje elektronske opreme",62, 5));
-//            itemDAO.insert(new Item("E280116060000213B8202B46",",ID89259",",CNC obdelovalni stroji",87, 5));
-//            itemDAO.insert(new Item("E28011606000021185F021AC",",ID74007",",Profesionalne stiskalnice za metal",9, 5));
-//            itemDAO.insert(new Item("E280116060000213B81FD5BB",",ID63491",",Zmogljive pnevmatske vijačne matrice",69, 5));
-//            itemDAO.insert(new Item("E28011606000021185F01054",",ID91561",",Avtomatska linija za proizvodnjo kovin",15, 5));
-//            itemDAO.insert(new Item("E28011606000021185EF3080",",ID99494",",Procesna oprema za proizvodnjo polimerov",53, 5));
-//            itemDAO.insert(new Item("E280116060000213B81FCCF1",",ID55637",",Oprema za sušenje materialov",93, 5));
-//            itemDAO.insert(new Item("E280116060000213B81F43F4",",ID56886",",Visokotlačne črpalke za tekočine",76, 5));
-//            itemDAO.insert(new Item("E28011606000021185EFC3CD",",ID86410",",Profesionalne brizgalne naprave",75, 5));
-//            itemDAO.insert(new Item("E28011606000021185EF6D7F",",ID45205",",Oprema za mehansko obdelavo kovin",70, 5));
-//            itemDAO.insert(new Item("E28011606000021185EF64EA",",ID70499",",Avtomatski sistemi za valjanje kovin",78, 5));
-//            itemDAO.insert(new Item("E280116060000213B81FA150",",ID7620",",Zmogljive frekvenčne inverterje",12, 5));
+
+
+
+            locationDAO.insert(new Location("001", "Obrat 2", ""));
+            locationDAO.insert(new Location("002", "Obrat 1", ""));
+            locationDAO.insert(new Location("003", "Servis", ""));
+            locationDAO.insert(new Location("004", "Kooperacija", ""));
+
+
             return null;
         }
     }

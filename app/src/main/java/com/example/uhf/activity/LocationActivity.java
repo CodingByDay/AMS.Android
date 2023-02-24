@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,7 +25,9 @@ import com.example.uhf.R;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
+import com.example.uhf.mvvm.ViewModel.LocationViewModel;
 import com.example.uhf.tools.UIHelper;
 import com.example.uhf.view.UhfLocationCanvasView;
 import com.rscja.deviceapi.RFIDWithUHFUART;
@@ -32,6 +35,7 @@ import com.rscja.deviceapi.interfaces.IUHF;
 import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,6 +55,9 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private Button btToggle;
 
     private BarcodeUtility barcodeUtility;
+    private LocationViewModel locationsViewModel;
+    private List<Location> locations;
+    private ArrayAdapter locationsAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,6 +157,9 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             dialog.setContentView(R.layout.add_location_alert);
             EditText tbLocationScan = (EditText) dialog.findViewById(R.id.tbLocationScan);
             SearchableSpinner cbLocation = (SearchableSpinner) dialog.findViewById(R.id.cbLocation);
+
+
+
             Button btYes = (Button) dialog.findViewById(R.id.btYes);
             Button btNo = (Button) dialog.findViewById(R.id.btNo);
             // dialog dismiss
@@ -170,14 +180,29 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 }
-
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
 
                 }
             });
-
             dialog.show();
+            locations = new ArrayList<>();
+            locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
+            locationsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            //Setting the ArrayAdapter data on the Spinner
+            locationsViewModel = ViewModelProviders.of(LocationActivity.this).get(LocationViewModel.class);
+            cbLocation.setAdapter(locationsAdapter);
+            locationsViewModel.getAllItems().observe(LocationActivity.this, new Observer<List<Location>>() {
+                @Override
+                public void onChanged(List<Location> items) {
+                    locations = items;
+                    if (dialog!=null && dialog.isShowing()) {
+                        locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
+                        SearchableSpinner cbLocation = dialog.findViewById(R.id.cbLocation);
+                        cbLocation.setAdapter(locationsAdapter);
+                    }
+                }
+            });
         }
     }
     private void startLocation(){

@@ -117,14 +117,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_fixed_assets, container, false);
-
-
-
-
         // Initialization
         initSound();
         initUHF();
-
         // Getting the caller information
         Bundle arguments = getArguments();
         assert arguments != null;
@@ -171,7 +166,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 mContext.scannedItems = items;
             }
         });
-
     }
 
 

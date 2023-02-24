@@ -17,8 +17,8 @@ public class Location {
     private String code;
 
 
-    public Location(int ID, String location, String name, String code) {
-        this.ID = ID;
+    public Location(String location, String name, String code) {
+
         this.location = location;
         this.name = name;
         this.code = code;
