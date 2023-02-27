@@ -110,13 +110,15 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         // Initialization
         initSound();
         initUHF();
+
         // Getting the caller information
         Bundle arguments = getArguments();
         assert arguments != null;
         callerID = arguments.getString("callerID");
         switch (callerID) {
             case "InventoryActivity":
-                init(view);
+                view = inflater.inflate(R.layout.fragment_fixed_assets_inventory, container, false);
+                initEmpty(view);
                 break;
             case "ListingActivity":
                 initListing(view);
@@ -248,7 +250,12 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 playSound(1);
                 // TODO fix date time to work with earlier versions
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now() .toString() , "Janko", info.getRssi()));
+                        if(callerID.equals("RegistrationActivity")) {
+                            temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now().toString(), "Janko", info.getRssi()));
+                        } else if (callerID.equals("InventoryActivity")) {
+                            temporaryViewModel.insert(new ItemTemporary("test", "test", "test", "01", 3, Instant.now().toString(), "Janko", info.getRssi()));
+
+                        }
                     }
                     tempDatas.add(info.getEPC());
                 }
@@ -362,8 +369,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
         locationAdapter = new ItemLocationAdapter(this);
-        locationAdapter.setItems(itemsLocation);
-       // recycler.setAdapter(adapter);
+        recycler.setAdapter(locationAdapter);
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
         itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
             @Override

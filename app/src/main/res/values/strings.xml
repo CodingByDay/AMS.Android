@@ -2592,6 +2592,7 @@
     <string name="button_yes">Da</string>
     <string name="item_code">Ident</string>
     <string name="qty">Količina</string>
+    <string name="item_location">Lokacija</string>
 
 
 </resources>

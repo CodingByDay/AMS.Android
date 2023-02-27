@@ -32,14 +32,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/location_inventory" />
-
-            <EditText
-                android:id="@+id/tbLocation"
+            <LinearLayout
+                android:weightSum="2"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <EditText
+                android:layout_weight="1.5"
+                android:id="@+id/tbLocation"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
                 />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:layout_weight="0.5"
+                    android:id="@+id/cbLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+
+                    />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
@@ -87,5 +102,7 @@
             android:layout_weight="1"
             android:text="@string/confirm_inventory" />
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

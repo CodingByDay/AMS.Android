@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.uhf.R;
+import com.example.uhf.barcode.Barcode;
+import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.fragment.KeyDwonFragment;
 import com.example.uhf.fragment.UHFReadTagFragment;
@@ -28,7 +31,7 @@ import com.rscja.deviceapi.entity.UHFTAGInfo;
 import java.io.File;
 import java.util.Objects;
 
-public class InventoryActivity extends FragmentActivity  {
+public class InventoryActivity extends FragmentActivity implements Barcode {
 private ItemViewModel itemViewModel;
 private Button btConfirm;
 public KeyDwonFragment currentFragment=null;
@@ -36,10 +39,13 @@ public KeyDwonFragment currentFragment=null;
 private EditText tbLocation;
 private Button btToggleScanning;
 public RFIDWithUHFUART mReader;
+    private BarcodeUtility barcodeUtility;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
+        barcodeUtility = new BarcodeUtility(this, this);
         initViews();
         initializeFragment();
     }
@@ -57,13 +63,13 @@ public RFIDWithUHFUART mReader;
     private void initViews() {
         btConfirm = findViewById(R.id.btConfirm);
         tbLocation = findViewById(R.id.tbLocation);
+        tbLocation.setBackgroundColor(Color.parseColor("#34e5eb"));
         btToggleScanning = findViewById(R.id.btToggleScanning);
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO add loader while data is being filtered
                 FixedAssetsFragment.getInstance().sortBasedOnLocation(tbLocation.getText().toString());
-
             }
         });
         btToggleScanning.setOnClickListener(new View.OnClickListener() {
@@ -101,4 +107,10 @@ public RFIDWithUHFUART mReader;
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void getResult(String result) {
+        if(result != null && !result.trim().isEmpty()) {
+            tbLocation.setText(result);
+        }
+    }
 }
