@@ -110,7 +110,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         // Initialization
         initSound();
         initUHF();
-
         // Getting the caller information
         Bundle arguments = getArguments();
         assert arguments != null;
@@ -253,7 +252,8 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                         if(callerID.equals("RegistrationActivity")) {
                             temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now().toString(), "Janko", info.getRssi()));
                         } else if (callerID.equals("InventoryActivity")) {
-                            temporaryViewModel.insert(new ItemTemporary("test", "test", "test", "01", 3, Instant.now().toString(), "Janko", info.getRssi()));
+                            int location = (int) Math.floor(Math.random() * 5);
+                            temporaryViewModel.insert(new ItemTemporary("test", "test", "test", String.valueOf(location), 3, Instant.now().toString(), "Janko", info.getRssi()));
 
                         }
                     }
