@@ -115,7 +115,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         callerID = arguments.getString("callerID");
         switch (callerID) {
             case "InventoryActivity":
-                initEmpty(view);
+                init(view);
+
+           //     initEmpty(view);
                 break;
             case "ListingActivity":
                 init(view);
