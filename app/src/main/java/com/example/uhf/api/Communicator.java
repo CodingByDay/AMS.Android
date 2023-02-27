@@ -133,16 +133,14 @@ public class Communicator {
                     }
                     // Converting to response object
                     ObjectMapper mapper = new ObjectMapper();
-                    String json_c = response.toString();
-                    HashMap<String, String> myMap = mapper.readValue(json_c, new TypeReference<HashMap<String, String>>() {
-                    });
-                    String success = myMap.get("success");
-                    String token = myMap.get("token");
-                    String error = myMap.get("error");
 
-                    if(token!=null) {
-                        login.token = token;
-                    }
+                    ItemResponse itemResponse = mapper.readValue(response.toString(), ItemResponse.class);
+
+
+                    int result = 7 + 3;
+
+
+
                     return new ArrayList<Item>();
                 }
             } catch (Exception e) {
@@ -178,7 +176,23 @@ public class Communicator {
 
 
 
+    public boolean retrieveItems(Context context, List<Setting> settings) throws JsonProcessingException {
+        try {
+            baseUrl = settings.get(0).getValue();
+            String endpoint = "/getItems";
 
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
+            String url = baseUrl + endpoint;
+            RetrieveLogingInformation retrieve = new RetrieveLogingInformation();
+            retrieve = retrieve.setInstance(context);
+            retrieve.execute(url, json);
+            return false;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 
 

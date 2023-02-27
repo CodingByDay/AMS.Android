@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.uhf.R;
 import com.example.uhf.api.AsyncCallBack;
 import com.example.uhf.api.Communicator;
+import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -111,7 +112,7 @@ private Button login;
         mypDialog.show();
 
 
-
+        // Continue here
 
 
 
@@ -170,7 +171,7 @@ private Button login;
     }
 
     @Override
-    public void setResultListTypeItem(List<String> items) {
+    public void setResultListTypeItem(List<Item> items) {
         int result = items.size();
     }
 }
