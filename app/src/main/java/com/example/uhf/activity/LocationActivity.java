@@ -27,6 +27,7 @@ import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.Location;
+import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.LocationViewModel;
 import com.example.uhf.tools.UIHelper;
@@ -60,6 +61,9 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private List<Location> locations;
     private ArrayAdapter locationsAdapter;
     private Item item;
+    private ItemLocation locationItem;
+
+    private ItemLocationViewModel itemLocationViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -135,6 +139,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 }
             }
         });
+        // ItemLocation view model
+        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
     }
 
     @Override
@@ -167,12 +173,23 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             btYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    locationItem.setLocation(cbLocation.getSelectedItem().toString());
+                    itemLocationViewModel.insert(locationItem);
+                    // Return back to the list - Registration activity
+                    dialog.dismiss();       // dismiss
+                    Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
+                    startActivity(myIntent);
                 }
             });
             btNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // Save the item to the
+                    itemLocationViewModel.insert(locationItem);
+                    // Return back to the list - Registration activity
+                    dialog.dismiss();       // dismiss
+                    Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
+                    startActivity(myIntent);
                 }
             });
             cbLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -237,21 +254,11 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             stopLocation();
-
-
                             String item = LocationActivity.this.item.toString();
                             String code = LocationActivity.this.item.getCode();
                             String location = "";
                             String epc = etEPC.getText().toString();
-
-
-
-                            ItemLocation locationItem = new ItemLocation(item, code, location, epc);
-
-
-
-
-
+                            locationItem = new ItemLocation(item, code, location, epc);
                             LocationDialog alert = new LocationDialog();
                             alert.showDialog(LocationActivity.this);
                         }

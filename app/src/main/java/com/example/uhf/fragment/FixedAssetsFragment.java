@@ -99,6 +99,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private List<ItemTemporary> itemsTemporary;
     private String callerID;
     private ItemLocationViewModel itemLocationViewModel;
+    private List<ItemLocation> itemsLocation = new ArrayList<ItemLocation>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,11 +117,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         switch (callerID) {
             case "InventoryActivity":
                 init(view);
-
-           //     initEmpty(view);
                 break;
             case "ListingActivity":
-                init(view);
+                initListing(view);
                 break;
             case "RegistrationActivity":
                 mContext = (RegistrationActivity) getActivity();
@@ -130,6 +129,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 break;
         }
         return view;
+    }
+
+    private void initListing(View view) {
     }
 
     // Init the registration logic
@@ -360,14 +362,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
         locationAdapter = new ItemLocationAdapter(this);
-        recycler.setAdapter(adapter);
+        locationAdapter.setItems(itemsLocation);
+       // recycler.setAdapter(adapter);
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
         itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
-
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsLocationsClassLevel = items;
-                locationAdapter.setItems(items);
+            //    locationAdapter.setItems(items);
             }
         });
     }

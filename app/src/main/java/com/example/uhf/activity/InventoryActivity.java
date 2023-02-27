@@ -47,7 +47,6 @@ public RFIDWithUHFUART mReader;
 
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if(keyCode == 296) {
             // This is the hardware start button
             FixedAssetsFragment.getInstance().toggleScanning(btToggleScanning.getText().equals("Skeniraj"));
