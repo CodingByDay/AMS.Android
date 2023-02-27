@@ -51,9 +51,6 @@ private Button login;
         getSupportActionBar().show();
         initSettings();
         initPageViews();
-
-
-
     }
 
     private void initSettings() {
@@ -63,7 +60,6 @@ private Button login;
             public void onChanged(List<Setting> settings) {
                 settingsList = settings;
             }
-
         });
     }
 
@@ -84,7 +80,6 @@ private Button login;
                 builder.setTitle("O aplikaciji");
                 builder.setMessage("Inventura verzija: " + versionName);
                 builder.setPositiveButton("Zapri", ((dialogInterface, i) -> {
-
                 }));
                 builder.show();
                 break;
@@ -114,6 +109,14 @@ private Button login;
         mypDialog.setMessage("Pridobivanje podatkov...");
         mypDialog.setCanceledOnTouchOutside(false);
         mypDialog.show();
+
+
+
+
+
+
+        mypDialog.hide();
+        mypDialog.cancel();
     }
 
     @Override
@@ -164,5 +167,10 @@ private Button login;
             Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
             startActivity(myIntent);
         }
+    }
+
+    @Override
+    public void setResultListTypeItem(List<String> items) {
+        int result = items.size();
     }
 }

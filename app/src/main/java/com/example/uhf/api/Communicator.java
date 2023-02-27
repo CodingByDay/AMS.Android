@@ -8,7 +8,9 @@ import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.example.uhf.activity.InventoryActivity;
 import com.example.uhf.activity.LoginActivityMain;
+import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.settings.Setting;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -20,6 +22,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -67,9 +70,11 @@ public class Communicator {
                     String success = myMap.get("success");
                     String token = myMap.get("token");
                     String error = myMap.get("error");
+
                     if(token!=null) {
                         login.token = token;
                     }
+
                     assert success != null;
                     if (!success.equals("true")) return false;
                     assert token != null;
@@ -85,6 +90,100 @@ public class Communicator {
             asyncCallBack.setResult(result);
         }
     }
+
+
+    /**
+     * This class is responsible for handling item synchronization
+     */
+    public class RetrieveItems extends AsyncTask<String, Void, List<Item>> {
+        private LoginActivityMain login;
+        private AsyncCallBack asyncCallBack;
+        private InventoryActivity inventory;
+
+        RetrieveItems setInstance(Context context) {
+            this.inventory = (InventoryActivity) context;
+            asyncCallBack = (AsyncCallBack) context;
+            return this;
+        }
+        @Override protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override protected List<Item> doInBackground(String... args) {
+            int responseCode;
+            try {
+                URL url = new URL(args[0]);
+                String json = args[1];
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
+                conn.connect();
+                try(OutputStream os = conn.getOutputStream()) {
+                    byte[] input = json.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+                try(BufferedReader br = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                    StringBuilder response = new StringBuilder();
+                    String responseLine = null;
+
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+                    // Converting to response object
+                    ObjectMapper mapper = new ObjectMapper();
+                    String json_c = response.toString();
+                    HashMap<String, String> myMap = mapper.readValue(json_c, new TypeReference<HashMap<String, String>>() {
+                    });
+                    String success = myMap.get("success");
+                    String token = myMap.get("token");
+                    String error = myMap.get("error");
+
+                    if(token!=null) {
+                        login.token = token;
+                    }
+                    return new ArrayList<Item>();
+                }
+            } catch (Exception e) {
+                return new ArrayList<Item>();
+
+            }
+
+        }
+        protected void onPostExecute(List<Item> result) {
+            super.onPostExecute(result);
+            asyncCallBack.setResultListTypeItem(result);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
          String baseUrl = "";
         public boolean login(Context context, List<Setting> settings, String company, String uname, String password) throws JsonProcessingException {
