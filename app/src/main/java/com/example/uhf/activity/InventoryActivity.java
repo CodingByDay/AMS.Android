@@ -45,8 +45,9 @@ private ItemViewModel itemViewModel;
 private Button btConfirm;
 public KeyDwonFragment currentFragment=null;
 
-private EditText tbLocation;
-private SearchableSpinner cbLocation;
+public EditText tbLocation;
+public SearchableSpinner cbLocation;
+private String currentLocation;
 private Button btToggleScanning;
 public RFIDWithUHFUART mReader;
     private BarcodeUtility barcodeUtility;
@@ -108,6 +109,7 @@ public RFIDWithUHFUART mReader;
                 // Change the location text
                 if(helpCounter != 0) {
                     tbLocation.setText(cbLocation.getSelectedItem().toString());
+                    currentLocation = tbLocation.getText().toString();
                 }
                 helpCounter += 1;
             }
@@ -128,12 +130,17 @@ public RFIDWithUHFUART mReader;
             public void onClick(View view) {
                 String btText = btToggleScanning.getText().toString();
                 if (btText.equals("Skeniraj")) {
-                    FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                    fixedAssetsFragment.startScanning();
-                    btToggleScanning.setText("Nehaj");
+                    if(tbLocation.getText().toString().equals("")) {
+                        Toast.makeText(InventoryActivity.this, "Lokacija mora biti izbrana", Toast.LENGTH_SHORT).show();
+                    } else {
+                        FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                        fixedAssetsFragment.startScanning();
+                        btToggleScanning.setText("Nehaj");
+                    }
                 } else {
                     FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                     fixedAssetsFragment.stopScanning();
+                    fixedAssetsFragment.sortBasedOnLocation(tbLocation.getText().toString());
                     btToggleScanning.setText("Skeniraj");
                 }
             }

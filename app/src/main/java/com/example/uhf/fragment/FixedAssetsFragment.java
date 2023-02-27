@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uhf.R;
+import com.example.uhf.activity.InventoryActivity;
 import com.example.uhf.activity.RegistrationActivity;
 import com.example.uhf.adapter.ItemAdapter;
 import com.example.uhf.adapter.ItemTemporaryAdapter;
@@ -81,6 +82,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     Button BtInventory;
     ListView LvTags;
+    private InventoryActivity context;
     private RegistrationActivity mContext;
     private HashMap<String, String> map;
 
@@ -117,6 +119,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         switch (callerID) {
             case "InventoryActivity":
                 view = inflater.inflate(R.layout.fragment_fixed_assets_inventory, container, false);
+                context = (InventoryActivity) getActivity();
                 initEmpty(view);
                 break;
             case "ListingActivity":
@@ -253,8 +256,12 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                             temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now().toString(), "Janko", info.getRssi()));
                         } else if (callerID.equals("InventoryActivity")) {
                             int location = (int) Math.floor(Math.random() * 5);
-                            temporaryViewModel.insert(new ItemTemporary("test", "test", "test", String.valueOf(location), 3, Instant.now().toString(), "Janko", info.getRssi()));
-
+                            if(location == 0) {
+                                temporaryViewModel.insert(new ItemTemporary("test", "test", "test", "", 1, Instant.now().toString(), "Janko", info.getRssi()));
+                            } else {
+                                temporaryViewModel.insert(new ItemTemporary("test", "test", "test", String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi()));
+                            }
+                            // TODO: automatically sort items
                         }
                     }
                     tempDatas.add(info.getEPC());
@@ -406,7 +413,8 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     // This is a method to be called from the parent activity
     public void sortBasedOnLocation(String location) {
-       // adapter.sortBasedOnLocation(itemsClassLevel, location);
+
+        temporaryAdapter.sortBasedOnLocation(itemsTemporary, location);
     }
 
     // Method to be called from the parent activity and a method that starts the scanning process
