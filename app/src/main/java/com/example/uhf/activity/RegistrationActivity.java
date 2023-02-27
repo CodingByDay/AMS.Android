@@ -18,6 +18,7 @@ import com.example.uhf.R;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.fragment.UHFLocationFragment;
 import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.view.UhfLocationCanvasView;
 import com.rscja.deviceapi.RFIDWithUHFUART;
@@ -68,28 +69,22 @@ public class RegistrationActivity extends AppCompatActivity {
                     Toast.makeText(RegistrationActivity.this, "Sredstvo ni izbrano?!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-
                 mypDialog = new ProgressDialog(RegistrationActivity.this);
                 mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 mypDialog.setMessage("Iskanje najmočnejšega signala. Počakajte...");
                 mypDialog.setCanceledOnTouchOutside(false);
                 mypDialog.show();
-
                 fixedAssetsFragment.startScanning();
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         fixedAssetsFragment.stopScanning();
-
                         Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
                         String strongest = findStrongestSignal().getEcd();
                         myIntent.putExtra("epc", strongest);
                         myIntent.putExtra("item_id", currentItem.getID());
                         mypDialog.cancel();
                         startActivity(myIntent);
-
                     }
                 }, 5000);
             }

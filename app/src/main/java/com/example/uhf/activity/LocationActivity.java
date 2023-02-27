@@ -25,6 +25,7 @@ import com.example.uhf.R;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.LocationViewModel;
@@ -58,6 +59,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private LocationViewModel locationsViewModel;
     private List<Location> locations;
     private ArrayAdapter locationsAdapter;
+    private Item item;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,7 +128,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             @Override
             public void onChanged(List<Item> items) {
                 itemsClassLevel = items;
-                Item item = findById(id);
+                item = findById(id);
                 if(item!=null) {
                     lbItem.setText(item.getName());
                     toggleLocation(true);
@@ -157,9 +159,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             dialog.setContentView(R.layout.add_location_alert);
             EditText tbLocationScan = (EditText) dialog.findViewById(R.id.tbLocationScan);
             SearchableSpinner cbLocation = (SearchableSpinner) dialog.findViewById(R.id.cbLocation);
-
-
-
+            cbLocation.setTitle("Izberite lokaciju");
+            cbLocation.setPositiveButton("Potrdi");
             Button btYes = (Button) dialog.findViewById(R.id.btYes);
             Button btNo = (Button) dialog.findViewById(R.id.btNo);
             // dialog dismiss
@@ -172,7 +173,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             btNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                 }
             });
             cbLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -195,12 +195,28 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             locationsViewModel.getAllItems().observe(LocationActivity.this, new Observer<List<Location>>() {
                 @Override
                 public void onChanged(List<Location> items) {
-                    locations = items;
+                    List<String> locations = new ArrayList<String>();
+                    // Think about improving the time complexity here
+                    for (Location location : items) {
+                        locations.add(location.getName());
+                    }
+
                     if (dialog!=null && dialog.isShowing()) {
                         locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
                         SearchableSpinner cbLocation = dialog.findViewById(R.id.cbLocation);
                         cbLocation.setAdapter(locationsAdapter);
                     }
+                }
+            });
+            cbLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    // Change the location text
+                    tbLocationScan.setText(cbLocation.getSelectedItem().toString());
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
                 }
             });
         }
@@ -221,6 +237,21 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             stopLocation();
+
+
+                            String item = LocationActivity.this.item.toString();
+                            String code = LocationActivity.this.item.getCode();
+                            String location = "";
+                            String epc = etEPC.getText().toString();
+
+
+
+                            ItemLocation locationItem = new ItemLocation(item, code, location, epc);
+
+
+
+
+
                             LocationDialog alert = new LocationDialog();
                             alert.showDialog(LocationActivity.this);
                         }
@@ -272,7 +303,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
         @Override
         protected void onPreExecute() {
-
             super.onPreExecute();
             mypDialog = new ProgressDialog(LocationActivity.this);
             mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

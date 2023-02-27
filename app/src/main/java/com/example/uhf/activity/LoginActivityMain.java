@@ -160,6 +160,9 @@ private Button login;
             Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
             startActivity(myIntent);
         } else {
-        Toast.makeText(this, "Napačni podatki.", Toast.LENGTH_SHORT).show(); }
+            Toast.makeText(this, "Napačni podatki.", Toast.LENGTH_SHORT).show();
+            Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
+            startActivity(myIntent);
+        }
     }
 }

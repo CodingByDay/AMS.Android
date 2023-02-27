@@ -15,6 +15,7 @@ public class ItemLocation {
     private String ecd;
 
 
+
     public ItemLocation(String item, String code, String location, String ecd) {
         this.item = item;
         this.code = code;

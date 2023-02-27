@@ -29,15 +29,15 @@
             android:text="Name" />
 
         <TextView
-            android:id="@+id/tbLocation"
+            android:id="@+id/tbCode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
-            android:text="Location" />
+            android:text="Code" />
 
         <TextView
-            android:id="@+id/tbECD"
+            android:id="@+id/tbQty"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

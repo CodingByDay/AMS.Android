@@ -11,22 +11,44 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uhf.R;
 import com.example.uhf.interfaces.RecyclerViewInterface;
-import com.example.uhf.mvvm.Model.Item;
-import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.Model.ItemLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
-private List<Item> items = new ArrayList<Item>();
+public class ItemLocationAdapter extends RecyclerView.Adapter<ItemLocationAdapter.ItemHolder> {
+private List<ItemLocation> items = new ArrayList<ItemLocation>();
 private final RecyclerViewInterface recyclerViewInterface;
 
-    public ItemAdapter(RecyclerViewInterface recyclerViewInterface) {
+    public ItemLocationAdapter(RecyclerViewInterface recyclerViewInterface) {
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
     // Here is the sorting method
+    public void sortBasedOnLocation(List<ItemLocation> items, String location) {
 
+
+            List<ItemLocation> correctItems = new ArrayList<ItemLocation>();
+            List<ItemLocation> wrongItems = new ArrayList<ItemLocation>();
+            List<ItemLocation> emptyItems = new ArrayList<ItemLocation>();
+
+        for (ItemLocation item :items) {
+            if (item.getLocation().equals(location)) {
+                correctItems.add(item);
+            } else if (!item.getLocation().equals(location) && !item.getLocation().equals("")) {
+                wrongItems.add(item);
+            } else if (item.getLocation().equals("")) {
+                emptyItems.add(item);
+            }
+          }
+            ArrayList<ItemLocation> sorted = new ArrayList<ItemLocation>();
+            sorted.addAll(correctItems);
+            sorted.addAll(wrongItems);
+            sorted.addAll(emptyItems);
+            this.items = sorted;
+            notifyDataSetChanged();
+
+    }
     @NonNull
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,16 +59,12 @@ private final RecyclerViewInterface recyclerViewInterface;
 
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
-        Item current = items.get(position);
-        holder.tbItem.setText(current.getItem());
-        holder.tbName.setText(current.getName());
-        holder.tbCode.setText(current.getCode());
-        holder.tbQty.setText("1");
-
-
-       // holder.tbLocation.setText(current.getLocation());
+        ItemLocation current = items.get(position);
+        holder.tbItem.setText(current.getCode());
+       // holder.tbName.setText(current.getName());
+        holder.tbLocation.setText(current.getLocation());
       //  String qty = String.valueOf(current.getQty());
-       // holder.tbECD.setText(current.getEcd());
+        holder.tbECD.setText(current.getEcd());
     }
 
     @Override
@@ -54,7 +72,7 @@ private final RecyclerViewInterface recyclerViewInterface;
         return items.size();
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(List<ItemLocation> items) {
         this.items = items;
         notifyDataSetChanged();
     }
@@ -62,8 +80,7 @@ private final RecyclerViewInterface recyclerViewInterface;
         private TextView tbItem;
         private TextView tbName;
         private TextView tbLocation;
-        private TextView tbCode;
-        private TextView tbQty;
+        private TextView tbECD;
 
         private LinearLayout linearLayout;
 
@@ -72,16 +89,15 @@ private final RecyclerViewInterface recyclerViewInterface;
             tbItem = (TextView) itemView.findViewById(R.id.tbItem);
             tbName = (TextView) itemView.findViewById(R.id.tbName);
             tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
-            tbCode = (TextView) itemView.findViewById(R.id.tbCode);
-            tbQty = (TextView) itemView.findViewById(R.id.tbQty);
+          //  tbECD = (TextView) itemView.findViewById(R.id.tbECD);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (ItemAdapter.this.recyclerViewInterface !=null) {
+                    if (ItemLocationAdapter.this.recyclerViewInterface !=null) {
                         int position = getAdapterPosition();
                         if(position!=RecyclerView.NO_POSITION) {
-                            ItemAdapter.this.recyclerViewInterface.onItemClick(position);
+                            ItemLocationAdapter.this.recyclerViewInterface.onItemClick(position);
                         }
                     }
                 }

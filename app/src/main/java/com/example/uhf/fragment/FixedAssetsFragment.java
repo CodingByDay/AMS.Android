@@ -3,11 +3,8 @@ package com.example.uhf.fragment;
 import static android.app.ProgressDialog.show;
 import static android.content.Context.AUDIO_SERVICE;
 
-import static java.util.Objects.checkIndex;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -15,7 +12,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -24,12 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -39,33 +32,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uhf.R;
-import com.example.uhf.activity.BaseTabFragmentActivity;
-import com.example.uhf.activity.InventoryActivity;
 import com.example.uhf.activity.RegistrationActivity;
-import com.example.uhf.activity.UHFMainActivity;
+import com.example.uhf.adapter.ItemAdapter;
 import com.example.uhf.adapter.ItemTemporaryAdapter;
 import com.example.uhf.interfaces.RecyclerViewInterface;
-import com.example.uhf.adapter.ItemAdapter;
+import com.example.uhf.adapter.ItemLocationAdapter;
 import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemTemporary;
+import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemTemporaryViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.tools.StringUtils;
-import com.example.uhf.tools.UIHelper;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
-import com.rscja.deviceapi.exception.ConfigurationException;
 
-import java.io.File;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerViewInterface {
     private ItemViewModel itemViewModel;
@@ -75,7 +61,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     private int count = 0;
     private List<Item> itemsClassLevel;
+    private List<ItemLocation> itemsLocationsClassLevel;
     private ItemAdapter adapter;
+    private ItemLocationAdapter locationAdapter;
     private ItemTemporaryAdapter temporaryAdapter;
     private String data;
     private static final String TAG = "UHFReadTagFragment";
@@ -110,6 +98,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private RFIDWithUHFUART mReader;
     private List<ItemTemporary> itemsTemporary;
     private String callerID;
+    private ItemLocationViewModel itemLocationViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -150,6 +139,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler.setAdapter(adapter);
         itemViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemViewModel.class);
         itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
+
             @Override
             public void onChanged(List<Item> items) {
                 itemsClassLevel = items;
@@ -367,14 +357,15 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        adapter = new ItemAdapter(this);
+        locationAdapter = new ItemLocationAdapter(this);
         recycler.setAdapter(adapter);
-        itemViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemViewModel.class);
-        itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
+        itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
+        itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
+
             @Override
-            public void onChanged(List<Item> items) {
-                itemsClassLevel = items;
-                adapter.setItems(items);
+            public void onChanged(List<ItemLocation> items) {
+                itemsLocationsClassLevel = items;
+                locationAdapter.setItems(items);
             }
         });
     }
@@ -405,7 +396,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     // This is a method to be called from the parent activity
     public void sortBasedOnLocation(String location) {
-        adapter.sortBasedOnLocation(itemsClassLevel, location);
+       // adapter.sortBasedOnLocation(itemsClassLevel, location);
     }
 
     // Method to be called from the parent activity and a method that starts the scanning process

@@ -35,7 +35,6 @@ public class Communicator {
         }
         @Override protected void onPreExecute() {
             super.onPreExecute();
-
         }
         @Override protected Boolean doInBackground(String... args) {
             int responseCode;
@@ -56,6 +55,7 @@ public class Communicator {
                         new InputStreamReader(conn.getInputStream(), "utf-8"))) {
                     StringBuilder response = new StringBuilder();
                     String responseLine = null;
+
                     while ((responseLine = br.readLine()) != null) {
                         response.append(responseLine.trim());
                     }

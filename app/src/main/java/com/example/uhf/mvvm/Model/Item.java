@@ -11,22 +11,20 @@ public class Item {
     private int ID;
 
 
-    private String ecd;
 
+    private String item;
     private String name;
-
     private String code;
-    private String location;
 
     private double qty;
 
-    public Item(String ecd,String code, String name , String location, double qty) {
-        this.ecd = ecd;
+    public Item(String item, String name, String code, double qty) {
+        this.item = item;
         this.name = name;
         this.code = code;
-        this.location = location;
         this.qty = qty;
     }
+
 
     public int getID() {
         return ID;
@@ -36,12 +34,12 @@ public class Item {
         this.ID = ID;
     }
 
-    public String getEcd() {
-        return ecd;
+    public String getItem() {
+        return item;
     }
 
-    public void setEcd(String ecd) {
-        this.ecd = ecd;
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getName() {
@@ -58,14 +56,6 @@ public class Item {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public double getQty() {

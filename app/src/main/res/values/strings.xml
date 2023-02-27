@@ -2590,6 +2590,8 @@
     <string name="hint_scan">Skeniranje</string>
     <string name="button_no">Ne</string>
     <string name="button_yes">Da</string>
+    <string name="item_code">Ident</string>
+    <string name="qty">Količina</string>
 
 
 </resources>
