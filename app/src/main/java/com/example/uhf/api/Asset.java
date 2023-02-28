@@ -1,0 +1,51 @@
+package com.example.uhf.api;
+
+import java.util.Date;
+
+public class Asset{
+    public int qid;
+    public String type;
+    public String item;
+    public String location;
+    public String code;
+    public String ecd;
+    public String name;
+    public String name2;
+    public Object dateOfACQ;
+    public Object dateOfACT;
+    public Object dateOfLIQ;
+    public Object dateOfELI;
+    public String careTaker;
+    public Date timeIns;
+    public int userIns;
+    public Date timeChg;
+    public int userChg;
+    public String note;
+    public String fieldSA;
+    public String fieldSB;
+    public String fieldSC;
+    public String fieldSD;
+    public String fieldSE;
+    public String fieldSF;
+    public String fieldSG;
+    public String fieldSH;
+    public String fieldSI;
+    public String fieldSJ;
+    public double fieldNA;
+    public double fieldNB;
+    public double fieldNC;
+    public double fieldND;
+    public double fieldNE;
+    public double fieldNF;
+    public double fieldNG;
+    public double fieldNH;
+    public double fieldNI;
+    public double fieldNJ;
+    public Object fieldDA;
+    public Object fieldDB;
+    public Object fieldDC;
+    public Object fieldDD;
+    public Object active;
+    public Object seqID;
+    public String insertedFrom;
+}
