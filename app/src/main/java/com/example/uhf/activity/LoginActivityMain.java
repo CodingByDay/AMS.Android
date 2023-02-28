@@ -24,6 +24,10 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.uhf.R;
 import com.example.uhf.api.AsyncCallBack;
 import com.example.uhf.api.Communicator;
+import com.example.uhf.api.Root;
+import com.example.uhf.api.RootAsset;
+import com.example.uhf.api.RootLocation;
+import com.example.uhf.api.RootStatus;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
@@ -43,6 +47,14 @@ private Button login;
 
     public String token = "";
     private SettingsViewModel settingsView;
+
+
+    // Jackson properties
+    private Root root;
+    private RootLocation rootLocation;
+    private RootAsset rootAsset;
+    // Jackson properties
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -177,5 +189,25 @@ private Button login;
     @Override
     public void setResultListTypeItem(List<Item> items) {
         int result = items.size();
+    }
+
+    @Override
+    public void setResultRoot(Root root) {
+        this.root = root;
+    }
+
+    @Override
+    public void setResultRootLocation(RootLocation rootLocation) {
+        this.rootLocation = rootLocation;
+    }
+
+    @Override
+    public void setResultRootStatus(RootStatus status) {
+       // TODO: Ask about this
+    }
+
+    @Override
+    public void setResultRootAsset(RootAsset asset) {
+        this.rootAsset = asset;
     }
 }

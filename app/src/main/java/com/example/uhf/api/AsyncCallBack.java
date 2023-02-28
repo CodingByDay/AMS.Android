@@ -8,4 +8,17 @@ public interface AsyncCallBack {
     void setResult(Boolean result);
 
     void setResultListTypeItem(List<Item> items);
+
+
+
+    void setResultRoot(Root root);
+
+
+    void setResultRootLocation(RootLocation rootLocation);
+
+
+    void setResultRootStatus(RootStatus status);
+
+
+    void setResultRootAsset(RootAsset asset);
 }

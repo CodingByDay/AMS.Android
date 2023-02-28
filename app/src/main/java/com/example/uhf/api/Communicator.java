@@ -91,7 +91,7 @@ public class Communicator {
     /**
      * This class is responsible for handling item synchronization
      */
-    public class RetrieveItems extends AsyncTask<String, Void, List<Item>> {
+    public class RetrieveItems extends AsyncTask<String, Void, Root> {
         private LoginActivityMain login;
         private AsyncCallBack asyncCallBack;
         RetrieveItems setInstance(Context context) {
@@ -101,7 +101,7 @@ public class Communicator {
         @Override protected void onPreExecute() {
             super.onPreExecute();
         }
-        @Override protected List<Item> doInBackground(String... args) {
+        @Override protected Root doInBackground(String... args) {
             int responseCode;
             try {
                 URL url = new URL(args[0]);
@@ -126,18 +126,167 @@ public class Communicator {
                     // Converting to response object
                     ObjectMapper om = new ObjectMapper();
                     Root root = om.readValue(response.toString(), Root.class);
-                    int result = 7 + 3;
-                    return new ArrayList<Item>();
+                    return root;
                 }
             } catch (Exception e) {
-                return new ArrayList<Item>();
+                return new Root();
+            }
+        }
+        protected void onPostExecute(Root result) {
+            super.onPostExecute(result);
+            asyncCallBack.setResultRoot(result);
+        }
+    }
+    /**
+     * This class is responsible for handling locations synchronization
+     */
+    public class RetrieveLocations extends AsyncTask<String, Void, RootLocation > {
+        private LoginActivityMain login;
+        private AsyncCallBack asyncCallBack;
+        RetrieveLocations setInstance(Context context) {
+            asyncCallBack = (AsyncCallBack) context;
+            return this;
+        }
+        @Override protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override protected RootLocation doInBackground(String... args) {
+            int responseCode;
+            try {
+                URL url = new URL(args[0]);
+                String json = args[1];
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
+                conn.connect();
+                try(OutputStream os = conn.getOutputStream()) {
+                    byte[] input = json.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+                try(BufferedReader br = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                    StringBuilder response = new StringBuilder();
+                    String responseLine = null;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+                    // Converting to response object
+                    ObjectMapper om = new ObjectMapper();
+                    RootLocation root = om.readValue(response.toString(), RootLocation.class);
+                    return root;
+                }
+            } catch (Exception e) {
+                return new RootLocation();
+            }
+        }
+        protected void onPostExecute(RootLocation result) {
+            super.onPostExecute(result);
+            asyncCallBack.setResultRootLocation(result);
+        }
+    }
+    /**
+     * This class is responsible for handling locations synchronization
+     */
+    public class RetrieveStatus extends AsyncTask<String, Void, RootStatus > {
+        private LoginActivityMain login;
+        private AsyncCallBack asyncCallBack;
+        RetrieveStatus setInstance(Context context) {
+            asyncCallBack = (AsyncCallBack) context;
+            return this;
+        }
+        @Override protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override protected RootStatus doInBackground(String... args) {
+            int responseCode;
+            try {
+                URL url = new URL(args[0]);
+                String json = args[1];
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
+                conn.connect();
+                try(OutputStream os = conn.getOutputStream()) {
+                    byte[] input = json.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+                try(BufferedReader br = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                    StringBuilder response = new StringBuilder();
+                    String responseLine = null;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+                    // Converting to response object
+                    ObjectMapper om = new ObjectMapper();
+                    RootStatus root = om.readValue(response.toString(), RootStatus.class);
+                    return root;
+                }
+            } catch (Exception e) {
+                return new RootStatus();
 
             }
 
         }
-        protected void onPostExecute(List<Item> result) {
+        protected void onPostExecute(RootStatus result) {
             super.onPostExecute(result);
-            asyncCallBack.setResultListTypeItem(result);
+            asyncCallBack.setResultRootStatus(result);
+        }
+    }
+    /**
+     * This class is responsible for handling locations synchronization
+     */
+    public class RetrieveAsset extends AsyncTask<String, Void, RootAsset > {
+        private LoginActivityMain login;
+        private AsyncCallBack asyncCallBack;
+        RetrieveAsset setInstance(Context context) {
+            asyncCallBack = (AsyncCallBack) context;
+            return this;
+        }
+        @Override protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override protected RootAsset doInBackground(String... args) {
+            int responseCode;
+            try {
+                URL url = new URL(args[0]);
+                String json = args[1];
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
+                conn.connect();
+                try(OutputStream os = conn.getOutputStream()) {
+                    byte[] input = json.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+                try(BufferedReader br = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                    StringBuilder response = new StringBuilder();
+                    String responseLine = null;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+                    // Converting to response object
+                    ObjectMapper om = new ObjectMapper();
+                    RootAsset root = om.readValue(response.toString(), RootAsset.class);
+                    int result = 7 + 3;
+                    return root;
+                }
+            } catch (Exception e) {
+                return new RootAsset();
+
+            }
+
+        }
+        protected void onPostExecute(RootStatus result) {
+            super.onPostExecute(result);
+            asyncCallBack.setResultRootStatus(result);
         }
     }
 
@@ -157,12 +306,26 @@ public class Communicator {
 
 
 
-
-
-
-
-
+    // Retrieve item class
     public boolean retrieveItems(Context context, List<Setting> settings) throws JsonProcessingException {
+        try {
+            baseUrl = settings.get(0).getValue();
+            String endpoint = "/getItems";
+
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
+            String url = baseUrl + endpoint;
+            RetrieveItems retrieve = new RetrieveItems();
+            retrieve = retrieve.setInstance(context);
+            retrieve.execute(url, json);
+            return false;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    // Retrieve item class
+    public boolean retrieveLocations(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
             baseUrl = settings.get(0).getValue();
             String endpoint = "/getItems";
@@ -184,8 +347,8 @@ public class Communicator {
 
 
 
-
          String baseUrl = "";
+        // Retrieve login information
         public boolean login(Context context, List<Setting> settings, String company, String uname, String password) throws JsonProcessingException {
             try {
                 baseUrl = settings.get(1).getValue();
