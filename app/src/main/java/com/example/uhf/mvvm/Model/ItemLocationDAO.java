@@ -21,4 +21,7 @@ public interface ItemLocationDAO {
     void deleteAllItems();
     @Query("SELECT * FROM item_location")
     LiveData<List<ItemLocation>> getAllItems();
+
+    @Query("SELECT * FROM item_location WHERE ecd IS NULL")
+    LiveData<List<ItemLocation>> getAllItemsThatAreNotRegistered();
 }

@@ -23,9 +23,6 @@ public class ItemViewModel extends AndroidViewModel {
     public void insert(Item item) {
         repository.insert(item);
     }
-
-
-
     public void update (Item item) {
         repository.update(item);
     }
@@ -33,7 +30,6 @@ public class ItemViewModel extends AndroidViewModel {
     public void delete (Item item) {
         repository.delete(item);
     }
-
     public LiveData<List<Item>> getAllItems() {
         return allItems;
     }

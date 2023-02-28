@@ -14,15 +14,16 @@ public class ItemLocation {
     private String location;
     private String ecd;
 
+    private String name;
 
 
-    public ItemLocation(String item, String code, String location, String ecd) {
+    public ItemLocation(String item, String code, String location, String ecd, String name) {
         this.item = item;
         this.code = code;
         this.location = location;
         this.ecd = ecd;
+        this.name = name;
     }
-
 
     public int getID() {
         return ID;
@@ -62,5 +63,13 @@ public class ItemLocation {
 
     public void setEcd(String ecd) {
         this.ecd = ecd;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

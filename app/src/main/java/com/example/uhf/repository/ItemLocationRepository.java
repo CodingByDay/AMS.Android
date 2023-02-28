@@ -8,20 +8,20 @@ import androidx.lifecycle.LiveData;
 import com.example.uhf.database.Database;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemLocationDAO;
-import com.example.uhf.mvvm.Model.Location;
-import com.example.uhf.mvvm.Model.LocationDAO;
 
 import java.util.List;
 
 public class ItemLocationRepository {
     private ItemLocationDAO itemDAO;
     private LiveData<List<ItemLocation>> allItems;
+    private LiveData<List<ItemLocation>> allItemsNotRegistered;
 
 
     public ItemLocationRepository(Application application) {
         Database database = Database.getInstance(application);
         itemDAO = database.itemlocationDAO();
         allItems = itemDAO.getAllItems();
+        allItemsNotRegistered = itemDAO.getAllItemsThatAreNotRegistered();
     }
 
     public void insert(ItemLocation item) {
@@ -40,6 +40,13 @@ public class ItemLocationRepository {
     public LiveData<List<ItemLocation>> getAllItems() {
         return allItems;
     }
+
+
+    public LiveData<List<ItemLocation>> getAllItemsNotRegistered() {
+        return allItemsNotRegistered;
+    }
+
+
 
 
     private static class InsertItemAsyncTask extends AsyncTask<ItemLocation, Void, Void> {

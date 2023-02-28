@@ -30,7 +30,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button btExit;
     private Button btRequest;
     public UhfLocationCanvasView llChart;
-    public Item currentItem;
+    public ItemLocation currentItem;
 
     private boolean fLocate;
 

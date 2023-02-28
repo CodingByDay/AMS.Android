@@ -258,7 +258,9 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                             String code = LocationActivity.this.item.getCode();
                             String location = "";
                             String epc = etEPC.getText().toString();
-                            locationItem = new ItemLocation(item, code, location, epc);
+
+                            // TODO: Link item name here
+                            locationItem = new ItemLocation(item, code, location, epc, "test");
                             LocationDialog alert = new LocationDialog();
                             alert.showDialog(LocationActivity.this);
                         }

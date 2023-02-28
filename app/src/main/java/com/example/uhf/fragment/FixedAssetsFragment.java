@@ -61,9 +61,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private int selected = -1;
 
     private int count = 0;
-    private List<Item> itemsClassLevel;
+    private List<ItemLocation> itemsClassLevel;
     private List<ItemLocation> itemsLocationsClassLevel;
-    private ItemAdapter adapter;
+    private ItemLocationAdapter adapter;
     private ItemLocationAdapter locationAdapter;
     private ItemTemporaryAdapter temporaryAdapter;
     private String data;
@@ -143,18 +143,16 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        adapter = new ItemAdapter(this);
+        adapter = new ItemLocationAdapter(this);
         recycler.setAdapter(adapter);
-        itemViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemViewModel.class);
-        itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
-
+        itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
+        itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
             @Override
-            public void onChanged(List<Item> items) {
+            public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;
                 adapter.setItems(items);
             }
         });
-
         temporaryViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemTemporaryViewModel.class);
         temporaryViewModel.deleteAllItems();
         temporaryViewModel.getAllItems().observe(this, new Observer<List<ItemTemporary>>() {
@@ -285,7 +283,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     static int binarySearch(List<String> array, String src) {
         int left = 0;
         int right = array.size() - 1;
-        // 这里必须是 <=
+
         while (left <= right) {
             if (compareString(array.get(left), src)) {
                 return left;

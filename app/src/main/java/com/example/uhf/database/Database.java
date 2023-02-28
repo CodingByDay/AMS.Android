@@ -57,9 +57,7 @@ public abstract class Database extends RoomDatabase {
 
         private ItemDAO itemDAO;
         private ItemTemporaryDAO itemTemporaryDAO;
-
         private LocationDAO locationDAO;
-
         private SettingDAO  settingDAO;
         private PopulateDbAsyncTask(Database db) {
             itemDAO = db.itemDAO();

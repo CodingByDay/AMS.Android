@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uhf.R;
 import com.example.uhf.interfaces.RecyclerViewInterface;
+import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 
 import java.util.ArrayList;
@@ -60,11 +61,14 @@ private final RecyclerViewInterface recyclerViewInterface;
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         ItemLocation current = items.get(position);
-        holder.tbItem.setText(current.getCode());
-       // holder.tbName.setText(current.getName());
-        holder.tbLocation.setText(current.getLocation());
-      //  String qty = String.valueOf(current.getQty());
-        holder.tbECD.setText(current.getEcd());
+
+        holder.tbItem.setText(current.getItem());
+
+
+        // TODO: link table
+        holder.tbName.setText(current.getName());
+        holder.tbCode.setText(current.getCode());
+        holder.tbQty.setText("1");
     }
 
     @Override
@@ -80,16 +84,17 @@ private final RecyclerViewInterface recyclerViewInterface;
         private TextView tbItem;
         private TextView tbName;
         private TextView tbLocation;
-        private TextView tbECD;
-
+        private TextView tbCode;
+        private TextView tbQty;
         private LinearLayout linearLayout;
 
         public ItemHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             tbItem = (TextView) itemView.findViewById(R.id.tbItem);
             tbName = (TextView) itemView.findViewById(R.id.tbName);
-            tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
-          //  tbECD = (TextView) itemView.findViewById(R.id.tbECD);
+            // tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
+            tbCode = (TextView) itemView.findViewById(R.id.tbCode);
+            tbQty = (TextView) itemView.findViewById(R.id.tbQty);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

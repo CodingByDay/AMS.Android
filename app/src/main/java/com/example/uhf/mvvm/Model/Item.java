@@ -9,9 +9,6 @@ public class Item {
 
     @PrimaryKey(autoGenerate = true)
     private int ID;
-
-
-
     private String item;
     private String name;
     private String code;

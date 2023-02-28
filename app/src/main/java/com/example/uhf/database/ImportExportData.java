@@ -47,7 +47,7 @@ public class ImportExportData {
         callBack.setProgressValue(80);
         // update progress
         for(Asset asset: rootAssets.assets)  {
-            itemLocationViewModel.insert(new com.example.uhf.mvvm.Model.ItemLocation(asset.item, asset.code, asset.location, asset.ecd));
+            itemLocationViewModel.insert(new com.example.uhf.mvvm.Model.ItemLocation(asset.item, asset.code, asset.location, asset.ecd,asset.name));
         }
         callBack.setProgressValue(100);
     }

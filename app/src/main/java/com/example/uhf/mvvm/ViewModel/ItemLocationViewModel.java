@@ -34,4 +34,5 @@ public class ItemLocationViewModel extends AndroidViewModel {
     public LiveData<List<ItemLocation>> getAllItems() {
         return allItems;
     }
+
 }
