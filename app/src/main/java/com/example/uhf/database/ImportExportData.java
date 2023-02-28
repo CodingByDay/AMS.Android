@@ -35,7 +35,6 @@ public class ImportExportData {
         callBack = (AsyncCallBack) context;
         boolean debug = true;
     }
-
     public void commitToLocalStorage(Root rootItems, RootLocation rootLocations, RootAsset rootAssets) {
         for (Item item: rootItems.items) {
             itemViewModel.insert(new  com.example.uhf.mvvm.Model.Item(item.item, item.name, "", 1));
@@ -43,16 +42,14 @@ public class ImportExportData {
         callBack.setProgressValue(64);
         // update progress
         for(Location location:rootLocations.locations ) {
-            locationViewModel.insert(new com.example.uhf.mvvm.Model.Location("","", ""));
+            locationViewModel.insert(new com.example.uhf.mvvm.Model.Location(location.location,location.name, ""));
         }
         callBack.setProgressValue(80);
-
         // update progress
-        for(int i = 0; i < 10000;i++)  {
-            itemLocationViewModel.insert(new com.example.uhf.mvvm.Model.ItemLocation("test", "", "", ""));
+        for(Asset asset: rootAssets.assets)  {
+            itemLocationViewModel.insert(new com.example.uhf.mvvm.Model.ItemLocation(asset.item, asset.code, asset.location, asset.ecd));
         }
         callBack.setProgressValue(100);
-
     }
 
 }

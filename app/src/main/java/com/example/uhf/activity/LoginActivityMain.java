@@ -45,17 +45,13 @@ private Button login;
     private EditText tbPassword;
     private List<Setting> settingsList = new ArrayList<Setting>();
     private Communicator client;
-
     public String token = "";
     private SettingsViewModel settingsView;
-
-
     // Jackson properties
     private Root root;
     private RootLocation rootLocation;
     private RootAsset rootAsset;
     // Jackson properties
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,8 +72,6 @@ private Button login;
             }
         });
     }
-
-
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -115,7 +109,6 @@ private Button login;
         }
         return true;
     }
-
     private void SyncData() throws JsonProcessingException {
         boolean connected = client.isDeviceConnected(this);
         if(!connected) {
@@ -133,7 +126,6 @@ private Button login;
         client.retrieveLocations(LoginActivityMain.this, settingsList);
         client.retrieveAssets(LoginActivityMain.this, settingsList);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         supportInvalidateOptionsMenu();
@@ -162,8 +154,8 @@ private Button login;
                     client.login(LoginActivityMain.this, settingsList, company, uname, password);
                 } catch (JsonProcessingException e) {
                     // TODO handle exceptions better
+                    boolean successs = false;
                 }
-
             }
         });
     }
@@ -182,7 +174,6 @@ private Button login;
             startActivity(myIntent);
         }
     }
-
     @Override
     public void setResultListTypeItem(List<Item> items) {
         int result = items.size();
@@ -215,15 +206,13 @@ private Button login;
         ImportExportData importExportData = new ImportExportData(this);
         importExportData.commitToLocalStorage(root,rootLocation,rootAsset);
     }
-
     @Override
     public void setProgressValue(int progress) {
         mypDialog.setProgress(progress);
         if(progress == 100) {
             mypDialog.hide();
             mypDialog.cancel();
+            Toast.makeText(this, "Podatki sinhronizirani", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }

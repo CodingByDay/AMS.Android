@@ -71,28 +71,7 @@ public abstract class Database extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            itemDAO.insert(new Item("I12537","Novi motor","25",3));
-            itemDAO.insert(new Item("I18263","Industrijska stiskalnica","5", 5));
-            itemDAO.insert(new Item("I91837","Učinkovita plazemska reza","", 5));
-            itemDAO.insert(new Item("I17231","Preizkušeni generator za električno energijo","5", 5));
-            itemDAO.insert(new Item("I16732","Kompaktni laserski gravirnik","256", 5));
-            itemDAO.insert(new Item("I01273","Visokokakovostna vijačna matrica","265", 5));
-            itemDAO.insert(new Item("I01273","Digitalna tiskalna naprava","235", 5));
-            itemDAO.insert(new Item("I71123","Zmogljiv kompresor zraka","25", 5));
-            itemDAO.insert(new Item("I98162","Robustna kroglična obdelovalna masina","5", 5));
-            itemDAO.insert(new Item("I17892","Profesionalna stacionarna sesalna naprava","5", 5));
-            itemDAO.insert(new Item("I97123","Napredna stiskalnica za plastiko","", 5));
-            itemDAO.insert(new Item("I00912","Nakladalna tehnika za materiale","253", 5));
-            itemDAO.insert(new Item("I07112","Procesna oprema za kemične procese","25", 5));
-            itemDAO.insert(new Item("I98163","Učinkovit kotlični pritisk","225", 5));
-            itemDAO.insert(new Item("I89172","Zmogljivi rezalni stroj","", 5));
-
-            locationDAO.insert(new Location("001", "Obrat 2", ""));
-            locationDAO.insert(new Location("002", "Obrat 1", ""));
-            locationDAO.insert(new Location("003", "Servis", ""));
-            locationDAO.insert(new Location("004", "Kooperacija", ""));
-
-
+            // TODO Beginning data management
             return null;
         }
     }

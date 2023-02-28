@@ -86,8 +86,6 @@ public class Communicator {
             asyncCallBack.setResult(result);
         }
     }
-
-
     /**
      * This class is responsible for handling item synchronization
      */
@@ -291,23 +289,6 @@ public class Communicator {
             asyncCallBack.setResultRootAsset(result);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Retrieve item class
     public boolean retrieveItems(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
@@ -315,7 +296,7 @@ public class Communicator {
             String endpoint = "/getItems";
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
+            String json = ow.writeValueAsString(new Token(settings.get(1).getValue()));
             String url = baseUrl + endpoint;
             RetrieveItems retrieve = new RetrieveItems();
             retrieve = retrieve.setInstance(context);
@@ -333,7 +314,7 @@ public class Communicator {
             String endpoint = "/getLocations";
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
+            String json = ow.writeValueAsString(new Token(settings.get(1).getValue()));
             String url = baseUrl + endpoint;
             RetrieveLocations retrieve = new RetrieveLocations();
             retrieve = retrieve.setInstance(context);
@@ -352,7 +333,7 @@ public class Communicator {
             String endpoint = "/getStatuses";
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
+            String json = ow.writeValueAsString(new Token(settings.get(1).getValue()));
             String url = baseUrl + endpoint;
             RetrieveStatus retrieve = new RetrieveStatus();
             retrieve = retrieve.setInstance(context);
@@ -364,14 +345,13 @@ public class Communicator {
         }
     }
 
-
     // Retrieve assets class
     public boolean retrieveAssets(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
             baseUrl = settings.get(0).getValue();
             String endpoint = "/getAssets";
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
+            String json = ow.writeValueAsString(new Token(settings.get(1).getValue()));
             String url = baseUrl + endpoint;
             RetrieveAsset retrieve = new RetrieveAsset();
             retrieve = retrieve.setInstance(context);
@@ -386,7 +366,11 @@ public class Communicator {
         // Retrieve login information
         public boolean login(Context context, List<Setting> settings, String company, String uname, String password) throws JsonProcessingException {
             try {
+                if(settings.size() == 2) {
                 baseUrl = settings.get(1).getValue();
+                } else {
+                baseUrl = settings.get(0).getValue();
+                }
                 String endpoint = "/login";
                 User user = new User(company,uname,password);
                 ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
