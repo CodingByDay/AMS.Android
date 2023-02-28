@@ -130,6 +130,7 @@ private Button login;
 
         // Continue here
         client.retrieveItems(LoginActivityMain.this, settingsList);
+        client.
 
 
         mypDialog.hide();
@@ -194,11 +195,13 @@ private Button login;
     @Override
     public void setResultRoot(Root root) {
         this.root = root;
+        // 33.33 %
     }
 
     @Override
     public void setResultRootLocation(RootLocation rootLocation) {
         this.rootLocation = rootLocation;
+        // 66.66 %
     }
 
     @Override
@@ -209,5 +212,6 @@ private Button login;
     @Override
     public void setResultRootAsset(RootAsset asset) {
         this.rootAsset = asset;
+        // 100.00%
     }
 }

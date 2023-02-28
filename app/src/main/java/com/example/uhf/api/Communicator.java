@@ -284,9 +284,9 @@ public class Communicator {
             }
 
         }
-        protected void onPostExecute(RootStatus result) {
+        protected void onPostExecute(RootAsset result) {
             super.onPostExecute(result);
-            asyncCallBack.setResultRootStatus(result);
+            asyncCallBack.setResultRootAsset(result);
         }
     }
 
@@ -328,12 +328,12 @@ public class Communicator {
     public boolean retrieveLocations(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
             baseUrl = settings.get(0).getValue();
-            String endpoint = "/getItems";
+            String endpoint = "/getLocations";
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
             String url = baseUrl + endpoint;
-            RetrieveItems retrieve = new RetrieveItems();
+            RetrieveLocations retrieve = new RetrieveLocations();
             retrieve = retrieve.setInstance(context);
             retrieve.execute(url, json);
             return false;
@@ -343,6 +343,42 @@ public class Communicator {
         }
     }
 
+    // Retrieve status class
+    public boolean retrieveStatus(Context context, List<Setting> settings) throws JsonProcessingException {
+        try {
+            baseUrl = settings.get(0).getValue();
+            String endpoint = "/getStatuses";
+
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
+            String url = baseUrl + endpoint;
+            RetrieveStatus retrieve = new RetrieveStatus();
+            retrieve = retrieve.setInstance(context);
+            retrieve.execute(url, json);
+            return false;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    // Retrieve assets class
+    public boolean retrieveAssets(Context context, List<Setting> settings) throws JsonProcessingException {
+        try {
+            baseUrl = settings.get(0).getValue();
+            String endpoint = "/getStatuses";
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
+            String url = baseUrl + endpoint;
+            RetrieveAsset retrieve = new RetrieveAsset();
+            retrieve = retrieve.setInstance(context);
+            retrieve.execute(url, json);
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 
 
