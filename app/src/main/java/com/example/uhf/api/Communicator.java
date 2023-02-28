@@ -4,11 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
-import android.view.View;
-import android.widget.ProgressBar;
 
-import com.example.uhf.activity.InventoryActivity;
 import com.example.uhf.activity.LoginActivityMain;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.settings.Setting;
@@ -98,10 +94,7 @@ public class Communicator {
     public class RetrieveItems extends AsyncTask<String, Void, List<Item>> {
         private LoginActivityMain login;
         private AsyncCallBack asyncCallBack;
-        private InventoryActivity inventory;
-
         RetrieveItems setInstance(Context context) {
-            this.inventory = (InventoryActivity) context;
             asyncCallBack = (AsyncCallBack) context;
             return this;
         }
@@ -127,20 +120,13 @@ public class Communicator {
                         new InputStreamReader(conn.getInputStream(), "utf-8"))) {
                     StringBuilder response = new StringBuilder();
                     String responseLine = null;
-
                     while ((responseLine = br.readLine()) != null) {
                         response.append(responseLine.trim());
                     }
                     // Converting to response object
-                    ObjectMapper mapper = new ObjectMapper();
-
-                    ItemResponse itemResponse = mapper.readValue(response.toString(), ItemResponse.class);
-
-
+                    ObjectMapper om = new ObjectMapper();
+                    Root root = om.readValue(response.toString(), Root.class);
                     int result = 7 + 3;
-
-
-
                     return new ArrayList<Item>();
                 }
             } catch (Exception e) {
@@ -184,7 +170,7 @@ public class Communicator {
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
             String url = baseUrl + endpoint;
-            RetrieveLogingInformation retrieve = new RetrieveLogingInformation();
+            RetrieveItems retrieve = new RetrieveItems();
             retrieve = retrieve.setInstance(context);
             retrieve.execute(url, json);
             return false;
@@ -202,7 +188,7 @@ public class Communicator {
          String baseUrl = "";
         public boolean login(Context context, List<Setting> settings, String company, String uname, String password) throws JsonProcessingException {
             try {
-                baseUrl = settings.get(0).getValue();
+                baseUrl = settings.get(1).getValue();
                 String endpoint = "/login";
                 User user = new User(company,uname,password);
                 ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();

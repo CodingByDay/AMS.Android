@@ -85,7 +85,11 @@ private Button login;
                 builder.show();
                 break;
             case R.id.sync:
-                 SyncData();
+                try {
+                    SyncData();
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case R.id.settings:
                 Toast.makeText(this, "Nastavitve", Toast.LENGTH_SHORT).show();
@@ -99,7 +103,7 @@ private Button login;
         return true;
     }
 
-    private void SyncData() {
+    private void SyncData() throws JsonProcessingException {
         boolean connected = client.isDeviceConnected(this);
         if(!connected) {
         Toast.makeText(this, "Ni povezave!", Toast.LENGTH_SHORT).show();
@@ -113,7 +117,7 @@ private Button login;
 
 
         // Continue here
-
+        client.retrieveItems(LoginActivityMain.this, settingsList);
 
 
         mypDialog.hide();
