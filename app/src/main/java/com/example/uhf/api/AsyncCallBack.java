@@ -21,4 +21,7 @@ public interface AsyncCallBack {
 
 
     void setResultRootAsset(RootAsset asset);
+
+    void setProgressValue(int progress);
+
 }

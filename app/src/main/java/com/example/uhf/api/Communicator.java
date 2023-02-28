@@ -272,6 +272,8 @@ public class Communicator {
                     while ((responseLine = br.readLine()) != null) {
                         response.append(responseLine.trim());
                     }
+
+                    String js = response.toString();
                     // Converting to response object
                     ObjectMapper om = new ObjectMapper();
                     RootAsset root = om.readValue(response.toString(), RootAsset.class);
@@ -367,7 +369,7 @@ public class Communicator {
     public boolean retrieveAssets(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
             baseUrl = settings.get(0).getValue();
-            String endpoint = "/getStatuses";
+            String endpoint = "/getAssets";
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(new Token("5fdab8a2-4ebc-41d5-ac21-cbfd48dc115e"));
             String url = baseUrl + endpoint;
@@ -379,9 +381,6 @@ public class Communicator {
             return false;
         }
     }
-
-
-
 
          String baseUrl = "";
         // Retrieve login information

@@ -28,6 +28,7 @@ import com.example.uhf.api.Root;
 import com.example.uhf.api.RootAsset;
 import com.example.uhf.api.RootLocation;
 import com.example.uhf.api.RootStatus;
+import com.example.uhf.database.ImportExportData;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
@@ -122,19 +123,15 @@ private Button login;
          return;
         }
         mypDialog = new ProgressDialog(this);
-        mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mypDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mypDialog.setMax(100);
         mypDialog.setMessage("Pridobivanje podatkov...");
         mypDialog.setCanceledOnTouchOutside(false);
         mypDialog.show();
-
-
         // Continue here
         client.retrieveItems(LoginActivityMain.this, settingsList);
-        client.
-
-
-        mypDialog.hide();
-        mypDialog.cancel();
+        client.retrieveLocations(LoginActivityMain.this, settingsList);
+        client.retrieveAssets(LoginActivityMain.this, settingsList);
     }
 
     @Override
@@ -144,7 +141,6 @@ private Button login;
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
     private void initPageViews() {
         login = (Button) findViewById(R.id.login);
         tbCompany = (EditText) findViewById(R.id.tbCompany);
@@ -195,12 +191,14 @@ private Button login;
     @Override
     public void setResultRoot(Root root) {
         this.root = root;
+        mypDialog.setProgress(16);
         // 33.33 %
     }
 
     @Override
     public void setResultRootLocation(RootLocation rootLocation) {
         this.rootLocation = rootLocation;
+        mypDialog.setProgress(32);
         // 66.66 %
     }
 
@@ -212,6 +210,20 @@ private Button login;
     @Override
     public void setResultRootAsset(RootAsset asset) {
         this.rootAsset = asset;
+        mypDialog.setProgress(48);
         // 100.00%
+        ImportExportData importExportData = new ImportExportData(this);
+        importExportData.commitToLocalStorage(root,rootLocation,rootAsset);
     }
+
+    @Override
+    public void setProgressValue(int progress) {
+        mypDialog.setProgress(progress);
+        if(progress == 100) {
+            mypDialog.hide();
+            mypDialog.cancel();
+        }
+    }
+
+
 }
