@@ -239,6 +239,10 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         }
     }
     private void startLocation(){
+
+        if(etEPC.getText().toString().equals("")) {
+            return;
+        }
         String epc=etEPC.getText().toString();
         boolean result= mReader.startLocation(this,epc, IUHF.Bank_EPC,32, new IUHFLocationCallback(){
             @Override

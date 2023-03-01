@@ -22,6 +22,12 @@ public interface ItemLocationDAO {
     @Query("SELECT * FROM item_location")
     LiveData<List<ItemLocation>> getAllItems();
 
-    @Query("SELECT * FROM item_location WHERE ecd IS NULL")
+    @Query("select id, item, code, location, ecd from item_location where ecd is null || ecd = \"\"\n" +
+            "union\n" +
+            "select a.[id], '' as [item], '' as [code], '' as [location], '' as [ecd]" +
+            "from item a\n" +
+            "left join item_location b on a.item = b.item\n" +
+            "group by a.item, a.qty\n" +
+            "having a.qty > count(b.item) ")
     LiveData<List<ItemLocation>> getAllItemsThatAreNotRegistered();
 }

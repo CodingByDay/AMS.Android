@@ -366,11 +366,7 @@ public class Communicator {
         // Retrieve login information
         public boolean login(Context context, List<Setting> settings, String company, String uname, String password) throws JsonProcessingException {
             try {
-                if(settings.size() == 2) {
-                baseUrl = settings.get(1).getValue();
-                } else {
                 baseUrl = settings.get(0).getValue();
-                }
                 String endpoint = "/login";
                 User user = new User(company,uname,password);
                 ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();

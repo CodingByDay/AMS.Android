@@ -54,7 +54,6 @@ private final RecyclerViewInterface recyclerViewInterface;
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-
         return new ItemHolder(itemView, recyclerViewInterface);
     }
 
@@ -63,7 +62,6 @@ private final RecyclerViewInterface recyclerViewInterface;
         ItemLocation current = items.get(position);
 
         holder.tbItem.setText(current.getItem());
-
 
         // TODO: link table
         holder.tbName.setText(current.getName());

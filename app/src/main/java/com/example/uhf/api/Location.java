@@ -15,4 +15,5 @@ public class Location{
     public String company;
     public String note;
     public String active;
+    public String code;
 }

@@ -15,12 +15,14 @@ import com.example.uhf.repository.LocationRepository;
 import java.util.List;
 
 public class ItemLocationViewModel extends AndroidViewModel {
+    private final LiveData<List<ItemLocation>> allItemsQuery;
     private ItemLocationRepository repository;
     private LiveData<List<ItemLocation>> allItems;
     public ItemLocationViewModel(@NonNull Application application) {
         super(application);
         repository = new ItemLocationRepository(application);
         allItems = repository.getAllItems();
+        allItemsQuery = repository.getAllItemsNotRegistered();
     }
     public void insert(ItemLocation item) {
         repository.insert(item);
@@ -33,6 +35,9 @@ public class ItemLocationViewModel extends AndroidViewModel {
     }
     public LiveData<List<ItemLocation>> getAllItems() {
         return allItems;
+    }
+    public LiveData<List<ItemLocation>> getAllItemsNotRegistered() {
+        return allItemsQuery;
     }
 
 }

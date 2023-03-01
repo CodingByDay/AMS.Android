@@ -127,15 +127,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 break;
             case "RegistrationActivity":
                 mContext = (RegistrationActivity) getActivity();
-
                 initRegistration(view);
-
                 break;
         }
         return view;
     }
 
     private void initListing(View view) {
+
     }
 
     // Init the registration logic
@@ -146,7 +145,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         adapter = new ItemLocationAdapter(this);
         recycler.setAdapter(adapter);
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
-        itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
+        itemLocationViewModel.getAllItemsNotRegistered().observe(this, new Observer<List<ItemLocation>>() {
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;

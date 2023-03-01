@@ -20,13 +20,10 @@ import com.example.uhf.mvvm.ViewModel.LocationViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 
 public class ImportExportData {
-
     private ItemViewModel itemViewModel;
     private ItemLocationViewModel itemLocationViewModel;
     private LocationViewModel locationViewModel;
-
     private AsyncCallBack callBack;
-
 
     public ImportExportData(FragmentActivity context) {
         itemViewModel = ViewModelProviders.of(context).get(ItemViewModel.class);
