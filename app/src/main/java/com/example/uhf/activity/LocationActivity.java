@@ -26,8 +26,10 @@ import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
+import com.example.uhf.mvvm.Model.ItemLocationCache;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.Location;
+import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.LocationViewModel;
@@ -60,6 +62,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
     private BarcodeUtility barcodeUtility;
     private LocationViewModel locationsViewModel;
+    private ItemLocationCacheViewModel itemLocationCacheViewModel;
     private List<Location> locations;
     private ArrayAdapter locationsAdapter;
     private Item item;
@@ -141,6 +144,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 }
             }
         });
+        itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
         // ItemLocation view model
         itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
     }
@@ -178,8 +182,13 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     locationItem.setLocation(cbLocation.getSelectedItem().toString());
                     Date date = new Date(System.currentTimeMillis());
 
+                    // Add the cached item here
 
-                    //itemLocationViewModel.insert(locationItem);
+                    itemLocationCacheViewModel.insert(new ItemLocationCache(locationItem.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), "Janko"));
+
+
+
+
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);

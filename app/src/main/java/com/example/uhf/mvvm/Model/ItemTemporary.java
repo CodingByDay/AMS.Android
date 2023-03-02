@@ -17,12 +17,9 @@ public class ItemTemporary {
 
     @PrimaryKey(autoGenerate = true)
     private int ID;
-
-
-    private String item;
+    private String ecd;
     private String name;
     private String code;
-    private String ecd;
     private String location;
     private double qty;
     private String timestamp;
@@ -30,11 +27,10 @@ public class ItemTemporary {
 
     private String rssi;
 
-    public ItemTemporary(String item, String name, String code, String ecd, String location, double qty, String timestamp, String user, String rssi) {
-        this.item = item;
+    public ItemTemporary(String ecd, String name, String code, String location, double qty, String timestamp, String user, String rssi) {
+        this.ecd = ecd;
         this.name = name;
         this.code = code;
-        this.ecd = ecd;
         this.location = location;
         this.qty = qty;
         this.timestamp = timestamp;
@@ -42,6 +38,11 @@ public class ItemTemporary {
         this.rssi = rssi;
     }
 
+
+    @Ignore
+    public ItemTemporary(String rssi) {
+        this.rssi = rssi;
+    }
 
     public int getID() {
         return ID;
@@ -51,12 +52,12 @@ public class ItemTemporary {
         this.ID = ID;
     }
 
-    public String getItem() {
-        return item;
+    public String getEcd() {
+        return ecd;
     }
 
-    public void setItem(String item) {
-        this.item = item;
+    public void setEcd(String ecd) {
+        this.ecd = ecd;
     }
 
     public String getName() {
@@ -73,14 +74,6 @@ public class ItemTemporary {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getEcd() {
-        return ecd;
-    }
-
-    public void setEcd(String ecd) {
-        this.ecd = ecd;
     }
 
     public String getLocation() {

@@ -40,4 +40,8 @@ public class ItemLocationViewModel extends AndroidViewModel {
         return allItemsQuery;
     }
 
+    public void updateEPCByID(int id, String epc) {
+        repository.updateById(id, epc);
+    }
+
 }

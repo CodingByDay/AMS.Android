@@ -31,4 +31,9 @@ public interface ItemLocationDAO {
             "group by a.item, a.qty\n" +
             "having a.qty > count(b.item)")
     LiveData<List<ItemLocation>> getAllItemsThatAreNotRegistered();
+
+
+
+    @Query("update item_location set ecd = :edc where ID = :id ")
+    void updateByID(int id, String edc);
 }

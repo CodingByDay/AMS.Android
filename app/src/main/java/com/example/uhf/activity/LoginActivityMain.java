@@ -1,21 +1,16 @@
 package com.example.uhf.activity;
 
-import android.app.Activity;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -30,6 +25,10 @@ import com.example.uhf.api.RootLocation;
 import com.example.uhf.api.RootStatus;
 import com.example.uhf.database.ImportExportData;
 import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.Model.ItemLocation;
+import com.example.uhf.mvvm.Model.ItemLocationCache;
+import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
+import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,6 +50,11 @@ private Button login;
     private Root root;
     private RootLocation rootLocation;
     private RootAsset rootAsset;
+
+
+    private ItemLocationViewModel itemLocationViewModel;
+    private ItemLocationCacheViewModel itemLocationCacheViewModel;
+    private List<ItemLocationCache> itemsLocationsCacheClassLevel;
     // Jackson properties
 
     @Override
@@ -61,6 +65,33 @@ private Button login;
         getSupportActionBar().show();
         initSettings();
         initPageViews();
+        initSynchronization();
+    }
+
+    private void initSynchronization() {
+        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
+        // if cached table is not empty and there is internet sync the data
+        itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
+
+        itemLocationCacheViewModel.getAllItems().observe(this, new Observer<List<ItemLocationCache>>() {
+            @Override
+            public void onChanged(List<ItemLocationCache> items) {
+                itemsLocationsCacheClassLevel = items;
+
+
+                 if(itemsLocationsCacheClassLevel.size() > 0) {
+                     syncDatabase(itemsLocationsCacheClassLevel);
+                 }
+            }
+        });
+
+    }
+
+    private void syncDatabase(List<ItemLocationCache> itemsLocationsCacheClassLevel) {
+        for (ItemLocationCache itemLocationCache: itemsLocationsCacheClassLevel) {
+           itemLocationViewModel.updateEPCByID(itemLocationCache.getID(), itemLocationCache.getEcd());
+        }
+
     }
 
     private void initSettings() {

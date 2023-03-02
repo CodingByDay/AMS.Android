@@ -30,6 +30,10 @@ public class ItemLocationRepository {
     public void update(ItemLocation item) {
         new ItemLocationRepository.UpdateItemAsyncTask(itemDAO).execute(item);
     }
+
+    public void updateById(int id, String ecd) {
+        new ItemLocationRepository.UpdateItemByIdAsyncTask(itemDAO).execute(String.valueOf(id), ecd);
+    }
     public void delete (ItemLocation item) {
         new ItemLocationRepository.DeleteItemAsyncTask(itemDAO).execute(item);
     }
@@ -81,7 +85,20 @@ public class ItemLocationRepository {
     }
 
 
+    private static class UpdateItemByIdAsyncTask extends AsyncTask<String, Void, Void> {
+        private ItemLocationDAO itemDAO;
+        private UpdateItemByIdAsyncTask(ItemLocationDAO itemDAO) {
+            this.itemDAO = itemDAO;
+        }
+        @Override
+        protected Void doInBackground(String... items) {
+            int id = Integer.parseInt(items[0]);
+            String epc = items[1];
+            itemDAO.updateByID(id, epc);
+            return null;
 
+        }
+    }
 
     private static class DeleteItemAsyncTask extends AsyncTask<ItemLocation, Void, Void> {
         private ItemLocationDAO itemDAO;

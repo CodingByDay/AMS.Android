@@ -16,6 +16,20 @@ public class ItemLocation {
 
     private String name;
 
+    private String timestamp;
+    private String user;
+
+
+    public ItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user) {
+        this.item = item;
+        this.code = code;
+        this.location = location;
+        this.ecd = ecd;
+        this.name = name;
+        this.timestamp = timestamp;
+        this.user = user;
+    }
+
 
     public ItemLocation(String item, String code, String location, String ecd, String name) {
         this.item = item;
@@ -24,6 +38,7 @@ public class ItemLocation {
         this.ecd = ecd;
         this.name = name;
     }
+
 
     public int getID() {
         return ID;
@@ -71,5 +86,21 @@ public class ItemLocation {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

@@ -379,7 +379,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsLocationsClassLevel = items;
-            //    locationAdapter.setItems(items);
+                // locationAdapter.setItems(items);
             }
         });
     }
