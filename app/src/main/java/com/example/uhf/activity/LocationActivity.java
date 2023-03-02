@@ -26,6 +26,7 @@ import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
+import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
@@ -38,6 +39,7 @@ import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -174,7 +176,10 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 @Override
                 public void onClick(View view) {
                     locationItem.setLocation(cbLocation.getSelectedItem().toString());
-                    itemLocationViewModel.insert(locationItem);
+                    Date date = new Date(System.currentTimeMillis());
+
+
+                    //itemLocationViewModel.insert(locationItem);
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
@@ -265,8 +270,9 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
                             // TODO: Link item name here
                             locationItem = new ItemLocation(item, code, location, epc, "test");
-                            LocationDialog alert = new LocationDialog();
-                            alert.showDialog(LocationActivity.this);
+                            LocationDialog alertLocation = new LocationDialog();
+                            alertLocation.showDialog(LocationActivity.this);
+
                         }
                     });
                     alert.setNegativeButton("Ne", new DialogInterface.OnClickListener() {

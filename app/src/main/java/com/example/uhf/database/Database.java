@@ -11,6 +11,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemDAO;
 import com.example.uhf.mvvm.Model.ItemLocation;
+import com.example.uhf.mvvm.Model.ItemLocationCache;
+import com.example.uhf.mvvm.Model.ItemLocationCacheDAO;
 import com.example.uhf.mvvm.Model.ItemLocationDAO;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.ItemTemporaryDAO;
@@ -19,7 +21,7 @@ import com.example.uhf.mvvm.Model.LocationDAO;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.settings.SettingDAO;
 
-@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class, Location.class, ItemLocation.class}, version = 7)
+@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class, Location.class, ItemLocation.class, ItemLocationCache.class}, version = 8)
 public abstract class Database extends RoomDatabase {
 
     private static Database instance;
@@ -30,6 +32,8 @@ public abstract class Database extends RoomDatabase {
     public abstract LocationDAO locationDAO();
 
     public abstract ItemLocationDAO itemlocationDAO();
+
+    public abstract ItemLocationCacheDAO itemLocationCacheDAO();
 
     public abstract SettingDAO settingDAO();
 
@@ -59,11 +63,14 @@ public abstract class Database extends RoomDatabase {
         private ItemTemporaryDAO itemTemporaryDAO;
         private LocationDAO locationDAO;
         private SettingDAO  settingDAO;
+
+        private ItemLocationCacheDAO itemLocationCacheDAO;
         private PopulateDbAsyncTask(Database db) {
             itemDAO = db.itemDAO();
             itemTemporaryDAO = db.itemTemporaryDAO();
             settingDAO = db.settingDAO();
             locationDAO = db.locationDAO();
+            itemLocationCacheDAO = db.itemLocationCacheDAO();
         }
 
 
