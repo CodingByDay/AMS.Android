@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "item_location_cache")
 public class ItemLocationCache {
-    @PrimaryKey(autoGenerate = true)
+
+    @PrimaryKey(autoGenerate = false)
     private int ID;
     private String item;
     private String code;

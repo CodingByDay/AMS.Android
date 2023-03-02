@@ -85,7 +85,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private InventoryActivity context;
     private RegistrationActivity mContext;
     private HashMap<String, String> map;
-
     private int total;
     private long time;
 
@@ -102,6 +101,8 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private String callerID;
     private ItemLocationViewModel itemLocationViewModel;
     private List<ItemLocation> itemsLocation = new ArrayList<ItemLocation>();
+    public int index;
+    public ItemLocation itemLocationCurrent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -394,9 +395,15 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         }
         selected = position;
 
-        if(callerID.equals("RegistrationActivity")) {
+        if(callerID.equals("RegistrationActivity") ) {
         mContext.currentItem = itemsClassLevel.get(position);
         }
+
+
+        itemLocationCurrent = itemsClassLevel.get(position);
+
+
+        index = position;
     }
 
     private void findTheClosestEPC() {

@@ -89,7 +89,9 @@ private Button login;
 
     private void syncDatabase(List<ItemLocationCache> itemsLocationsCacheClassLevel) {
         for (ItemLocationCache itemLocationCache: itemsLocationsCacheClassLevel) {
-           itemLocationViewModel.updateEPCByID(itemLocationCache.getID(), itemLocationCache.getEcd());
+            itemLocationViewModel.updateEPCByID(itemLocationCache.getID(), itemLocationCache.getEcd());
+            itemLocationCacheViewModel.delete(itemLocationCache);
+
         }
 
     }

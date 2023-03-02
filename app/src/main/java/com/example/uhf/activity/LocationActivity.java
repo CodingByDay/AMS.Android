@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.uhf.R;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
+import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemLocationCache;
@@ -183,8 +184,9 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     Date date = new Date(System.currentTimeMillis());
 
                     // Add the cached item here
+                    FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
 
-                    itemLocationCacheViewModel.insert(new ItemLocationCache(locationItem.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), "Janko"));
+                    itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), "Janko"));
 
 
 
