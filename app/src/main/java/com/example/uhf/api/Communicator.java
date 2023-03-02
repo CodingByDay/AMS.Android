@@ -38,8 +38,15 @@ public class Communicator {
         @Override protected Boolean doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL(args[0]);
-                String json = args[1];
+                URL url = new URL("http://invapi-test.in-sist.si");
+                String json = new String("");
+                for(String ar: args) {
+                    if(ar.startsWith("http")) {
+                        url = new URL(ar);
+                    } else {
+                        json = ar;
+                    }
+                }
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
@@ -102,8 +109,15 @@ public class Communicator {
         @Override protected Root doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL(args[0]);
-                String json = args[1];
+                URL url = new URL("http://invapi-test.in-sist.si");
+                String json = new String("");
+                for(String ar: args) {
+                    if(ar.startsWith("http")) {
+                        url = new URL(ar);
+                    } else {
+                        json = ar;
+                    }
+                }
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
@@ -151,8 +165,16 @@ public class Communicator {
         @Override protected RootLocation doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL(args[0]);
-                String json = args[1];
+                URL url = new URL("http://invapi-test.in-sist.si");
+                String json = new String("");
+                for(String ar: args) {
+                    if(ar.startsWith("http")) {
+                       url = new URL(ar);
+                    } else {
+                        json = ar;
+                    }
+                }
+
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
@@ -200,8 +222,15 @@ public class Communicator {
         @Override protected RootStatus doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL(args[0]);
-                String json = args[1];
+                URL url = new URL("http://invapi-test.in-sist.si");
+                String json = new String("");
+                for(String ar: args) {
+                    if(ar.startsWith("http")) {
+                        url = new URL(ar);
+                    } else {
+                        json = ar;
+                    }
+                }
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
@@ -251,8 +280,15 @@ public class Communicator {
         @Override protected RootAsset doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL(args[0]);
-                String json = args[1];
+                URL url = new URL("http://invapi-test.in-sist.si");
+                String json = new String("");
+                for(String ar: args) {
+                    if(ar.startsWith("http")) {
+                        url = new URL(ar);
+                    } else {
+                        json = ar;
+                    }
+                }
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
@@ -310,11 +346,21 @@ public class Communicator {
     // Retrieve item class
     public boolean retrieveLocations(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
-            baseUrl = settings.get(0).getValue();
+            String baseUrl = new String();
+            String token = new String();
+            for (Setting setting: settings) {
+                if(setting.getValue().startsWith("http")) {
+                    baseUrl = setting.getValue();
+                } else {
+                    token = setting.getValue();
+                }
+            }
+
+
             String endpoint = "/getLocations";
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(new Token(settings.get(1).getValue()));
+            String json = ow.writeValueAsString(new Token(token));
             String url = baseUrl + endpoint;
             RetrieveLocations retrieve = new RetrieveLocations();
             retrieve = retrieve.setInstance(context);
@@ -329,11 +375,19 @@ public class Communicator {
     // Retrieve status class
     public boolean retrieveStatus(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
-            baseUrl = settings.get(0).getValue();
+            String baseUrl = new String();
+            String token = new String();
+            for (Setting setting: settings) {
+                if(setting.getValue().startsWith("http")) {
+                    baseUrl = setting.getValue();
+                } else {
+                    token = setting.getValue();
+                }
+            }
             String endpoint = "/getStatuses";
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(new Token(settings.get(1).getValue()));
+            String json = ow.writeValueAsString(new Token(token));
             String url = baseUrl + endpoint;
             RetrieveStatus retrieve = new RetrieveStatus();
             retrieve = retrieve.setInstance(context);
@@ -348,10 +402,18 @@ public class Communicator {
     // Retrieve assets class
     public boolean retrieveAssets(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
-            baseUrl = settings.get(0).getValue();
+            String baseUrl = new String();
+            String token = new String();
+            for (Setting setting: settings) {
+                if(setting.getValue().startsWith("http")) {
+                    baseUrl = setting.getValue();
+                } else {
+                    token = setting.getValue();
+                }
+            }
             String endpoint = "/getAssets";
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(new Token(settings.get(1).getValue()));
+            String json = ow.writeValueAsString(new Token(token));
             String url = baseUrl + endpoint;
             RetrieveAsset retrieve = new RetrieveAsset();
             retrieve = retrieve.setInstance(context);
@@ -366,7 +428,15 @@ public class Communicator {
         // Retrieve login information
         public boolean login(Context context, List<Setting> settings, String company, String uname, String password) throws JsonProcessingException {
             try {
-                baseUrl = settings.get(0).getValue();
+                String baseUrl = new String();
+                String token = new String();
+                for (Setting setting: settings) {
+                    if(setting.getValue().startsWith("http")) {
+                        baseUrl = setting.getValue();
+                    } else {
+                        token = setting.getValue();
+                    }
+                }
                 String endpoint = "/login";
                 User user = new User(company,uname,password);
                 ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();

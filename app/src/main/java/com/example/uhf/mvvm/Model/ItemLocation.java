@@ -20,15 +20,7 @@ public class ItemLocation {
     private String user;
 
 
-    public ItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user) {
-        this.item = item;
-        this.code = code;
-        this.location = location;
-        this.ecd = ecd;
-        this.name = name;
-        this.timestamp = timestamp;
-        this.user = user;
-    }
+
 
 
     public ItemLocation(String item, String code, String location, String ecd, String name) {
