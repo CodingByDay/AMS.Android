@@ -12,6 +12,7 @@ import com.example.uhf.mvvm.Model.ItemLocationDAO;
 import java.util.List;
 
 public class ItemLocationRepository {
+    private final LiveData<List<ItemLocation>> allItemsRegistered;
     private ItemLocationDAO itemDAO;
     private LiveData<List<ItemLocation>> allItems;
     private LiveData<List<ItemLocation>> allItemsNotRegistered;
@@ -22,6 +23,7 @@ public class ItemLocationRepository {
         itemDAO = database.itemlocationDAO();
         allItems = itemDAO.getAllItems();
         allItemsNotRegistered = itemDAO.getAllItemsThatAreNotRegistered();
+        allItemsRegistered = itemDAO.getAllItemsThatAreRegistered();
     }
 
     public void insert(ItemLocation item) {
@@ -51,6 +53,7 @@ public class ItemLocationRepository {
     }
 
 
+    public LiveData<List<ItemLocation>> getAllItemsRegistered() {return allItemsRegistered;}
 
 
     private static class InsertItemAsyncTask extends AsyncTask<ItemLocation, Void, Void> {

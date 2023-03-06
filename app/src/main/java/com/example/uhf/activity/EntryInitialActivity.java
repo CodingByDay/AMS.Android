@@ -40,7 +40,8 @@ private CardView btSync;
         btListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent myIntent = new Intent(getApplicationContext(), ListingActivity.class);
+                startActivity(myIntent);
             }
         });
         btSync.setOnClickListener(new View.OnClickListener() {

@@ -20,6 +20,9 @@
         android:theme="@style/Toolbar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.ListingActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.LocationActivity"
             android:exported="false" />
         <activity

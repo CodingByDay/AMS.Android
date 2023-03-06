@@ -135,7 +135,19 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     }
 
     private void initListing(View view) {
-
+        recycler = (RecyclerView) view.findViewById(R.id.rwItems);
+        recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recycler.setHasFixedSize(true);
+        adapter = new ItemLocationAdapter(this);
+        recycler.setAdapter(adapter);
+        itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
+        itemLocationViewModel.getItemsThatAreRegistered().observe(this, new Observer<List<ItemLocation>>() {
+            @Override
+            public void onChanged(List<ItemLocation> items) {
+                itemsClassLevel = items;
+                adapter.setItems(items);
+            }
+        });
     }
 
     // Init the registration logic

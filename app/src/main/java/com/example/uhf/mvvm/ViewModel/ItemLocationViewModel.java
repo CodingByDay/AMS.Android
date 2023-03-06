@@ -16,6 +16,7 @@ import java.util.List;
 
 public class ItemLocationViewModel extends AndroidViewModel {
     private final LiveData<List<ItemLocation>> allItemsQuery;
+    private final LiveData<List<ItemLocation>> allItemsRegistered;
     private ItemLocationRepository repository;
     private LiveData<List<ItemLocation>> allItems;
     public ItemLocationViewModel(@NonNull Application application) {
@@ -23,6 +24,7 @@ public class ItemLocationViewModel extends AndroidViewModel {
         repository = new ItemLocationRepository(application);
         allItems = repository.getAllItems();
         allItemsQuery = repository.getAllItemsNotRegistered();
+        allItemsRegistered = repository.getAllItemsRegistered();
     }
     public void insert(ItemLocation item) {
         repository.insert(item);
@@ -43,5 +45,10 @@ public class ItemLocationViewModel extends AndroidViewModel {
     public void updateEPCByID(int id, String epc) {
         repository.updateById(id, epc);
     }
+
+    public LiveData<List<ItemLocation>>getItemsThatAreRegistered() {
+        return allItemsRegistered;
+    }
+
 
 }

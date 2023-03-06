@@ -72,13 +72,10 @@ private Button login;
         itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
         // if cached table is not empty and there is internet sync the data
         itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
-
         itemLocationCacheViewModel.getAllItems().observe(this, new Observer<List<ItemLocationCache>>() {
             @Override
             public void onChanged(List<ItemLocationCache> items) {
-                itemsLocationsCacheClassLevel = items;
-
-
+                 itemsLocationsCacheClassLevel = items;
                  if(itemsLocationsCacheClassLevel.size() > 0) {
                      syncDatabase(itemsLocationsCacheClassLevel);
                  }
