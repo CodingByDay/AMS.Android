@@ -56,6 +56,31 @@ public class ItemLocationRepository {
     public LiveData<List<ItemLocation>> getAllItemsRegistered() {return allItemsRegistered;}
 
 
+
+
+
+    private static class GetItemLocationByEcdAsyncTask extends AsyncTask<String, Void, ItemLocation> {
+
+        private ItemLocationDAO itemDAO;
+
+        private GetItemLocationByEcdAsyncTask(ItemLocationDAO itemDAO) {
+            this.itemDAO = itemDAO;
+        }
+        protected ItemLocation doInBackground(String id) {
+
+            return  itemDAO.getItemByEcd(id);
+        }
+
+        @Override
+        protected ItemLocation doInBackground(String... strings) {
+            return  itemDAO.getItemByEcd(strings[0]);
+
+        }
+    }
+
+
+
+
     private static class InsertItemAsyncTask extends AsyncTask<ItemLocation, Void, Void> {
 
         private ItemLocationDAO itemDAO;

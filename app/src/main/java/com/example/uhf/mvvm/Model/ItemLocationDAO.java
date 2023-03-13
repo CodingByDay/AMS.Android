@@ -40,4 +40,9 @@ public interface ItemLocationDAO {
 
     @Query("select id, item, code, location, ecd from item_location where ecd != ''")
     LiveData<List<ItemLocation>> getAllItemsThatAreRegistered();
+
+
+
+    @Query ("select * from item_location where ecd is :ecd")
+    ItemLocation getItemByEcd(String ecd);
 }

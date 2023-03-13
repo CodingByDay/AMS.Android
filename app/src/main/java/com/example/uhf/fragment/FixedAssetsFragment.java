@@ -103,6 +103,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private List<ItemLocation> itemsLocation = new ArrayList<ItemLocation>();
     public int index;
     public ItemLocation itemLocationCurrent;
+    private ItemTemporary itemsTemporaryCurrent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -411,10 +412,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         mContext.currentItem = itemsClassLevel.get(position);
         }
 
-
-        itemLocationCurrent = itemsClassLevel.get(position);
-
-
+        if(callerID.equals("InventoryActivity")) {
+            itemsTemporaryCurrent = itemsTemporary.get(position);
+        }
         index = position;
     }
 

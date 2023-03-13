@@ -71,7 +71,7 @@ public class Communicator {
                     HashMap<String, String> myMap = mapper.readValue(json_c, new TypeReference<HashMap<String, String>>() {
                     });
                     String success = myMap.get("success");
-                    String token = myMap.get("token");
+                    String token = myMap.get("result");
                     String error = myMap.get("error");
 
                     if(token!=null) {
@@ -328,6 +328,10 @@ public class Communicator {
     // Retrieve item class
     public boolean retrieveItems(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
+
+
+
+
             baseUrl = settings.get(0).getValue();
             String endpoint = "/getItems";
 

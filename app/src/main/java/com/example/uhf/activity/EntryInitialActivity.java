@@ -34,7 +34,8 @@ private CardView btSync;
         btInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
+                startActivity(myIntent);
             }
         });
         btListing.setOnClickListener(new View.OnClickListener() {
