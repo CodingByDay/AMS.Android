@@ -413,7 +413,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         }
 
         if(callerID.equals("InventoryActivity")) {
+
             itemsTemporaryCurrent = itemsTemporary.get(position);
+            context.current = itemsTemporary.get(position);
         }
         index = position;
     }

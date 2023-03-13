@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.fragment.KeyDwonFragment;
 import com.example.uhf.fragment.UHFReadTagFragment;
+import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.LocationViewModel;
@@ -54,6 +56,7 @@ public RFIDWithUHFUART mReader;
     private ArrayAdapter locationsAdapter;
     private LocationViewModel locationsViewModel;
 
+    public ItemTemporary current;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +125,11 @@ public RFIDWithUHFUART mReader;
             @Override
             public void onClick(View view) {
                 // TODO add loader while data is being filtered
-                FixedAssetsFragment.getInstance().sortBasedOnLocation(tbLocation.getText().toString());
+                if(current!=null) {
+                    Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
+                    myIntent.putExtra("epc", current.getEcd());
+
+                }
             }
         });
         btToggleScanning.setOnClickListener(new View.OnClickListener() {

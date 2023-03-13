@@ -130,14 +130,6 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
 
             }
         });
-
-
-        
-        
-        
-        
-        
-        
     }
 
     @Override
