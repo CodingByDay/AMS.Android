@@ -82,6 +82,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
                         String strongest = findStrongestSignal().getEcd();
                         myIntent.putExtra("epc", strongest);
+                        myIntent.putExtra("callerID", "Registration");
                         myIntent.putExtra("item_id", currentItem.getID());
                         mypDialog.cancel();
                         startActivity(myIntent);

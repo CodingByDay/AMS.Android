@@ -131,11 +131,6 @@ public RFIDWithUHFUART mReader;
                     myIntent.putExtra("callerID", "InventoryProcessLocation");
                     // Redirect to the location activity
                     startActivity(myIntent);
-
-
-
-
-
                 }
             }
         });

@@ -2,6 +2,7 @@ package com.example.uhf.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -72,6 +73,9 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
     private ItemLocationViewModel itemLocationViewModel;
     private List<ItemLocation> itemsLocationClassLevel;
+    private List<ItemLocation> itemsLocationsClassLevel;
+    private ItemLocation currentItem;
+    private String epc;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +104,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         });
 
         llChart.clean();
-
         Bundle extras = getIntent().getExtras();
         String callerID =  extras.getString("callerID");
 
@@ -113,10 +116,12 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
 
     private ItemLocation findCorrectItemLocation(String epc) {
+        if(itemsLocationClassLevel!=null) {
         for(ItemLocation item: itemsLocationClassLevel) {
             if (item.getEcd().equals(epc)) {
                 return item;
             }
+        }
         }
         return null;
     }
@@ -124,22 +129,16 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         if(callerID.equals("InventoryProcessLocation")) {
             initialize();
             Bundle extras = getIntent().getExtras();
-            String epc =  extras.getString("epc");
-
-            ItemLocation currentItem = findCorrectItemLocation(epc);
-
-
-            int result = 8 + 8 ;
-
-
-
-        } else {
+            epc =  extras.getString("epc");
+            etEPC.setText(epc);
+        } else if (callerID.equals("Registration")) {
             initialize();
             // ItemTemporary strongest = findStrongestSignal();
             Bundle extras = getIntent().getExtras();
             String strongest =  extras.getString("epc");
             id = extras.getInt("item_id");
             etEPC.setText(strongest);
+
         }
     }
 
@@ -168,17 +167,22 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     }
 
     private void initialize() {
-        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
 
+
+        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
         itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
-                    @Override
-                    public void onChanged(List<ItemLocation> itemLocations) {
-                        itemsLocationClassLevel = itemLocations;
-                    }
+            @Override
+            public void onChanged(List<ItemLocation> items) {
+                currentItem = findCorrectItemLocation(epc);
+                itemsLocationClassLevel = items;
+            }
         });
 
 
-                itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
+
+
+
+        itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
         itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
             @Override
             public void onChanged(List<Item> items) {
@@ -192,7 +196,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         });
         itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
         // ItemLocation view model
-        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
     }
 
     @Override
@@ -230,12 +233,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
                     // Add the cached item here
                     FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-
                     itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), "Janko"));
-
-
-
-
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
@@ -319,6 +317,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             stopLocation();
+
                             String item = LocationActivity.this.item.toString();
                             String code = LocationActivity.this.item.getCode();
                             String location = "";

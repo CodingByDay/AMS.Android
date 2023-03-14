@@ -453,6 +453,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
             itemsTemporaryCurrent = itemsTemporary.get(position);
             context.current = itemsTemporary.get(position);
+            ItemTemporary tmp = itemsTemporary.get(position);
         }
         index = position;
     }
