@@ -129,6 +129,8 @@ public RFIDWithUHFUART mReader;
                     Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
                     myIntent.putExtra("epc", current.getEcd());
                     myIntent.putExtra("callerID", "InventoryProcessLocation");
+                    String location = tbLocation.getText().toString();
+                    myIntent.putExtra("location", tbLocation.getText().toString());
                     // Redirect to the location activity
                     startActivity(myIntent);
                 }

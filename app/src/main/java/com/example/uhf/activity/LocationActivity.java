@@ -43,6 +43,7 @@ import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
 import com.rscja.team.qcom.deviceapi.P;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,6 +77,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private List<ItemLocation> itemsLocationsClassLevel;
     private ItemLocation currentItem;
     private String epc;
+    private String callerID;
+    private String location;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,7 +108,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
         llChart.clean();
         Bundle extras = getIntent().getExtras();
-        String callerID =  extras.getString("callerID");
+        callerID =  extras.getString("callerID");
 
 
         resolveCaller(callerID);
@@ -131,6 +134,10 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             Bundle extras = getIntent().getExtras();
             epc =  extras.getString("epc");
             etEPC.setText(epc);
+            location = extras.getString("location");
+
+            startLocation();
+
         } else if (callerID.equals("Registration")) {
             initialize();
             // ItemTemporary strongest = findStrongestSignal();
@@ -167,8 +174,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     }
 
     private void initialize() {
-
-
         itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
         itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
             @Override
@@ -177,10 +182,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 itemsLocationClassLevel = items;
             }
         });
-
-
-
-
 
         itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
         itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
@@ -311,22 +312,39 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     stopLocation();
                     AlertDialog.Builder alert = new AlertDialog.Builder(LocationActivity.this);
                     alert.setTitle("Potrditev oznake");
+                    if (callerID.equals("InventoryProcessLocation")) {
+                        alert.setMessage("Ali želite potrditi inventuro?");
+                    } else {
+                        alert.setMessage("Ali želite povezati oznako z sredstvom?");
+                    }
                     alert.setMessage("Ali želite povezati oznako z sredstvom?");
                     alert.setPositiveButton("Da", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            stopLocation();
 
-                            String item = LocationActivity.this.item.toString();
-                            String code = LocationActivity.this.item.getCode();
-                            String location = "";
-                            String epc = etEPC.getText().toString();
+                            if (callerID.equals("InventoryProcessLocation")) {
+                                String epc = LocationActivity.this.epc;
+                                String location = LocationActivity.this.location;
+                                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-                            // TODO: Link item name here
-                            locationItem = new ItemLocation(item, code, location, epc, "test");
-                            LocationDialog alertLocation = new LocationDialog();
-                            alertLocation.showDialog(LocationActivity.this);
+                                ItemTemporary tmp = new ItemTemporary(epc, "", "", location, 1, timestamp.toString(), "Janko", "" );
+
+
+
+                                // Continues here
+                            } else {
+                                // Transfer location and make a new object
+                                dialog.dismiss();
+                                stopLocation();
+                                String item = LocationActivity.this.item.toString();
+                                String code = LocationActivity.this.item.getCode();
+                                String location = "";
+                                String epc = etEPC.getText().toString();
+                                // TODO: Link item name here
+                                locationItem = new ItemLocation(item, code, location, epc, "test");
+                                LocationDialog alertLocation = new LocationDialog();
+                                alertLocation.showDialog(LocationActivity.this);
+                            }
 
                         }
                     });
