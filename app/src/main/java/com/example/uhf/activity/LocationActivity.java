@@ -39,6 +39,7 @@ import com.example.uhf.view.UhfLocationCanvasView;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.interfaces.IUHF;
 import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
+import com.rscja.team.qcom.deviceapi.P;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
@@ -70,6 +71,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private ItemLocation locationItem;
 
     private ItemLocationViewModel itemLocationViewModel;
+    private List<ItemLocation> itemsLocationClassLevel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,15 +100,48 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         });
 
         llChart.clean();
-        initialize();
-        // ItemTemporary strongest = findStrongestSignal();
+
         Bundle extras = getIntent().getExtras();
-        String strongest =  extras.getString("epc");
-        id = extras.getInt("item_id");
-        etEPC.setText(strongest);
+        String callerID =  extras.getString("callerID");
+
+
+        resolveCaller(callerID);
+
 
     }
 
+
+
+    private ItemLocation findCorrectItemLocation(String epc) {
+        for(ItemLocation item: itemsLocationClassLevel) {
+            if (item.getEcd().equals(epc)) {
+                return item;
+            }
+        }
+        return null;
+    }
+    private void resolveCaller(String callerID) {
+        if(callerID.equals("InventoryProcessLocation")) {
+            initialize();
+            Bundle extras = getIntent().getExtras();
+            String epc =  extras.getString("epc");
+
+            ItemLocation currentItem = findCorrectItemLocation(epc);
+
+
+            int result = 8 + 8 ;
+
+
+
+        } else {
+            initialize();
+            // ItemTemporary strongest = findStrongestSignal();
+            Bundle extras = getIntent().getExtras();
+            String strongest =  extras.getString("epc");
+            id = extras.getInt("item_id");
+            etEPC.setText(strongest);
+        }
+    }
 
 
     private void toggleLocation(boolean start) {
@@ -133,7 +168,17 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     }
 
     private void initialize() {
-        itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
+        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
+
+        itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
+                    @Override
+                    public void onChanged(List<ItemLocation> itemLocations) {
+                        itemsLocationClassLevel = itemLocations;
+                    }
+        });
+
+
+                itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
         itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
             @Override
             public void onChanged(List<Item> items) {

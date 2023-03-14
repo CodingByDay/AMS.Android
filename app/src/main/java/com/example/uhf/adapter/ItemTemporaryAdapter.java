@@ -62,7 +62,11 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         ItemTemporary current = items.get(position);
-        holder.tbItem.setText(current.getEcd());
+
+
+
+
+        holder.tbItem.setText(current.getEcd().substring(current.getEcd().length() - 5));
         holder.tbName.setText(current.getName());
         holder.tbLocation.setText(current.getLocation());
         String qty = String.valueOf(current.getQty());

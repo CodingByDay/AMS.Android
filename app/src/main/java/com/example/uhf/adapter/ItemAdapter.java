@@ -44,9 +44,6 @@ private final RecyclerViewInterface recyclerViewInterface;
         holder.tbQty.setText("1");
 
 
-       // holder.tbLocation.setText(current.getLocation());
-      //  String qty = String.valueOf(current.getQty());
-       // holder.tbECD.setText(current.getEcd());
     }
 
     @Override

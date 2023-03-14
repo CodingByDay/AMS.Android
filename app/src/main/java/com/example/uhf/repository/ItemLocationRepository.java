@@ -55,7 +55,9 @@ public class ItemLocationRepository {
 
     public LiveData<List<ItemLocation>> getAllItemsRegistered() {return allItemsRegistered;}
 
-
+    public AsyncTask<String, Void, ItemLocation> getItemByEpc(String epc) {
+        return new ItemLocationRepository.GetItemLocationByEcdAsyncTask(itemDAO).execute(epc);
+    }
 
 
 
