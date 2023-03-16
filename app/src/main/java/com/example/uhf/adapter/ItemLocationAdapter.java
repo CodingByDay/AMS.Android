@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uhf.R;
 import com.example.uhf.interfaces.RecyclerViewInterface;
-import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 
 import java.util.ArrayList;
@@ -20,9 +19,13 @@ import java.util.List;
 public class ItemLocationAdapter extends RecyclerView.Adapter<ItemLocationAdapter.ItemHolder> {
 private List<ItemLocation> items = new ArrayList<ItemLocation>();
 private final RecyclerViewInterface recyclerViewInterface;
+    private String calllerID;
 
-    public ItemLocationAdapter(RecyclerViewInterface recyclerViewInterface) {
+
+
+    public ItemLocationAdapter(RecyclerViewInterface recyclerViewInterface, String callerID) {
         this.recyclerViewInterface = recyclerViewInterface;
+        this.calllerID = calllerID;
     }
 
     // Here is the sorting method
@@ -62,7 +65,6 @@ private final RecyclerViewInterface recyclerViewInterface;
         ItemLocation current = items.get(position);
 
         holder.tbItem.setText(current.getItem());
-
         // TODO: link table
         holder.tbName.setText(current.getName());
         holder.tbCode.setText(current.getCode());

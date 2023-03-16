@@ -1,5 +1,7 @@
 package com.example.uhf.mvvm.Model;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -11,7 +13,7 @@ import java.util.List;
 
 @Dao
 public interface ItemLocationDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(entity = ItemLocation.class, onConflict = REPLACE)
     void insert(ItemLocation location);
     @Update
     void update(ItemLocation location);

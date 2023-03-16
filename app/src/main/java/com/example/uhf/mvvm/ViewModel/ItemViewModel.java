@@ -1,14 +1,17 @@
 package com.example.uhf.mvvm.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.repository.ItemRepository;
 import com.example.uhf.mvvm.Model.Item;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemViewModel extends AndroidViewModel {
@@ -34,5 +37,18 @@ public class ItemViewModel extends AndroidViewModel {
         return allItems;
     }
 
+    public void batchInsert(Item... items) {
 
+    }
+
+
+    public void insertBatch(Context context, ArrayList<com.example.uhf.api.Item> items) {
+        List<Item> itemsLocations = new ArrayList<>();
+        for (com.example.uhf.api.Item item: items) {
+            itemsLocations.add(new Item(item.item, item.name, "", 1));
+        }
+
+
+        repository.insertItemsBatch(context, itemsLocations.toArray(new Item[0]));
+    }
 }

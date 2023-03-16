@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -20,6 +21,8 @@ import com.example.uhf.api.RootLocation;
 import com.example.uhf.api.RootStatus;
 import com.example.uhf.database.ImportExportData;
 import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.Model.Location;
+import com.example.uhf.mvvm.Model.LocationDAO;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -40,6 +43,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     private RootLocation rootLocation;
     private RootAsset rootAsset;
     private SettingsViewModel settingsView;
+    private boolean locationsClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,22 +65,41 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             }
         });
     }
-    private void SyncData() throws JsonProcessingException {
-        boolean connected = client.isDeviceConnected(this);
-        if(!connected) {
-            Toast.makeText(this, "Ni povezave!", Toast.LENGTH_SHORT).show();
-            return;
+    private void SyncData(boolean locations) throws JsonProcessingException {
+
+        if(locations) {
+            locationsClass = true;
+            boolean connected = client.isDeviceConnected(this);
+            if(!connected) {
+                Toast.makeText(this, "Ni povezave!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            mypDialog = new ProgressDialog(this);
+            mypDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mypDialog.setMax(100);
+            mypDialog.setMessage("Pridobivanje podatkov...");
+            mypDialog.setCanceledOnTouchOutside(false);
+            mypDialog.show();
+            // Continue here
+            client.retrieveLocations(EntryActivity.this, settingsList);
+        } else {
+            locationsClass = false;
+            boolean connected = client.isDeviceConnected(this);
+            if(!connected) {
+                Toast.makeText(this, "Ni povezave!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            mypDialog = new ProgressDialog(this);
+            mypDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mypDialog.setMax(100);
+            mypDialog.setMessage("Pridobivanje podatkov...");
+            mypDialog.setCanceledOnTouchOutside(false);
+            mypDialog.show();
+            // Continue here
+            client.retrieveItems(EntryActivity.this, settingsList);
+            client.retrieveAssets(EntryActivity.this, settingsList);
         }
-        mypDialog = new ProgressDialog(this);
-        mypDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        mypDialog.setMax(100);
-        mypDialog.setMessage("Pridobivanje podatkov...");
-        mypDialog.setCanceledOnTouchOutside(false);
-        mypDialog.show();
-        // Continue here
-        client.retrieveItems(EntryActivity.this, settingsList);
-        client.retrieveLocations(EntryActivity.this, settingsList);
-        client.retrieveAssets(EntryActivity.this, settingsList);
+
     }
     private void initializeViews() {
         btTransferLocations = findViewById(R.id.transferLocations);
@@ -85,25 +108,25 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btListingItems = findViewById(R.id.listingItems);
         btExportListing = findViewById(R.id.exportListing);
         btTransferListing = findViewById(R.id.transferListing);
+
         btTransferLocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    SyncData();
+                    SyncData(true);
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
                 }
-
-
-               // Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
-               // startActivity(myIntent);
             }
         });
         btTransferItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(getApplicationContext(),  UHFMainActivity.class);
-                startActivity(myIntent);
+                try {
+                    SyncData(false);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         btListingLocations.setOnClickListener(new View.OnClickListener() {
@@ -145,16 +168,24 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     @Override
     public void setResultRoot(Root root) {
         this.root = root;
-        mypDialog.setProgress(16);
+        mypDialog.setProgress(25);
         // 33.33 %
     }
 
     @Override
     public void setResultRootLocation(RootLocation rootLocation) {
         this.rootLocation = rootLocation;
-        mypDialog.setProgress(32);
-        // 66.66 %
+        mypDialog.setProgress(50);
+
+        ImportExportData importExportData = new ImportExportData(this);
+        importExportData.commitToLocalStorageLocations(rootLocation);
     }
+
+
+
+
+
+
 
     @Override
     public void setResultRootStatus(RootStatus status) {
@@ -164,10 +195,10 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     @Override
     public void setResultRootAsset(RootAsset asset) {
         this.rootAsset = asset;
-        mypDialog.setProgress(48);
+        mypDialog.setProgress(50);
         // 100.00%
         ImportExportData importExportData = new ImportExportData(this);
-        importExportData.commitToLocalStorage(root,rootLocation,rootAsset);
+        importExportData.commitToLocalStorageMaterial(root,rootAsset);
     }
     @Override
     public void setProgressValue(int progress) {

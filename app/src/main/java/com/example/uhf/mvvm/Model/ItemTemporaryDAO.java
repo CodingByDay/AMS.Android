@@ -25,4 +25,9 @@ public interface ItemTemporaryDAO {
 
     @Query("SELECT * FROM item_temp")
     List<ItemTemporary> getAllItemsList();
+
+
+
+
+
 }

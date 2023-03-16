@@ -1,21 +1,23 @@
 package com.example.uhf.repository;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.uhf.api.AsyncCallBack;
 import com.example.uhf.database.Database;
-import com.example.uhf.mvvm.Model.Item;
-import com.example.uhf.mvvm.Model.ItemDAO;
 import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.Model.LocationDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocationRepository {
     private LocationDAO itemDAO;
     private LiveData<List<Location>> allItems;
+    private AsyncCallBack callBack;
 
 
     public LocationRepository(Application application) {
@@ -32,15 +34,44 @@ public class LocationRepository {
     }
     public void delete (Location item) {
         new LocationRepository.DeleteItemAsyncTask(itemDAO).execute(item);
-
     }
     public void deleteAllItems() {
         new LocationRepository.DeleteAllItemAsyncTask(itemDAO).execute();
-
     }
     public LiveData<List<Location>> getAllItems() {
         return allItems;
     }
+
+
+    public void insertLocationsBatch(Context context, Location... items) {
+        callBack = (AsyncCallBack) context;
+        new InsertLocationsBatchAsync(itemDAO).execute(items);
+    }
+
+    private class InsertLocationsBatchAsync extends AsyncTask<com.example.uhf.mvvm.Model.Location, Void, Void> {
+        private LocationDAO itemDAO;
+        private InsertLocationsBatchAsync(LocationDAO itemDAO) {
+            this.itemDAO = itemDAO;
+        }
+
+
+        @Override
+        protected Void doInBackground(Location... items) {
+            for (Location location: items) {
+                itemDAO.insert(location);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            LocationRepository.this.callBack.setProgressValue(100);
+            super.onPostExecute(unused);
+        }
+    }
+
+
+
 
 
     private static class InsertItemAsyncTask extends AsyncTask<Location, Void, Void> {

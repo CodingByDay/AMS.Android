@@ -139,7 +139,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        adapter = new ItemLocationAdapter(this);
+        adapter = new ItemLocationAdapter(this, callerID);
         recycler.setAdapter(adapter);
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
         itemLocationViewModel.getItemsThatAreRegistered().observe(this, new Observer<List<ItemLocation>>() {
@@ -156,14 +156,15 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        adapter = new ItemLocationAdapter(this);
+        adapter = new ItemLocationAdapter(this, callerID);
         recycler.setAdapter(adapter);
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
-        itemLocationViewModel.getAllItemsNotRegistered().observe(this, new Observer<List<ItemLocation>>() {
+        itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;
                 adapter.setItems(items);
+                itemLocationViewModel.insert(new com.example.uhf.mvvm.Model.ItemLocation("test", "test","test", "test", "hardy", "test", "s"));
             }
         });
         temporaryViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemTemporaryViewModel.class);
@@ -423,7 +424,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        locationAdapter = new ItemLocationAdapter(this);
+        locationAdapter = new ItemLocationAdapter(this, callerID);
         recycler.setAdapter(locationAdapter);
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
         itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {

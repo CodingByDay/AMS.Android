@@ -82,6 +82,17 @@ private Button login;
             }
         });
 
+
+        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
+        // if cached table is not empty and there is internet sync the data
+        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
+        itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
+            @Override
+            public void onChanged(List<ItemLocation> items) {
+                int r = 9+9;
+            }
+        });
+
     }
 
     private void syncDatabase(List<ItemLocationCache> itemsLocationsCacheClassLevel) {
@@ -211,38 +222,27 @@ private Button login;
 
     @Override
     public void setResultRoot(Root root) {
-        this.root = root;
-        mypDialog.setProgress(16);
-        // 33.33 %
+
+
     }
 
     @Override
     public void setResultRootLocation(RootLocation rootLocation) {
-        this.rootLocation = rootLocation;
-        mypDialog.setProgress(32);
-        // 66.66 %
+
+
     }
 
     @Override
     public void setResultRootStatus(RootStatus status) {
-       // TODO: Ask about this
+
     }
 
     @Override
     public void setResultRootAsset(RootAsset asset) {
-        this.rootAsset = asset;
-        mypDialog.setProgress(48);
-        // 100.00%
-        ImportExportData importExportData = new ImportExportData(this);
-        importExportData.commitToLocalStorage(root,rootLocation,rootAsset);
+
     }
     @Override
     public void setProgressValue(int progress) {
-        mypDialog.setProgress(progress);
-        if(progress == 100) {
-            mypDialog.hide();
-            mypDialog.cancel();
-            Toast.makeText(this, "Podatki sinhronizirani", Toast.LENGTH_SHORT).show();
-        }
+
     }
 }

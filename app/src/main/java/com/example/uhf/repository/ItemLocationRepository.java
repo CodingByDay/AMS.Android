@@ -1,11 +1,15 @@
 package com.example.uhf.repository;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.uhf.api.AsyncCallBack;
 import com.example.uhf.database.Database;
+import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.Model.ItemDAO;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemLocationDAO;
 
@@ -16,6 +20,7 @@ public class ItemLocationRepository {
     private ItemLocationDAO itemDAO;
     private LiveData<List<ItemLocation>> allItems;
     private LiveData<List<ItemLocation>> allItemsNotRegistered;
+    private AsyncCallBack callBack;
 
 
     public ItemLocationRepository(Application application) {
@@ -59,7 +64,33 @@ public class ItemLocationRepository {
         return new ItemLocationRepository.GetItemLocationByEcdAsyncTask(itemDAO).execute(epc);
     }
 
+    public void insertItemsBatch(Context context, ItemLocation... items) {
+        callBack = (AsyncCallBack) context;
+        new ItemLocationRepository.InsertAssetsBatchAsync(itemDAO).execute(items);
+    }
 
+
+    public class InsertAssetsBatchAsync extends AsyncTask<com.example.uhf.mvvm.Model.ItemLocation, Void, Void> {
+        private ItemLocationDAO itemDAO;
+        private InsertAssetsBatchAsync(ItemLocationDAO itemDAO) {
+            this.itemDAO = itemDAO;
+        }
+
+
+        @Override
+        protected Void doInBackground(ItemLocation... items) {
+            for (ItemLocation item: items) {
+                itemDAO.insert(item);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            ItemLocationRepository.this.callBack.setProgressValue(100);
+            super.onPostExecute(unused);
+        }
+    }
 
     private static class GetItemLocationByEcdAsyncTask extends AsyncTask<String, Void, ItemLocation> {
 

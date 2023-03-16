@@ -24,4 +24,7 @@ public interface AsyncCallBack {
 
     void setProgressValue(int progress);
 
+
+
+
 }
