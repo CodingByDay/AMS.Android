@@ -159,12 +159,11 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         adapter = new ItemLocationAdapter(this, callerID);
         recycler.setAdapter(adapter);
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
-        itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
+        itemLocationViewModel.getAllItemsNotRegistered().observe(this, new Observer<List<ItemLocation>>() {
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;
                 adapter.setItems(items);
-                itemLocationViewModel.insert(new com.example.uhf.mvvm.Model.ItemLocation("test", "test","test", "test", "hardy", "test", "s"));
             }
         });
         temporaryViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemTemporaryViewModel.class);
@@ -448,6 +447,11 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
         if(callerID.equals("RegistrationActivity") ) {
             mContext.currentItem = itemsClassLevel.get(position);
+
+
+            itemLocationCurrent = itemsClassLevel.get(position);
+
+
         }
 
         if(callerID.equals("InventoryActivity")) {

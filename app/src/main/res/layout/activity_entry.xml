@@ -258,7 +258,7 @@
                             android:layout_below="@id/airplane"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            android:text="@string/transfer_inventory"
+                            android:text="@string/transfer_inventory_sync"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 

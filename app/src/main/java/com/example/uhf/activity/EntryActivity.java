@@ -21,8 +21,12 @@ import com.example.uhf.api.RootLocation;
 import com.example.uhf.api.RootStatus;
 import com.example.uhf.database.ImportExportData;
 import com.example.uhf.mvvm.Model.Item;
+import com.example.uhf.mvvm.Model.ItemLocation;
+import com.example.uhf.mvvm.Model.ItemLocationCache;
 import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.Model.LocationDAO;
+import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
+import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -44,6 +48,9 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     private RootAsset rootAsset;
     private SettingsViewModel settingsView;
     private boolean locationsClass;
+    private ItemLocationViewModel itemLocationViewModel;
+    private ItemLocationCacheViewModel itemLocationCacheViewModel;
+    private List<ItemLocationCache> itemsLocationsCacheClassLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +60,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         client = new Communicator();
         initSettings();
         initializeViews();
+
     }
 
 
@@ -150,10 +158,45 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btTransferListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                initSynchronization();
             }
         });
     }
+    private void initSynchronization() {
+        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
+        // if cached table is not empty and there is internet sync the data
+        itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
+        itemLocationCacheViewModel.getAllItems().observe(this, new Observer<List<ItemLocationCache>>() {
+            @Override
+            public void onChanged(List<ItemLocationCache> items) {
+                itemsLocationsCacheClassLevel = items;
+                if(itemsLocationsCacheClassLevel.size() > 0) {
+                    syncDatabase(itemsLocationsCacheClassLevel);
+                }
+            }
+        });
+
+
+        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
+        // if cached table is not empty and there is internet sync the data
+        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
+        itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
+            @Override
+            public void onChanged(List<ItemLocation> items) {
+                int r = 9+9;
+            }
+        });
+
+    }
+    private void syncDatabase(List<ItemLocationCache> itemsLocationsCacheClassLevel) {
+        for (ItemLocationCache itemLocationCache: itemsLocationsCacheClassLevel) {
+            itemLocationViewModel.updateEPCByID(itemLocationCache.getID(), itemLocationCache.getEcd());
+            itemLocationCacheViewModel.delete(itemLocationCache);
+
+        }
+
+    }
+
 
     @Override
     public void setResult(Boolean result) {
@@ -203,7 +246,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     @Override
     public void setProgressValue(int progress) {
         mypDialog.setProgress(progress);
-        if(progress == 100) {
+        if(progress >= 100) {
             mypDialog.hide();
             mypDialog.cancel();
             Toast.makeText(this, "Podatki sinhronizirani", Toast.LENGTH_SHORT).show();
