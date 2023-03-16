@@ -20,6 +20,7 @@ public class ItemRepository {
     private LiveData<List<Item>> allItems;
     private AsyncCallBack callBack;
 
+    private int count;
 
     public ItemRepository(Application application) {
         Database database = Database.getInstance(application);
@@ -52,12 +53,13 @@ public class ItemRepository {
 
 
 
-    public void insertItemsBatch(Context context, Item... items) {
+    public void insertItemsBatch(Context context, int count, Item... items) {
         callBack = (AsyncCallBack) context;
+        this.count = count;
         new ItemRepository.InsertItemsBatchAsync(itemDAO).execute(items);
     }
 
-    public class InsertItemsBatchAsync extends AsyncTask<com.example.uhf.mvvm.Model.Item, Void, Void> {
+    public class InsertItemsBatchAsync extends AsyncTask<com.example.uhf.mvvm.Model.Item, Integer, Void> {
         private ItemDAO itemDAO;
         private InsertItemsBatchAsync(ItemDAO itemDAO) {
             this.itemDAO = itemDAO;
@@ -66,12 +68,27 @@ public class ItemRepository {
 
         @Override
         protected Void doInBackground(Item... items) {
+            int breakPoint = Math.round(count / 100);
+            int progress = 0;
+            int counter = 0;
             for (Item item: items) {
+                counter += 1;
                 itemDAO.insert(item);
+                if(counter == breakPoint) {
+                    progress += 1;
+                    publishProgress(progress);
+                    counter = 0;
+                }
             }
             return null;
         }
-
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            if(values[0] <= 50) {
+                ItemRepository.this.callBack.setProgressValue(values[0]);
+            }
+        }
         @Override
         protected void onPostExecute(Void unused) {
             ItemRepository.this.callBack.setProgressValue(75);

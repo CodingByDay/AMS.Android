@@ -21,6 +21,7 @@ public class ItemLocationRepository {
     private LiveData<List<ItemLocation>> allItems;
     private LiveData<List<ItemLocation>> allItemsNotRegistered;
     private AsyncCallBack callBack;
+    private int count;
 
 
     public ItemLocationRepository(Application application) {
@@ -63,28 +64,41 @@ public class ItemLocationRepository {
     public AsyncTask<String, Void, ItemLocation> getItemByEpc(String epc) {
         return new ItemLocationRepository.GetItemLocationByEcdAsyncTask(itemDAO).execute(epc);
     }
-
-    public void insertItemsBatch(Context context, ItemLocation... items) {
+    public void insertItemsBatch(Context context, int count, ItemLocation... items) {
         callBack = (AsyncCallBack) context;
+        this.count = count;
         new ItemLocationRepository.InsertAssetsBatchAsync(itemDAO).execute(items);
     }
 
-
-    public class InsertAssetsBatchAsync extends AsyncTask<com.example.uhf.mvvm.Model.ItemLocation, Void, Void> {
+    public class InsertAssetsBatchAsync extends AsyncTask<com.example.uhf.mvvm.Model.ItemLocation, Integer, Void> {
         private ItemLocationDAO itemDAO;
         private InsertAssetsBatchAsync(ItemLocationDAO itemDAO) {
             this.itemDAO = itemDAO;
         }
 
-
         @Override
         protected Void doInBackground(ItemLocation... items) {
+            int breakPoint = Math.round(count / 100);
+            int progress = 50;
+            int counter = 0;
             for (ItemLocation item: items) {
+                counter += 1;
                 itemDAO.insert(item);
+
+                if(counter == breakPoint) {
+                    progress += 1;
+                    publishProgress(progress);
+                    counter = 0;
+                }
+
             }
             return null;
         }
-
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            ItemLocationRepository.this.callBack.setProgressValue(values[0] + 50);
+        }
         @Override
         protected void onPostExecute(Void unused) {
             ItemLocationRepository.this.callBack.setProgressValue(100);
@@ -110,9 +124,6 @@ public class ItemLocationRepository {
 
         }
     }
-
-
-
 
     private static class InsertItemAsyncTask extends AsyncTask<ItemLocation, Void, Void> {
 

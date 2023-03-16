@@ -55,9 +55,9 @@ public class ImportExportData {
 
     public void commitToLocalStorageMaterial(Root rootItems,  RootAsset rootAssets) {
 
-
-        itemViewModel.insertBatch(this.context, rootItems.items);
-        itemLocationViewModel.insertBatch(this.context, rootAssets.assets);
+        int count = rootItems.items.size() + rootAssets.assets.size();
+        itemViewModel.insertBatch(this.context, rootItems.items, count);
+        itemLocationViewModel.insertBatch(this.context, rootAssets.assets, count);
 
 
     }

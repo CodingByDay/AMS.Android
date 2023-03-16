@@ -6,14 +6,10 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.uhf.api.Asset;
-import com.example.uhf.api.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
-import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.repository.ItemLocationRepository;
-import com.example.uhf.repository.LocationRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +51,13 @@ public class ItemLocationViewModel extends AndroidViewModel {
     }
 
 
-    public void insertBatch(Context context, ArrayList<Asset> items) {
+    public void insertBatch(Context context, ArrayList<Asset> items, int count) {
         List<com.example.uhf.mvvm.Model.ItemLocation> itemsLocations = new ArrayList<>();
         for (com.example.uhf.api.Asset item: items) {
             itemsLocations.add(new com.example.uhf.mvvm.Model.ItemLocation(item.item, item.code, item.location, item.ecd, item.name, "test", "test"));
         }
 
 
-        repository.insertItemsBatch(context, itemsLocations.toArray(new com.example.uhf.mvvm.Model.ItemLocation[0]));
+        repository.insertItemsBatch(context, count, itemsLocations.toArray(new com.example.uhf.mvvm.Model.ItemLocation[0]));
     }
 }

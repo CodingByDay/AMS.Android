@@ -168,15 +168,14 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     @Override
     public void setResultRoot(Root root) {
         this.root = root;
-        mypDialog.setProgress(25);
+        mypDialog.setProgress(50);
         // 33.33 %
     }
 
     @Override
     public void setResultRootLocation(RootLocation rootLocation) {
         this.rootLocation = rootLocation;
-        mypDialog.setProgress(50);
-
+        mypDialog.setProgress(1);
         ImportExportData importExportData = new ImportExportData(this);
         importExportData.commitToLocalStorageLocations(rootLocation);
     }
@@ -195,7 +194,8 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     @Override
     public void setResultRootAsset(RootAsset asset) {
         this.rootAsset = asset;
-        mypDialog.setProgress(50);
+        mypDialog.setProgress(99);
+        mypDialog.setMessage("Zapisovanje podatkov.");
         // 100.00%
         ImportExportData importExportData = new ImportExportData(this);
         importExportData.commitToLocalStorageMaterial(root,rootAsset);

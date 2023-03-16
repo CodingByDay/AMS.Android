@@ -33,7 +33,6 @@ public class LocationViewModel extends AndroidViewModel {
             itemsLocations.add(new Location(loc.location, loc.name, loc.code));
         }
 
-
         repository.insertLocationsBatch(context, itemsLocations.toArray(new Location[0]));
     }
     public void update (Location item) {

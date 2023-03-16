@@ -42,13 +42,13 @@ public class ItemViewModel extends AndroidViewModel {
     }
 
 
-    public void insertBatch(Context context, ArrayList<com.example.uhf.api.Item> items) {
+    public void insertBatch(Context context, ArrayList<com.example.uhf.api.Item> items, int count) {
         List<Item> itemsLocations = new ArrayList<>();
         for (com.example.uhf.api.Item item: items) {
             itemsLocations.add(new Item(item.item, item.name, "", 1));
         }
 
 
-        repository.insertItemsBatch(context, itemsLocations.toArray(new Item[0]));
+        repository.insertItemsBatch(context, count, itemsLocations.toArray(new Item[0]));
     }
 }

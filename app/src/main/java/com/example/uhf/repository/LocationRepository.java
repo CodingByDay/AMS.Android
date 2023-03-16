@@ -48,19 +48,34 @@ public class LocationRepository {
         new InsertLocationsBatchAsync(itemDAO).execute(items);
     }
 
-    private class InsertLocationsBatchAsync extends AsyncTask<com.example.uhf.mvvm.Model.Location, Void, Void> {
+    private class InsertLocationsBatchAsync extends AsyncTask<com.example.uhf.mvvm.Model.Location, Integer, Void> {
         private LocationDAO itemDAO;
         private InsertLocationsBatchAsync(LocationDAO itemDAO) {
             this.itemDAO = itemDAO;
         }
 
-
         @Override
         protected Void doInBackground(Location... items) {
+            int breakPoint = Math.round(items.length / 100);
+            int progress = 0;
+            int counter = 0;
             for (Location location: items) {
+                counter +=1;
                 itemDAO.insert(location);
+                if(counter == breakPoint) {
+                    progress += 1;
+                    publishProgress(progress);
+                    counter = 0;
+                }
             }
             return null;
+        }
+
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            LocationRepository.this.callBack.setProgressValue(values[0]);
         }
 
         @Override
