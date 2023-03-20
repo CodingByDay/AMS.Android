@@ -61,7 +61,7 @@ private final String caller;
 
         switch (this.caller) {
             case "InventoryActivity": {
-                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_inventory, parent, false);
                 return new ItemHolder(itemView, recyclerViewInterface);
             }
             case "ListingActivity": {
@@ -86,7 +86,7 @@ private final String caller;
             case "InventoryActivity": {
                 holder.tbItem.setText(current.getItem());
                 holder.tbName.setText(current.getName());
-                holder.tbCode.setText(current.getCode());
+                holder.tbLocation.setText(current.getLocation());
                 if(current.getEcd().length()>=6) {
                     holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
                 } else {
@@ -147,8 +147,8 @@ private final String caller;
                 case "InventoryActivity": {
                     tbItem = itemView.findViewById(R.id.tbItem);
                     tbName = itemView.findViewById(R.id.tbName);
-                    tbCode = itemView.findViewById(R.id.tbCode);
-                    tbQty = itemView.findViewById(R.id.tbQty);
+                    tbLocation = itemView.findViewById(R.id.tbLocation);
+                    tbEpc = itemView.findViewById(R.id.tbEpc);
                     break;
                 }
                 case "ListingActivity": {

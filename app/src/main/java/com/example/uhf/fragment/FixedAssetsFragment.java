@@ -133,6 +133,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             case "InventoryActivity":
                 context = (InventoryActivity) getActivity();
                 initEmpty(view);
+                initListingForCheck(view);
                 first.setText("Sredstvo");
                 second.setText("Naziv");
                 third.setText("Lokacija");
@@ -191,7 +192,17 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             }
         });
     }
+    private void initListingForCheck(View view) {
 
+        itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
+        itemLocationViewModel.getItemsThatAreRegistered().observe(this, new Observer<List<ItemLocation>>() {
+            @Override
+            public void onChanged(List<ItemLocation> items) {
+                itemsClassLevel = items;
+
+            }
+        });
+    }
     // Init the registration logic
     private void initRegistration(View view) {
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
@@ -324,8 +335,11 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                             int location = (int) Math.floor(Math.random() * 5);
                             ItemLocation item = filterList(info.getEPC());
                             if(item!=null) {
-                                // Consider the query for the already scanned items
-                                if(location == 0) {
+                                // Query
+                                ItemLocation asset = checkExistance(info.getEPC());
+                                if(asset!=null ) {
+
+                                    if(location == 0) {
                                     temporaryViewModel.insert(new ItemTemporary(item.getEcd(), item.getName(), item.getCode(), "", 1, Instant.now().toString(), "Janko", info.getRssi()));
                                 } else {
                                     temporaryViewModel.insert(new ItemTemporary(item.getEcd(), item.getName(), item.getCode(), String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi()));
@@ -337,8 +351,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                                     temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "", "", String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi()));
                                 }
                             }
-
-
+                            } else {
+                                return;
+                            }
                         }
                     }
                     tempDatas.add(info.getEPC());
@@ -348,7 +363,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         }
     };
 
-
+    private ItemLocation checkExistance(String epc) {
+        for(ItemLocation item: itemsClassLevel) {
+            if(item.getEcd().equals(epc)) {
+                return item;
+            }
+        }
+        return null;
+    }
 
 
     public int checkIfExist(String epc) {
