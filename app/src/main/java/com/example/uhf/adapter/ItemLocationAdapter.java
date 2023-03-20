@@ -19,13 +19,14 @@ import java.util.List;
 public class ItemLocationAdapter extends RecyclerView.Adapter<ItemLocationAdapter.ItemHolder> {
 private List<ItemLocation> items = new ArrayList<ItemLocation>();
 private final RecyclerViewInterface recyclerViewInterface;
-    private String calllerID;
-
+    private static String calllerID;
+private final String caller;
 
 
     public ItemLocationAdapter(RecyclerViewInterface recyclerViewInterface, String callerID) {
         this.recyclerViewInterface = recyclerViewInterface;
-        this.calllerID = calllerID;
+        this.caller = callerID;
+
     }
 
     // Here is the sorting method
@@ -58,7 +59,7 @@ private final RecyclerViewInterface recyclerViewInterface;
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
-        switch (calllerID) {
+        switch (this.caller) {
             case "InventoryActivity": {
                 View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
                 return new ItemHolder(itemView, recyclerViewInterface);
@@ -81,7 +82,7 @@ private final RecyclerViewInterface recyclerViewInterface;
         ItemLocation current = items.get(position);
 
 
-        switch (calllerID) {
+        switch (this.caller) {
             case "InventoryActivity": {
                 holder.tbItem.setText(current.getItem());
                 holder.tbName.setText(current.getName());
@@ -93,14 +94,14 @@ private final RecyclerViewInterface recyclerViewInterface;
                 holder.tbItem.setText(current.getItem());
                 holder.tbName.setText(current.getName());
                 holder.tbLocation.setText(current.getLocation());
-                holder.tbEpc.setText(current.getEcd());
+                holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
                 break;
             }
             case "RegistrationActivity": {
                 holder.tbItem.setText(current.getItem());
                 holder.tbName.setText(current.getName());
                 holder.tbCode.setText(current.getCode());
-                holder.tbQty.setText("1");
+                holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
                 break;
             }
         }
@@ -133,7 +134,7 @@ private final RecyclerViewInterface recyclerViewInterface;
             super(itemView);
 
             // switch the context
-            switch (calllerID) {
+            switch (caller) {
                 case "InventoryActivity": {
                     tbItem = itemView.findViewById(R.id.tbItem);
                     tbName = itemView.findViewById(R.id.tbName);

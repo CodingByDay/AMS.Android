@@ -37,11 +37,11 @@
             android:text="Code" />
 
         <TextView
-            android:id="@+id/tbQty"
+            android:id="@+id/tbEpc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
-            android:text="Qty" />
+            android:text="tbEpc" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
