@@ -62,15 +62,10 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         ItemTemporary current = items.get(position);
-
-
-
-
         holder.tbItem.setText(current.getEcd().substring(current.getEcd().length() - 5));
         holder.tbName.setText(current.getName());
         holder.tbLocation.setText(current.getLocation());
-        String qty = String.valueOf(current.getQty());
-        holder.tbQty.setText(qty);
+        holder.tbEpc.setText(current.getEcd());
 
     }
 
@@ -92,6 +87,8 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
         private TextView tbLocation;
         private TextView tbQty;
 
+        private TextView tbEpc;
+
         private LinearLayout linearLayout;
 
         public ItemHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
@@ -99,7 +96,7 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
             tbItem = (TextView) itemView.findViewById(R.id.tbItem);
             tbName = (TextView) itemView.findViewById(R.id.tbName);
             tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
-            tbQty = (TextView) itemView.findViewById(R.id.tbQty);
+            tbEpc = (TextView) itemView.findViewById(R.id.tbEpc);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

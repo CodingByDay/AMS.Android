@@ -34,9 +34,11 @@ import android.widget.Toast;
 import com.example.uhf.R;
 import com.example.uhf.activity.InventoryActivity;
 import com.example.uhf.activity.RegistrationActivity;
+import com.example.uhf.adapter.ItemAdapter;
 import com.example.uhf.adapter.ItemTemporaryAdapter;
 import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.adapter.ItemLocationAdapter;
+import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
@@ -102,6 +104,10 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     public int index;
     public ItemLocation itemLocationCurrent;
     private ItemTemporary itemsTemporaryCurrent;
+    private TextView first;
+    private TextView second;
+    private TextView third;
+    private TextView forth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,6 +115,13 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         // Inflate the layout for this fragment
         instance = this;
         View view = inflater.inflate(R.layout.fragment_fixed_assets, container, false);
+
+        first = view.findViewById(R.id.first);
+        second = view.findViewById(R.id.second);
+        third = view.findViewById(R.id.third);
+        forth = view.findViewById(R.id.forth);
+
+
         // Initialization
         initSound();
         initUHF();
@@ -118,43 +131,51 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         callerID = arguments.getString("callerID");
         switch (callerID) {
             case "InventoryActivity":
-                view = inflater.inflate(R.layout.fragment_fixed_assets_inventory, container, false);
                 context = (InventoryActivity) getActivity();
                 initEmpty(view);
+                first.setText("Sredstvo");
+                second.setText("Naziv");
+                third.setText("Lokacija");
+                forth.setText("EPC");
                 break;
             case "ListingActivity":
                 initListing(view);
-                break;
-            case "RegistrationActivity":
-                mContext = (RegistrationActivity) getActivity();
-                initRegistration(view);
-                break;
-        }
-        changeUI(view, callerID);
-        return view;
-    }
-
-
-    private void changeUI(View view, String callerID) {
-        switch (callerID) {
-            case "InventoryActivity":
-
-                break;
-            case "ListingActivity":
-                TextView first = view.findViewById(R.id.first);
-                TextView second = view.findViewById(R.id.second);
-                TextView third = view.findViewById(R.id.third);
-                TextView forth = view.findViewById(R.id.forth);
                 first.setText("Sredstvo");
                 second.setText("Naziv");
                 third.setText("Lokacija");
                 forth.setText("EPC");
                 break;
             case "RegistrationActivity":
+                mContext = (RegistrationActivity) getActivity();
+                initRegistration(view);
+                break;
+        }
+        //changeUI(view, callerID);
 
+        return view;
+    }
+    private void changeUI(View view, String callerID) {
+
+
+        switch (callerID) {
+            case "InventoryActivity":
+                first.setText("Sredstvo");
+                second.setText("Naziv");
+                third.setText("Lokacija");
+                forth.setText("EPC");
+                break;
+            case "ListingActivity":
+
+                first.setText("Sredstvo");
+                second.setText("Naziv");
+                third.setText("Lokacija");
+                forth.setText("EPC");
+                break;
+            case "RegistrationActivity":
                 break;
         }
     }
+
     private void initListing(View view) {
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -229,7 +250,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             super.onPostExecute(result);
             mypDialog.cancel();
             if (!result) {
-               Toast.makeText(getActivity(), "init fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "init fail", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -246,21 +267,21 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     }
 
     private void initUHF() {
-            try {
-                mReader = RFIDWithUHFUART.getInstance();
-            } catch (Exception ex) {
-                return;
-            }
-            if (mReader != null) {
-               new InitTask().execute();
-            }
+        try {
+            mReader = RFIDWithUHFUART.getInstance();
+        } catch (Exception ex) {
+            return;
+        }
+        if (mReader != null) {
+            new InitTask().execute();
+        }
     }
 
     private List<String> cache;
     private boolean preventDuplicate = false;
     /*
-    * Turn scanning on and off from the activity
-    * */
+     * Turn scanning on and off from the activity
+     * */
     public void toggleScanning(boolean enable) {
         if (enable) {
             startScanning();
@@ -288,14 +309,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
-               preventDuplicate = true;
-               UHFTAGInfo info = (UHFTAGInfo) msg.obj;
-               // Binary search check for duplicates
+            preventDuplicate = true;
+            UHFTAGInfo info = (UHFTAGInfo) msg.obj;
+            // Binary search check for duplicates
             if(!StringUtils.isEmpty(info.getEPC())) {
                 int index = checkIfExist(info.getEPC());
                 if(index == -1) {
-                playSound(1);
-                // TODO fix date time to work with earlier versions
+                    playSound(1);
+                    // TODO fix date time to work with earlier versions
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         if(callerID.equals("RegistrationActivity")) {
                             temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now().toString(), "Janko", info.getRssi()));
@@ -381,7 +402,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         soundMap.put(1, soundPool.load(getActivity(), R.raw.barcodebeep, 1));
         soundMap.put(2, soundPool.load(getActivity(), R.raw.serror, 1));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            am = (AudioManager) Objects.requireNonNull(getActivity()).getSystemService(AUDIO_SERVICE);// 实例化AudioManager对象
+            am = (AudioManager) Objects.requireNonNull(getActivity()).getSystemService(AUDIO_SERVICE);// å®žä¾‹åŒ–AudioManagerå¯¹è±¡
         }
     }
     HashMap<Integer, Integer> soundMap = new HashMap<Integer, Integer>();

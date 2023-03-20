@@ -10,7 +10,7 @@ import java.util.List;
 @Dao
 public interface AssetDAO {
 
-    @Insert(entity = ItemLocation.class, onConflict = REPLACE)
+    @Insert(entity = Asset.class, onConflict = REPLACE)
     void insert(Asset asset);
     @Update
     void update(Asset asset);

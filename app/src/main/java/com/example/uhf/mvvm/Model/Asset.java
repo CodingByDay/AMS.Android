@@ -19,8 +19,10 @@ public class Asset {
     private String timestamp;
     private String user;
 
+    private boolean committed;
 
-    public Asset(String item, String code, String name, String location, String epc, String timestamp, String user) {
+
+    public Asset(String item, String code, String name, String location, String epc, String timestamp, String user, boolean committed) {
         this.item = item;
         this.code = code;
         this.name = name;
@@ -28,6 +30,7 @@ public class Asset {
         this.epc = epc;
         this.timestamp = timestamp;
         this.user = user;
+        this.committed = committed;
     }
 
 
@@ -95,7 +98,11 @@ public class Asset {
         this.user = user;
     }
 
+    public boolean isCommitted() {
+        return committed;
+    }
 
-
-
+    public void setCommitted(boolean committed) {
+        this.committed = committed;
+    }
 }
