@@ -329,8 +329,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
                                 ItemTemporary tmp = new ItemTemporary(epc, "", "", location, 1, timestamp.toString(), "Janko", "" );
 
-
-
                                 // Continues here
                             } else {
                                 // Transfer location and make a new object
