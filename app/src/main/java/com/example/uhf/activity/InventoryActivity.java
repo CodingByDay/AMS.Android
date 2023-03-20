@@ -56,6 +56,8 @@ public RFIDWithUHFUART mReader;
     private ArrayAdapter locationsAdapter;
     private LocationViewModel locationsViewModel;
 
+    private Button btExit;
+
     public ItemTemporary current;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +79,21 @@ public RFIDWithUHFUART mReader;
     }
     private int helpCounter = 0;
     private void initViews() {
-
+        btExit = findViewById(R.id.btExit);
+        btExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getApplicationContext(), LoginActivityMain.class);
+                startActivity(myIntent);
+                finishAffinity();
+            }
+        });
         btConfirm = findViewById(R.id.btConfirm);
         tbLocation = findViewById(R.id.tbLocation);
         tbLocation.setBackgroundColor(Color.parseColor("#34e5eb"));
         btToggleScanning = findViewById(R.id.btToggleScanning);
         cbLocation = findViewById(R.id.cbLocation);
-        cbLocation.setTitle("Izberite lokaciju");
+        cbLocation.setTitle("Izberite lokacijo");
         cbLocation.setPositiveButton("Potrdi");
         List<String> locations = new ArrayList<String>();
         locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
@@ -146,7 +156,7 @@ public RFIDWithUHFUART mReader;
                     } else {
                         FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                         fixedAssetsFragment.startScanning();
-                        btToggleScanning.setText("Nehaj");
+                        btToggleScanning.setText("Prekini");
                     }
                 } else {
                     FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();

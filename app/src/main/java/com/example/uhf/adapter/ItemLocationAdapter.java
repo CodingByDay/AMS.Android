@@ -69,7 +69,7 @@ private final String caller;
                 return new ItemHolder(itemView, recyclerViewInterface);
             }
             case "RegistrationActivity": {
-                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_inventory, parent, false);
+                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
                 return new ItemHolder(itemView, recyclerViewInterface);
             }
         }
@@ -87,21 +87,30 @@ private final String caller;
                 holder.tbItem.setText(current.getItem());
                 holder.tbName.setText(current.getName());
                 holder.tbCode.setText(current.getCode());
-                holder.tbQty.setText("1");
+                if(current.getEcd().length()>=6) {
+                    holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
+                } else {
+                    holder.tbEpc.setText(current.getEcd());
+                }
                 break;
             }
             case "ListingActivity": {
                 holder.tbItem.setText(current.getItem());
                 holder.tbName.setText(current.getName());
                 holder.tbLocation.setText(current.getLocation());
-                holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
+                if(current.getEcd().length()>=6) {
+                    holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
+                } else {
+                    holder.tbEpc.setText(current.getEcd());
+                }
                 break;
             }
             case "RegistrationActivity": {
                 holder.tbItem.setText(current.getItem());
                 holder.tbName.setText(current.getName());
                 holder.tbCode.setText(current.getCode());
-                holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
+                // Ask about this
+                holder.tbQty.setText("1");
                 break;
             }
         }

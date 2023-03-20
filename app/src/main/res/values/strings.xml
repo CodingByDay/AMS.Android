@@ -2594,6 +2594,7 @@
     <string name="qty">Količina</string>
     <string name="item_location">Lokacija</string>
     <string name="transfer_inventory_sync">Sinhronizacija</string>
+    <string name="logout">Odjava</string>
 
 
 </resources>

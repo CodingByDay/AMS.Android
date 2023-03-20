@@ -132,13 +132,7 @@ private Button login;
                 }));
                 builder.show();
                 break;
-            case R.id.sync:
-                try {
-                    SyncData();
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
+
             case R.id.settings:
                 Toast.makeText(this, "Nastavitve", Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(getApplicationContext(), SettingsActivity.class);

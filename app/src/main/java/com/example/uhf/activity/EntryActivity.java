@@ -40,6 +40,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     private CardView btListingItems;
     private CardView btExportListing;
     private CardView btTransferListing;
+    private CardView btLogout;
     private ProgressDialog mypDialog;
     private Communicator client;
     private List<Setting> settingsList;
@@ -109,6 +110,11 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         }
 
     }
+
+
+
+
+
     private void initializeViews() {
         btTransferLocations = findViewById(R.id.transferLocations);
         btTransferItems = findViewById(R.id.transferItems);
@@ -116,6 +122,16 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btListingItems = findViewById(R.id.listingItems);
         btExportListing = findViewById(R.id.exportListing);
         btTransferListing = findViewById(R.id.transferListing);
+        btLogout = findViewById(R.id.btLogout);
+
+
+        btLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
 
         btTransferLocations.setOnClickListener(new View.OnClickListener() {
             @Override
