@@ -159,12 +159,6 @@ private final String caller;
                 }
             }
 
-
-
-
-
-
-
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

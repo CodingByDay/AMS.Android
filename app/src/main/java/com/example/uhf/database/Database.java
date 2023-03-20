@@ -8,6 +8,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.uhf.mvvm.Model.Asset;
+import com.example.uhf.mvvm.Model.AssetDAO;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemDAO;
 import com.example.uhf.mvvm.Model.ItemLocation;
@@ -21,7 +23,7 @@ import com.example.uhf.mvvm.Model.LocationDAO;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.settings.SettingDAO;
 
-@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class, Location.class, ItemLocation.class, ItemLocationCache.class}, version = 10)
+@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class, Location.class, ItemLocation.class, ItemLocationCache.class, Asset.class}, version = 11)
 public abstract class Database extends RoomDatabase {
 
     private static Database instance;
@@ -36,6 +38,9 @@ public abstract class Database extends RoomDatabase {
     public abstract ItemLocationCacheDAO itemLocationCacheDAO();
 
     public abstract SettingDAO settingDAO();
+
+
+    public abstract AssetDAO assetDAO();
 
     public static synchronized Database getInstance(Context context) {
         if(instance == null) {
@@ -64,6 +69,7 @@ public abstract class Database extends RoomDatabase {
         private LocationDAO locationDAO;
         private SettingDAO  settingDAO;
 
+        private AssetDAO assetDAO;
         private ItemLocationCacheDAO itemLocationCacheDAO;
         private PopulateDbAsyncTask(Database db) {
             itemDAO = db.itemDAO();
@@ -71,6 +77,7 @@ public abstract class Database extends RoomDatabase {
             settingDAO = db.settingDAO();
             locationDAO = db.locationDAO();
             itemLocationCacheDAO = db.itemLocationCacheDAO();
+            assetDAO = db.assetDAO();
         }
 
 
