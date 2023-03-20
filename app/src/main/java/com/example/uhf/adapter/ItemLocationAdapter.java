@@ -56,6 +56,22 @@ private final RecyclerViewInterface recyclerViewInterface;
     @NonNull
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+        switch (calllerID) {
+            case "InventoryActivity": {
+                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+                return new ItemHolder(itemView, recyclerViewInterface);
+            }
+            case "ListingActivity": {
+                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_listing, parent, false);
+                return new ItemHolder(itemView, recyclerViewInterface);
+            }
+            case "RegistrationActivity": {
+                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_inventory, parent, false);
+                return new ItemHolder(itemView, recyclerViewInterface);
+            }
+        }
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         return new ItemHolder(itemView, recyclerViewInterface);
     }
@@ -64,11 +80,33 @@ private final RecyclerViewInterface recyclerViewInterface;
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         ItemLocation current = items.get(position);
 
-        holder.tbItem.setText(current.getItem());
-        // TODO: link table
-        holder.tbName.setText(current.getName());
-        holder.tbCode.setText(current.getCode());
-        holder.tbQty.setText("1");
+
+        switch (calllerID) {
+            case "InventoryActivity": {
+                holder.tbItem.setText(current.getItem());
+                holder.tbName.setText(current.getName());
+                holder.tbCode.setText(current.getCode());
+                holder.tbQty.setText("1");
+                break;
+            }
+            case "ListingActivity": {
+                holder.tbItem.setText(current.getItem());
+                holder.tbName.setText(current.getName());
+                holder.tbLocation.setText(current.getLocation());
+                holder.tbEpc.setText(current.getEcd());
+                break;
+            }
+            case "RegistrationActivity": {
+                holder.tbItem.setText(current.getItem());
+                holder.tbName.setText(current.getName());
+                holder.tbCode.setText(current.getCode());
+                holder.tbQty.setText("1");
+                break;
+            }
+        }
+
+
+
     }
 
     @Override
@@ -86,15 +124,46 @@ private final RecyclerViewInterface recyclerViewInterface;
         private TextView tbLocation;
         private TextView tbCode;
         private TextView tbQty;
+
+        private TextView tbEpc;
+
         private LinearLayout linearLayout;
 
         public ItemHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
-            tbItem = (TextView) itemView.findViewById(R.id.tbItem);
-            tbName = (TextView) itemView.findViewById(R.id.tbName);
-            // tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
-            tbCode = (TextView) itemView.findViewById(R.id.tbCode);
-            tbQty = (TextView) itemView.findViewById(R.id.tbQty);
+
+            // switch the context
+            switch (calllerID) {
+                case "InventoryActivity": {
+                    tbItem = itemView.findViewById(R.id.tbItem);
+                    tbName = itemView.findViewById(R.id.tbName);
+                    tbCode = itemView.findViewById(R.id.tbCode);
+                    tbQty = itemView.findViewById(R.id.tbQty);
+                    break;
+                }
+                case "ListingActivity": {
+                    tbItem = itemView.findViewById(R.id.tbItem);
+                    tbName = itemView.findViewById(R.id.tbName);
+                    tbLocation = itemView.findViewById(R.id.tbLocation);
+                    tbEpc = itemView.findViewById(R.id.tbEpc);
+                    break;
+                }
+                case "RegistrationActivity": {
+                    boolean different = true;
+                    tbItem = itemView.findViewById(R.id.tbItem);
+                    tbName = itemView.findViewById(R.id.tbName);
+                    tbCode = itemView.findViewById(R.id.tbCode);
+                    tbQty =  itemView.findViewById(R.id.tbQty);
+                    break;
+                }
+            }
+
+
+
+
+
+
+
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

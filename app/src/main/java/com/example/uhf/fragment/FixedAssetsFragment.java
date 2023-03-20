@@ -132,9 +132,31 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 initRegistration(view);
                 break;
         }
+        changeUI(view, callerID);
         return view;
     }
 
+
+    private void changeUI(View view, String callerID) {
+        switch (callerID) {
+            case "InventoryActivity":
+
+                break;
+            case "ListingActivity":
+                TextView first = view.findViewById(R.id.first);
+                TextView second = view.findViewById(R.id.second);
+                TextView third = view.findViewById(R.id.third);
+                TextView forth = view.findViewById(R.id.forth);
+                first.setText("Sredstvo");
+                second.setText("Naziv");
+                third.setText("Lokacija");
+                forth.setText("EPC");
+                break;
+            case "RegistrationActivity":
+
+                break;
+        }
+    }
     private void initListing(View view) {
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
