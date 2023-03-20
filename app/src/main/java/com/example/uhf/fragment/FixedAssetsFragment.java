@@ -340,15 +340,17 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                                 if(asset!=null ) {
 
                                     if(location == 0) {
-                                    temporaryViewModel.insert(new ItemTemporary(item.getEcd(), item.getName(), item.getCode(), "", 1, Instant.now().toString(), "Janko", info.getRssi()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), item.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi()));
                                 } else {
-                                    temporaryViewModel.insert(new ItemTemporary(item.getEcd(), item.getName(), item.getCode(), String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi()));
                                 }
                             } else {
                                 if(location == 0) {
-                                    temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "", "", "", 1, Instant.now().toString(), "Janko", info.getRssi()));
+                                    assert false;
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi()));
                                 } else {
-                                    temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "", "", String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi()));
+                                    assert false;
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi()));
                                 }
                             }
                             } else {

@@ -326,9 +326,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 String epc = LocationActivity.this.epc;
                                 String location = LocationActivity.this.location;
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
                                 ItemTemporary tmp = new ItemTemporary(epc, "", "", location, 1, timestamp.toString(), "Janko", "" );
-
                                 // Continues here
                             } else {
                                 // Transfer location and make a new object
