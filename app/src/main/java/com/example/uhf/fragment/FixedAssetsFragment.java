@@ -151,7 +151,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 initRegistration(view);
                 break;
         }
-        //changeUI(view, callerID);
+        // changeUI(view, callerID);
 
         return view;
     }

@@ -200,6 +200,7 @@ private Button login;
         if(result) {
             if(!token.equals("")) {
                 settingsView.insert(new Setting("token", token));
+                settingsView.insert(new Setting("user", tbUname.getText().toString()));
             }
             Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
             startActivity(myIntent);

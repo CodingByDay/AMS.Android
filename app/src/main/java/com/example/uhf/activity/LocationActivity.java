@@ -13,6 +13,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -35,6 +37,9 @@ import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.LocationViewModel;
+import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
+import com.example.uhf.settings.Setting;
+import com.example.uhf.tools.SettingsHelper;
 import com.example.uhf.tools.UIHelper;
 import com.example.uhf.view.UhfLocationCanvasView;
 import com.rscja.deviceapi.RFIDWithUHFUART;
@@ -69,7 +74,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private ItemLocationCacheViewModel itemLocationCacheViewModel;
     private List<Location> locations;
     private ArrayAdapter locationsAdapter;
-    private Item item;
+    private ItemLocation item;
     private ItemLocation locationItem;
 
     private ItemLocationViewModel itemLocationViewModel;
@@ -79,12 +84,15 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private String epc;
     private String callerID;
     private String location;
+    private SettingsViewModel settingsView;
+    private List<Setting> settingsList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
         initUHF();
+        initSettings();
         barcodeUtility = new BarcodeUtility(this, this);
         llChart=findViewById(R.id.llChart);
         etEPC=findViewById(R.id.etEPC);
@@ -164,8 +172,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             btToggle.setText("Pavza");
         }}
     }
-    private Item findById(Integer id) {
-        for(Item item : Objects.requireNonNull(itemViewModel.getAllItems().getValue())) {
+    private ItemLocation findById(Integer id) {
+        for(ItemLocation item : itemsLocationClassLevel) {
             if(item.getID()==id) {
                 return item;
             }
@@ -180,6 +188,12 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             public void onChanged(List<ItemLocation> items) {
                 currentItem = findCorrectItemLocation(epc);
                 itemsLocationClassLevel = items;
+                item = findById(id);
+                if(item!=null) {
+                    lbItem.setText(item.getName());
+                    toggleLocation(true);
+                }
+
             }
         });
 
@@ -188,11 +202,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             @Override
             public void onChanged(List<Item> items) {
                 itemsClassLevel = items;
-                item = findById(id);
-                if(item!=null) {
-                    lbItem.setText(item.getName());
-                    toggleLocation(true);
-                }
+
             }
         });
         itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
@@ -213,6 +223,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
     }
 
+
+    private String locationCurrent;
     public class LocationDialog {
         public void showDialog(AppCompatActivity activity){
             dialog = new Dialog(activity);
@@ -220,6 +232,24 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.add_location_alert);
             EditText tbLocationScan = (EditText) dialog.findViewById(R.id.tbLocationScan);
+            tbLocationScan.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    if(!charSequence.equals("") ) {
+                        locationCurrent = charSequence.toString();
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
             SearchableSpinner cbLocation = (SearchableSpinner) dialog.findViewById(R.id.cbLocation);
             cbLocation.setTitle("Izberite lokaciju");
             cbLocation.setPositiveButton("Potrdi");
@@ -229,12 +259,12 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             btYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    locationItem.setLocation(cbLocation.getSelectedItem().toString());
+                    locationItem.setLocation(locationCurrent);
                     Date date = new Date(System.currentTimeMillis());
 
                     // Add the cached item here
                     FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                    itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), "Janko"));
+                    itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user")));
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
@@ -245,7 +275,11 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 @Override
                 public void onClick(View view) {
                     // Save the item to the
-                    itemLocationViewModel.insert(locationItem);
+                    locationItem.setLocation("");
+                    Date date = new Date(System.currentTimeMillis());
+                    // Add the cached item here
+                    FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                    itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user")));
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
@@ -298,6 +332,22 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             });
         }
     }
+
+
+
+
+
+    private void initSettings() {
+        settingsView = ViewModelProviders.of(this).get(SettingsViewModel.class);
+        settingsView.getAllItems().observe(this, new Observer<List<Setting>>() {
+            @Override
+            public void onChanged(List<Setting> settings) {
+                settingsList = settings;
+            }
+        });
+    }
+
+
     private void startLocation(){
 
         if(etEPC.getText().toString().equals("")) {
@@ -332,12 +382,15 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 // Transfer location and make a new object
                                 dialog.dismiss();
                                 stopLocation();
-                                String item = LocationActivity.this.item.toString();
+                                String item = LocationActivity.this.item.getItem();
                                 String code = LocationActivity.this.item.getCode();
+                                String name = LocationActivity.this.item.getName();
+                                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
                                 String location = "";
                                 String epc = etEPC.getText().toString();
                                 // TODO: Link item name here
-                                locationItem = new ItemLocation(item, code, location, epc, "test", "test", "test");
+                                locationItem = new ItemLocation(item, code, location, epc, name, timestamp.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
                                 LocationDialog alertLocation = new LocationDialog();
                                 alertLocation.showDialog(LocationActivity.this);
                             }

@@ -147,7 +147,13 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             @Override
             public void onClick(View view) {
                 try {
+                    mypDialog = new ProgressDialog(EntryActivity.this);
+                    mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    mypDialog.setMessage("init...");
+                    mypDialog.setCanceledOnTouchOutside(false);
+                    mypDialog.show();
                     SyncData(false);
+                    mypDialog.cancel();
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
                 }
