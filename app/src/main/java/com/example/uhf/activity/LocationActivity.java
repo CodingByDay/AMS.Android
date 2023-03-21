@@ -191,6 +191,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 item = findById(id);
                 if(item!=null) {
                     lbItem.setText(item.getName());
+                    toggleLocation(false);
                     toggleLocation(true);
                 }
 
@@ -384,8 +385,10 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         String epc=etEPC.getText().toString();
         boolean result= mReader.startLocation(this,epc, IUHF.Bank_EPC,32, new IUHFLocationCallback(){
             @Override
+
             public void getLocationValue(int Value) {
                 llChart.setData(Value);
+
                 if(Value >= 100) {
                     stopLocation();
                     AlertDialog.Builder alert = new AlertDialog.Builder(LocationActivity.this);
