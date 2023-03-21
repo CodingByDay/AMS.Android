@@ -40,7 +40,9 @@ import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.adapter.ItemLocationAdapter;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
+import com.example.uhf.mvvm.Model.ItemLocationCache;
 import com.example.uhf.mvvm.Model.ItemTemporary;
+import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemTemporaryViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
@@ -108,6 +110,8 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private TextView second;
     private TextView third;
     private TextView forth;
+    private ItemLocationCacheViewModel itemLocationCacheViewModel;
+    private List<ItemLocationCache> cached;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -215,7 +219,12 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;
-                adapter.setItems(items);
+
+                List<ItemLocation> removeCached = new ArrayList<>();
+
+                removeCached = removeCached(items);
+
+                adapter.setItems(removeCached);
             }
         });
         temporaryViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemTemporaryViewModel.class);
@@ -227,6 +236,27 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 mContext.scannedItems = items;
             }
         });
+
+
+        itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
+
+        itemLocationCacheViewModel.getAllItems().observe(this, new Observer<List<ItemLocationCache>>() {
+            @Override
+            public void onChanged(List<ItemLocationCache> itemLocationCaches) {
+                cached = itemLocationCaches;
+            }
+        });
+    }
+
+    private List<ItemLocation> removeCached(List<ItemLocation> items) {
+        for(ItemLocationCache item: cached) {
+            for (ItemLocation itemInner: items) {
+                items.remove(itemInner);
+                int r = 9+6;
+            }
+        }
+
+        return items;
     }
 
 
@@ -330,7 +360,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                     // TODO fix date time to work with earlier versions
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         if(callerID.equals("RegistrationActivity")) {
-                            temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now().toString(), "Janko", info.getRssi()));
+                            temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now().toString(), "Janko", info.getRssi(), -1));
                         } else if (callerID.equals("InventoryActivity")) {
                             int location = (int) Math.floor(Math.random() * 5);
                             ItemLocation item = filterList(info.getEPC());
@@ -340,17 +370,17 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                                 if(asset!=null ) {
 
                                     if(location == 0) {
-                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), item.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), item.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
                                 } else {
-                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
                                 }
                             } else {
                                 if(location == 0) {
                                     assert false;
-                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
                                 } else {
                                     assert false;
-                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
                                 }
                             }
                             } else {
@@ -426,7 +456,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         soundMap.put(1, soundPool.load(getActivity(), R.raw.barcodebeep, 1));
         soundMap.put(2, soundPool.load(getActivity(), R.raw.serror, 1));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            am = (AudioManager) Objects.requireNonNull(getActivity()).getSystemService(AUDIO_SERVICE);// å®žä¾‹åŒ–AudioManagerå¯¹è±¡
+            am = (AudioManager) Objects.requireNonNull(getActivity()).getSystemService(AUDIO_SERVICE);
         }
     }
     HashMap<Integer, Integer> soundMap = new HashMap<Integer, Integer>();

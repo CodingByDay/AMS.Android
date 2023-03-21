@@ -328,15 +328,21 @@ public class Communicator {
     // Retrieve item class
     public boolean retrieveItems(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
-
-
+            String token = "";
+            for (Setting setting: settings) {
+                if(setting.getValue().startsWith("http")) {
+                    baseUrl = setting.getValue();
+                } else if (setting.getValue().length() == 36 && setting.getValue().contains("-")) {
+                    token = setting.getValue();
+                }
+            }
 
 
             baseUrl = settings.get(0).getValue();
             String endpoint = "/getItems";
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(new Token(settings.get(1).getValue()));
+            String json = ow.writeValueAsString(new Token(token));
             String url = baseUrl + endpoint;
             RetrieveItems retrieve = new RetrieveItems();
             retrieve = retrieve.setInstance(context);
@@ -355,7 +361,7 @@ public class Communicator {
             for (Setting setting: settings) {
                 if(setting.getValue().startsWith("http")) {
                     baseUrl = setting.getValue();
-                } else {
+                } else if (setting.getValue().length() == 36 && setting.getValue().contains("-")) {
                     token = setting.getValue();
                 }
             }
@@ -384,7 +390,7 @@ public class Communicator {
             for (Setting setting: settings) {
                 if(setting.getValue().startsWith("http")) {
                     baseUrl = setting.getValue();
-                } else {
+                } else if (setting.getValue().length() == 36 && setting.getValue().contains("-")) {
                     token = setting.getValue();
                 }
             }
@@ -406,12 +412,13 @@ public class Communicator {
     // Retrieve assets class
     public boolean retrieveAssets(Context context, List<Setting> settings) throws JsonProcessingException {
         try {
-            String baseUrl = new String();
-            String token = new String();
+            String baseUrl = "";
+            String token = "";
+
             for (Setting setting: settings) {
                 if(setting.getValue().startsWith("http")) {
                     baseUrl = setting.getValue();
-                } else {
+                } else if (setting.getValue().length() == 36 && setting.getValue().contains("-")) {
                     token = setting.getValue();
                 }
             }
@@ -437,7 +444,7 @@ public class Communicator {
                 for (Setting setting: settings) {
                     if(setting.getValue().startsWith("http")) {
                         baseUrl = setting.getValue();
-                    } else {
+                    } else if (setting.getValue().length() == 36 && setting.getValue().contains("-")) {
                         token = setting.getValue();
                     }
                 }

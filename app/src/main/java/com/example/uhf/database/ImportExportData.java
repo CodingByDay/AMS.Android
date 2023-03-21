@@ -42,23 +42,15 @@ public class ImportExportData {
 
     }
     public void commitToLocalStorageLocations(RootLocation rootLocations) {
-
-
         Context inner = this.context;
         locationViewModel.insertBatch(this.context,rootLocations.locations);
-
     }
-
-
-
-
 
     public void commitToLocalStorageMaterial(Root rootItems,  RootAsset rootAssets) {
 
         int count = rootItems.items.size() + rootAssets.assets.size();
         itemViewModel.insertBatch(this.context, rootItems.items, count);
         itemLocationViewModel.insertBatch(this.context, rootAssets.assets, count);
-
 
     }
 

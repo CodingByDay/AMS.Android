@@ -13,40 +13,61 @@ public class Item {
     private String code;
     private double qty;
 
-    public Item(String item, String name, String code, double qty) {
+    private int qid;
+
+    public Item(String item, String name, String code, double qty, int qid) {
         this.item = item;
         this.name = name;
         this.code = code;
         this.qty = qty;
+        this.qid = qid;
     }
+
     public int getID() {
         return ID;
     }
+
     public void setID(int ID) {
         this.ID = ID;
     }
+
     public String getItem() {
         return item;
     }
+
     public void setItem(String item) {
         this.item = item;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getCode() {
         return code;
     }
+
     public void setCode(String code) {
         this.code = code;
     }
+
     public double getQty() {
         return qty;
     }
+
     public void setQty(double qty) {
         this.qty = qty;
+    }
+
+    public int getQid() {
+        return qid;
+    }
+
+    public void setQid(int qid) {
+        this.qid = qid;
     }
 }

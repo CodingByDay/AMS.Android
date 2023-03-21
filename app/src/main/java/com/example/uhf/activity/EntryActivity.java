@@ -91,6 +91,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             mypDialog.show();
             // Continue here
             client.retrieveLocations(EntryActivity.this, settingsList);
+
         } else {
             locationsClass = false;
             boolean connected = client.isDeviceConnected(this);
@@ -122,15 +123,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btListingItems = findViewById(R.id.listingItems);
         btExportListing = findViewById(R.id.exportListing);
         btTransferListing = findViewById(R.id.transferListing);
-        btLogout = findViewById(R.id.btLogout);
 
-
-        btLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
 
         btTransferLocations.setOnClickListener(new View.OnClickListener() {
@@ -147,13 +140,8 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             @Override
             public void onClick(View view) {
                 try {
-                    mypDialog = new ProgressDialog(EntryActivity.this);
-                    mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    mypDialog.setMessage("init...");
-                    mypDialog.setCanceledOnTouchOutside(false);
-                    mypDialog.show();
+
                     SyncData(false);
-                    mypDialog.cancel();
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
                 }
@@ -179,8 +167,16 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         });
         btTransferListing.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {mypDialog = new ProgressDialog(EntryActivity.this);
+
+                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mypDialog.setMessage("init...");
+                mypDialog.setCanceledOnTouchOutside(false);
+                mypDialog.show();
+
                 initSynchronization();
+
+                mypDialog.cancel();
             }
         });
     }

@@ -54,7 +54,7 @@ public class ItemLocationViewModel extends AndroidViewModel {
     public void insertBatch(Context context, ArrayList<Asset> items, int count) {
         List<com.example.uhf.mvvm.Model.ItemLocation> itemsLocations = new ArrayList<>();
         for (com.example.uhf.api.Asset item: items) {
-            itemsLocations.add(new com.example.uhf.mvvm.Model.ItemLocation(item.item, item.code, item.location, item.ecd, item.name, "test", "test"));
+            itemsLocations.add(new com.example.uhf.mvvm.Model.ItemLocation(item.item, item.code, item.location, item.ecd, item.name, "test", "test", item.qid));
         }
 
 

@@ -27,7 +27,9 @@ public class ItemTemporary {
 
     private String rssi;
 
-    public ItemTemporary(String ecd, String name, String code, String location, double qty, String timestamp, String user, String rssi) {
+    private int qid;
+
+    public ItemTemporary(String ecd, String name, String code, String location, double qty, String timestamp, String user, String rssi, int qid) {
         this.ecd = ecd;
         this.name = name;
         this.code = code;
@@ -36,8 +38,8 @@ public class ItemTemporary {
         this.timestamp = timestamp;
         this.user = user;
         this.rssi = rssi;
+        this.qid = qid;
     }
-
 
     @Ignore
     public ItemTemporary(String rssi) {
@@ -114,5 +116,13 @@ public class ItemTemporary {
 
     public void setRssi(String rssi) {
         this.rssi = rssi;
+    }
+
+    public int getQid() {
+        return qid;
+    }
+
+    public void setQid(int qid) {
+        this.qid = qid;
     }
 }

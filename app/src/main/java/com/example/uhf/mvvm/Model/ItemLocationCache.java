@@ -18,9 +18,10 @@ public class ItemLocationCache {
     private String timestamp;
     private String user;
 
+    private int qid;
 
 
-    public ItemLocationCache(int ID, String item, String code, String location, String ecd, String name, String timestamp, String user) {
+    public ItemLocationCache(int ID, String item, String code, String location, String ecd, String name, String timestamp, String user, int qid) {
         this.ID = ID;
         this.item = item;
         this.code = code;
@@ -29,7 +30,9 @@ public class ItemLocationCache {
         this.name = name;
         this.timestamp = timestamp;
         this.user = user;
+        this.qid = qid;
     }
+
 
     public int getID() {
         return ID;
@@ -93,5 +96,13 @@ public class ItemLocationCache {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public int getQid() {
+        return qid;
+    }
+
+    public void setQid(int qid) {
+        this.qid = qid;
     }
 }

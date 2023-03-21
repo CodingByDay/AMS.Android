@@ -24,8 +24,8 @@ public interface ItemLocationDAO {
     @Query("SELECT * FROM item_location")
     LiveData<List<ItemLocation>> getAllItems();
 
-    @Query("select id, item, name, code, location, ecd from item_location" +
-            " where ecd = '' and item != '' union select a.id,'' as item,'' as name, '' as code, '' as location, '' as ecd from item a left join\n" +
+    @Query("select id, item, name, code, location, ecd, qid from item_location" +
+            " where ecd = '' and item != '' union select a.id,'' as item,'' as name, '' as code, '' as location, '' as ecd, '' as qid from item a left join\n" +
             "item_location b on a.item = b.item group by a.item, a.qty having a.qty > count(b.item)")
     LiveData<List<ItemLocation>> getAllItemsThatAreNotRegistered();
 
@@ -35,7 +35,7 @@ public interface ItemLocationDAO {
     void updateByID(int id, String edc);
 
 
-    @Query("select id, item, code, location, ecd from item_location where ecd != ''")
+    @Query("select id, item, code, location, ecd, qid from item_location where ecd != ''")
     LiveData<List<ItemLocation>> getAllItemsThatAreRegistered();
 
 

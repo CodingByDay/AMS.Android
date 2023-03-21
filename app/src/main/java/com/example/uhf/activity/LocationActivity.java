@@ -223,6 +223,14 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
     }
 
+    private ItemLocation getItemByEpc(String epc) {
+        for (ItemLocation item: itemsLocationsClassLevel) {
+            if(item.getEcd().equals(epc)) {
+                return item;
+            }
+        }
+        return null;
+    }
 
     private String locationCurrent;
     public class LocationDialog {
@@ -259,12 +267,24 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             btYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    locationItem.setLocation(locationCurrent);
+
                     Date date = new Date(System.currentTimeMillis());
 
                     // Add the cached item here
                     FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                    itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user")));
+                    ItemLocation item = fixedAssetsFragment.itemLocationCurrent;
+
+
+                    item.setEcd(locationItem.getEcd());
+                    item.setLocation(locationCurrent);
+                    item.setTimestamp(date.toString());
+                    item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
+
+
+                     itemLocationViewModel.update(item);
+
+
+                    //itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"),locationItem.getQid()));
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
@@ -279,7 +299,15 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     Date date = new Date(System.currentTimeMillis());
                     // Add the cached item here
                     FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                    itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user")));
+
+                    item.setEcd(locationItem.getEcd());
+                    item.setLocation("");
+                    item.setTimestamp(date.toString());
+                    item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
+
+
+                    itemLocationViewModel.update(item);
+
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
@@ -376,7 +404,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 String epc = LocationActivity.this.epc;
                                 String location = LocationActivity.this.location;
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                                ItemTemporary tmp = new ItemTemporary(epc, "", "", location, 1, timestamp.toString(), "Janko", "" );
+                                ItemTemporary tmp = new ItemTemporary(epc, "", "", location, 1, timestamp.toString(), "Janko", "", -1 );
                                 // Continues here
                             } else {
                                 // Transfer location and make a new object
@@ -385,12 +413,13 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 String item = LocationActivity.this.item.getItem();
                                 String code = LocationActivity.this.item.getCode();
                                 String name = LocationActivity.this.item.getName();
+                                int qid = LocationActivity.this.item.getQid();
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
                                 String location = "";
                                 String epc = etEPC.getText().toString();
                                 // TODO: Link item name here
-                                locationItem = new ItemLocation(item, code, location, epc, name, timestamp.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
+                                locationItem = new ItemLocation(item, code, location, epc, name, timestamp.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"), qid);
                                 LocationDialog alertLocation = new LocationDialog();
                                 alertLocation.showDialog(LocationActivity.this);
                             }

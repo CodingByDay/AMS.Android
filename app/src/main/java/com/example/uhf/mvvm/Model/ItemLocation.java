@@ -19,8 +19,9 @@ public class ItemLocation {
     private String timestamp;
     private String user;
 
+    private int qid;
 
-    public ItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user) {
+    public ItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user, int qid) {
         this.item = item;
         this.code = code;
         this.location = location;
@@ -28,6 +29,7 @@ public class ItemLocation {
         this.name = name;
         this.timestamp = timestamp;
         this.user = user;
+        this.qid = qid;
     }
 
 
@@ -93,5 +95,13 @@ public class ItemLocation {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public int getQid() {
+        return qid;
+    }
+
+    public void setQid(int qid) {
+        this.qid = qid;
     }
 }
