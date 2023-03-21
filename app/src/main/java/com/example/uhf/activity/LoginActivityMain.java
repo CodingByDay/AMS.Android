@@ -33,6 +33,9 @@ import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.tools.SettingsHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +63,8 @@ private Button login;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        AppCenter.start(getApplication(), "a5a00bbc-d587-4742-a9a9-82dd343f1f9e",
+                Analytics.class, Crashes.class);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
         client = new Communicator();
