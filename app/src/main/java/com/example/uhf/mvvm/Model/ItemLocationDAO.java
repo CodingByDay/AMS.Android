@@ -35,7 +35,7 @@ public interface ItemLocationDAO {
     void updateByID(int id, String edc);
 
 
-    @Query("select id, item, code, location, ecd, qid from item_location where ecd != ''")
+    @Query("select id, item, name, code, location, ecd, qid from item_location where ecd != ''")
     LiveData<List<ItemLocation>> getAllItemsThatAreRegistered();
 
 

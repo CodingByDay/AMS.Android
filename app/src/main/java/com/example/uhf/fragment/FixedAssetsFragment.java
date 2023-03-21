@@ -372,7 +372,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                                     if(location == 0) {
                                     temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), item.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
                                 } else {
-                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
                                 }
                             } else {
                                 if(location == 0) {
@@ -380,7 +380,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                                     temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
                                 } else {
                                     assert false;
-                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), String.valueOf(location), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
                                 }
                             }
                             } else {

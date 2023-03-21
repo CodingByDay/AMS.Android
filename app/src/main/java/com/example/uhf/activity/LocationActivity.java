@@ -407,7 +407,20 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 String epc = LocationActivity.this.epc;
                                 String location = LocationActivity.this.location;
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                                ItemTemporary tmp = new ItemTemporary(epc, "", "", location, 1, timestamp.toString(), "Janko", "", -1 );
+                                String code = LocationActivity.this.item.getCode();
+                                String name = LocationActivity.this.item.getName();
+                                int qid = LocationActivity.this.item.getQid();
+
+
+                                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+
+                                ItemLocation item = fixedAssetsFragment.itemLocationCurrent;
+
+                                item.setLocation(locationCurrent);
+                                item.setTimestamp(timestamp.toString());
+                                item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
+
+                                itemLocationViewModel.update(item);
                                 // Continues here
                             } else {
                                 // Transfer location and make a new object

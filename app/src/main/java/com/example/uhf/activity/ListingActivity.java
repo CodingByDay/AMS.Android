@@ -73,7 +73,7 @@ public class ListingActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(getApplicationContext(), LoginActivityMain.class);
+                Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
                 startActivity(myIntent);
                 finishAffinity();
             }
