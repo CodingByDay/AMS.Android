@@ -28,6 +28,8 @@ private List<Setting> settingsClass  = new ArrayList<Setting>();
 private Button btSave;
     private EditText tbUrl;
     private SettingsHelper settingsHelper = new SettingsHelper();
+    private EditText tbCompany;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +41,13 @@ private Button btSave;
     private void initUI() {
         btSave = (Button) findViewById(R.id.btSave);
         tbUrl = (EditText) findViewById(R.id.tbUrl);
+        tbCompany = (EditText) findViewById(R.id.tbCompany);
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
                     settingsView.insert(new Setting("url", tbUrl.getText().toString()));
+                    settingsView.insert(new Setting("company", tbCompany.getText().toString()));
                 } catch (Exception e) {
                     // TODO application wide logging
                 } finally {

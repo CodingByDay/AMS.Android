@@ -2595,6 +2595,7 @@
     <string name="item_location">Lokacija</string>
     <string name="transfer_inventory_sync">Sinhronizacija</string>
     <string name="logout">Odjava</string>
+    <string name="companyName">Ime podjetja</string>
 
 
 </resources>

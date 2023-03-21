@@ -31,6 +31,7 @@ import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
+import com.example.uhf.tools.SettingsHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
@@ -177,10 +178,14 @@ private Button login;
             @Override
             public void onClick(View view) {
                 // Data
-                String company = tbCompany.getText().toString();
+
+                if(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "company")!=null) {
+
+                String company = SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "company");
                 String uname = tbUname.getText().toString();
                 String password = tbPassword.getText().toString();
-                if(company.isEmpty()||uname.isEmpty()||password.isEmpty()) {
+                    assert company != null;
+                    if(company.isEmpty()||uname.isEmpty()||password.isEmpty()) {
                     return;
                 }
                 // Call the API
@@ -189,7 +194,11 @@ private Button login;
                     client.login(LoginActivityMain.this, settingsList, company, uname, password);
                 } catch (JsonProcessingException e) {
                     // TODO handle exceptions better
-                    boolean successs = false;
+
+                }
+
+                }  else {
+                    Toast.makeText(LoginActivityMain.this, "Ni podatka o podjetju", Toast.LENGTH_SHORT).show();
                 }
             }
         });
