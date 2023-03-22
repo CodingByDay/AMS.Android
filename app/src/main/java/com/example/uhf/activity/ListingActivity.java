@@ -32,6 +32,8 @@ public class ListingActivity extends AppCompatActivity {
     private SearchView swListing;
     private Setting token;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,11 @@ public class ListingActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                fixedAssetsFragment.adapter.searchByField("first", newText);
+                String currentColumnSearch = fixedAssetsFragment.currentSearchColumn;
+                if(currentColumnSearch.equals("")) {
+                    currentColumnSearch = fixedAssetsFragment.first.getText().toString();
+                }
+                fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
 
 
                 int result = 9+9;

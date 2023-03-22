@@ -21,6 +21,7 @@ private List<ItemLocation> items = new ArrayList<ItemLocation>();
 private final RecyclerViewInterface recyclerViewInterface;
     private static String calllerID;
 private final String caller;
+    private List<ItemLocation> backupForSearching;
 
 
     public ItemLocationAdapter(RecyclerViewInterface recyclerViewInterface, String callerID) {
@@ -126,11 +127,42 @@ private final String caller;
 
     public void setItems(List<ItemLocation> items) {
         this.items = items;
+        this.backupForSearching = items;
         notifyDataSetChanged();
     }
 
     public void searchByField(String field, String searchBy) {
-
+        List<ItemLocation> sorted = new ArrayList<>();
+        for (ItemLocation item: this.backupForSearching) {
+            switch (field) {
+                case "Sredstvo":
+                    if(item.getItem().toLowerCase().contains(searchBy.toLowerCase())) {
+                        sorted.add(item);
+                    }
+                    break;
+                case "Naziv":
+                    if(item.getName().toLowerCase().contains(searchBy.toLowerCase())) {
+                        sorted.add(item);
+                    }
+                    break;
+                case "Ident":
+                    if(item.getCode().toLowerCase().contains(searchBy.toLowerCase())) {
+                        sorted.add(item);
+                    }
+                case "Lokacija":
+                    if(item.getLocation().toLowerCase().contains(searchBy.toLowerCase())) {
+                        sorted.add(item);
+                    }
+                    break;
+                case "EPC":
+                    if(item.getEcd().toLowerCase().contains(searchBy.toLowerCase())) {
+                        sorted.add(item);
+                    }
+                    break;
+            }
+            this.items = sorted;
+            notifyDataSetChanged();
+        }
 
     }
 

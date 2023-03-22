@@ -106,13 +106,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     public int index;
     public ItemLocation itemLocationCurrent;
     private ItemTemporary itemsTemporaryCurrent;
-    private TextView first;
-    private TextView second;
-    private TextView third;
-    private TextView forth;
+    public TextView first;
+    public TextView second;
+    public TextView third;
+    public TextView forth;
     private ItemLocationCacheViewModel itemLocationCacheViewModel;
     private List<ItemLocationCache> cached;
 
+    public String currentSearchColumn  = "";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -125,6 +126,30 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         third = view.findViewById(R.id.third);
         forth = view.findViewById(R.id.forth);
 
+        first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentSearchColumn = first.getText().toString();
+            }
+        });
+        second.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentSearchColumn = second.getText().toString();
+            }
+        });
+        third.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentSearchColumn = third.getText().toString();
+            }
+        });
+        forth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentSearchColumn = forth.getText().toString();
+            }
+        });
 
         // Initialization
         initSound();
