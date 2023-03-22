@@ -1,5 +1,6 @@
 package com.example.uhf.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,43 +13,104 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uhf.R;
 import com.example.uhf.adapter.ItemLocationAdapter;
+import com.example.uhf.adapter.LocationAdapter;
+import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.mvvm.Model.ItemLocation;
+import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
+import com.example.uhf.mvvm.ViewModel.LocationViewModel;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Objects;
 
 
-public class ListingLocationsFragment extends Fragment {
+public class ListingLocationsFragment extends KeyDwonFragment implements RecyclerViewInterface {
 private RecyclerView rwItems;
-    private ItemLocationAdapter adapter;
+    public LocationAdapter adapter;
+    private LocationViewModel locationViewModel;
+    private List<Location> itemsClassLevel;
+    
+    public TextView first;
+    private TextView second;
+    private TextView third;
+    public String currentSearchColumn;
 
+    private Button btExit;
+    private static ListingLocationsFragment instance;
+    private int selected = -1;
+
+    public static ListingLocationsFragment getInstance() {
+        return instance;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        instance = this;
         super.onCreate(savedInstanceState);
         
     }
+    private void clearColors() {
+        first.setBackgroundColor(Color.TRANSPARENT);
+        second.setBackgroundColor(Color.TRANSPARENT);
+        third.setBackgroundColor(Color.TRANSPARENT);
 
+    }
     private void initData(View view) {
+
+
+        first = view.findViewById(R.id.first);
+        second = view.findViewById(R.id.second);
+        third = view.findViewById(R.id.third);
+        first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.sortASCandDESC(first.getText().toString());
+                clearColors();
+                currentSearchColumn = first.getText().toString();
+                first.setBackgroundColor(Color.parseColor("#FFCCCB"));
+            }
+        });
+        second.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.sortASCandDESC(second.getText().toString());
+                clearColors();
+                currentSearchColumn = second.getText().toString();
+                second.setBackgroundColor(Color.parseColor("#FFCCCB"));
+            }
+        });
+        third.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.sortASCandDESC(third.getText().toString());
+                clearColors();
+                currentSearchColumn = third.getText().toString();
+                third.setBackgroundColor(Color.parseColor("#FFCCCB"));
+            }
+        });
+        
         rwItems = view.findViewById(R.id.rwItems);
+        rwItems.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rwItems.setHasFixedSize(true);
 
-
-//    rwItems.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//    rwItems.setHasFixedSize(true);
-//    adapter = new ItemLocationAdapter(this, callerID);
-//    rwItems.setAdapter(adapter);
-//    itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
-//    itemLocationViewModel.getItemsThatAreRegistered().observe(this, new Observer<List<ItemLocation>>() {
-//        @Override
-//        public void onChanged(List<ItemLocation> items) {
-//            itemsClassLevel = items;
-//            adapter.setItems(items);
-//        }
-//    });
+        adapter = new LocationAdapter(this);
+        rwItems.setAdapter(adapter);
+            locationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(LocationViewModel.class);
+            locationViewModel.getAllItems().observe(this, new Observer<List<Location>>() {
+                @Override
+                public void onChanged(List<Location> locations) {
+                    itemsClassLevel = locations;
+                    adapter.setItems(locations);
+                }
+            });
         
     }
 
@@ -59,5 +121,16 @@ private RecyclerView rwItems;
         View view = inflater.inflate(R.layout.fragment_listing_locations, container, false);
         initData(view);
         return view;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        if(selected==-1) {
+            Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#FFCCCB"));
+        } else {
+            Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(selected)).setBackgroundColor(Color.TRANSPARENT);
+            Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#FFCCCB"));
+        }
+        selected = position;
     }
 }

@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uhf.R;
 import com.example.uhf.interfaces.RecyclerViewInterface;
+import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.Location;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHolder> {
@@ -33,20 +35,82 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHo
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_item, parent, false);
-
         return new ItemHolder(itemView, recyclerViewInterface);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         Location current = items.get(position);
-
         holder.tbName.setText(current.getName());
         holder.tbLocation.setText(current.getLocation());
         holder.tbCode.setText(current.getCode());
-
-
     }
+
+    private List<Location> backupForSearching = new ArrayList<>();
+    private boolean tbLocationASC;
+    private boolean tbNameASC;
+    private boolean tbCodeASC;
+
+    public void searchByField(String field, String searchBy) {
+        List<Location> sorted = new ArrayList<>();
+        if(this.backupForSearching!=null) {
+            for (Location item : this.backupForSearching) {
+                switch (field) {
+                    case "Lokacija":
+                        if (item.getLocation().toLowerCase().contains(searchBy.toLowerCase())) {
+                            sorted.add(item);
+                        }
+                        break;
+                    case "Naziv":
+                        if (item.getName().toLowerCase().contains(searchBy.toLowerCase())) {
+                            sorted.add(item);
+                        }
+                        break;
+                    case "Šifra":
+                        if (item.getCode().toLowerCase().contains(searchBy.toLowerCase())) {
+                            sorted.add(item);
+                        }
+
+                }
+                this.items = sorted;
+                notifyDataSetChanged();
+            }
+        }
+    }
+
+    public void sortASCandDESC(String field) {
+        switch (field) {
+            case "Lokacija":
+                if(tbLocationASC) {
+                    items.sort(Comparator.comparing(Location::getLocation).reversed());
+                    tbLocationASC = false;
+                } else {
+                    items.sort(Comparator.comparing(Location::getLocation));
+                    tbLocationASC = true;
+                }
+                break;
+            case "Naziv":
+                if(tbNameASC) {
+                    items.sort(Comparator.comparing(Location::getName));
+                    tbNameASC = false;
+                } else {
+                    items.sort(Comparator.comparing(Location::getName).reversed());
+                    tbNameASC = true;
+                }
+                break;
+            case "Šifra":
+                if(tbCodeASC) {
+                    items.sort(Comparator.comparing(Location::getCode));
+                    tbCodeASC = false;
+                } else {
+                    items.sort(Comparator.comparing(Location::getCode).reversed());
+                    tbLocationASC = true;
+                }
+                break;
+        }
+        notifyDataSetChanged();
+    }
+
 
     public List<Location> getItems() {
         return items;
@@ -58,6 +122,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHo
 
     public void setItems(List<Location> items) {
         this.items = items;
+        this.backupForSearching = items;
         notifyDataSetChanged();
     }
     class ItemHolder extends RecyclerView.ViewHolder {
@@ -75,7 +140,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHo
 
             tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
             tbName = (TextView) itemView.findViewById(R.id.tbName);
-            tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
+            tbCode = (TextView) itemView.findViewById(R.id.tbCode);
 
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {
