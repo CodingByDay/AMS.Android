@@ -1,5 +1,6 @@
 package com.example.uhf.mvvm.Model;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,13 +11,22 @@ public class ItemLocation {
     @PrimaryKey(autoGenerate = true)
     private int ID;
     private String item;
+    @ColumnInfo( defaultValue = "empty")
+
     private String code;
+    @ColumnInfo(defaultValue = "empty")
+
     private String location;
+    @ColumnInfo(defaultValue = "empty")
+
     private String ecd;
+    @ColumnInfo(defaultValue = "empty")
 
     private String name;
-
+    @ColumnInfo(defaultValue = "empty")
     private String timestamp;
+    @ColumnInfo(defaultValue = "empty")
+
     private String user;
 
     private int qid;

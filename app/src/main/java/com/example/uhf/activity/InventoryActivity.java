@@ -93,14 +93,16 @@ public RFIDWithUHFUART mReader;
             public boolean onQueryTextChange(String newText) {
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                 String currentColumnSearch = fixedAssetsFragment.currentSearchColumn;
+
                 if(currentColumnSearch.equals("")) {
                     currentColumnSearch = fixedAssetsFragment.first.getText().toString();
                 }
+
                 if(fixedAssetsFragment.adapter!=null) {
                     fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
                 }
 
-                int result = 9+9;
+
                 return false;
             }
         });

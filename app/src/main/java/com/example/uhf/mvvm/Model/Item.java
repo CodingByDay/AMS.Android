@@ -1,6 +1,7 @@
 package com.example.uhf.mvvm.Model;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -8,8 +9,14 @@ import androidx.room.PrimaryKey;
 public class Item {
     @PrimaryKey(autoGenerate = true)
     private int ID;
+    @ColumnInfo(defaultValue = "")
+
     private String item;
+    @ColumnInfo(defaultValue = "")
+
     private String name;
+    @ColumnInfo(defaultValue = "")
+
     private String code;
     private double qty;
 

@@ -267,7 +267,6 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         if(progress >= 100) {
             mypDialog.hide();
             mypDialog.cancel();
-            Toast.makeText(this, "Podatki sinhronizirani", Toast.LENGTH_SHORT).show();
         }
     }
 }

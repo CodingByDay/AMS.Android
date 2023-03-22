@@ -10,7 +10,9 @@ import androidx.lifecycle.LiveData;
 import com.example.uhf.api.Asset;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.repository.ItemLocationRepository;
+import com.example.uhf.tools.SettingsHelper;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +56,12 @@ public class ItemLocationViewModel extends AndroidViewModel {
     public void insertBatch(Context context, ArrayList<Asset> items, int count) {
         List<com.example.uhf.mvvm.Model.ItemLocation> itemsLocations = new ArrayList<>();
         for (com.example.uhf.api.Asset item: items) {
-            itemsLocations.add(new com.example.uhf.mvvm.Model.ItemLocation(item.item, item.code, item.location, item.ecd, item.name, "test", "test", item.qid));
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            if(item.name == null ) {
+                item.name = "";
+            }
+            itemsLocations.add(new com.example.uhf.mvvm.Model.ItemLocation(item.item, item.code, item.location, item.ecd, item.name, timestamp.toString(), "", item.qid));
         }
-
-
         repository.insertItemsBatch(context, count, itemsLocations.toArray(new com.example.uhf.mvvm.Model.ItemLocation[0]));
     }
 }
