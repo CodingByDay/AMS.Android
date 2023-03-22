@@ -1,6 +1,7 @@
 package com.example.uhf.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -59,6 +60,8 @@ public RFIDWithUHFUART mReader;
     private Button btExit;
 
     public ItemTemporary current;
+    private SearchView swListing;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +82,28 @@ public RFIDWithUHFUART mReader;
     }
     private int helpCounter = 0;
     private void initViews() {
+        swListing = findViewById(R.id.swListing);
+        swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                String currentColumnSearch = fixedAssetsFragment.currentSearchColumn;
+                if(currentColumnSearch.equals("")) {
+                    currentColumnSearch = fixedAssetsFragment.first.getText().toString();
+                }
+                if(fixedAssetsFragment.adapter!=null) {
+                    fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
+                }
+
+                int result = 9+9;
+                return false;
+            }
+        });
         btExit = findViewById(R.id.btExit);
         btExit.setOnClickListener(new View.OnClickListener() {
             @Override

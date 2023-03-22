@@ -1,6 +1,7 @@
 package com.example.uhf.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -39,6 +40,7 @@ public class RegistrationActivity extends AppCompatActivity {
     public List<ItemTemporary> scannedItems =  new ArrayList<ItemTemporary>();
     private ProgressDialog mypDialog;
 
+    private SearchView swListing;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,26 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void initializeActivity() {
+
+        swListing = findViewById(R.id.swListing);
+        swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                String currentColumnSearch = fixedAssetsFragment.currentSearchColumn;
+                if(currentColumnSearch.equals("")) {
+                    currentColumnSearch = fixedAssetsFragment.first.getText().toString();
+                }
+                fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
+
+                return false;
+            }
+        });
         btExit = findViewById(R.id.btExit);
         btRequest = findViewById(R.id.btRequest);
         btExit.setOnClickListener(new View.OnClickListener() {
