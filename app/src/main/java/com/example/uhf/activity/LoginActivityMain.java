@@ -36,6 +36,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
+import com.microsoft.appcenter.distribute.Distribute;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ private Button login;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         AppCenter.start(getApplication(), "a5a00bbc-d587-4742-a9a9-82dd343f1f9e",
-                Analytics.class, Crashes.class);
+                Analytics.class, Crashes.class, Distribute.class);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
         client = new Communicator();
@@ -183,9 +184,7 @@ private Button login;
             @Override
             public void onClick(View view) {
                 // Data
-
                 if(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "company")!=null) {
-
                 String company = SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "company");
                 String uname = tbUname.getText().toString();
                 String password = tbPassword.getText().toString();
@@ -199,9 +198,7 @@ private Button login;
                     client.login(LoginActivityMain.this, settingsList, company, uname, password);
                 } catch (JsonProcessingException e) {
                     // TODO handle exceptions better
-
                 }
-
                 }  else {
                     Toast.makeText(LoginActivityMain.this, "Ni podatka o podjetju", Toast.LENGTH_SHORT).show();
                 }

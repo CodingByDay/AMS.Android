@@ -65,9 +65,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private int count = 0;
     private List<ItemLocation> itemsClassLevel;
     private List<ItemLocation> itemsLocationsClassLevel;
-    private ItemLocationAdapter adapter;
-    private ItemLocationAdapter locationAdapter;
-    private ItemTemporaryAdapter temporaryAdapter;
+    public ItemLocationAdapter adapter;
+    public ItemLocationAdapter locationAdapter;
+    public ItemTemporaryAdapter temporaryAdapter;
     private String data;
     private static final String TAG = "UHFReadTagFragment";
     private boolean loopFlag = true;

@@ -128,6 +128,12 @@ private final String caller;
         this.items = items;
         notifyDataSetChanged();
     }
+
+    public void searchByField(String field, String searchBy) {
+
+
+    }
+
     class ItemHolder extends RecyclerView.ViewHolder {
         private TextView tbItem;
         private TextView tbName;

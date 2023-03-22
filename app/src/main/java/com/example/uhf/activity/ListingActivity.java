@@ -1,6 +1,7 @@
 package com.example.uhf.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,6 +29,7 @@ public class ListingActivity extends AppCompatActivity {
     private SettingsViewModel settingsView;
     private List<Setting> settingsList;
 
+    private SearchView swListing;
     private Setting token;
 
     @Override
@@ -35,6 +37,23 @@ public class ListingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_listing);
+        swListing = findViewById(R.id.swListing);
+        swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                fixedAssetsFragment.adapter.searchByField("first", newText);
+
+
+                int result = 9+9;
+                return false;
+            }
+        });
         initializeFragment();
         initializeButtonEvents();
         initSettings();

@@ -51,7 +51,7 @@ android {
 
         android.applicationVariants.all { variant ->
             variant.outputs.all {
-                outputFileName = "UHF-serial_v${defaultConfig.versionName}.apk"
+                outputFileName = "InventoryExpert_v${defaultConfig.versionName}.apk"
             }
         }
     }
@@ -63,7 +63,9 @@ android {
 }
 
 dependencies {
+
     def appCenterSdkVersion = '4.4.5'
+    implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
     implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
     implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
