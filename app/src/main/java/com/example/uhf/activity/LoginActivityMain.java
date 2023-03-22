@@ -1,9 +1,12 @@
 package com.example.uhf.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.view.Menu;
@@ -37,11 +40,15 @@ import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
 import com.microsoft.appcenter.distribute.Distribute;
+import com.microsoft.appcenter.distribute.DistributeListener;
+import com.microsoft.appcenter.distribute.ReleaseDetails;
+import com.microsoft.appcenter.distribute.UpdateAction;
+import com.microsoft.appcenter.utils.async.AppCenterFuture;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginActivityMain extends AppCompatActivity implements AsyncCallBack {
+public class LoginActivityMain extends AppCompatActivity implements AsyncCallBack, DistributeListener {
 private Button login;
     private ProgressDialog mypDialog;
     private EditText tbCompany;
@@ -66,6 +73,8 @@ private Button login;
     public void onCreate(Bundle savedInstanceState) {
         AppCenter.start(getApplication(), "a5a00bbc-d587-4742-a9a9-82dd343f1f9e",
                 Analytics.class, Crashes.class, Distribute.class);
+        Distribute.setEnabledForDebuggableBuild(true);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
         client = new Communicator();
@@ -73,6 +82,13 @@ private Button login;
         initSettings();
         initPageViews();
         initSynchronization();
+
+        boolean start = Distribute.isEnabled().get();
+
+
+
+        int res = 9+9;
+
     }
 
     private void initSynchronization() {
@@ -251,4 +267,55 @@ private Button login;
     public void setProgressValue(int progress) {
 
     }
+
+
+    @Override
+    public boolean onReleaseAvailable(Activity activity, ReleaseDetails releaseDetails) {
+
+        // Look at releaseDetails public methods to get version information, release notes text or release notes URL
+        String versionName = releaseDetails.getShortVersion();
+        int versionCode = releaseDetails.getVersion();
+        String releaseNotes = releaseDetails.getReleaseNotes();
+        Uri releaseNotesUrl = releaseDetails.getReleaseNotesUrl();
+
+        // Build our own dialog title and message
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
+        dialogBuilder.setTitle("Version " + versionName + " available!"); // you should use a string resource instead, this is just a simple example
+        dialogBuilder.setMessage(releaseNotes);
+
+        // Mimic default SDK buttons
+        dialogBuilder.setPositiveButton(com.microsoft.appcenter.distribute.R.string.appcenter_distribute_update_dialog_download, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // This method is used to tell the SDK what button was clicked
+                Distribute.notifyUpdateAction(UpdateAction.UPDATE);
+            }
+        });
+
+        // We can postpone the release only if the update isn't mandatory
+        if (!releaseDetails.isMandatoryUpdate()) {
+            dialogBuilder.setNegativeButton(com.microsoft.appcenter.distribute.R.string.appcenter_distribute_update_dialog_postpone, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    // This method is used to tell the SDK what button was clicked
+                    Distribute.notifyUpdateAction(UpdateAction.POSTPONE);
+                }
+            });
+        }
+        dialogBuilder.setCancelable(false); // if it's cancelable you should map cancel to postpone, but only for optional updates
+        dialogBuilder.create().show();
+
+        // Return true if you're using your own dialog, false otherwise
+        return true;
+    }
+
+    @Override
+    public void onNoReleaseAvailable(Activity activity) {
+        Toast.makeText(activity, activity.getString(R.string.no_updates_available), Toast.LENGTH_LONG).show();
+    }
+
 }
