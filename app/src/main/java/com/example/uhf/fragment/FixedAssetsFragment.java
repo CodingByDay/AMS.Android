@@ -114,6 +114,18 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private List<ItemLocationCache> cached;
 
     public String currentSearchColumn  = "";
+
+
+
+    private void clearColors() {
+        first.setBackgroundColor(Color.TRANSPARENT);
+        second.setBackgroundColor(Color.TRANSPARENT);
+        third.setBackgroundColor(Color.TRANSPARENT);
+        forth.setBackgroundColor(Color.TRANSPARENT);
+
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -129,25 +141,35 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clearColors();
                 currentSearchColumn = first.getText().toString();
+                first.setBackgroundColor(Color.parseColor("#FFCCCB"));
             }
         });
         second.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clearColors();
                 currentSearchColumn = second.getText().toString();
+                second.setBackgroundColor(Color.parseColor("#FFCCCB"));
+
             }
         });
         third.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clearColors();
                 currentSearchColumn = third.getText().toString();
+                third.setBackgroundColor(Color.parseColor("#FFCCCB"));
             }
         });
         forth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clearColors();
                 currentSearchColumn = forth.getText().toString();
+                forth.setBackgroundColor(Color.parseColor("#FFCCCB"));
+
             }
         });
 
