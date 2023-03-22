@@ -140,7 +140,6 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             @Override
             public void onClick(View view) {
                 try {
-
                     SyncData(false);
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
@@ -150,7 +149,8 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btListingLocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent myIntent = new Intent(getApplicationContext(), ListingLocationsActivity.class);
+                startActivity(myIntent);
             }
         });
         btListingItems.setOnClickListener(new View.OnClickListener() {

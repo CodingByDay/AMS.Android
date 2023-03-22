@@ -2597,6 +2597,7 @@
     <string name="logout">Odjava</string>
     <string name="companyName">Ime podjetja</string>
     <string name="no_updates_available">Najnovejša verzija</string>
+    <string name="code">Šifra</string>
 
 
 </resources>
