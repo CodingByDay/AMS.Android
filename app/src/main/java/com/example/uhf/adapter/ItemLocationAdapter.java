@@ -14,6 +14,7 @@ import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.mvvm.Model.ItemLocation;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ItemLocationAdapter extends RecyclerView.Adapter<ItemLocationAdapter.ItemHolder> {
@@ -164,6 +165,67 @@ private final String caller;
             notifyDataSetChanged();
         }
 
+    }
+
+
+
+
+
+    boolean itemASC = true;
+    boolean nameASC = true;
+    boolean identASC = true;
+    boolean locationASC = true;
+    boolean epcASC = true;
+
+    public void sortASCandDESC(String field) {
+        switch (field) {
+            case "Sredstvo":
+                if(itemASC) {
+                    items.sort(Comparator.comparing(ItemLocation::getItem).reversed());
+                    itemASC = false;
+                } else {
+                    items.sort(Comparator.comparing(ItemLocation::getItem));
+                    itemASC = true;
+                }
+                break;
+            case "Naziv":
+                if(nameASC) {
+                    items.sort(Comparator.comparing(ItemLocation::getName));
+                    nameASC = false;
+                } else {
+                    items.sort(Comparator.comparing(ItemLocation::getName).reversed());
+                    nameASC = true;
+                }
+                break;
+            case "Ident":
+                if(identASC) {
+                    items.sort(Comparator.comparing(ItemLocation::getCode));
+                    identASC = false;
+                } else {
+                    items.sort(Comparator.comparing(ItemLocation::getCode).reversed());
+                    identASC = true;
+                }
+                break;
+            case "Lokacija":
+                if(locationASC) {
+                    items.sort(Comparator.comparing(ItemLocation::getLocation));
+                    locationASC = false;
+                } else {
+                    items.sort(Comparator.comparing(ItemLocation::getLocation).reversed());
+                    locationASC = true;
+                }
+                break;
+            case "EPC":
+                if(epcASC) {
+                    items.sort(Comparator.comparing(ItemLocation::getEcd));
+                    itemASC = false;
+                } else {
+                    items.sort(Comparator.comparing(ItemLocation::getEcd).reversed());
+                    itemASC = true;
+                }
+                break;
+        }
+        notifyDataSetChanged();
     }
 
     class ItemHolder extends RecyclerView.ViewHolder {
