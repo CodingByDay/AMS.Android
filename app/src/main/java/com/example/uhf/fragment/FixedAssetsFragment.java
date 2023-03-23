@@ -114,7 +114,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private List<ItemLocationCache> cached;
 
     public String currentSearchColumn  = "";
-
+    private List<ItemLocation> registeredItems;
 
 
     private void clearColors() {
@@ -277,6 +277,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 adapter.setItems(removeCached);
             }
         });
+
+        itemLocationViewModel.getItemsThatAreRegistered().observe(this, new Observer<List<ItemLocation>>() {
+            @Override
+            public void onChanged(List<ItemLocation> items) {
+                registeredItems = items;
+            }
+        });
+
         temporaryViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemTemporaryViewModel.class);
         temporaryViewModel.deleteAllItems();
         temporaryViewModel.getAllItems().observe(this, new Observer<List<ItemTemporary>>() {
@@ -392,7 +400,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     }
 
 
-
+    private boolean checkifEPCisRegistered(String epc) {
+        for(ItemLocation item: registeredItems) {
+            if (item.getEcd().equals(epc)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     // TODO: Handlers should be static lest they can have leaks.
     @SuppressLint("HandlerLeak")
@@ -410,7 +425,13 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                     // TODO fix date time to work with earlier versions
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         if(callerID.equals("RegistrationActivity")) {
-                            temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "test", "test", "01", 3, Instant.now().toString(), "Janko", info.getRssi(), -1));
+
+                            // Logic for not registered items -- check in internal structure -- performance friendly
+
+                            if(!checkifEPCisRegistered(info.getEPC())) {
+                                 temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "temp", "temp", "temp", 1, Instant.now().toString(), "Janko", info.getRssi(), -1));
+                            }
+
                         } else if (callerID.equals("InventoryActivity")) {
                             int location = (int) Math.floor(Math.random() * 5);
                             ItemLocation item = filterList(info.getEPC());
@@ -418,7 +439,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                                 // Query
                                 ItemLocation asset = checkExistance(info.getEPC());
                                 if(asset!=null ) {
-
                                     if(location == 0) {
                                     temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), item.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
                                 } else {

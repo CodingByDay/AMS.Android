@@ -53,14 +53,12 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void initializeActivity() {
-
         swListing = findViewById(R.id.swListing);
         swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
@@ -69,7 +67,6 @@ public class RegistrationActivity extends AppCompatActivity {
                     currentColumnSearch = fixedAssetsFragment.first.getText().toString();
                 }
                 fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
-
                 return false;
             }
         });
@@ -103,18 +100,22 @@ public class RegistrationActivity extends AppCompatActivity {
                         fixedAssetsFragment.stopScanning();
                         Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
                         String strongest = findStrongestSignal().getEcd();
+                        
+                        if(strongest!=null) {
                         myIntent.putExtra("epc", strongest);
                         myIntent.putExtra("callerID", "Registration");
                         myIntent.putExtra("item_id", currentItem.getID());
                         mypDialog.cancel();
                         startActivity(myIntent);
+                        } else {
+                            mypDialog.cancel();
+                            Toast.makeText(RegistrationActivity.this, "V bližini ni signala", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, 5000);
             }
         });
     }
-
-
         private ItemTemporary findStrongestSignal() {
         ItemTemporary itemStrongest = new ItemTemporary("-200");
         for(ItemTemporary itemTemporary: this.scannedItems) {
