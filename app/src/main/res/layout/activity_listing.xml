@@ -35,6 +35,16 @@
                 android:layout_height="wrap_content"
                 android:iconifiedByDefault="false"
                 android:queryHint="Iskanje" />
+            <EditText
+
+                android:id="@+id/tbBarcodeScan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="Skeniranje črtne kode"
+                android:background="@android:color/holo_blue_bright"
+                android:inputType="textPersonName"
+                />
         </LinearLayout>
     </LinearLayout>
     <FrameLayout
