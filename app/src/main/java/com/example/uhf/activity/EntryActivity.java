@@ -156,27 +156,26 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btListingItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent myIntent = new Intent(getApplicationContext(), ListingAssetsActivity.class);
+                startActivity(myIntent);
             }
         });
         btExportListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mypDialog.setMessage("init...");
+                mypDialog.setCanceledOnTouchOutside(false);
+                mypDialog.show();
+                initSynchronization();
+                mypDialog.cancel();
             }
         });
         btTransferListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {mypDialog = new ProgressDialog(EntryActivity.this);
 
-                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                mypDialog.setMessage("init...");
-                mypDialog.setCanceledOnTouchOutside(false);
-                mypDialog.show();
-
-                initSynchronization();
-
-                mypDialog.cancel();
+                Toast.makeText(EntryActivity.this, "Funkcionalnost še ni podprta!", Toast.LENGTH_SHORT).show();            
             }
         });
     }

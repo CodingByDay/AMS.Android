@@ -11,16 +11,17 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.uhf.R;
-import com.example.uhf.fragment.FixedAssetsFragment;
+import com.example.uhf.fragment.ListingAssetsFragment;
 import com.example.uhf.fragment.ListingLocationsFragment;
 
-public class ListingLocationsActivity extends AppCompatActivity {
-private SearchView swListing;
-private Button btExit;
+public class ListingAssetsActivity extends AppCompatActivity {
+
+    private SearchView swListing;
+    private Button btExit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listing_locations);
+        setContentView(R.layout.activity_listing_assets);
         getSupportActionBar().hide();
         swListing = findViewById(R.id.swListing);
         swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -31,15 +32,12 @@ private Button btExit;
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ListingLocationsFragment fragment = ListingLocationsFragment.getInstance();
+                ListingAssetsFragment fragment = ListingAssetsFragment.getInstance();
                 String currentColumnSearch = fragment.currentSearchColumn;
                 if(currentColumnSearch.equals("")) {
                     currentColumnSearch = fragment.first.getText().toString();
                 }
                 fragment.adapter.searchByField(currentColumnSearch, newText);
-
-
-
                 return false;
             }
         });
@@ -60,7 +58,7 @@ private Button btExit;
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, new ListingLocationsFragment());
+        fragmentTransaction.replace(R.id.fragment_container, new ListingAssetsFragment());
         fragmentTransaction.commit();
     }
 }

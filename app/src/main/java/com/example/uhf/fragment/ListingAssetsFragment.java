@@ -3,7 +3,6 @@ package com.example.uhf.fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,39 +14,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.uhf.R;
 import com.example.uhf.adapter.ItemLocationAdapter;
-import com.example.uhf.adapter.LocationAdapter;
 import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.mvvm.Model.ItemLocation;
-import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
-import com.example.uhf.mvvm.ViewModel.LocationViewModel;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Objects;
 
+public class ListingAssetsFragment extends KeyDwonFragment implements RecyclerViewInterface {
 
-public class ListingLocationsFragment extends KeyDwonFragment implements RecyclerViewInterface {
-private RecyclerView rwItems;
-    public LocationAdapter adapter;
-    private LocationViewModel locationViewModel;
-    private List<Location> itemsClassLevel;
-    
+
+
+    private RecyclerView rwItems;
+    public ItemLocationAdapter adapter;
+    private ItemLocationViewModel locationViewModel;
+    private List<ItemLocation> itemsClassLevel;
+
     public TextView first;
     private TextView second;
     private TextView third;
+    private TextView forth;
     public String currentSearchColumn = "";
 
     private Button btExit;
-    private static ListingLocationsFragment instance;
+    private static ListingAssetsFragment instance;
     private int selected = -1;
 
-    public static ListingLocationsFragment getInstance() {
+    public static ListingAssetsFragment getInstance() {
         return instance;
     }
 
@@ -55,12 +51,13 @@ private RecyclerView rwItems;
     public void onCreate(Bundle savedInstanceState) {
         instance = this;
         super.onCreate(savedInstanceState);
-        
+
     }
     private void clearColors() {
         first.setBackgroundColor(Color.TRANSPARENT);
         second.setBackgroundColor(Color.TRANSPARENT);
         third.setBackgroundColor(Color.TRANSPARENT);
+        forth.setBackgroundColor(Color.TRANSPARENT);
 
     }
     private void initData(View view) {
@@ -69,6 +66,8 @@ private RecyclerView rwItems;
         first = view.findViewById(R.id.first);
         second = view.findViewById(R.id.second);
         third = view.findViewById(R.id.third);
+        forth = view.findViewById(R.id.forth);
+
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,29 +95,38 @@ private RecyclerView rwItems;
                 third.setBackgroundColor(Color.parseColor("#FFCCCB"));
             }
         });
-        
+        forth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.sortASCandDESC(forth.getText().toString());
+                clearColors();
+                currentSearchColumn = forth.getText().toString();
+                forth.setBackgroundColor(Color.parseColor("#FFCCCB"));
+            }
+        });
+
         rwItems = view.findViewById(R.id.rwItems);
         rwItems.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rwItems.setHasFixedSize(true);
 
-        adapter = new LocationAdapter(this);
+        adapter = new ItemLocationAdapter(this, "ListingAssetsFragment");
         rwItems.setAdapter(adapter);
-            locationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(LocationViewModel.class);
-            locationViewModel.getAllItems().observe(this, new Observer<List<Location>>() {
-                @Override
-                public void onChanged(List<Location> locations) {
-                    itemsClassLevel = locations;
-                    adapter.setItems(locations);
-                }
-            });
-        
+        locationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
+        locationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
+            @Override
+            public void onChanged(List<ItemLocation> locations) {
+                itemsClassLevel = locations;
+                adapter.setItems(locations);
+            }
+        });
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_listing_locations, container, false);
+        View view = inflater.inflate(R.layout.fragment_listing_assets, container, false);
         initData(view);
         return view;
     }

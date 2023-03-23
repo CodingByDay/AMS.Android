@@ -2598,6 +2598,8 @@
     <string name="companyName">Ime podjetja</string>
     <string name="no_updates_available">Najnovejša verzija</string>
     <string name="code">Šifra</string>
+    <string name="asset_label">Sredstvo</string>
+    <string name="location_label">Lokacija</string>
 
 
 </resources>

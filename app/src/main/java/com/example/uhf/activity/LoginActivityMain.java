@@ -233,8 +233,6 @@ private Button login;
             startActivity(myIntent);
         } else {
             Toast.makeText(this, "Napačni podatki.", Toast.LENGTH_SHORT).show();
-           // Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
-           // startActivity(myIntent);
         }
     }
     @Override

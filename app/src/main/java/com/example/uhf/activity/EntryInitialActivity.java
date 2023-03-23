@@ -100,6 +100,5 @@ private CardView btLogout;
                 startActivity(myIntent);
             }
         });
-        Toast.makeText(this, "Uspešna prijava.", Toast.LENGTH_SHORT).show();
     }
 }

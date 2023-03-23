@@ -21,6 +21,9 @@
         android:theme="@style/Toolbar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.ListingAssetsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ListingLocationsActivity"
             android:exported="false" />
         <activity

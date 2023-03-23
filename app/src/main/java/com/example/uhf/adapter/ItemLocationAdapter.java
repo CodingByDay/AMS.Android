@@ -31,6 +31,11 @@ private final String caller;
 
     }
 
+
+
+
+
+
     // Here is the sorting method
     public void sortBasedOnLocation(List<ItemLocation> items, String location) {
 
@@ -74,6 +79,10 @@ private final String caller;
                 View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
                 return new ItemHolder(itemView, recyclerViewInterface);
             }
+            case "ListingAssetsFragment": {
+                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_listing_assets, parent, false);
+                return new ItemHolder(itemView, recyclerViewInterface);
+            }
         }
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
         return new ItemHolder(itemView, recyclerViewInterface);
@@ -114,6 +123,20 @@ private final String caller;
                 // Ask about this
                 holder.tbQty.setText("1");
                 break;
+            }
+            case "ListingAssetsFragment": {
+                holder.tbItem.setText(current.getItem());
+                holder.tbName.setText(current.getName());
+                holder.tbLocation.setText(current.getLocation());
+                if(current.getEcd()!=null) {
+                if(current.getEcd().length()>=6) {
+                    holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
+                } else {
+                    holder.tbEpc.setText(current.getEcd());
+                }
+                } else {
+                    holder.tbEpc.setText("");
+                }
             }
         }
 
@@ -255,7 +278,7 @@ private final String caller;
                 case "ListingActivity": {
                     tbItem = itemView.findViewById(R.id.tbItem);
                     tbName = itemView.findViewById(R.id.tbName);
-                    tbLocation = itemView.findViewById(R.id.tbLocation);
+                    tbLocation= itemView.findViewById(R.id.tbLocation);
                     tbEpc = itemView.findViewById(R.id.tbEpc);
                     break;
                 }
@@ -266,6 +289,12 @@ private final String caller;
                     tbCode = itemView.findViewById(R.id.tbCode);
                     tbQty =  itemView.findViewById(R.id.tbQty);
                     break;
+                }
+                case "ListingAssetsFragment": {
+                    tbItem = itemView.findViewById(R.id.tbItem);
+                    tbName = itemView.findViewById(R.id.tbName);
+                    tbLocation= itemView.findViewById(R.id.tbLocation);
+                    tbEpc = itemView.findViewById(R.id.tbEPC);
                 }
             }
 
