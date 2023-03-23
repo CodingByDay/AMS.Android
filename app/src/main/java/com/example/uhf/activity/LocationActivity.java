@@ -316,18 +316,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     startActivity(myIntent);
                 }
             });
-            cbLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                   cbLocation.isSpinnerDialogOpen = false;
 
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-                    cbLocation.isSpinnerDialogOpen = false;
-
-                }
-            });
             dialog.show();
             locations = new ArrayList<>();
             locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
@@ -355,10 +344,13 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     // Change the location text
+                    cbLocation.isSpinnerDialogOpen = false;
+
                     tbLocationScan.setText(cbLocation.getSelectedItem().toString());
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
+                    cbLocation.isSpinnerDialogOpen = false;
 
                 }
             });
