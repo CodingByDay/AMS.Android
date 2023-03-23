@@ -107,6 +107,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         myIntent.putExtra("item_id", currentItem.getID());
                         mypDialog.cancel();
                         startActivity(myIntent);
+                        // Comment
                         } else {
                             mypDialog.cancel();
                             Toast.makeText(RegistrationActivity.this, "V bližini ni signala", Toast.LENGTH_SHORT).show();
