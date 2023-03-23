@@ -47,7 +47,7 @@
                 android:inputType="textPersonName"
                 />
 
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                <com.example.uhf.custom.CustomSearchableSpinner
                     android:layout_weight="0.5"
                     android:id="@+id/cbLocation"
                     android:layout_width="0dp"

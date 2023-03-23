@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.uhf.R;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
+import com.example.uhf.custom.CustomSearchableSpinner;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
@@ -259,7 +260,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
                 }
             });
-            SearchableSpinner cbLocation = (SearchableSpinner) dialog.findViewById(R.id.cbLocation);
+            CustomSearchableSpinner cbLocation = (CustomSearchableSpinner) dialog.findViewById(R.id.cbLocation);
             cbLocation.setTitle("Izberite lokaciju");
             cbLocation.setPositiveButton("Potrdi");
             Button btYes = (Button) dialog.findViewById(R.id.btYes);
@@ -318,10 +319,12 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             cbLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                   cbLocation.isSpinnerDialogOpen = false;
 
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
+                    cbLocation.isSpinnerDialogOpen = false;
 
                 }
             });

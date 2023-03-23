@@ -43,7 +43,7 @@
 
             android:importantForAutofill="no" />
 
-        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        <com.example.uhf.custom.CustomSearchableSpinner
             android:layout_weight="1"
             android:layout_width="0dp"
             android:id="@+id/cbLocation"

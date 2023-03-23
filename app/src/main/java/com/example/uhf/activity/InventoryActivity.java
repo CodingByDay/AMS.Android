@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.uhf.R;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
+import com.example.uhf.custom.CustomSearchableSpinner;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.fragment.KeyDwonFragment;
 import com.example.uhf.fragment.UHFReadTagFragment;
@@ -49,7 +50,7 @@ private Button btConfirm;
 public KeyDwonFragment currentFragment=null;
 
 public EditText tbLocation;
-public SearchableSpinner cbLocation;
+public CustomSearchableSpinner cbLocation;
 private String currentLocation;
 private Button btToggleScanning;
 public RFIDWithUHFUART mReader;
@@ -91,6 +92,7 @@ public RFIDWithUHFUART mReader;
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                 String currentColumnSearch = fixedAssetsFragment.currentSearchColumn;
 
@@ -101,8 +103,6 @@ public RFIDWithUHFUART mReader;
                 if(fixedAssetsFragment.adapter!=null) {
                     fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
                 }
-
-
                 return false;
             }
         });
@@ -146,6 +146,8 @@ public RFIDWithUHFUART mReader;
         cbLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                cbLocation.isSpinnerDialogOpen = false;
+
                 // Change the location text
                 if(helpCounter != 0) {
                     tbLocation.setText(cbLocation.getSelectedItem().toString());
@@ -155,7 +157,7 @@ public RFIDWithUHFUART mReader;
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                cbLocation.isSpinnerDialogOpen = false;
             }
         });
         btConfirm.setOnClickListener(new View.OnClickListener() {
