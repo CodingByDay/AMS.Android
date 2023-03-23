@@ -11,11 +11,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.uhf.R;
+import com.example.uhf.barcode.Barcode;
+import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.fragment.UHFLocationFragment;
 import com.example.uhf.mvvm.Model.Item;
@@ -27,7 +32,7 @@ import com.rscja.deviceapi.RFIDWithUHFUART;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity implements Barcode {
     private Button btExit;
     private Button btRequest;
     public UhfLocationCanvasView llChart;
@@ -40,7 +45,10 @@ public class RegistrationActivity extends AppCompatActivity {
     public List<ItemTemporary> scannedItems =  new ArrayList<ItemTemporary>();
     private ProgressDialog mypDialog;
 
+    private EditText tbBarcodeScan;
     private SearchView swListing;
+    private BarcodeUtility barcodeUtility;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +61,24 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void initializeActivity() {
+        tbBarcodeScan = findViewById(R.id.tbBarcodeScan);
+        barcodeUtility = new BarcodeUtility(this, this);
+        tbBarcodeScan.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                fixedAssetsFragment.adapter.findIdent(charSequence.toString());
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         swListing = findViewById(R.id.swListing);
         swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -137,6 +163,14 @@ public class RegistrationActivity extends AppCompatActivity {
             new InitTask().execute();
         }
     }
+
+    @Override
+    public void getResult(String result) {
+        if(tbBarcodeScan.hasFocus()) {
+            tbBarcodeScan.setText(result);
+        }
+    }
+
     public class InitTask extends AsyncTask<String, Integer, Boolean> {
         ProgressDialog mypDialog;
         @Override

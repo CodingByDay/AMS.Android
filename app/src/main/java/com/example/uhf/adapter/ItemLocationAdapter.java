@@ -252,6 +252,19 @@ private final String caller;
         notifyDataSetChanged();
     }
 
+    public void findIdent(String result) {
+        List<ItemLocation> sorted = new ArrayList<>();
+
+        for (ItemLocation item : this.backupForSearching) {
+
+            if (item.getCode().toLowerCase().contains(result.toLowerCase())) {
+                sorted.add(item);
+            }
+        }
+            this.items = sorted;
+            notifyDataSetChanged();
+    }
+
     class ItemHolder extends RecyclerView.ViewHolder {
         private TextView tbItem;
         private TextView tbName;

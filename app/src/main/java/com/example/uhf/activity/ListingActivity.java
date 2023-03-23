@@ -10,17 +10,22 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.uhf.R;
+import com.example.uhf.barcode.Barcode;
+import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 
 import java.util.List;
 
-public class ListingActivity extends AppCompatActivity {
+public class ListingActivity extends AppCompatActivity implements Barcode {
 
 
 
@@ -31,7 +36,8 @@ public class ListingActivity extends AppCompatActivity {
 
     private SearchView swListing;
     private Setting token;
-
+    private EditText tbBarcodeScan;
+    private BarcodeUtility barcodeUtility;
 
 
     @Override
@@ -58,6 +64,23 @@ public class ListingActivity extends AppCompatActivity {
 
                 int result = 9+9;
                 return false;
+            }
+        });
+        tbBarcodeScan = findViewById(R.id.tbBarcodeScan);
+        barcodeUtility = new BarcodeUtility(this, this);
+        tbBarcodeScan.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                fixedAssetsFragment.adapter.findIdent(charSequence.toString());
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
         initializeFragment();
@@ -118,5 +141,12 @@ public class ListingActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void getResult(String result) {
+        if(tbBarcodeScan.hasFocus()) {
+            tbBarcodeScan.setText(result);
+        }
     }
 }
