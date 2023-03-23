@@ -15,43 +15,65 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/Toolbar"
         android:usesCleartextTraffic="true">
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.ListingAssetsActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.ListingLocationsActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.ListingActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.LocationActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.RegistrationActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.SettingsActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.InventoryActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.MainFragmentHolderActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.EntryInitialActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.EntryActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.LoginActivityMain"
             android:exported="true"
             android:label="@string/title_activity_login">
@@ -62,7 +84,10 @@
             </intent-filter>
         </activity>
         <activity
+
+            android:windowSoftInputMode="adjustPan"
             android:name=".activity.UHFMainActivity"
+            android:exported="true"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
@@ -76,7 +101,8 @@
             -->
         </activity>
 
-        <receiver android:name=".reading.BootBroadcastReceiver">
+        <receiver android:name=".reading.BootBroadcastReceiver"
+            android:exported="true">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
 

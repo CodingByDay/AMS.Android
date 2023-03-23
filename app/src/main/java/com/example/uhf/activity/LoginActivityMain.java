@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,11 +46,13 @@ import com.microsoft.appcenter.distribute.ReleaseDetails;
 import com.microsoft.appcenter.distribute.UpdateAction;
 import com.microsoft.appcenter.utils.async.AppCenterFuture;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivityMain extends AppCompatActivity implements AsyncCallBack, DistributeListener {
-private Button login;
+private TextView login;
     private ProgressDialog mypDialog;
     private EditText tbCompany;
     private EditText tbUname;
@@ -73,7 +76,7 @@ private Button login;
     public void onCreate(Bundle savedInstanceState) {
         AppCenter.start(getApplication(), "a5a00bbc-d587-4742-a9a9-82dd343f1f9e",
                 Analytics.class, Crashes.class, Distribute.class);
-        Distribute.setEnabledForDebuggableBuild(true);
+       // Distribute.setEnabledForDebuggableBuild(true);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
@@ -87,8 +90,16 @@ private Button login;
 
 
 
-      //  int res = 9+9;
 
+
+    }
+
+    private void checkIdCreateIfNecessary() {
+       String id = com.example.uhf.settings.SettingsHelper.Helper.findSetting(settingsList, "device").getValue();
+       if (id.equals("")) {
+            String guid = java.util.UUID.randomUUID().toString();
+            settingsView.insert(new Setting("device", guid));
+       }
     }
 
     private void initSynchronization() {
@@ -133,6 +144,9 @@ private Button login;
             @Override
             public void onChanged(List<Setting> settings) {
                 settingsList = settings;
+
+                checkIdCreateIfNecessary();
+
             }
         });
     }
@@ -192,13 +206,19 @@ private Button login;
         return true;
     }
     private void initPageViews() {
-        login = (Button) findViewById(R.id.login);
+        login = (TextView) findViewById(R.id.login);
         tbCompany = (EditText) findViewById(R.id.tbCompany);
         tbUname = (EditText) findViewById(R.id.tbUname);
         tbPassword = (EditText) findViewById(R.id.tbPassword);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                mypDialog = new ProgressDialog(LoginActivityMain.this);
+                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mypDialog.setMessage("Prijava...");
+                mypDialog.setCanceledOnTouchOutside(false);
+                mypDialog.show();
                 // Data
                 if(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "company")!=null) {
                 String company = SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "company");
@@ -224,6 +244,7 @@ private Button login;
 
     @Override
     public void setResult(Boolean result) {
+        mypDialog.cancel();
         if(result) {
             if(!token.equals("")) {
                 settingsView.insert(new Setting("token", token));

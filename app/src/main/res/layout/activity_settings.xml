@@ -11,62 +11,130 @@
     android:paddingRight="0dp"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".activity.LoginActivityMain">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="46dp">
-        <EditText
-            android:id="@+id/tbUrl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="http://invapi-test.in-sist.si"
-            android:hint="@string/url"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionDone"
-            android:inputType="textUri"
-            android:selectAllOnFocus="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
-        <EditText
-            android:id="@+id/tbCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text=""
-            android:hint="@string/companyName"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionDone"
-            android:inputType="textUri"
-            android:selectAllOnFocus="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="1dp">
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout11">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foregroundGravity="center_horizontal"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="57dp"
+                    android:layout_height="57dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="23dp"
+                    android:src="@drawable/settings" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="52dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_marginRight="52dp"
+                    android:background="@drawable/blue_border_rounded_cornwe">
+
+                    <EditText
+                        android:id="@+id/tbUrl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins_regular"
+                        android:hint="@string/url"
+                        android:imeActionLabel="@string/action_sign_in_short"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingLeft="17dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:selectAllOnFocus="true"
+                        android:text="http://invapi-test.in-sist.si"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="52dp"
+                    android:layout_marginTop="16.7dp"
+                    android:layout_marginRight="52dp"
+                    android:background="@drawable/blue_border_rounded_cornwe">
+
+                    <EditText
+                        android:id="@+id/tbCompany"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins_regular"
+                        android:hint="@string/companyName"
+                        android:imeActionLabel="@string/action_sign_in_short"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingLeft="17dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:selectAllOnFocus="true"
+                        android:text="insist"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/btSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="52dp"
+                    android:layout_marginTop="18.7dp"
+                    android:layout_marginRight="52dp"
+                    android:background="@drawable/blue_fill__rounded_color"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="center"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:text="Shrani"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
 
 
-    <Button
-        android:id="@+id/btSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
-        android:enabled="true"
-        android:backgroundTint="@android:color/holo_blue_bright"
-        android:text="Shrani"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintVertical_bias="0.2" />
 
 
 

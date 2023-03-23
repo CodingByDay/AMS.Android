@@ -8,7 +8,7 @@ public class SettingsHelper {
 
     public static class Helper {
         public static Setting findSetting(List<Setting> items, String key) {
-            Setting setting = new Setting();
+            Setting setting = new Setting("", "");
             for (Setting settingLoop : items) {
                 if (settingLoop.getKey().equals(key)) {
                     return settingLoop;

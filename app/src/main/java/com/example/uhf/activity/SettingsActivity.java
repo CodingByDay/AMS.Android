@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.uhf.R;
 import com.example.uhf.mvvm.Model.Item;
@@ -25,7 +26,7 @@ import java.util.List;
 public class SettingsActivity extends AppCompatActivity {
 private SettingsViewModel settingsView;
 private List<Setting> settingsClass  = new ArrayList<Setting>();
-private Button btSave;
+private TextView btSave;
     private EditText tbUrl;
     private SettingsHelper settingsHelper = new SettingsHelper();
     private EditText tbCompany;
@@ -34,12 +35,14 @@ private Button btSave;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        getSupportActionBar().hide();
+
         initActivity();
         initUI();
     }
 
     private void initUI() {
-        btSave = (Button) findViewById(R.id.btSave);
+        btSave = (TextView) findViewById(R.id.btSave);
         tbUrl = (EditText) findViewById(R.id.tbUrl);
         tbCompany = (EditText) findViewById(R.id.tbCompany);
         btSave.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +62,7 @@ private Button btSave;
     }
     private void updateUI(List<Setting> settings) {
         tbUrl.setText(SettingsHelper.Helper.findSetting(settings, "url").getValue());
+        tbCompany.setText(SettingsHelper.Helper.findSetting(settings, "company").getValue());
     }
     private void initActivity() {
         settingsView = ViewModelProviders.of(this).get(SettingsViewModel.class);
