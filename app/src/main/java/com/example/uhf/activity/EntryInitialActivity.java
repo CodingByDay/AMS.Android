@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -60,11 +61,18 @@ private CardView btLogout;
         btLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                ProgressDialog mypDialog = new ProgressDialog(EntryInitialActivity.this);
+                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mypDialog.setMessage("Odjava...");
+                mypDialog.setCanceledOnTouchOutside(false);
+                mypDialog.show();
                 token.setValue("");
                 settingsView.update(token);
                 Intent myIntent = new Intent(getApplicationContext(), LoginActivityMain.class);
                 startActivity(myIntent);
                 finishAffinity();
+                mypDialog.cancel();
             }
         });
 
@@ -75,29 +83,53 @@ private CardView btLogout;
         btRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ProgressDialog mypDialog = new ProgressDialog(EntryInitialActivity.this);
+                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mypDialog.setMessage("Registracija...");
+                mypDialog.setCanceledOnTouchOutside(false);
+                mypDialog.show();
                 Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
                 startActivity(myIntent);
+                mypDialog.cancel();
             }
         });
         btInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ProgressDialog mypDialog = new ProgressDialog(EntryInitialActivity.this);
+                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mypDialog.setMessage("Inventura...");
+                mypDialog.setCanceledOnTouchOutside(false);
+                mypDialog.show();
                 Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
                 startActivity(myIntent);
+                mypDialog.cancel();
             }
         });
         btListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ProgressDialog mypDialog = new ProgressDialog(EntryInitialActivity.this);
+                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mypDialog.setMessage("Pregled...");
+                mypDialog.setCanceledOnTouchOutside(false);
+                mypDialog.show();
                 Intent myIntent = new Intent(getApplicationContext(), ListingActivity.class);
                 startActivity(myIntent);
+                mypDialog.cancel();
             }
         });
         btSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ProgressDialog mypDialog = new ProgressDialog(EntryInitialActivity.this);
+                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mypDialog.setMessage("Prijava...");
+                mypDialog.setCanceledOnTouchOutside(false);
+                mypDialog.show();
                 Intent myIntent = new Intent(getApplicationContext(), EntryActivity.class);
                 startActivity(myIntent);
+                mypDialog.cancel();
             }
         });
     }

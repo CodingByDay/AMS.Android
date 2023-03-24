@@ -237,6 +237,7 @@ private TextView login;
                 }
                 }  else {
                     Toast.makeText(LoginActivityMain.this, "Ni podatka o podjetju", Toast.LENGTH_SHORT).show();
+                    mypDialog.cancel();
                 }
             }
         });
