@@ -338,7 +338,7 @@ public class Communicator {
             }
 
 
-            baseUrl = settings.get(0).getValue();
+
             String endpoint = "/getItems";
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();

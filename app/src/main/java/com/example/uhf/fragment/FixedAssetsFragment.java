@@ -272,8 +272,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
                 List<ItemLocation> removeCached = new ArrayList<>();
 
-                removeCached = removeCached(items);
-
+                if(cached!=null) {
+                    removeCached = removeCached(items);
+                }
                 adapter.setItems(removeCached);
             }
         });
@@ -310,7 +311,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         for(ItemLocationCache item: cached) {
             for (ItemLocation itemInner: items) {
                 items.remove(itemInner);
-                int r = 9+6;
             }
         }
 
@@ -409,12 +409,15 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         return false;
     }
 
+    private boolean preventDuplicateUse = true;
     // TODO: Handlers should be static lest they can have leaks.
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
+            if (preventDuplicateUse) {
+            preventDuplicateUse = false;
             preventDuplicate = true;
             UHFTAGInfo info = (UHFTAGInfo) msg.obj;
             // Binary search check for duplicates
@@ -425,9 +428,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                     // TODO fix date time to work with earlier versions
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         if(callerID.equals("RegistrationActivity")) {
-
                             // Logic for not registered items -- check in internal structure -- performance friendly
-
                             if(!checkifEPCisRegistered(info.getEPC())) {
                                  temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "temp", "temp", "temp", 1, Instant.now().toString(), "Janko", info.getRssi(), -1));
                             }
@@ -459,10 +460,15 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                         }
                     }
                     tempDatas.add(info.getEPC());
+
                 }
             }
             // TODO cleanup button
+        }             preventDuplicateUse = true;
+
         }
+
+
     };
 
     private ItemLocation checkExistance(String epc) {

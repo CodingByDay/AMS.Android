@@ -95,7 +95,7 @@ private final String caller;
 
         switch (this.caller) {
             case "InventoryActivity": {
-                holder.tbItem.setText(current.getItem());
+                holder.tbItem.setText(current.getCode());
                 holder.tbName.setText(current.getName());
                 holder.tbLocation.setText(current.getLocation());
                 if(current.getEcd().length()>=6) {
@@ -106,18 +106,18 @@ private final String caller;
                 break;
             }
             case "ListingActivity": {
-                holder.tbItem.setText(current.getItem());
+                holder.tbItem.setText(current.getCode());
                 holder.tbName.setText(current.getName());
                 holder.tbLocation.setText(current.getLocation());
                 if(current.getEcd().length()>=6) {
-                    holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
+                    holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 6));
                 } else {
                     holder.tbEpc.setText(current.getEcd());
                 }
                 break;
             }
             case "RegistrationActivity": {
-                holder.tbItem.setText(current.getItem());
+                holder.tbItem.setText(current.getCode());
                 holder.tbName.setText(current.getName());
                 holder.tbCode.setText(current.getCode());
                 // Ask about this
@@ -125,7 +125,7 @@ private final String caller;
                 break;
             }
             case "ListingAssetsFragment": {
-                holder.tbItem.setText(current.getItem());
+                holder.tbItem.setText(current.getCode());
                 holder.tbName.setText(current.getName());
                 holder.tbLocation.setText(current.getLocation());
                 if(current.getEcd()!=null) {
