@@ -166,6 +166,7 @@ public RFIDWithUHFUART mReader;
                 // TODO add loader while data is being filtered
                 if(current!=null) {
                     Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
+                    myIntent.putExtra("id", current.getID());
                     myIntent.putExtra("epc", current.getEcd());
                     myIntent.putExtra("callerID", "InventoryProcessLocation");
                     String location = tbLocation.getText().toString();

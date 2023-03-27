@@ -148,7 +148,6 @@ private final String caller;
     public int getItemCount() {
         return items.size();
     }
-
     public void setItems(List<ItemLocation> items) {
         this.items = items;
         this.backupForSearching = items;

@@ -87,6 +87,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private String location;
     private SettingsViewModel settingsView;
     private List<Setting> settingsList;
+    private int idValue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,7 +145,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             epc =  extras.getString("epc");
             etEPC.setText(epc);
             location = extras.getString("location");
-
+            idValue = extras.getInt("id");
             startLocation();
 
         } else if (callerID.equals("Registration")) {
@@ -371,7 +372,14 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         });
     }
 
-
+    private ItemLocation findItemByEpc(String epc) {
+        for(ItemLocation item: itemsLocationClassLevel) {
+            if(item.getEcd().equals(epc)) {
+                return item;
+            }
+        }
+        return null;
+    }
     private void startLocation(){
 
         if(etEPC.getText().toString().equals("")) {
@@ -402,20 +410,33 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 String epc = LocationActivity.this.epc;
                                 String location = LocationActivity.this.location;
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                                String code = LocationActivity.this.item.getCode();
-                                String name = LocationActivity.this.item.getName();
-                                int qid = LocationActivity.this.item.getQid();
+
+                                // Consider this
+                                ItemLocation item = findItemByEpc(epc);
+
+                                assert item != null;
+                                if(item.getCode()!=null) {
+                                    String code = item.getCode();
+                                }
+
+                                String name = item.getName();
+                                int qid = item.getQid();
 
 
                                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
 
-                                ItemLocation item = fixedAssetsFragment.itemLocationCurrent;
+                                ItemLocation itemest = fixedAssetsFragment.itemLocationCurrent;
 
-                                item.setLocation(locationCurrent);
+                                item.setLocation(location);
                                 item.setTimestamp(timestamp.toString());
                                 item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
 
                                 itemLocationViewModel.update(item);
+
+                                Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
+                                startActivity(myIntent);
+
+
                                 // Continues here
                             } else {
                                 // Transfer location and make a new object
