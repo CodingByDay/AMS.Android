@@ -346,7 +346,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     // Change the location text
                     cbLocation.isSpinnerDialogOpen = false;
-
                     tbLocationScan.setText(cbLocation.getSelectedItem().toString());
                 }
                 @Override
@@ -381,7 +380,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         return null;
     }
     private void startLocation(){
-
         if(etEPC.getText().toString().equals("")) {
             return;
         }
@@ -391,7 +389,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
             public void getLocationValue(int Value) {
                 llChart.setData(Value);
-
                 if(Value >= 100) {
                     stopLocation();
                     AlertDialog.Builder alert = new AlertDialog.Builder(LocationActivity.this);
@@ -410,33 +407,22 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 String epc = LocationActivity.this.epc;
                                 String location = LocationActivity.this.location;
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
                                 // Consider this
                                 ItemLocation item = findItemByEpc(epc);
-
                                 assert item != null;
                                 if(item.getCode()!=null) {
                                     String code = item.getCode();
                                 }
-
                                 String name = item.getName();
                                 int qid = item.getQid();
-
-
                                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-
                                 ItemLocation itemest = fixedAssetsFragment.itemLocationCurrent;
-
                                 item.setLocation(location);
                                 item.setTimestamp(timestamp.toString());
                                 item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
-
                                 itemLocationViewModel.update(item);
-
                                 Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
                                 startActivity(myIntent);
-
-
                                 // Continues here
                             } else {
                                 // Transfer location and make a new object
