@@ -29,11 +29,13 @@ import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.custom.CustomSearchableSpinner;
 import com.example.uhf.fragment.FixedAssetsFragment;
+import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemLocationCache;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.Location;
+import com.example.uhf.mvvm.ViewModel.CheckOutViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
@@ -50,6 +52,7 @@ import com.rscja.team.qcom.deviceapi.P;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -88,6 +91,9 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private SettingsViewModel settingsView;
     private List<Setting> settingsList;
     private int idValue;
+
+    private CheckOutViewModel checkOutViewModel;
+    private List<CheckOut> checkOutItems;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -210,6 +216,17 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         });
         itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
         // ItemLocation view model
+
+
+
+
+        checkOutViewModel = ViewModelProviders.of(this).get(CheckOutViewModel.class);
+        checkOutViewModel.getAllItems().observe(this, new Observer<List<CheckOut>>() {
+            @Override
+            public void onChanged(List<CheckOut> checkOuts) {
+                checkOutItems = checkOuts;
+            }
+        });
     }
 
     @Override
@@ -417,10 +434,18 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 int qid = item.getQid();
                                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                                 ItemLocation itemest = fixedAssetsFragment.itemLocationCurrent;
-                                item.setLocation(location);
-                                item.setTimestamp(timestamp.toString());
-                                item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
-                                itemLocationViewModel.update(item);
+
+                                // item.setLocation(location);
+                                // item.setTimestamp(timestamp.toString());
+                                // item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
+                                LocalDate localDate = LocalDate.now();
+
+                                // itemLocationViewModel.update(item);
+                                CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), item.getLocation(),
+                                        item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(),  5,  "", -1, timestamp.toString(), 5, timestamp.toString(), 5, "");
+
+                                checkOutViewModel.insert(checkOutItem);
+
                                 Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
                                 startActivity(myIntent);
                                 // Continues here
@@ -433,7 +458,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 String name = LocationActivity.this.item.getName();
                                 int qid = LocationActivity.this.item.getQid();
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
                                 String location = "";
                                 String epc = etEPC.getText().toString();
                                 // TODO: Link item name here

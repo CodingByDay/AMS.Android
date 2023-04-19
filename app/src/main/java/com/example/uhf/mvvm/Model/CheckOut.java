@@ -30,7 +30,7 @@ public class CheckOut {
     @ColumnInfo( defaultValue = "empty")
     private String acName2;
     @ColumnInfo( defaultValue = "empty")
-    private String adStringCheck;
+    private String adDateCheck;
     @ColumnInfo( defaultValue = "empty")
     private int anUserCheck;
     @ColumnInfo( defaultValue = "empty")
@@ -48,8 +48,7 @@ public class CheckOut {
     @ColumnInfo( defaultValue = "empty")
     private String acNote;
 
-
-    public CheckOut(int anInventory, int anAssetID, String acItem, String acLocation, String acCode, String acECD, String acName, String acName2, String adStringCheck, int anUserCheck, String adStringConfirm, int anUserConfirm, String adTimeIns, int anUserIns, String adTimeChg, int anUserChg, String acNote) {
+    public CheckOut(int anInventory, int anAssetID, String acItem, String acLocation, String acCode, String acECD, String acName, String acName2, String adDateCheck, int anUserCheck, String adStringConfirm, int anUserConfirm, String adTimeIns, int anUserIns, String adTimeChg, int anUserChg, String acNote) {
         this.anInventory = anInventory;
         this.anAssetID = anAssetID;
         this.acItem = acItem;
@@ -58,7 +57,7 @@ public class CheckOut {
         this.acECD = acECD;
         this.acName = acName;
         this.acName2 = acName2;
-        this.adStringCheck = adStringCheck;
+        this.adDateCheck = adDateCheck;
         this.anUserCheck = anUserCheck;
         this.adStringConfirm = adStringConfirm;
         this.anUserConfirm = anUserConfirm;
@@ -142,12 +141,12 @@ public class CheckOut {
         this.acName2 = acName2;
     }
 
-    public String getAdStringCheck() {
-        return adStringCheck;
+    public String getAdDateCheck() {
+        return adDateCheck;
     }
 
-    public void setAdStringCheck(String adStringCheck) {
-        this.adStringCheck = adStringCheck;
+    public void setAdDateCheck(String adDateCheck) {
+        this.adDateCheck = adDateCheck;
     }
 
     public int getAnUserCheck() {
