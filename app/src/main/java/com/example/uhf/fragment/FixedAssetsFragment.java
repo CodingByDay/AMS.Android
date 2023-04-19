@@ -239,8 +239,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        adapter = new CheckOutAdapter(this, "ListingAssetsFragment", true, itemsClassLevel);
-        recycler.setAdapter(adapter);
+
         checkOutViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(CheckOutViewModel.class);
         checkOutViewModel.getAllItems().observe(this, new Observer<List<CheckOut>>() {
             @Override
@@ -254,7 +253,8 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;
-
+                adapter = new CheckOutAdapter(FixedAssetsFragment.this, "ListingAssetsFragment", true, itemsClassLevel);
+                recycler.setAdapter(adapter);
             }
         });
 

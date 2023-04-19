@@ -131,7 +131,16 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ItemHo
     }
 
     public void setItems(List<CheckOut> items) {
+
+
+
+
+
         this.items = items;
+
+
+
+
         this.backupForSearching = items;
         notifyDataSetChanged();
     }
