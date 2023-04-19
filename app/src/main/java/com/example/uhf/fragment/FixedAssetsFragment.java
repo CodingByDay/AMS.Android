@@ -249,7 +249,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             }
         });
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
-        itemLocationViewModel.getAllItemsNotRegistered().observe(this, new Observer<List<ItemLocation>>() {
+        itemLocationViewModel.getItemsThatAreRegistered().observe(this, new Observer<List<ItemLocation>>() {
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;
