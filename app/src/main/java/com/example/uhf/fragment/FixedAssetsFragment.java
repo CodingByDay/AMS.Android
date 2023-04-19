@@ -38,10 +38,12 @@ import com.example.uhf.adapter.ItemAdapter;
 import com.example.uhf.adapter.ItemTemporaryAdapter;
 import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.adapter.ItemLocationAdapter;
+import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemLocationCache;
 import com.example.uhf.mvvm.Model.ItemTemporary;
+import com.example.uhf.mvvm.ViewModel.CheckOutViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemTemporaryViewModel;
@@ -116,6 +118,8 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     public String currentSearchColumn  = "";
     private List<ItemLocation> registeredItems;
 
+    private CheckOutViewModel checkOutViewModel;
+    private List<CheckOut> checkOutItems;
 
     private void clearColors() {
         first.setBackgroundColor(Color.TRANSPARENT);
@@ -472,9 +476,12 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     };
 
     private boolean existsInCheckout(String epc) {
-
-
-
+        for (CheckOut check: checkOutItems) {
+            if(check.getAcECD().equals(epc)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private ItemLocation checkExistance(String epc) {
@@ -593,6 +600,16 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             }
         });
 
+
+
+        checkOutViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(CheckOutViewModel.class);
+
+        checkOutViewModel.getAllItems().observe(this, new Observer<List<CheckOut>>() {
+            @Override
+            public void onChanged(List<CheckOut> checkOuts) {
+                checkOutItems = checkOuts;
+            }
+        });
 
     }
 
