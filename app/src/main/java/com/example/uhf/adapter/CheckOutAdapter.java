@@ -7,26 +7,40 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uhf.R;
 import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.mvvm.Model.CheckOut;
+import com.example.uhf.mvvm.Model.ItemLocation;
+import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ItemHolder> {
+    private final boolean synchronizeWithUnchanged;
     private List<CheckOut> items = new ArrayList<CheckOut>();
     private final String caller;
-
+    private List<ItemLocation> itemsUnchanged;
     private final RecyclerViewInterface recyclerViewInterface;
     private List<CheckOut> backupForSearching;
-
-    public CheckOutAdapter(RecyclerViewInterface recyclerViewInterface, String callerID) {
+    private ItemLocationViewModel itemLocationViewModel;
+    public CheckOutAdapter(RecyclerViewInterface recyclerViewInterface, String callerID, boolean synchronizeWithUnchanged, List<ItemLocation> unchanged) {
         this.recyclerViewInterface = recyclerViewInterface;
         this.caller = callerID;
+        this.synchronizeWithUnchanged = synchronizeWithUnchanged;
+        this.itemsUnchanged = unchanged;
+        initializeTheRegisteredItems();
+    }
+
+    private void initializeTheRegisteredItems() {
+
+
     }
 
     // Here is the sorting method
