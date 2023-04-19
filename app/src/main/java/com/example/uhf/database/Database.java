@@ -10,6 +10,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.uhf.mvvm.Model.Asset;
 import com.example.uhf.mvvm.Model.AssetDAO;
+import com.example.uhf.mvvm.Model.CheckOut;
+import com.example.uhf.mvvm.Model.CheckOutDAO;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemDAO;
 import com.example.uhf.mvvm.Model.ItemLocation;
@@ -23,7 +25,7 @@ import com.example.uhf.mvvm.Model.LocationDAO;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.settings.SettingDAO;
 
-@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class, Location.class, ItemLocation.class, ItemLocationCache.class, Asset.class}, version = 15)
+@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class, Location.class, ItemLocation.class, ItemLocationCache.class, Asset.class, CheckOut.class}, version = 15)
 public abstract class Database extends RoomDatabase {
 
     private static Database instance;
@@ -41,6 +43,8 @@ public abstract class Database extends RoomDatabase {
 
 
     public abstract AssetDAO assetDAO();
+
+    public abstract CheckOutDAO checkOutDAO();
 
     public static synchronized Database getInstance(Context context) {
         if(instance == null) {
@@ -64,6 +68,7 @@ public abstract class Database extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void> {
 
+
         private ItemDAO itemDAO;
         private ItemTemporaryDAO itemTemporaryDAO;
         private LocationDAO locationDAO;
@@ -71,6 +76,8 @@ public abstract class Database extends RoomDatabase {
 
         private AssetDAO assetDAO;
         private ItemLocationCacheDAO itemLocationCacheDAO;
+
+        private CheckOutDAO checkOutDAO;
         private PopulateDbAsyncTask(Database db) {
             itemDAO = db.itemDAO();
             itemTemporaryDAO = db.itemTemporaryDAO();
@@ -78,6 +85,7 @@ public abstract class Database extends RoomDatabase {
             locationDAO = db.locationDAO();
             itemLocationCacheDAO = db.itemLocationCacheDAO();
             assetDAO = db.assetDAO();
+            checkOutDAO = db.checkOutDAO();
         }
 
 
