@@ -441,7 +441,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 LocalDate localDate = LocalDate.now();
 
                                 // itemLocationViewModel.update(item);
-                                CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), item.getLocation(),
+                                CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), location,
                                         item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(),  5,  "", -1, timestamp.toString(), 5, timestamp.toString(), 5, "");
 
                                 checkOutViewModel.insert(checkOutItem);

@@ -197,6 +197,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 third.setText("Lokacija");
                 forth.setText("EPC");
                 break;
+
             case "ListingActivity":
                 initListing(view);
                 first.setText("Sredstvo");
@@ -204,6 +205,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 third.setText("Lokacija");
                 forth.setText("EPC");
                 break;
+
             case "RegistrationActivity":
                 mContext = (RegistrationActivity) getActivity();
                 initRegistration(view);
@@ -255,6 +257,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 itemsClassLevel = items;
                 adapter = new CheckOutAdapter(FixedAssetsFragment.this, "ListingAssetsFragment", true, itemsClassLevel);
                 recycler.setAdapter(adapter);
+
             }
         });
 
@@ -451,7 +454,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                             ItemLocation item = filterList(info.getEPC());
                             if(item!=null && !existsInCheckout(info.getEPC())) {
                                 // Query
-                                ItemLocation asset = checkExistance(info.getEPC());
+                                ItemLocation asset = checkExistence(info.getEPC());
                                 if(asset!=null ) {
                                     if(location == 0) {
                                     temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), item.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
@@ -484,7 +487,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     };
 
+
+
+
+
+
+
     private boolean existsInCheckout(String epc) {
+        if(checkOutItems!=null && checkOutItems.size()>=1)
         for (CheckOut check: checkOutItems) {
             if(check.getAcECD().equals(epc)) {
                 return true;
@@ -493,11 +503,13 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         return false;
     }
 
-    private ItemLocation checkExistance(String epc) {
+    private ItemLocation checkExistence(String epc) {
+        if(itemsClassLevel!=null) {
         for(ItemLocation item: itemsClassLevel) {
             if(item.getEcd().equals(epc)) {
                 return item;
             }
+        }
         }
         return null;
     }
@@ -609,8 +621,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             }
         });
 
+        checkOutViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(CheckOutViewModel.class);
 
-
+        checkOutViewModel.getAllItems().observe(this, new Observer<List<CheckOut>>() {
+            @Override
+            public void onChanged(List<CheckOut> checkOuts) {
+                checkOutItems = checkOuts;
+            }
+        });
 
     }
 
@@ -642,11 +660,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
         if(callerID.equals("RegistrationActivity") ) {
             mContext.currentItem = itemsClassLevel.get(position);
-
-
             itemLocationCurrent = itemsClassLevel.get(position);
-
-
         }
 
         if(callerID.equals("InventoryActivity")) {
@@ -660,7 +674,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     private void findTheClosestEPC() {
         // TODO: Loading bar
-
     }
 
     public static FixedAssetsFragment getInstance() {
