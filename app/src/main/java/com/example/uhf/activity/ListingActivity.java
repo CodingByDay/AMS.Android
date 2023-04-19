@@ -62,7 +62,7 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
                 fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
 
 
-                int result = 9+9;
+
                 return false;
             }
         });
@@ -107,8 +107,6 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
     private void initializeButtonEvents() {
         registration = findViewById(R.id.btRequest);
         logout = findViewById(R.id.btExit);
-
-
         registration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

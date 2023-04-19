@@ -34,12 +34,11 @@ import android.widget.Toast;
 import com.example.uhf.R;
 import com.example.uhf.activity.InventoryActivity;
 import com.example.uhf.activity.RegistrationActivity;
-import com.example.uhf.adapter.ItemAdapter;
+import com.example.uhf.adapter.CheckOutAdapter;
 import com.example.uhf.adapter.ItemTemporaryAdapter;
 import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.adapter.ItemLocationAdapter;
 import com.example.uhf.mvvm.Model.CheckOut;
-import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemLocationCache;
 import com.example.uhf.mvvm.Model.ItemTemporary;
@@ -67,7 +66,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private int count = 0;
     private List<ItemLocation> itemsClassLevel;
     private List<ItemLocation> itemsLocationsClassLevel;
-    public ItemLocationAdapter adapter;
+    public CheckOutAdapter adapter;
     public ItemLocationAdapter locationAdapter;
     public ItemTemporaryAdapter temporaryAdapter;
     private String data;
@@ -120,6 +119,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     private CheckOutViewModel checkOutViewModel;
     private List<CheckOut> checkOutItems;
+    private List<CheckOut> checkOuts;
 
     private void clearColors() {
         first.setBackgroundColor(Color.TRANSPARENT);
@@ -239,14 +239,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        adapter = new ItemLocationAdapter(this, callerID);
+        adapter = new CheckOutAdapter(this, "ListingAssetsFragment");
         recycler.setAdapter(adapter);
-        itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
-        itemLocationViewModel.getItemsThatAreRegistered().observe(this, new Observer<List<ItemLocation>>() {
+        checkOutViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(CheckOutViewModel.class);
+        checkOutViewModel.getAllItems().observe(this, new Observer<List<CheckOut>>() {
             @Override
-            public void onChanged(List<ItemLocation> items) {
-                itemsClassLevel = items;
-                adapter.setItems(items);
+            public void onChanged(List<CheckOut> checkOutsInner) {
+                checkOuts = checkOutsInner;
+                adapter.setItems(checkOuts);
             }
         });
     }
@@ -266,8 +266,8 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        adapter = new ItemLocationAdapter(this, callerID);
-        recycler.setAdapter(adapter);
+        ItemLocationAdapter adapterLocation = new ItemLocationAdapter(this, callerID);
+        recycler.setAdapter(adapterLocation);
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
         itemLocationViewModel.getAllItemsNotRegistered().observe(this, new Observer<List<ItemLocation>>() {
             @Override
@@ -279,7 +279,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 if(cached!=null) {
                     removeCached = removeCached(items);
                 }
-                adapter.setItems(removeCached);
+                adapterLocation.setItems(removeCached);
             }
         });
 
@@ -602,14 +602,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
 
 
-        checkOutViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(CheckOutViewModel.class);
-
-        checkOutViewModel.getAllItems().observe(this, new Observer<List<CheckOut>>() {
-            @Override
-            public void onChanged(List<CheckOut> checkOuts) {
-                checkOutItems = checkOuts;
-            }
-        });
 
     }
 
