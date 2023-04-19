@@ -18,8 +18,10 @@ import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ItemHolder> {
@@ -135,14 +137,38 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ItemHo
 
 
 
-
-        this.items = items;
-
-
+        if(!this.synchronizeWithUnchanged) {
+            this.items = items;
+        } else {
+            this.items = syncronizeBothLists(items, itemsUnchanged);
+        }
 
 
         this.backupForSearching = items;
         notifyDataSetChanged();
+    }
+
+    private List<CheckOut> syncronizeBothLists(List<CheckOut> items, List<ItemLocation> itemsUnchanged) {
+        for(ItemLocation outer: itemsUnchanged) {
+            boolean isFound = false;
+            for(CheckOut inner: items) {
+                if(outer.getEcd().equals(inner.getAcECD())) {
+                    isFound = true;
+                } else {
+                    continue;
+                }
+            }
+
+
+            if(!isFound) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                Date today = new Date();
+                items.add(new CheckOut(1, outer.getQid(), outer.getItem(), outer.getLocation(), outer.getCode(), outer.getEcd(), outer.getName(), "", formatter.format(today), 5, "", -1, today.toString(), 5, today.toString(), 5, ""));
+            }
+        }
+
+
+        return items;
     }
 
 
