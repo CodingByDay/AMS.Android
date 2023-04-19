@@ -257,7 +257,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 itemsClassLevel = items;
                 adapter = new CheckOutAdapter(FixedAssetsFragment.this, "ListingAssetsFragment", true, itemsClassLevel);
                 recycler.setAdapter(adapter);
-
             }
         });
 

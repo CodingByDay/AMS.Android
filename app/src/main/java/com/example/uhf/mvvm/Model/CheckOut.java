@@ -1,5 +1,6 @@
 package com.example.uhf.mvvm.Model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -211,5 +212,31 @@ public class CheckOut {
 
     public void setAcNote(String acNote) {
         this.acNote = acNote;
+    }
+
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "CheckOut{" +
+                "anQId=" + anQId +
+                ", anInventory=" + anInventory +
+                ", anAssetID=" + anAssetID +
+                ", acItem='" + acItem + '\'' +
+                ", acLocation='" + acLocation + '\'' +
+                ", acCode='" + acCode + '\'' +
+                ", acECD='" + acECD + '\'' +
+                ", acName='" + acName + '\'' +
+                ", acName2='" + acName2 + '\'' +
+                ", adDateCheck='" + adDateCheck + '\'' +
+                ", anUserCheck=" + anUserCheck +
+                ", adStringConfirm='" + adStringConfirm + '\'' +
+                ", anUserConfirm=" + anUserConfirm +
+                ", adTimeIns='" + adTimeIns + '\'' +
+                ", anUserIns=" + anUserIns +
+                ", adTimeChg='" + adTimeChg + '\'' +
+                ", anUserChg=" + anUserChg +
+                ", acNote='" + acNote + '\'' +
+                '}';
     }
 }

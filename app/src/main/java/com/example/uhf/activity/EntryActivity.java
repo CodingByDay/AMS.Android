@@ -20,11 +20,13 @@ import com.example.uhf.api.RootAsset;
 import com.example.uhf.api.RootLocation;
 import com.example.uhf.api.RootStatus;
 import com.example.uhf.database.ImportExportData;
+import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemLocationCache;
 import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.Model.LocationDAO;
+import com.example.uhf.mvvm.ViewModel.CheckOutViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
@@ -53,6 +55,9 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     private ItemLocationCacheViewModel itemLocationCacheViewModel;
     private List<ItemLocationCache> itemsLocationsCacheClassLevel;
 
+    private CheckOutViewModel checkOutViewModel;
+    private List<CheckOut> checkOutItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +76,15 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             @Override
             public void onChanged(List<Setting> settings) {
                 settingsList = settings;
+            }
+        });
+
+
+        checkOutViewModel = ViewModelProviders.of(this).get(CheckOutViewModel.class);
+        checkOutViewModel.getAllItems().observe(this, new Observer<List<CheckOut>>() {
+            @Override
+            public void onChanged(List<CheckOut> checkOuts) {
+                checkOutItems = checkOuts;
             }
         });
     }
@@ -163,12 +177,9 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btExportListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                mypDialog.setMessage("init...");
-                mypDialog.setCanceledOnTouchOutside(false);
-                mypDialog.show();
-                initSynchronization();
-                mypDialog.cancel();
+                for(CheckOut co : checkOutItems) {
+                    Toast.makeText(EntryActivity.this, co.toString(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         btTransferListing.setOnClickListener(new View.OnClickListener() {
