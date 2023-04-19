@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
+
 
 
 
@@ -30,26 +30,26 @@ public class CheckOut {
     @ColumnInfo( defaultValue = "empty")
     private String acName2;
     @ColumnInfo( defaultValue = "empty")
-    private Date adDateCheck;
+    private String adStringCheck;
     @ColumnInfo( defaultValue = "empty")
     private int anUserCheck;
     @ColumnInfo( defaultValue = "empty")
-    private Date adDateConfirm;
+    private String adStringConfirm;
     @ColumnInfo( defaultValue = "empty")
     private int anUserConfirm;
     @ColumnInfo( defaultValue = "empty")
-    private Date adTimeIns;
+    private String adTimeIns;
     @ColumnInfo( defaultValue = "empty")
     private int anUserIns;
     @ColumnInfo( defaultValue = "empty")
-    private Date adTimeChg;
+    private String adTimeChg;
     @ColumnInfo( defaultValue = "empty")
     private int anUserChg;
     @ColumnInfo( defaultValue = "empty")
     private String acNote;
 
 
-    public CheckOut(int anInventory, int anAssetID, String acItem, String acLocation, String acCode, String acECD, String acName, String acName2, Date adDateCheck, int anUserCheck, Date adDateConfirm, int anUserConfirm, Date adTimeIns, int anUserIns, Date adTimeChg, int anUserChg, String acNote) {
+    public CheckOut(int anInventory, int anAssetID, String acItem, String acLocation, String acCode, String acECD, String acName, String acName2, String adStringCheck, int anUserCheck, String adStringConfirm, int anUserConfirm, String adTimeIns, int anUserIns, String adTimeChg, int anUserChg, String acNote) {
         this.anInventory = anInventory;
         this.anAssetID = anAssetID;
         this.acItem = acItem;
@@ -58,9 +58,9 @@ public class CheckOut {
         this.acECD = acECD;
         this.acName = acName;
         this.acName2 = acName2;
-        this.adDateCheck = adDateCheck;
+        this.adStringCheck = adStringCheck;
         this.anUserCheck = anUserCheck;
-        this.adDateConfirm = adDateConfirm;
+        this.adStringConfirm = adStringConfirm;
         this.anUserConfirm = anUserConfirm;
         this.adTimeIns = adTimeIns;
         this.anUserIns = anUserIns;
@@ -142,12 +142,12 @@ public class CheckOut {
         this.acName2 = acName2;
     }
 
-    public Date getAdDateCheck() {
-        return adDateCheck;
+    public String getAdStringCheck() {
+        return adStringCheck;
     }
 
-    public void setAdDateCheck(Date adDateCheck) {
-        this.adDateCheck = adDateCheck;
+    public void setAdStringCheck(String adStringCheck) {
+        this.adStringCheck = adStringCheck;
     }
 
     public int getAnUserCheck() {
@@ -158,12 +158,12 @@ public class CheckOut {
         this.anUserCheck = anUserCheck;
     }
 
-    public Date getAdDateConfirm() {
-        return adDateConfirm;
+    public String getAdStringConfirm() {
+        return adStringConfirm;
     }
 
-    public void setAdDateConfirm(Date adDateConfirm) {
-        this.adDateConfirm = adDateConfirm;
+    public void setAdStringConfirm(String adStringConfirm) {
+        this.adStringConfirm = adStringConfirm;
     }
 
     public int getAnUserConfirm() {
@@ -174,11 +174,11 @@ public class CheckOut {
         this.anUserConfirm = anUserConfirm;
     }
 
-    public Date getAdTimeIns() {
+    public String getAdTimeIns() {
         return adTimeIns;
     }
 
-    public void setAdTimeIns(Date adTimeIns) {
+    public void setAdTimeIns(String adTimeIns) {
         this.adTimeIns = adTimeIns;
     }
 
@@ -190,11 +190,11 @@ public class CheckOut {
         this.anUserIns = anUserIns;
     }
 
-    public Date getAdTimeChg() {
+    public String getAdTimeChg() {
         return adTimeChg;
     }
 
-    public void setAdTimeChg(Date adTimeChg) {
+    public void setAdTimeChg(String adTimeChg) {
         this.adTimeChg = adTimeChg;
     }
 
