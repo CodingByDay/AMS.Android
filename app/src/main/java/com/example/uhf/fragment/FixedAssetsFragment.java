@@ -436,7 +436,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                         } else if (callerID.equals("InventoryActivity")) {
                             int location = (int) Math.floor(Math.random() * 5);
                             ItemLocation item = filterList(info.getEPC());
-                            if(item!=null) {
+                            if(item!=null && !existsInCheckout(info.getEPC())) {
                                 // Query
                                 ItemLocation asset = checkExistance(info.getEPC());
                                 if(asset!=null ) {
@@ -470,6 +470,12 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
 
     };
+
+    private boolean existsInCheckout(String epc) {
+
+
+
+    }
 
     private ItemLocation checkExistance(String epc) {
         for(ItemLocation item: itemsClassLevel) {

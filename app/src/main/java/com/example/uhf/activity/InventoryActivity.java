@@ -48,7 +48,6 @@ public class InventoryActivity extends FragmentActivity implements Barcode {
 private ItemViewModel itemViewModel;
 private Button btConfirm;
 public KeyDwonFragment currentFragment=null;
-
 public EditText tbLocation;
 public CustomSearchableSpinner cbLocation;
 private String currentLocation;
@@ -57,12 +56,9 @@ public RFIDWithUHFUART mReader;
     private BarcodeUtility barcodeUtility;
     private ArrayAdapter locationsAdapter;
     private LocationViewModel locationsViewModel;
-
     private Button btExit;
-
     public ItemTemporary current;
     private SearchView swListing;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
