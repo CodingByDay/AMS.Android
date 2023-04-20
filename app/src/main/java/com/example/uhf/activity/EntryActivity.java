@@ -178,7 +178,12 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             @Override
             public void onClick(View view) {
                 for(CheckOut co : checkOutItems) {
-                    Toast.makeText(EntryActivity.this, co.toString(), Toast.LENGTH_SHORT).show();
+
+                    try {
+                        client.checkOutCommit(EntryActivity.this, settingsList, co);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });

@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
 import com.example.uhf.activity.LoginActivityMain;
+import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.settings.Setting;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,6 +24,80 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Communicator {
+
+    public class CommitCheckOut extends AsyncTask<String, Void, Boolean> {
+
+        private AsyncCallBack asyncCallBack;
+        CommitCheckOut setInstance(Context context) {
+
+            asyncCallBack = (AsyncCallBack) context;
+            return this;
+        }
+        @Override protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override protected Boolean doInBackground(String... args) {
+            int responseCode;
+            try {
+                URL url = new URL("http://invapi-test.in-sist.si");
+                String json = new String("");
+                for(String ar: args) {
+                    if(ar.startsWith("http")) {
+                        url = new URL(ar);
+                    } else {
+                        json = ar;
+                    }
+                }
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
+                conn.connect();
+                try(OutputStream os = conn.getOutputStream()) {
+                    byte[] input = json.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+                try(BufferedReader br = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                    StringBuilder response = new StringBuilder();
+                    String responseLine = null;
+
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+
+
+
+                    // Converting to response object
+                    ObjectMapper mapper = new ObjectMapper();
+
+
+
+                    String json_c = response.toString();
+                    return true;
+
+                }
+            } catch (Exception e) {
+                return false;
+            }
+
+        }
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            asyncCallBack.setResult(result);
+        }
+    }
+
+
+
+
+
+
+
+
+
 
     public class RetrieveLogingInformation extends AsyncTask<String, Void, Boolean> {
         private LoginActivityMain login;
@@ -463,6 +538,49 @@ public class Communicator {
             }
         }
 
+    public boolean checkOutCommit(Context context, List<Setting> settings, CheckOut out) throws JsonProcessingException {
+        try {
+            String baseUrl = new String();
+            String token = new String();
+            for (Setting setting: settings) {
+                if(setting.getValue().startsWith("http")) {
+                    baseUrl = setting.getValue();
+                } else if (setting.getValue().length() == 36 && setting.getValue().contains("-")) {
+                    token = setting.getValue();
+                }
+            }
+            String endpoint = "/insertCheckOut";
+            com.example.uhf.api.CheckOut ck = new com.example.uhf.api.CheckOut();
+            ck.token = token;
+            ck.assetID = out.getAnAssetID();
+            ck.dateCheck = out.getAdDateCheck();
+            ck.dateConfirm = out.getAdDateCheck();
+            ck.timeChg = out.getAdTimeChg();
+            ck.timeIns = out.getAdTimeIns();
+            ck.code = out.getAcCode();
+            ck.eCD = out.getAcECD();
+            ck.item = out.getAcItem();
+            ck.location = out.getAcLocation();
+            ck.name = out.getAcName();
+            ck.name2 = out.getAcName2();
+            ck.userIns = out.getAnUserIns();
+            ck.userChg = out.getAnUserChg();
+            ck.note = out.getAcNote();
+            ck.userCheck = out.getAnUserCheck();
+            ck.userConfirm = out.getAnUserConfirm();
+            ck.inventory = 1;
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            String json = ow.writeValueAsString(ck);
+            String url = baseUrl + endpoint;
+            CommitCheckOut retrieve = new CommitCheckOut();
+            retrieve = retrieve.setInstance(context);
+            retrieve.execute(url, json);
+            return false;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
         public boolean isDeviceConnected(Context context) {
             ConnectivityManager cm = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
