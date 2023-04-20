@@ -9,6 +9,7 @@ import com.example.uhf.activity.LoginActivityMain;
 import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.settings.Setting;
+import com.example.uhf.tools.DateHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -549,14 +550,20 @@ public class Communicator {
                     token = setting.getValue();
                 }
             }
+
+
+            String currentCorrectFormat = DateHelper.DateHelperClassStaticHelper.getCurrentDateWithT();
             String endpoint = "/insertCheckOut";
             com.example.uhf.api.CheckOut ck = new com.example.uhf.api.CheckOut();
+
+
+
             ck.token = token;
             ck.assetID = out.getAnAssetID();
-            ck.dateCheck = out.getAdDateCheck();
-            ck.dateConfirm = out.getAdDateCheck();
-            ck.timeChg = out.getAdTimeChg();
-            ck.timeIns = out.getAdTimeIns();
+            ck.dateCheck = currentCorrectFormat;
+            ck.dateConfirm = currentCorrectFormat;
+            ck.timeChg = currentCorrectFormat;
+            ck.timeIns = currentCorrectFormat;
             ck.code = out.getAcCode();
             ck.eCD = out.getAcECD();
             ck.item = out.getAcItem();
@@ -569,6 +576,9 @@ public class Communicator {
             ck.userCheck = out.getAnUserCheck();
             ck.userConfirm = out.getAnUserConfirm();
             ck.inventory = 1;
+
+
+
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(ck);
             String url = baseUrl + endpoint;
@@ -576,7 +586,6 @@ public class Communicator {
             retrieve = retrieve.setInstance(context);
             retrieve.execute(url, json);
             return false;
-
         } catch (Exception e) {
             return false;
         }
