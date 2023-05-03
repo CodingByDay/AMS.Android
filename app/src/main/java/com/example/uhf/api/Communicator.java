@@ -561,7 +561,7 @@ public class Communicator {
             ck.token = token;
             ck.assetID = out.getAnAssetID();
             ck.dateCheck = currentCorrectFormat;
-            ck.dateConfirm = currentCorrectFormat;
+            ck.dateConfirm = null;
             ck.timeChg = currentCorrectFormat;
             ck.timeIns = currentCorrectFormat;
             ck.code = out.getAcCode();

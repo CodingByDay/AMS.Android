@@ -181,6 +181,9 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
 
                     try {
                         client.checkOutCommit(EntryActivity.this, settingsList, co);
+                        Toast.makeText(EntryActivity.this, "Stanje posodobljeno.", Toast.LENGTH_SHORT).show();
+                        // Delete all data from commit table after the state has been updated.
+                        checkOutViewModel.deleteAll();
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }

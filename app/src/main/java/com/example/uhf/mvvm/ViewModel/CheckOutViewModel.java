@@ -29,4 +29,6 @@ public class CheckOutViewModel extends AndroidViewModel {
     public LiveData<List<CheckOut>> getAllItems() {
         return allItems;
     }
+
+    public void deleteAll() { repository.deleteAllItems(); }
 }

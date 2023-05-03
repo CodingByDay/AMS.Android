@@ -501,10 +501,11 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
 
     private boolean existsInCheckout(String epc) {
-        if(checkOutItems!=null && checkOutItems.size()>=1)
-        for (CheckOut check: checkOutItems) {
-            if(check.getAcECD().equals(epc)) {
-                return true;
+        if(checkOutItems!=null && checkOutItems.size()>=1) {
+            for (CheckOut check : checkOutItems) {
+                if (check.getAcECD().equals(epc)) {
+                    return true;
+                }
             }
         }
         return false;
