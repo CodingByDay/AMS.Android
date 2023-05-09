@@ -67,8 +67,6 @@ public abstract class Database extends RoomDatabase {
     };
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void> {
-
-
         private ItemDAO itemDAO;
         private ItemTemporaryDAO itemTemporaryDAO;
         private LocationDAO locationDAO;
@@ -79,6 +77,7 @@ public abstract class Database extends RoomDatabase {
 
         private CheckOutDAO checkOutDAO;
         private PopulateDbAsyncTask(Database db) {
+
             itemDAO = db.itemDAO();
             itemTemporaryDAO = db.itemTemporaryDAO();
             settingDAO = db.settingDAO();

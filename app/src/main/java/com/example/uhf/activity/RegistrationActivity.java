@@ -57,7 +57,6 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
         initUHF();
         initializeFragment();
         initializeActivity();
-
     }
 
     private void initializeActivity() {

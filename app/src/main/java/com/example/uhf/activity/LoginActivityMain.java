@@ -270,18 +270,14 @@ private TextView login;
 
     @Override
     public void setResultRootLocation(RootLocation rootLocation) {
-
-
     }
 
     @Override
     public void setResultRootStatus(RootStatus status) {
-
     }
 
     @Override
     public void setResultRootAsset(RootAsset asset) {
-
     }
     @Override
     public void setProgressValue(int progress) {
@@ -301,7 +297,10 @@ private TextView login;
         // Build our own dialog title and message
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
         dialogBuilder.setTitle("Version " + versionName + " available!"); // you should use a string resource instead, this is just a simple example
-        dialogBuilder.setMessage(releaseNotes);
+        dialogBuilder.setMessage("Please update the application.");
+
+
+        // This is the update text to
 
         // Mimic default SDK buttons
         dialogBuilder.setPositiveButton(com.microsoft.appcenter.distribute.R.string.appcenter_distribute_update_dialog_download, new DialogInterface.OnClickListener() {
