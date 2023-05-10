@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -41,7 +42,53 @@ private CardView btLogout;
             }
         });
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_F1:
+            {
+                btRegistration.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F2:
+            {
+                btInventory.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F3:
+            {
+                btListing.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F4:
+            {
+                btSync.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F5:
+            {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F6:
+            {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F7:
+            {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F8:
+            {
+                btLogout.performClick();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

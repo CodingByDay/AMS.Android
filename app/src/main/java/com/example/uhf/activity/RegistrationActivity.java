@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -126,7 +127,6 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                         fixedAssetsFragment.stopScanning();
                         Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
                         String strongest = findStrongestSignal().getEcd();
-                        
                         if(strongest!=null) {
                         myIntent.putExtra("epc", strongest);
                         myIntent.putExtra("callerID", "Registration");
@@ -142,6 +142,47 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                 }, 5000);
             }
         });
+    }
+
+
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_F1: {
+                btExit.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F2: {
+                btRequest.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F3: {
+
+                return true;
+            }
+            case KeyEvent.KEYCODE_F4: {
+
+                return true;
+            }
+            case KeyEvent.KEYCODE_F5: {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F6: {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F7: {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F8: {
+
+                return true;
+            }
+
+        }
+        return super.onKeyDown(keyCode, event);
     }
         private ItemTemporary findStrongestSignal() {
         ItemTemporary itemStrongest = new ItemTemporary("-200");

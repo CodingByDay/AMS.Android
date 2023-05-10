@@ -73,7 +73,7 @@
             android:layout_height="80dp"
             android:layout_weight="1"
             android:backgroundTint="@android:color/holo_blue_bright"
-            android:text="@string/exit_inventory" />
+            android:text="@string/exit_inventory_navigation" />
 
         <Button
             android:id="@+id/btRequest"
@@ -81,6 +81,6 @@
             android:layout_height="80dp"
             android:layout_weight="1"
             android:backgroundTint="@android:color/holo_blue_bright"
-            android:text="@string/registration" />
+            android:text="@string/registration_navigation2" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

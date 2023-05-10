@@ -2600,6 +2600,23 @@
     <string name="code">Šifra</string>
     <string name="asset_label">Sredstvo</string>
     <string name="location_label">Lokacija</string>
+    <string name="registration_navigation">Registracija - F1</string>
+    <string name="inventory_navigation">Popis - F2</string>
+    <string name="listing_navigation">Pregled - F3</string>
+    <string name="sync_navigation">Sinhronizacija - F4</string>
+    <string name="logout_navigation">Odjava - F8</string>
+    <string name="transfer_locations_navigation">Prenos lokacij - F1</string>
+    <string name="transfer_objects_navigation">Prenos sredstev - F2</string>
+    <string name="location_listing_navigation">Pregled lokacij - F3</string>
+    <string name="objects_listing_navigation">Pregled sredstev - F4</string>
+    <string name="export_inventory_navigation">Izvoz popisa - F5</string>
+    <string name="transfer_inventory_sync_navigation">Sinhronizacija - F6</string>
+    <string name="exit_inventory_navigation">Izhod - F1</string>
+    <string name="confirm_inventory_navigation">Potrdi - F2</string>
+    <string name="registration_navigation2">Registracija - F2</string>
+    <string name="stop_navigation">PAVZA - F1</string>
+    <string name="stop_permanent_navigation">PREKINI - F2</string>
+    <string name="stop_navigation2">Pavza - f1</string>
 
 
 </resources>

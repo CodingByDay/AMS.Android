@@ -50,7 +50,7 @@ private Button btConfirm;
 public KeyDwonFragment currentFragment=null;
 public EditText tbLocation;
 public CustomSearchableSpinner cbLocation;
-private String currentLocation;
+public String currentLocation;
 private Button btToggleScanning;
 public RFIDWithUHFUART mReader;
     private BarcodeUtility barcodeUtility;
@@ -59,6 +59,8 @@ public RFIDWithUHFUART mReader;
     private Button btExit;
     public ItemTemporary current;
     private SearchView swListing;
+    private String location;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,19 +68,58 @@ public RFIDWithUHFUART mReader;
         barcodeUtility = new BarcodeUtility(this, this);
         initViews();
         initializeFragment();
+
     }
 
 
-
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == 296) {
-            // This is the hardware start button
-            FixedAssetsFragment.getInstance().toggleScanning(btToggleScanning.getText().equals("Skeniraj"));
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_F1: {
+                btExit.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F2: {
+                btConfirm.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F3: {
+
+                return true;
+            }
+            case KeyEvent.KEYCODE_F4: {
+
+                return true;
+            }
+            case KeyEvent.KEYCODE_F5: {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F6: {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F7: {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F8: {
+
+                return true;
+            }
+            case 296: {
+                FixedAssetsFragment.getInstance().toggleScanning(btToggleScanning.getText().equals("Skeniraj"));
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
     private int helpCounter = 0;
     private void initViews() {
+        if(getIntent().getExtras()!=null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras.getString("location") != null) {
+                location = extras.getString("location");
+            }
+        }
         swListing = findViewById(R.id.swListing);
         swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -109,6 +150,7 @@ public RFIDWithUHFUART mReader;
                 Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
                 startActivity(myIntent);
                 finishAffinity();
+
             }
         });
         btConfirm = findViewById(R.id.btConfirm);
@@ -167,6 +209,7 @@ public RFIDWithUHFUART mReader;
                     myIntent.putExtra("callerID", "InventoryProcessLocation");
                     String location = tbLocation.getText().toString();
                     myIntent.putExtra("location", tbLocation.getText().toString());
+
                     // Redirect to the location activity
                     startActivity(myIntent);
                 }
@@ -195,6 +238,14 @@ public RFIDWithUHFUART mReader;
 
         tbLocation.setText("");
         tbLocation.requestFocus();
+
+
+
+        int postest = locationsAdapter.getPosition(location);
+
+        if(location!=null) {
+            cbLocation.setSelection(locationsAdapter.getPosition(location));
+        }
     }
 
     private void initializeFragment() {

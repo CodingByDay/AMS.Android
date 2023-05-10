@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +40,50 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
     private EditText tbBarcodeScan;
     private BarcodeUtility barcodeUtility;
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_F1:
+            {
+                logout.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F2:
+            {
+                registration.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F3:
+            {
+                return true;
+            }
+            case KeyEvent.KEYCODE_F4:
+            {
+                return true;
+            }
+            case KeyEvent.KEYCODE_F5:
+            {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F6:
+            {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F7:
+            {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F8:
+            {
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

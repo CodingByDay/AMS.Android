@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.example.uhf.api.RootAsset;
 import com.example.uhf.api.RootLocation;
 import com.example.uhf.api.RootStatus;
 import com.example.uhf.database.ImportExportData;
+import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
@@ -127,7 +129,44 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     }
 
 
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_F1: {
+                btTransferLocations.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F2: {
+                btTransferItems.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F3: {
+                btListingLocations.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F4: {
+                btListingItems.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F5: {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F6: {
+                btExportListing.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F7: {
+                btTransferListing.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F8: {
 
+                return true;
+            }
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 
     private void initializeViews() {

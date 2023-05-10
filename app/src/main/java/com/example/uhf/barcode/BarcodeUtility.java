@@ -20,8 +20,12 @@ public class BarcodeUtility {
                 barcodeInterface.getResult(barcodeEntity.getBarcodeData());
             }
         });
+
     }
 
+    public void unregister() {
+        barcodeDecoder.close();
+    }
 
 
 

@@ -109,7 +109,7 @@
             android:layout_height="80dp"
             android:layout_weight="1"
             android:backgroundTint="@android:color/holo_blue_bright"
-            android:text="@string/exit_inventory" />
+            android:text="@string/exit_inventory_navigation" />
 
         <Button
             android:id="@+id/btToggleScanning"
@@ -128,7 +128,7 @@
             android:layout_weight="1"
 
             android:backgroundTint="@android:color/holo_blue_bright"
-            android:text="@string/confirm_inventory" />
+            android:text="@string/confirm_inventory_navigation" />
     </LinearLayout>
 
 

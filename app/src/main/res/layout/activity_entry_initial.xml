@@ -57,9 +57,10 @@
                         android:layout_below="@id/cycle"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/registration"
-                        android:textSize="15sp"
+                        android:text="@string/registration_navigation"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
+
 
                     <ImageView
                         android:id="@+id/cycle"
@@ -106,9 +107,10 @@
                         android:layout_below="@id/bus"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/inventory"
-                        android:textSize="15sp"
+                        android:text="@string/inventory_navigation"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
+
 
                     <ImageView
                         android:id="@+id/bus"
@@ -156,8 +158,8 @@
                         android:layout_below="@id/bus1"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/listing"
-                        android:textSize="15sp"
+                        android:text="@string/listing_navigation"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -204,8 +206,8 @@
                         android:layout_below="@id/cycle"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/sync"
-                        android:textSize="15sp"
+                        android:text="@string/sync_navigation"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -251,8 +253,8 @@
                         android:layout_below="@id/cycle"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="@string/logout"
-                        android:textSize="15sp"
+                        android:text="@string/logout_navigation"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <ImageView

@@ -9,9 +9,11 @@
 
 
     <LinearLayout
+        android:paddingTop="3dp"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toTopOf="@id/rwItems"
         android:layout_height="wrap_content"
+        android:id="@+id/header"
         android:orientation="horizontal"
        >
         <TextView
@@ -43,9 +45,16 @@
             android:text="@string/qty" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/holo_blue_bright"
+        app:layout_constraintTop_toBottomOf="@+id/header"/>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rwItems"
+       android:id="@+id/rwItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"

@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -101,6 +102,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         setContentView(R.layout.activity_location);
         initUHF();
         initSettings();
+
         barcodeUtility = new BarcodeUtility(this, this);
         llChart=findViewById(R.id.llChart);
         etEPC=findViewById(R.id.etEPC);
@@ -121,13 +123,14 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 startActivity(myIntent);
             }
         });
-
+        llChart.setData(1);
         llChart.clean();
         Bundle extras = getIntent().getExtras();
         callerID =  extras.getString("callerID");
 
-
         resolveCaller(callerID);
+
+
 
 
     }
@@ -169,15 +172,15 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private void toggleLocation(boolean start) {
         if(start) {
             startLocation();
-            btToggle.setText("Pavza");
+            btToggle.setText("Pavza - F1");
         }
         else {
-        if (btToggle.getText().equals("Pavza")) {
+        if (btToggle.getText().equals("Pavza - F1")) {
             stopLocation();
-            btToggle.setText("Nadaljuj");
+            btToggle.setText("Nadaljuj - F1");
         } else {
             startLocation();
-            btToggle.setText("Pavza");
+            btToggle.setText("Pavza - F1");
         }}
     }
     private ItemLocation findById(Integer id) {
@@ -435,9 +438,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                                 ItemLocation itemest = fixedAssetsFragment.itemLocationCurrent;
 
-                                // item.setLocation(location);
-                                // item.setTimestamp(timestamp.toString());
-                                // item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
                                 LocalDate localDate = LocalDate.now();
 
                                 // itemLocationViewModel.update(item);
@@ -447,6 +447,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 checkOutViewModel.insert(checkOutItem);
 
                                 Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
+                                myIntent.putExtra("epc", location);
                                 startActivity(myIntent);
                                 // Continues here
                             } else {
@@ -485,11 +486,61 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         }
         etEPC.setEnabled(false);
     }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_F1:
+            {
+                btToggle.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F2:
+            {
+                btStop.performClick();
+                return true;
+            }
+            case KeyEvent.KEYCODE_F3:
+            {
+
+                return true;
+            }
+            case KeyEvent.KEYCODE_F4:
+            {
+
+                return true;
+            }
+            case KeyEvent.KEYCODE_F5:
+            {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F6:
+            {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F7:
+            {
+                //your Action code
+                return true;
+            }
+            case KeyEvent.KEYCODE_F8:
+            {
+
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     private void initUHF() {
         try {
             mReader = RFIDWithUHFUART.getInstance();
         } catch (Exception ex) {
-            return;
+            initUHF();
         }
         if (mReader != null) {
             new InitTask().execute();
