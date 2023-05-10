@@ -34,7 +34,6 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
     Button logout;
     private SettingsViewModel settingsView;
     private List<Setting> settingsList;
-
     private SearchView swListing;
     private Setting token;
     private EditText tbBarcodeScan;
@@ -90,11 +89,9 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_listing);
         new Thread(new Runnable() {
-
             @Override
             public void run() {
                 ListingActivity.this.runOnUiThread(new Runnable() {
-
                     @Override
                     public void run() {
                         swListing = findViewById(R.id.swListing);
@@ -112,9 +109,6 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
                                     currentColumnSearch = fixedAssetsFragment.first.getText().toString();
                                 }
                                 fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
-
-
-
                                 return false;
                             }
                         });

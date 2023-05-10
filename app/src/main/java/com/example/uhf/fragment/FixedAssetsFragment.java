@@ -74,7 +74,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private boolean loopFlag = true;
     private int inventoryFlag = 1;
     private List<String> tempDatas = new ArrayList<>();
-
+    private int countList = 0;
     Button BtClear;
     TextView tvTime;
     TextView tv_count;
@@ -253,9 +253,16 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;
-                adapter = new CheckOutAdapter(FixedAssetsFragment.this, "ListingAssetsFragment", true, itemsClassLevel);
+                countList += 1;
+                if(countList == 2) {
+                    countList = 0;
+                    List<ItemLocation> data = syncBothLists(itemsClassLevel, checkOuts);
+                    ItemLocationAdapter adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
+                    recycler.setAdapter(adapterFinal);
+                    adapterFinal.setItems(data);
+                    adapterFinal.notifyDataSetChanged();
 
-                recycler.setAdapter(adapter);
+                }
             }
         });
 
@@ -265,14 +272,36 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             @Override
             public void onChanged(List<CheckOut> checkOutsInner) {
                 checkOuts = checkOutsInner;
-                if(adapter!=null) {
-                     adapter.setItems(checkOuts);
+                countList += 1;
+                if(countList == 2) {
+                    countList = 0;
+                    List<ItemLocation> data = syncBothLists(itemsClassLevel, checkOuts);
+                    ItemLocationAdapter adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
+                    recycler.setAdapter(adapterFinal);
+                    adapterFinal.setItems(data);
+                    adapterFinal.notifyDataSetChanged();
                 }
             }
         });
 
 
     }
+
+    private List<ItemLocation> syncBothLists(List<ItemLocation> itemsClassLevelOut, List<CheckOut> checkOuts) {
+        for (CheckOut ck : checkOuts) {
+            for (ItemLocation item : itemsClassLevelOut) {
+                if (item.getQid() == ck.getAnAssetID()) {
+                    item.setLocation(ck.getAcLocation());
+                }
+            }
+        }
+
+
+        return itemsClassLevelOut;
+    }
+
+
+
     private void initListingForCheck(View view) {
 
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
@@ -309,6 +338,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         itemLocationViewModel.getItemsThatAreRegistered().observe(this, new Observer<List<ItemLocation>>() {
             @Override
             public void onChanged(List<ItemLocation> items) {
+
                 registeredItems = items;
             }
         });

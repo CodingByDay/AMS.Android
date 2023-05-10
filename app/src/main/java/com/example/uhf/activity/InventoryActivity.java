@@ -1,6 +1,5 @@
 package com.example.uhf.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -9,13 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,19 +25,15 @@ import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.custom.CustomSearchableSpinner;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.fragment.KeyDwonFragment;
-import com.example.uhf.fragment.UHFReadTagFragment;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.LocationViewModel;
+import com.microsoft.appcenter.analytics.Analytics;
 import com.rscja.deviceapi.RFIDWithUHFUART;
-import com.rscja.deviceapi.entity.UHFTAGInfo;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class InventoryActivity extends FragmentActivity implements Barcode {
 private ItemViewModel itemViewModel;
@@ -79,7 +70,15 @@ public RFIDWithUHFUART mReader;
             }
         }).start();
     }
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        try {
+        barcodeUtility.unregister();
+        } catch(Exception e) {
+            Analytics.trackEvent(e.getLocalizedMessage());
+        }
+    }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
@@ -115,9 +114,10 @@ public RFIDWithUHFUART mReader;
 
                 return true;
             }
-            case 296: {
-                FixedAssetsFragment.getInstance().toggleScanning(btToggleScanning.getText().equals("Skeniraj"));
+            case 294: {
+                btToggleScanning.performClick();
             }
+
         }
         return super.onKeyDown(keyCode, event);
     }
