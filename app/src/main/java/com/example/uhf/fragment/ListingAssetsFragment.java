@@ -71,37 +71,37 @@ public class ListingAssetsFragment extends KeyDwonFragment implements RecyclerVi
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.sortASCandDESC(first.getText().toString());
+                //adapter.sortASCandDESC(first.getText().toString());
                 clearColors();
                 currentSearchColumn = first.getText().toString();
-                first.setBackgroundColor(Color.parseColor("#FFCCCB"));
+                first.setBackgroundColor(Color.parseColor("#C7E3E1"));
             }
         });
         second.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.sortASCandDESC(second.getText().toString());
+                // adapter.sortASCandDESC(second.getText().toString());
                 clearColors();
                 currentSearchColumn = second.getText().toString();
-                second.setBackgroundColor(Color.parseColor("#FFCCCB"));
+                second.setBackgroundColor(Color.parseColor("#C7E3E1"));
             }
         });
         third.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.sortASCandDESC(third.getText().toString());
+                // adapter.sortASCandDESC(third.getText().toString());
                 clearColors();
                 currentSearchColumn = third.getText().toString();
-                third.setBackgroundColor(Color.parseColor("#FFCCCB"));
+                third.setBackgroundColor(Color.parseColor("#C7E3E1"));
             }
         });
         forth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.sortASCandDESC(forth.getText().toString());
+                //adapter.sortASCandDESC(forth.getText().toString());
                 clearColors();
                 currentSearchColumn = forth.getText().toString();
-                forth.setBackgroundColor(Color.parseColor("#FFCCCB"));
+                forth.setBackgroundColor(Color.parseColor("#C7E3E1"));
             }
         });
 
@@ -134,10 +134,10 @@ public class ListingAssetsFragment extends KeyDwonFragment implements RecyclerVi
     @Override
     public void onItemClick(int position) {
         if(selected==-1) {
-            Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#FFCCCB"));
+            Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#C7E3E1"));
         } else {
             Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(selected)).setBackgroundColor(Color.TRANSPARENT);
-            Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#FFCCCB"));
+            Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#C7E3E1"));
         }
         selected = position;
     }

@@ -43,7 +43,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHo
         Location current = items.get(position);
         holder.tbName.setText(current.getName());
         holder.tbLocation.setText(current.getLocation());
-        holder.tbCode.setText(current.getCode());
+        holder.tbDept.setText(current.getDept());
     }
 
     private List<Location> backupForSearching = new ArrayList<>();
@@ -66,7 +66,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHo
                             sorted.add(item);
                         }
                         break;
-                    case "Šifra":
+                    case "Oddelek":
                         if (item.getCode().toLowerCase().contains(searchBy.toLowerCase())) {
                             sorted.add(item);
                         }
@@ -98,7 +98,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHo
                     tbNameASC = true;
                 }
                 break;
-            case "Šifra":
+            case "Oddelek":
                 if(tbCodeASC) {
                     items.sort(Comparator.comparing(Location::getCode));
                     tbCodeASC = false;
@@ -131,7 +131,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHo
         private TextView tbLocation;
         private TextView tbName;
 
-        private TextView tbCode;
+        private TextView tbDept;
 
         private LinearLayout linearLayout;
 
@@ -140,7 +140,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHo
 
             tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
             tbName = (TextView) itemView.findViewById(R.id.tbName);
-            tbCode = (TextView) itemView.findViewById(R.id.tbCode);
+            tbDept = (TextView) itemView.findViewById(R.id.tbDept);
 
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {

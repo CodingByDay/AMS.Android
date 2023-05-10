@@ -30,7 +30,8 @@ public class LocationViewModel extends AndroidViewModel {
     public void insertBatch(Context context, ArrayList<com.example.uhf.api.Location> items) {
         List<Location> itemsLocations = new ArrayList<>();
         for (com.example.uhf.api.Location loc: items) {
-            itemsLocations.add(new Location(loc.location, loc.name, loc.code));
+
+            itemsLocations.add(new Location(loc.location, loc.name, loc.code, loc.dept));
         }
 
         repository.insertLocationsBatch(context, itemsLocations.toArray(new Location[0]));

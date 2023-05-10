@@ -2617,6 +2617,7 @@
     <string name="stop_navigation">PAVZA - F1</string>
     <string name="stop_permanent_navigation">PREKINI - F2</string>
     <string name="stop_navigation2">Pavza - f1</string>
+    <string name="dept">Oddelek</string>
 
 
 </resources>

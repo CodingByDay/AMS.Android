@@ -1,27 +1,36 @@
 package com.example.uhf.mvvm.Model;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.lidroid.xutils.db.annotation.Unique;
 
 
-@Entity(tableName = "location")
+@Entity(tableName = "location", indices = {@Index(value = {"location", "name"}, unique = true)})
 public class Location {
 
 
     @PrimaryKey(autoGenerate = true)
     private int ID;
+    @ColumnInfo(name = "location")
     private String location;
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "code")
     private String code;
+    @ColumnInfo(name = "dept")
+    private String dept;
 
 
-    public Location(String location, String name, String code) {
+    public Location(String location, String name, String code, String dept) {
 
         this.location = location;
         this.name = name;
         this.code = code;
+        this.dept = dept;
     }
 
 
@@ -55,5 +64,13 @@ public class Location {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
     }
 }

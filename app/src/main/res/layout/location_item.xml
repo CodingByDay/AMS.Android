@@ -29,7 +29,7 @@
             android:text="@string/name_inventory" />
 
         <TextView
-            android:id="@+id/tbCode"
+            android:id="@+id/tbDept"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
