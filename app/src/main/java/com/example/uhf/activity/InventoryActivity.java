@@ -96,8 +96,8 @@ public RFIDWithUHFUART mReader;
                     currentColumnSearch = fixedAssetsFragment.first.getText().toString();
                 }
 
-                if(fixedAssetsFragment.adapter!=null) {
-                    fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
+                if(fixedAssetsFragment.temporaryAdapter!=null) {
+                    fixedAssetsFragment.temporaryAdapter.searchByField(currentColumnSearch, newText);
                 }
                 return false;
             }

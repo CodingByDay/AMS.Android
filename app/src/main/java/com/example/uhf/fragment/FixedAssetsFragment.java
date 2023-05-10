@@ -120,6 +120,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private CheckOutViewModel checkOutViewModel;
     private List<CheckOut> checkOutItems;
     private List<CheckOut> checkOuts;
+    public ItemLocationAdapter adapterLocation;
 
     private void clearColors() {
         first.setBackgroundColor(Color.TRANSPARENT);
@@ -140,7 +141,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         Bundle arguments = getArguments();
         assert arguments != null;
         callerID = arguments.getString("callerID");
-
         first = view.findViewById(R.id.first);
         second = view.findViewById(R.id.second);
         third = view.findViewById(R.id.third);
@@ -151,9 +151,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             public void onClick(View view) {
 
 
-                if(adapter!=null) {
-                    adapter.sortASCandDESC(first.getText().toString());
-                }
+
                 clearColors();
                 currentSearchColumn = first.getText().toString();
                 first.setBackgroundColor(Color.parseColor("#FFCCCB"));
@@ -162,9 +160,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         second.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(adapter!=null) {
-                    adapter.sortASCandDESC(second.getText().toString());
-                }
+
                 clearColors();
                 currentSearchColumn = second.getText().toString();
                 second.setBackgroundColor(Color.parseColor("#FFCCCB"));
@@ -173,9 +169,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         third.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(adapter!=null) {
-                    adapter.sortASCandDESC(third.getText().toString());
-                }
+
                 clearColors();
                 currentSearchColumn = third.getText().toString();
                 third.setBackgroundColor(Color.parseColor("#FFCCCB"));
@@ -184,9 +178,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         forth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(adapter!=null) {
-                    adapter.sortASCandDESC(forth.getText().toString());
-                }
+
                 clearColors();
                 currentSearchColumn = forth.getText().toString();
                 forth.setBackgroundColor(Color.parseColor("#FFCCCB"));
@@ -297,7 +289,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        ItemLocationAdapter adapterLocation = new ItemLocationAdapter(this, callerID);
+        adapterLocation = new ItemLocationAdapter(this, callerID);
         recycler.setAdapter(adapterLocation);
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
         itemLocationViewModel.getAllItemsNotRegistered().observe(this, new Observer<List<ItemLocation>>() {

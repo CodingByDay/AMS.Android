@@ -91,7 +91,8 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                 if(currentColumnSearch.equals("")) {
                     currentColumnSearch = fixedAssetsFragment.first.getText().toString();
                 }
-                fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
+
+                fixedAssetsFragment.adapterLocation.searchByField(currentColumnSearch, newText);
                 return false;
             }
         });

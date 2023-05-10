@@ -70,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="" />
+
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/swListing"
                     android:layout_width="match_parent"
@@ -86,7 +87,7 @@
         android:layout_marginRight="15dp"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="230dp"
         android:layout_marginTop="30dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintTop_toBottomOf="@id/header"

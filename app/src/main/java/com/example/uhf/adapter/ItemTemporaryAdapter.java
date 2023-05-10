@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uhf.R;
 import com.example.uhf.interfaces.RecyclerViewInterface;
+import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdapter.ItemHolder> {
     private List<ItemTemporary> items = new ArrayList<ItemTemporary>();
     private final RecyclerViewInterface recyclerViewInterface;
-
+    private List<ItemTemporary> backupForSearching;
 
 
     public ItemTemporaryAdapter(RecyclerViewInterface recyclerViewInterface) {
@@ -51,6 +52,39 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
         notifyDataSetChanged();
 
     }
+
+
+    public void searchByField(String field, String searchBy) {
+        List<ItemTemporary> sorted = new ArrayList<>();
+        if(this.backupForSearching!=null) {
+            for (ItemTemporary item : this.backupForSearching) {
+                switch (field) {
+                    case "Sredstvo":
+                        if (item.getCode().toLowerCase().contains(searchBy.toLowerCase())) {
+                            sorted.add(item);
+                        }
+                        break;
+                    case "Naziv":
+                        if (item.getName().toLowerCase().contains(searchBy.toLowerCase())) {
+                            sorted.add(item);
+                        }
+                        break;
+                    case "Lokacija":
+                        if (item.getLocation().toLowerCase().contains(searchBy.toLowerCase())) {
+                            sorted.add(item);
+                        }
+                    case "EPC":
+                        if (item.getEcd().toLowerCase().contains(searchBy.toLowerCase())) {
+                            sorted.add(item);
+                        }
+                        break;
+
+                }
+                this.items = sorted;
+                notifyDataSetChanged();
+            }
+        }
+    }
     @NonNull
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -79,6 +113,7 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
 
     public void setItems(List<ItemTemporary> items) {
         this.items = items;
+        this.backupForSearching = items;
         notifyDataSetChanged();
     }
     class ItemHolder extends RecyclerView.ViewHolder {
