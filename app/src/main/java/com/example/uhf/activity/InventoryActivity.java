@@ -65,10 +65,19 @@ public RFIDWithUHFUART mReader;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
-        barcodeUtility = new BarcodeUtility(this, this);
-        initViews();
-        initializeFragment();
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                InventoryActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        barcodeUtility = new BarcodeUtility(InventoryActivity.this, InventoryActivity.this);
+                        initViews();
+                        initializeFragment();
+                    }
+                });
+            }
+        }).start();
     }
 
 

@@ -55,9 +55,24 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         getSupportActionBar().hide();
-        initUHF();
-        initializeFragment();
-        initializeActivity();
+
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                RegistrationActivity.this.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        initUHF();
+                        initializeFragment();
+                        initializeActivity();
+                    }
+                });
+            }
+        }).start();
+
     }
 
     private void initializeActivity() {

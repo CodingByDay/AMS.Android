@@ -154,7 +154,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
                 clearColors();
                 currentSearchColumn = first.getText().toString();
-                first.setBackgroundColor(Color.parseColor("#FFCCCB"));
+                first.setBackgroundColor(Color.parseColor("#C7E3E1"));
             }
         });
         second.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +163,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
                 clearColors();
                 currentSearchColumn = second.getText().toString();
-                second.setBackgroundColor(Color.parseColor("#FFCCCB"));
+                second.setBackgroundColor(Color.parseColor("#C7E3E1"));
             }
         });
         third.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +172,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
                 clearColors();
                 currentSearchColumn = third.getText().toString();
-                third.setBackgroundColor(Color.parseColor("#FFCCCB"));
+                third.setBackgroundColor(Color.parseColor("#C7E3E1"));
             }
         });
         forth.setOnClickListener(new View.OnClickListener() {
@@ -181,7 +181,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
                 clearColors();
                 currentSearchColumn = forth.getText().toString();
-                forth.setBackgroundColor(Color.parseColor("#FFCCCB"));
+                forth.setBackgroundColor(Color.parseColor("#C7E3E1"));
 
             }
         });
@@ -663,10 +663,10 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     @Override
     public void onItemClick(int position) {
         if(selected==-1) {
-            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#FFCCCB"));
+            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#C7E3E1"));
         } else {
             Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(selected)).setBackgroundColor(Color.TRANSPARENT);
-            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#FFCCCB"));
+            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#C7E3E1"));
         }
         selected = position;
 

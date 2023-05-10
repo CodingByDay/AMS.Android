@@ -140,7 +140,9 @@ private CardView btLogout;
                 mypDialog.cancel();
             }
         });
+
         btInventory.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 ProgressDialog mypDialog = new ProgressDialog(EntryInitialActivity.this);

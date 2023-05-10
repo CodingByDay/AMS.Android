@@ -23,35 +23,48 @@ public class ListingAssetsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing_assets);
         getSupportActionBar().hide();
-        swListing = findViewById(R.id.swListing);
-        swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        new Thread(new Runnable() {
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                ListingAssetsFragment fragment = ListingAssetsFragment.getInstance();
-                String currentColumnSearch = fragment.currentSearchColumn;
-                if(currentColumnSearch.equals("")) {
-                    currentColumnSearch = fragment.first.getText().toString();
-                }
-                fragment.adapter.searchByField(currentColumnSearch, newText);
-                return false;
-            }
-        });
-        btExit = findViewById(R.id.btExit);
-        btExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
-                startActivity(myIntent);
-                finishAffinity();
-            }
-        });
+            public void run() {
+                ListingAssetsActivity.this.runOnUiThread(new Runnable() {
 
-        replaceFragment();
+                    @Override
+                    public void run() {
+                        swListing = findViewById(R.id.swListing);
+                        swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                            @Override
+                            public boolean onQueryTextSubmit(String query) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onQueryTextChange(String newText) {
+                                ListingAssetsFragment fragment = ListingAssetsFragment.getInstance();
+                                String currentColumnSearch = fragment.currentSearchColumn;
+                                if(currentColumnSearch.equals("")) {
+                                    currentColumnSearch = fragment.first.getText().toString();
+                                }
+                                fragment.adapter.searchByField(currentColumnSearch, newText);
+                                return false;
+                            }
+                        });
+                        btExit = findViewById(R.id.btExit);
+                        btExit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
+                                startActivity(myIntent);
+                                finishAffinity();
+                            }
+                        });
+
+                        replaceFragment();
+                    }
+                });
+            }
+        }).start();
+
     }
 
     private void replaceFragment() {

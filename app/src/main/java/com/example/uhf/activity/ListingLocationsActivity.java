@@ -22,38 +22,51 @@ private Button btExit;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing_locations);
         getSupportActionBar().hide();
-        swListing = findViewById(R.id.swListing);
-        swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        new Thread(new Runnable() {
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                ListingLocationsFragment fragment = ListingLocationsFragment.getInstance();
-                String currentColumnSearch = fragment.currentSearchColumn;
-                if(currentColumnSearch.equals("")) {
-                    currentColumnSearch = fragment.first.getText().toString();
-                }
-                fragment.adapter.searchByField(currentColumnSearch, newText);
+            public void run() {
+                ListingLocationsActivity.this.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        swListing = findViewById(R.id.swListing);
+                        swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                            @Override
+                            public boolean onQueryTextSubmit(String query) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onQueryTextChange(String newText) {
+                                ListingLocationsFragment fragment = ListingLocationsFragment.getInstance();
+                                String currentColumnSearch = fragment.currentSearchColumn;
+                                if(currentColumnSearch.equals("")) {
+                                    currentColumnSearch = fragment.first.getText().toString();
+                                }
+                                fragment.adapter.searchByField(currentColumnSearch, newText);
 
 
 
-                return false;
+                                return false;
+                            }
+                        });
+                        btExit = findViewById(R.id.btExit);
+                        btExit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
+                                startActivity(myIntent);
+                                finishAffinity();
+                            }
+                        });
+
+                        replaceFragment();
+                    }
+                });
             }
-        });
-        btExit = findViewById(R.id.btExit);
-        btExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
-                startActivity(myIntent);
-                finishAffinity();
-            }
-        });
+        }).start();
 
-        replaceFragment();
     }
 
     private void replaceFragment() {

@@ -89,47 +89,60 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_listing);
-        swListing = findViewById(R.id.swListing);
-        swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        new Thread(new Runnable() {
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                String currentColumnSearch = fixedAssetsFragment.currentSearchColumn;
-                if(currentColumnSearch.equals("")) {
-                    currentColumnSearch = fixedAssetsFragment.first.getText().toString();
-                }
-                fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
+            public void run() {
+                ListingActivity.this.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        swListing = findViewById(R.id.swListing);
+                        swListing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                            @Override
+                            public boolean onQueryTextSubmit(String query) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onQueryTextChange(String newText) {
+                                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                                String currentColumnSearch = fixedAssetsFragment.currentSearchColumn;
+                                if(currentColumnSearch.equals("")) {
+                                    currentColumnSearch = fixedAssetsFragment.first.getText().toString();
+                                }
+                                fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
 
 
 
-                return false;
+                                return false;
+                            }
+                        });
+                        tbBarcodeScan = findViewById(R.id.tbBarcodeScan);
+                        barcodeUtility = new BarcodeUtility(ListingActivity.this, ListingActivity.this);
+                        tbBarcodeScan.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                                fixedAssetsFragment.adapter.findIdent(charSequence.toString());
+                            }
+                            @Override
+                            public void afterTextChanged(Editable editable) {
+
+                            }
+                        });
+                        initializeFragment();
+                        initializeButtonEvents();
+                        initSettings();
+                    }
+                });
             }
-        });
-        tbBarcodeScan = findViewById(R.id.tbBarcodeScan);
-        barcodeUtility = new BarcodeUtility(this, this);
-        tbBarcodeScan.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
+        }).start();
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                fixedAssetsFragment.adapter.findIdent(charSequence.toString());
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        initializeFragment();
-        initializeButtonEvents();
-        initSettings();
     }
 
     private void initSettings() {
