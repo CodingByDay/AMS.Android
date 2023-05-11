@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public interface LocationDAO {
     @Insert
     void insert(Location location);
-    @Update
+    @Update (onConflict = OnConflictStrategy.REPLACE)
     void update(Location location);
     @Delete
     void delete(Location location);

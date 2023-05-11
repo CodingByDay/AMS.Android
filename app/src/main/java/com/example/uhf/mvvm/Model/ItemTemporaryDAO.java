@@ -13,7 +13,10 @@ import java.util.List;
 public interface ItemTemporaryDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(ItemTemporary item);
-    @Update
+
+
+
+    @Update (onConflict = OnConflictStrategy.REPLACE)
     void update(ItemTemporary item);
     @Delete
     void delete(ItemTemporary item);

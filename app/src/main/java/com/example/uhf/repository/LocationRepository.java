@@ -2,6 +2,7 @@ package com.example.uhf.repository;
 
 import android.app.Application;
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
@@ -61,7 +62,13 @@ public class LocationRepository {
             int counter = 0;
             for (Location location: items) {
                 counter +=1;
-                itemDAO.insert(location);
+                try {
+                    itemDAO.insert(location);
+                } catch (SQLiteConstraintException ignored) {
+
+                    itemDAO.update(location);
+                }
+
                 if(counter == breakPoint) {
                     progress += 1;
                     publishProgress(progress);

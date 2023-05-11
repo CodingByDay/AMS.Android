@@ -3,23 +3,23 @@ package com.example.uhf.mvvm.Model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "item")
+@Entity(tableName = "item", indices = {@Index(value = {"qid"}, unique = true)})
 public class Item {
     @PrimaryKey(autoGenerate = true)
     private int ID;
     @ColumnInfo(defaultValue = "")
-
     private String item;
     @ColumnInfo(defaultValue = "")
-
     private String name;
     @ColumnInfo(defaultValue = "")
-
     private String code;
     private double qty;
 
+
+    @ColumnInfo(name = "qid")
     private int qid;
 
     public Item(String item, String name, String code, double qty, int qid) {

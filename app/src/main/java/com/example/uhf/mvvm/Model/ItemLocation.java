@@ -2,11 +2,12 @@ package com.example.uhf.mvvm.Model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
 
-@Entity(tableName = "item_location")
+@Entity(tableName = "item_location", indices = {@Index(value = {"qid"}, unique = true)})
 public class ItemLocation {
     @PrimaryKey(autoGenerate = true)
     private int ID;
@@ -28,7 +29,7 @@ public class ItemLocation {
     @ColumnInfo(defaultValue = "empty")
 
     private String user;
-
+    @ColumnInfo(name = "qid")
     private int qid;
 
     public ItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user, int qid) {

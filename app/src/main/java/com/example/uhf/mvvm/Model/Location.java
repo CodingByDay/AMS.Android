@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 import com.lidroid.xutils.db.annotation.Unique;
 
 
-@Entity(tableName = "location", indices = {@Index(value = {"location", "name"}, unique = true)})
+@Entity(tableName = "location", indices = {@Index(value = {"location"}, unique = true)})
 public class Location {
 
 

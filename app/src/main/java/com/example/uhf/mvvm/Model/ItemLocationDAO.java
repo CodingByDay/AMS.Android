@@ -15,7 +15,7 @@ import java.util.List;
 public interface ItemLocationDAO {
     @Insert(entity = ItemLocation.class, onConflict = REPLACE)
     void insert(ItemLocation location);
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     void update(ItemLocation location);
     @Delete
     void delete(ItemLocation location);
