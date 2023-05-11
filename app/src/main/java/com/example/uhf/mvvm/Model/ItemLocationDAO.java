@@ -15,8 +15,10 @@ import java.util.List;
 public interface ItemLocationDAO {
     @Insert(entity = ItemLocation.class, onConflict = REPLACE)
     void insert(ItemLocation location);
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    void update(ItemLocation location);
+
+
+    @Query("UPDATE item_location SET item = :item, code = :code, location = :location, ecd = :ecd, name = :name, timestamp = :timestamp WHERE qid = :qid")
+    void update(String item, String code, String location, String ecd, String name, String timestamp, int qid);
     @Delete
     void delete(ItemLocation location);
     @Query("DELETE FROM item_location")

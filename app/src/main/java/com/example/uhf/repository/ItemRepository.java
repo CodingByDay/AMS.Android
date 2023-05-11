@@ -77,7 +77,7 @@ public class ItemRepository {
                 try {
                     itemDAO.insert(item);
                 } catch (SQLiteConstraintException ignored) {
-                    itemDAO.update(item);
+                    itemDAO.update(item.getItem(), item.getName(), item.getCode(), item.getQty());
                 }
                 if(counter == breakPoint) {
                     progress += 1;
@@ -133,7 +133,8 @@ public class ItemRepository {
         }
         @Override
         protected Void doInBackground(Item... items) {
-            itemDAO.update(items[0]);
+            Item item = items[0];
+            itemDAO.update(item.getItem(), item.getName(), item.getCode(), item.getQty());
             return null;
         }
     }

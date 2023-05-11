@@ -87,7 +87,7 @@ public class ItemLocationRepository {
                 try {
                     itemDAO.insert(item);
                 } catch (SQLiteConstraintException ignored) {
-                    itemDAO.insert(item);
+                    itemDAO.update(item.getItem(), item.getCode(), item.getLocation(), item.getEcd(), item.getName(), item.getTimestamp(), item.getQid());
                 }
                 if(counter == breakPoint) {
                     progress += 1;
@@ -155,7 +155,8 @@ public class ItemLocationRepository {
         }
         @Override
         protected Void doInBackground(ItemLocation... items) {
-            itemDAO.update(items[0]);
+            ItemLocation item = items[0];
+            itemDAO.update(item.getItem(), item.getCode(), item.getLocation(), item.getEcd(), item.getName(), item.getTimestamp(), item.getQid());
             return null;
         }
     }

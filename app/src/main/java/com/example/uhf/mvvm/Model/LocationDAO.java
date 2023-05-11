@@ -14,12 +14,14 @@ import java.util.List;
 public interface LocationDAO {
     @Insert
     void insert(Location location);
-    @Update (onConflict = OnConflictStrategy.REPLACE)
-    void update(Location location);
+    @Query ("UPDATE location SET name = :name, code = :code, dept = :dept WHERE location = :location")
+    void update(String name, String code, String dept, String location);
     @Delete
     void delete(Location location);
     @Query("DELETE FROM location")
     void deleteAllItems();
     @Query("SELECT * FROM location")
     LiveData<List<Location>> getAllItems();
+
+
 }

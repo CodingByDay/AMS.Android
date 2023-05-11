@@ -13,8 +13,8 @@ import java.util.List;
 public interface ItemDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Item item);
-    @Update
-    void update(Item item);
+    @Query("UPDATE item SET item = :item, name = :name, code = :code, qty = :qty")
+    void update(String item, String name, String code, double qty);
     @Delete
     void delete(Item item);
     @Query("DELETE FROM item")

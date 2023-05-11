@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.uhf.api.AsyncCallBack;
 import com.example.uhf.database.Database;
+import com.example.uhf.mvvm.Model.ItemLocationCache;
 import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.Model.LocationDAO;
 
@@ -25,7 +27,10 @@ public class LocationRepository {
         Database database = Database.getInstance(application);
         itemDAO = database.locationDAO();
         allItems = itemDAO.getAllItems();
+
+
     }
+
 
     public void insert(Location item) {
         new LocationRepository.InsertItemAsyncTask(itemDAO).execute(item);
@@ -66,7 +71,8 @@ public class LocationRepository {
                     itemDAO.insert(location);
                 } catch (SQLiteConstraintException ignored) {
 
-                    itemDAO.update(location);
+
+                    itemDAO.update(location.getName(), location.getCode(), location.getDept(), location.getLocation());
                 }
 
                 if(counter == breakPoint) {
@@ -118,7 +124,7 @@ public class LocationRepository {
         }
         @Override
         protected Void doInBackground(Location... items) {
-            itemDAO.update(items[0]);
+            itemDAO.update(items[0].getName(), items[0].getCode(), items[0].getDept(), items[0].getLocation());
             return null;
         }
     }
