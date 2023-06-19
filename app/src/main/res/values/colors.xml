@@ -74,7 +74,8 @@
     <color name="viewfinder_frame">#ff000000</color>
     <color name="viewfinder_laser">#ffff0000</color>
     <color name="viewfinder_mask">#60000000</color>
-
+    <color name="main_color_riko">#081A45</color>
+    <color name="riko_color_gray">#f7f7f8</color>
     <!--zxing end-->
 
     <string-array name="colors" translatable="false">

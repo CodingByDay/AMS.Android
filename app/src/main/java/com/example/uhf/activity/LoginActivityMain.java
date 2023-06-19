@@ -76,22 +76,17 @@ private TextView login;
     public void onCreate(Bundle savedInstanceState) {
         AppCenter.start(getApplication(), "a5a00bbc-d587-4742-a9a9-82dd343f1f9e",
                 Analytics.class, Crashes.class, Distribute.class);
-       // Distribute.setEnabledForDebuggableBuild(true);
-
+        // Distribute.setEnabledForDebuggableBuild(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
         client = new Communicator();
         getSupportActionBar().show();
+        getSupportActionBar().setTitle("RF Inventura");
+
         initSettings();
         initPageViews();
         initSynchronization();
-
         boolean start = Distribute.isEnabled().get();
-
-
-
-
-
     }
 
     private void checkIdCreateIfNecessary() {

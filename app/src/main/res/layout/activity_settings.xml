@@ -48,7 +48,7 @@
                     android:layout_marginLeft="52dp"
                     android:layout_marginTop="150dp"
                     android:layout_marginRight="52dp"
-                    android:background="@drawable/blue_border_rounded_cornwe">
+                    android:background="@drawable/blue_border_rounded_corner">
 
                     <EditText
                         android:id="@+id/tbUrl"
@@ -81,7 +81,7 @@
                     android:layout_marginLeft="52dp"
                     android:layout_marginTop="16.7dp"
                     android:layout_marginRight="52dp"
-                    android:background="@drawable/blue_border_rounded_cornwe">
+                    android:background="@drawable/blue_border_rounded_corner">
 
                     <EditText
                         android:id="@+id/tbCompany"

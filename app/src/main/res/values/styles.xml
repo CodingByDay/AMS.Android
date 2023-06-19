@@ -35,13 +35,13 @@
     </style>
 
     <style name="Toolbar" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="colorPrimary">#1566e0</item>
+        <item name="colorPrimary">#081A45</item>
         <item name="android:windowBackground">@drawable/launch_background</item>
 
     </style>
 
     <style name="ToolbarNormal" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="colorPrimary">#1566e0</item>
+        <item name="colorPrimary">#081A45</item>
 
 
     </style>

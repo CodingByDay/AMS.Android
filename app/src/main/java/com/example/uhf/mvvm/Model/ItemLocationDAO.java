@@ -24,6 +24,7 @@ public interface ItemLocationDAO {
     @Query("DELETE FROM item_location")
     void deleteAllItems();
     @Query("SELECT * FROM item_location")
+
     LiveData<List<ItemLocation>> getAllItems();
 
     @Query("select id, item, name, code, location, ecd, qid from item_location where ifnull(ecd,'') = ''\n" +
@@ -40,11 +41,8 @@ public interface ItemLocationDAO {
     @Query("update item_location set ecd = :edc where ID = :id ")
     void updateByID(int id, String edc);
 
-
     @Query("select id, item, name, code, location, ecd, qid from item_location where ecd != ''")
     LiveData<List<ItemLocation>> getAllItemsThatAreRegistered();
-
-
 
     @Query ("select * from item_location where ecd is :ecd")
     ItemLocation getItemByEcd(String ecd);
