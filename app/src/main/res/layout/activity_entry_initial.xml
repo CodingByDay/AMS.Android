@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@color/riko_color_gray"
     tools:context=".activity.EntryInitialActivity">
 
 
@@ -12,9 +12,7 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="50dp"
-
         app:layout_constraintEnd_toEndOf="parent"
-
         app:srcCompat="@drawable/main_logo" />
 
     <LinearLayout
@@ -28,10 +26,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-
             android:layout_weight="1"
             android:orientation="horizontal"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +44,7 @@
                 <RelativeLayout
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
+                    android:background="@color/main_color_riko"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -56,19 +53,20 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/cycle"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="0dp"
                         android:text="@string/registration_navigation"
                         android:textSize="12sp"
+                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
 
                     <ImageView
                         android:id="@+id/cycle"
-                        android:layout_width="75dp"
-                        android:layout_height="20dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        app:srcCompat="@drawable/registration" />
+                        android:layout_marginTop="0dp"
+                        app:srcCompat="@drawable/ikone11" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -98,15 +96,16 @@
                     android:layout_width="match_parent"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
+                    android:background="@color/main_color_riko"
                     android:layout_height="match_parent">
 
                     <TextView
-
+                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/bus"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="0dp"
                         android:text="@string/inventory_navigation"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -114,11 +113,11 @@
 
                     <ImageView
                         android:id="@+id/bus"
-                        android:layout_width="75dp"
-                        android:layout_height="20dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        app:srcCompat="@drawable/inventory_entry" />
+                        android:layout_marginTop="0dp"
+                        app:srcCompat="@drawable/ikone12" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -128,9 +127,7 @@
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-
             android:layout_weight="1"
-
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -149,26 +146,28 @@
                     android:layout_width="match_parent"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
+                    android:background="@color/main_color_riko"
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:textColor="@color/white"
                         android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/bus1"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="0dp"
                         android:text="@string/listing_navigation"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/bus1"
-                        android:layout_width="75dp"
-                        android:layout_height="20dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        app:srcCompat="@drawable/to_do_list" />
+                        android:layout_marginTop="0dp"
+                        app:srcCompat="@drawable/ikone13" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -197,26 +196,28 @@
                     android:layout_width="match_parent"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
+                    android:background="@color/main_color_riko"
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:textColor="@color/white"
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/cycle"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="0dp"
                         android:text="@string/sync_navigation"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/cycle"
-                        android:layout_width="75dp"
-                        android:layout_height="20dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        app:srcCompat="@drawable/tick" />
+                        android:layout_marginTop="0dp"
+                        app:srcCompat="@drawable/ikone14" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -245,25 +246,27 @@
                     android:layout_width="match_parent"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
+                    android:background="@color/main_color_riko"
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/cycle"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="00dp"
                         android:text="@string/logout_navigation"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/cycle"
-                        android:layout_width="75dp"
-                        android:layout_height="20dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        app:srcCompat="@drawable/logout" />
+                        android:layout_marginTop="0dp"
+                        app:srcCompat="@drawable/ikone15" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
