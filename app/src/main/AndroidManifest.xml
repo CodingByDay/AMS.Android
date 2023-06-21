@@ -76,9 +76,10 @@
             android:name=".activity.LoginActivityMain"
             android:exported="true"
             android:label="@string/title_activity_login"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="stateUnchanged|adjustPan"
             android:theme="@style/Toolbar"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
+            android:screenOrientation="portrait">
 
 
             <intent-filter>

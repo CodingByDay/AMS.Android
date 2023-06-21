@@ -87,8 +87,12 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                try {
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                 fixedAssetsFragment.adapter.findIdent(charSequence.toString());
+                } catch (Exception err) {
+                    return;
+                }
             }
             @Override
             public void afterTextChanged(Editable editable) {

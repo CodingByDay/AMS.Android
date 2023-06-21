@@ -131,8 +131,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         resolveCaller(callerID);
 
 
-
-
     }
 
 
@@ -257,12 +255,13 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
     private String locationCurrent;
     public class LocationDialog {
-        public void showDialog(AppCompatActivity activity){
+        public void showDialog(AppCompatActivity activity) {
             dialog = new Dialog(activity);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.add_location_alert);
             EditText tbLocationScan = (EditText) dialog.findViewById(R.id.tbLocationScan);
+            tbLocationScan.setShowSoftInputOnFocus(false);
             tbLocationScan.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

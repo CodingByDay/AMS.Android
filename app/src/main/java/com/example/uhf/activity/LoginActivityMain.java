@@ -2,6 +2,7 @@ package com.example.uhf.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,8 +10,14 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,12 +34,16 @@ import com.example.uhf.api.Root;
 import com.example.uhf.api.RootAsset;
 import com.example.uhf.api.RootLocation;
 import com.example.uhf.api.RootStatus;
+import com.example.uhf.custom.CustomSearchableSpinner;
 import com.example.uhf.database.ImportExportData;
+import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemLocationCache;
+import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
+import com.example.uhf.mvvm.ViewModel.LocationViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.tools.SettingsHelper;
@@ -45,10 +56,12 @@ import com.microsoft.appcenter.distribute.DistributeListener;
 import com.microsoft.appcenter.distribute.ReleaseDetails;
 import com.microsoft.appcenter.distribute.UpdateAction;
 import com.microsoft.appcenter.utils.async.AppCenterFuture;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LoginActivityMain extends AppCompatActivity implements AsyncCallBack, DistributeListener {
@@ -82,12 +95,17 @@ private TextView login;
         client = new Communicator();
         getSupportActionBar().show();
         getSupportActionBar().setTitle("RF Inventura");
-
         initSettings();
         initPageViews();
         initSynchronization();
         boolean start = Distribute.isEnabled().get();
+
+
+
+
     }
+
+
 
     private void checkIdCreateIfNecessary() {
        String id = com.example.uhf.settings.SettingsHelper.Helper.findSetting(settingsList, "device").getValue();
