@@ -11,49 +11,45 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="50dp"
-            android:layout_height="100dp"
 
-
-            android:src="@drawable/logo" />
 
 
         <LinearLayout
+
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+
+            android:layout_marginTop="0dp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:textSize="10dp"
-                android:layout_height="wrap_content"
-                android:text="@string/location_inventory" />
+
             <LinearLayout
                 android:weightSum="2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
             <EditText
                 android:layout_weight="1.5"
                 android:id="@+id/tbLocation"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+                android:hint="Lokacija"
+                android:paddingLeft="15dp"
+                android:background="@drawable/back"
                 android:ems="10"
                 android:inputType="textPersonName"
                 />
 
                 <com.example.uhf.custom.CustomSearchableSpinner
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.3"
                     android:id="@+id/cbLocation"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
 
 
                     />
@@ -83,13 +79,12 @@
     </LinearLayout>
 
     <FrameLayout
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/header"
         tools:layout_editor_absoluteX="15dp">
 
@@ -104,11 +99,11 @@
 
         <Button
             android:id="@+id/btExit"
-
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_weight="1"
-            android:backgroundTint="@android:color/holo_blue_bright"
+            android:backgroundTint="@color/main_color_riko"
+            android:textColor="@color/white"
             android:text="@string/exit_inventory_navigation" />
 
         <Button
@@ -117,7 +112,8 @@
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_weight="1"
-            android:backgroundTint="@android:color/holo_blue_bright"
+            android:backgroundTint="@color/main_color_riko"
+            android:textColor="@color/white"
             android:text="@string/scanning_inventory" />
 
         <Button
@@ -126,8 +122,8 @@
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_weight="1"
-
-            android:backgroundTint="@android:color/holo_blue_bright"
+            android:backgroundTint="@color/main_color_riko"
+            android:textColor="@color/white"
             android:text="@string/confirm_inventory_navigation" />
     </LinearLayout>
 

@@ -1,5 +1,6 @@
 package com.example.uhf.activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,7 @@ import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListingActivity extends AppCompatActivity implements Barcode {
 
@@ -86,7 +88,8 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.riko_toolbar);
         setContentView(R.layout.activity_listing);
         new Thread(new Runnable() {
             @Override

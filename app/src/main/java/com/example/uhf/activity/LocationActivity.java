@@ -351,7 +351,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     List<String> locations = new ArrayList<String>();
                     // Think about improving the time complexity here
                     for (Location location : items) {
-                        locations.add(location.getName());
+                        locations.add(location.getLocation());
                     }
 
                     if (dialog!=null && dialog.isShowing()) {

@@ -46,23 +46,25 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="80dp">
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:weightSum="2"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
                 <Button
-                    android:backgroundTint="@android:color/holo_blue_bright"
-
+                    android:backgroundTint="@color/main_color_riko"
+                    android:textColor="@color/white"
                     android:id="@+id/btToggle"
                     android:text="@string/stop_navigation2"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <Button
-                    android:backgroundTint="@android:color/holo_blue_bright"
+                    android:backgroundTint="@color/main_color_riko"
+                    android:textColor="@color/white"
                     android:id="@+id/btStop"
+
                     android:text="@string/stop_permanent_navigation"
                     android:layout_weight="1"
                     android:layout_width="0dp"

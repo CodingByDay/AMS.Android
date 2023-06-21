@@ -6,30 +6,24 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".activity.ListingAssetsActivity">
+
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:visibility="gone"
-            app:srcCompat="@drawable/small_logo" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="" />
+
+
+
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/swListing"
                 android:layout_width="match_parent"
@@ -45,7 +39,6 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
         app:layout_constraintTop_toBottomOf="@id/header"
         tools:layout_editor_absoluteX="15dp" />
 
@@ -62,7 +55,8 @@
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_weight="1"
-            android:backgroundTint="@android:color/holo_blue_bright"
+            android:backgroundTint="@color/main_color_riko"
+            android:textColor="@color/white"
             android:text="@string/exit_inventory_navigation" />
 
     </LinearLayout>

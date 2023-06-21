@@ -1,5 +1,6 @@
 package com.example.uhf.activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -32,6 +33,7 @@ import com.rscja.deviceapi.RFIDWithUHFUART;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RegistrationActivity extends AppCompatActivity implements Barcode {
     private Button btExit;
@@ -54,9 +56,9 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        getSupportActionBar().hide();
 
-
+        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.riko_toolbar);
         new Thread(new Runnable() {
 
             @Override

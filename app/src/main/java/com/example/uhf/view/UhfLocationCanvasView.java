@@ -39,7 +39,7 @@ public class UhfLocationCanvasView extends View {
             paint = new Paint();
             paint.setStyle(Paint.Style.FILL);
             paint.setAntiAlias(true);
-            paint.setColor(Color.BLUE);
+            paint.setColor(Color.parseColor("#081A45"));
             paint.setFakeBoldText(true);
             paint.setTextSize(16);
         }
@@ -47,9 +47,9 @@ public class UhfLocationCanvasView extends View {
 
     public UhfLocationCanvasView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        paint.setStyle(Paint.Style.FILL);//实心
+        paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
-        paint.setColor(Color.BLUE);
+        paint.setColor(Color.parseColor("#081A45"));
         paint.setFakeBoldText(true);
         paint.setTextSize(16);
 

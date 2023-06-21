@@ -156,6 +156,8 @@ public RFIDWithUHFUART mReader;
         btExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                fixedAssetsFragment.stopScanning();
                 Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
                 startActivity(myIntent);
                 finishAffinity();
@@ -164,7 +166,7 @@ public RFIDWithUHFUART mReader;
         });
         btConfirm = findViewById(R.id.btConfirm);
         tbLocation = findViewById(R.id.tbLocation);
-        tbLocation.setBackgroundColor(Color.parseColor("#34e5eb"));
+
         btToggleScanning = findViewById(R.id.btToggleScanning);
         cbLocation = findViewById(R.id.cbLocation);
         cbLocation.setTitle("Izberite lokacijo");
@@ -181,7 +183,7 @@ public RFIDWithUHFUART mReader;
                 List<String> locations = new ArrayList<String>();
                 // Think about improving the time complexity here
                 for (Location location : items) {
-                    locations.add(location.getName());
+                    locations.add(location.getLocation());
                 }
 
 
@@ -210,6 +212,8 @@ public RFIDWithUHFUART mReader;
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                fixedAssetsFragment.stopScanning();
                 // TODO add loader while data is being filtered
                 if(current!=null) {
                     Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);

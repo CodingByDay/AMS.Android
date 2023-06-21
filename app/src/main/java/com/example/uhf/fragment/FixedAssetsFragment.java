@@ -48,6 +48,7 @@ import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemTemporaryViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.tools.StringUtils;
+import com.microsoft.appcenter.analytics.Analytics;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
 
@@ -693,10 +694,10 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     @Override
     public void onItemClick(int position) {
         if(selected==-1) {
-            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#C7E3E1"));
+            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#969595"));
         } else {
             Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(selected)).setBackgroundColor(Color.TRANSPARENT);
-            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#C7E3E1"));
+            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#969595"));
         }
         selected = position;
 
@@ -724,8 +725,11 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     // This is a method to be called from the parent activity
     public void sortBasedOnLocation(String location) {
-
-        temporaryAdapter.sortBasedOnLocation(itemsTemporary, location);
+        try {
+            temporaryAdapter.sortBasedOnLocation(itemsTemporary, location);
+        } catch (Exception err) {
+            Analytics.trackEvent(err.getLocalizedMessage());
+        }
     }
 
     // Method to be called from the parent activity and a method that starts the scanning process
