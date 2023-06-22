@@ -160,7 +160,7 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                             Toast.makeText(RegistrationActivity.this, "V bližini ni signala", Toast.LENGTH_SHORT).show();
                         }
                     }
-                }, 5000);
+                }, 3000);
             }
         });
     }

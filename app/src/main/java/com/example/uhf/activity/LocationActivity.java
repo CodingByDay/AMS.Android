@@ -408,7 +408,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
             public void getLocationValue(int Value) {
                 llChart.setData(Value);
-                if(Value >= 100) {
+                if(Value >= 95) {
                     stopLocation();
                     AlertDialog.Builder alert = new AlertDialog.Builder(LocationActivity.this);
                     alert.setTitle("Potrditev oznake");
@@ -480,8 +480,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             }
         });
         if(!result) {
-            UIHelper.ToastMessage(this, R.string.psam_msg_fail);
-            return;
+           stopLocation();
+           startLocation();
         }
         etEPC.setEnabled(false);
     }
