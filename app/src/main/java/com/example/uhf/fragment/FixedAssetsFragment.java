@@ -124,6 +124,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private List<CheckOut> checkOuts;
     public ItemLocationAdapter adapterLocation;
     private boolean loopFlagStrongest;
+    public ItemLocationAdapter adapterFinal;
 
     private void clearColors() {
         first.setBackgroundColor(Color.TRANSPARENT);
@@ -260,7 +261,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 if(countList == 2) {
                     countList = 0;
                     List<ItemLocation> data = syncBothLists(itemsClassLevel, checkOuts);
-                    ItemLocationAdapter adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
+                    adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
                     recycler.setAdapter(adapterFinal);
                     adapterFinal.setItems(data);
                     adapterFinal.notifyDataSetChanged();
@@ -279,7 +280,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 if(countList == 2) {
                     countList = 0;
                     List<ItemLocation> data = syncBothLists(itemsClassLevel, checkOuts);
-                    ItemLocationAdapter adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
+                    adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
                     recycler.setAdapter(adapterFinal);
                     adapterFinal.setItems(data);
                     adapterFinal.notifyDataSetChanged();

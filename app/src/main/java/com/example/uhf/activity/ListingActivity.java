@@ -111,7 +111,7 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
                                 if(currentColumnSearch.equals("")) {
                                     currentColumnSearch = fixedAssetsFragment.first.getText().toString();
                                 }
-                                fixedAssetsFragment.adapter.searchByField(currentColumnSearch, newText);
+                                fixedAssetsFragment.adapterFinal.searchByField(currentColumnSearch, newText);
                                 return false;
                             }
                         });
@@ -125,7 +125,7 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
                             @Override
                             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                                fixedAssetsFragment.adapter.findIdent(charSequence.toString());
+                                fixedAssetsFragment.adapterFinal.findIdent(charSequence.toString());
                             }
                             @Override
                             public void afterTextChanged(Editable editable) {
