@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,6 +123,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     private List<CheckOut> checkOutItems;
     private List<CheckOut> checkOuts;
     public ItemLocationAdapter adapterLocation;
+    private boolean loopFlagStrongest;
 
     private void clearColors() {
         first.setBackgroundColor(Color.TRANSPARENT);
@@ -527,7 +529,35 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         }
 
 
+
     };
+
+
+    public ItemTemporary strongestRssi = new ItemTemporary("");
+
+
+    @SuppressLint("HandlerLeak")
+    Handler handlerStrongest = new Handler() {
+        @SuppressLint("HandlerLeak")
+        @Override
+        public void handleMessage(Message msg) {
+            UHFTAGInfo info = (UHFTAGInfo) msg.obj;
+            if (strongestRssi.getRssi().equals("")) {
+                strongestRssi.setEcd(info.getEPC());
+                strongestRssi.setRssi(info.getRssi());
+                return;
+            }
+            float rssi = Float.parseFloat(strongestRssi.getRssi().replace(",", "."));
+            if (Float.parseFloat(info.getRssi().replace(",", ".")) > rssi) {
+                strongestRssi.setEcd(info.getEPC());
+                strongestRssi.setRssi(info.getRssi());
+            }
+
+            // Compare
+        }
+
+    };
+
 
 
 
@@ -636,7 +666,20 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         }
     }
 
-
+    class TagThreadStrongest extends Thread {
+        public void run() {
+            UHFTAGInfo uhftagInfo;
+            Message msg;
+            while (loopFlagStrongest) {
+                uhftagInfo = mReader.readTagFromBuffer();
+                if (uhftagInfo != null) {
+                    msg = handlerStrongest.obtainMessage();
+                    msg.obj = uhftagInfo;
+                    handlerStrongest.sendMessage(msg);
+                }
+            }
+        }
+    }
     private void initEmpty(View view) {
         temporaryAdapter = new ItemTemporaryAdapter(this);
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
@@ -739,6 +782,19 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             new TagThread().start();
         }
     }
+
+    // Method to be called from the parent activity and a method that starts the scanning process
+    public void startScanningStrongest() {
+        loopFlagStrongest = true;
+        if (mReader.startInventoryTag()) {
+            new TagThreadStrongest().start();
+        }
+    }
+    public void stopScanningStrongest ()  {
+
+        loopFlagStrongest = false;
+    }
+
     // Method to be called from the parent activity and a method that starts the scanning process for locating
     public void startScanningBackground() {
         loopFlag = true;

@@ -141,13 +141,13 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                 mypDialog.setMessage("Iskanje najmočnejšega signala. Počakajte...");
                 mypDialog.setCanceledOnTouchOutside(false);
                 mypDialog.show();
-                fixedAssetsFragment.startScanning();
+                fixedAssetsFragment.startScanningStrongest();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        fixedAssetsFragment.stopScanning();
+                        fixedAssetsFragment.stopScanningStrongest();
                         Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
-                        String strongest = findStrongestSignal().getEcd();
+                        String strongest = fixedAssetsFragment.strongestRssi.getEcd();
                         if(strongest!=null) {
                         myIntent.putExtra("epc", strongest);
                         myIntent.putExtra("callerID", "Registration");

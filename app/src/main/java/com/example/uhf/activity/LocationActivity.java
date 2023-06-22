@@ -408,7 +408,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
             public void getLocationValue(int Value) {
                 llChart.setData(Value);
-                if(Value >= 95) {
+                if(Value >= 90) {
                     stopLocation();
                     AlertDialog.Builder alert = new AlertDialog.Builder(LocationActivity.this);
                     alert.setTitle("Potrditev oznake");
