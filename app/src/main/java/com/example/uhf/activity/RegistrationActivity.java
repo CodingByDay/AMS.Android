@@ -29,6 +29,7 @@ import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.view.UhfLocationCanvasView;
+import com.microsoft.appcenter.analytics.Analytics;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 
 import java.util.ArrayList;
@@ -89,9 +90,9 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                fixedAssetsFragment.adapter.findIdent(charSequence.toString());
+                fixedAssetsFragment.adapterLocation.findIdent(charSequence.toString());
                 } catch (Exception err) {
-                    return;
+                    Analytics.trackEvent(err.getLocalizedMessage());
                 }
             }
             @Override
