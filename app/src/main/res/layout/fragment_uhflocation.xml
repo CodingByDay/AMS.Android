@@ -26,6 +26,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
+            android:backgroundTint="@color/riko_color_gray"
+            android:background="@color/riko_color_gray"
             android:layout_weight="1">
             <com.example.uhf.view.UhfLocationCanvasView
                 android:orientation="horizontal"
@@ -33,7 +35,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
-                android:background="@color/white"
+                android:backgroundTint="@color/riko_color_gray"
+                android:background="@color/riko_color_gray"
                 />
         </LinearLayout>
 

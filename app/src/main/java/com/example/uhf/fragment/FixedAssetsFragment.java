@@ -808,6 +808,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     }
     // Method to be called from the parent activity and a method that stops the scanning process
     public void stopScanning ()  {
+        mReader.stopLocation();
         int test = selected;
         if(selected != -1) {
             Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(selected)).setBackgroundColor(Color.TRANSPARENT);

@@ -119,16 +119,21 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         btStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
-                startActivity(myIntent);
+                if(callerID.equals("InventoryProcessLocation")) {
+                    Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
+                    startActivity(myIntent);
+                } else {
+                    Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
+                    startActivity(myIntent);
+                }
+
             }
         });
         llChart.setData(1);
         llChart.clean();
-        Bundle extras = getIntent().getExtras();
-        callerID =  extras.getString("callerID");
-
-        resolveCaller(callerID);
+      //  Bundle extras = getIntent().getExtras();
+     //   callerID =  extras.getString("callerID");
+     //   resolveCaller(callerID);
 
 
     }
@@ -471,8 +476,16 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     alert.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            startLocation();
+                            if(callerID.equals("InventoryProcessLocation")) {
+                                mReader.stopLocation();
+                                Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
+                                startActivity(myIntent);
+                            } else {
+                                mReader.stopLocation();
+                                Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
+                                startActivity(myIntent);
+                            }
+
                         }
                     });
                     alert.show();
@@ -484,6 +497,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
            startLocation();
         }
         etEPC.setEnabled(false);
+
     }
 
 
@@ -560,6 +574,10 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             mypDialog.cancel();
             if (!result) {
                 Toast.makeText(LocationActivity.this, "init fail", Toast.LENGTH_SHORT).show();
+            } else {
+                Bundle extras = getIntent().getExtras();
+                callerID =  extras.getString("callerID");
+                resolveCaller(callerID);
             }
         }
 

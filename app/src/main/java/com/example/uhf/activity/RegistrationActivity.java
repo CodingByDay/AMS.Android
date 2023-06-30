@@ -154,6 +154,7 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                         myIntent.putExtra("callerID", "Registration");
                         myIntent.putExtra("item_id", currentItem.getID());
                         mypDialog.cancel();
+                        mReader.stopLocation();
                         startActivity(myIntent);
                         // Comment
                         } else {
