@@ -57,7 +57,7 @@
 
                         android:background="@android:color/transparent"
                         android:fontFamily="@font/poppins_regular"
-                        android:hint="@string/url"
+                        android:hint="@string/url_riko_hint_main"
                         android:imeActionLabel="@string/action_sign_in_short"
                         android:imeOptions="actionDone"
                         android:inputType="text"
@@ -66,7 +66,7 @@
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
                         android:selectAllOnFocus="true"
-                        android:text="http://invapi-test.in-sist.si"
+                        android:text="http://riko-inv.in-sist.si"
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="12sp"
 

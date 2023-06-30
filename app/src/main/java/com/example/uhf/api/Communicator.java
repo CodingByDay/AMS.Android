@@ -40,7 +40,7 @@ public class Communicator {
         @Override protected Boolean doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL("http://invapi-test.in-sist.si");
+                URL url = new URL("http://riko-inv.in-sist.si");
                 String json = new String("");
                 for(String ar: args) {
                     if(ar.startsWith("http")) {
@@ -114,7 +114,7 @@ public class Communicator {
         @Override protected Boolean doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL("http://invapi-test.in-sist.si");
+                URL url = new URL("http://riko-inv.in-sist.si");
                 String json = new String("");
                 for(String ar: args) {
                     if(ar.startsWith("http")) {
@@ -185,7 +185,7 @@ public class Communicator {
         @Override protected Root doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL("http://invapi-test.in-sist.si");
+                URL url = new URL("http://riko-inv.in-sist.si");
                 String json = new String("");
                 for(String ar: args) {
                     if(ar.startsWith("http")) {
@@ -241,7 +241,7 @@ public class Communicator {
         @Override protected RootLocation doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL("http://invapi-test.in-sist.si");
+                URL url = new URL("http://riko-inv.in-sist.si");
                 String json = new String("");
                 for(String ar: args) {
                     if(ar.startsWith("http")) {
@@ -298,7 +298,7 @@ public class Communicator {
         @Override protected RootStatus doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL("http://invapi-test.in-sist.si");
+                URL url = new URL("http://riko-inv.in-sist.si");
                 String json = new String("");
                 for(String ar: args) {
                     if(ar.startsWith("http")) {
@@ -356,7 +356,7 @@ public class Communicator {
         @Override protected RootAsset doInBackground(String... args) {
             int responseCode;
             try {
-                URL url = new URL("http://invapi-test.in-sist.si");
+                URL url = new URL("http://riko-inv.in-sist.si");
                 String json = new String("");
                 for(String ar: args) {
                     if(ar.startsWith("http")) {

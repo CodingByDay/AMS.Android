@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -245,7 +246,9 @@ private TextView login;
                 try {
                     client.login(LoginActivityMain.this, settingsList, company, uname, password);
                 } catch (JsonProcessingException e) {
-                    // TODO handle exceptions better
+                    Toast.makeText(LoginActivityMain.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    JsonProcessingException error = e;
+                    Analytics.trackEvent(e.getLocalizedMessage());
                 }
                 }  else {
                     Toast.makeText(LoginActivityMain.this, "Ni podatka o podjetju", Toast.LENGTH_SHORT).show();

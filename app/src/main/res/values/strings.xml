@@ -2618,6 +2618,9 @@
     <string name="stop_permanent_navigation">PREKINI - F2</string>
     <string name="stop_navigation2">Pavza - f1</string>
     <string name="dept">Oddelek</string>
+    <string name="url_riko">riko-inv.in-sist</string>
+    <string name="url_riko_main">http://riko-inv.in-sist.si/</string>
+    <string name="url_riko_hint_main">Naslov strežnika</string>
 
 
 </resources>
