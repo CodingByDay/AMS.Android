@@ -59,6 +59,7 @@ public class UhfLocationCanvasView extends View {
         periphery_paint.setFakeBoldText(true);
         periphery_paint.setTextSize(16);
     }
+    // Testing the new update ..
     public void clean(){
         setData(0);
     }

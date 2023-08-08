@@ -88,7 +88,7 @@ private TextView login;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        AppCenter.start(getApplication(), "a5a00bbc-d587-4742-a9a9-82dd343f1f9e",
+        AppCenter.start(getApplication(), "9997086a-90d2-4150-b81a-4cd67bc6c2b1",
                 Analytics.class, Crashes.class, Distribute.class);
         // Distribute.setEnabledForDebuggableBuild(true);
         super.onCreate(savedInstanceState);
