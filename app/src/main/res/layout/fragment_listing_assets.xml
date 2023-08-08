@@ -19,28 +19,28 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/first"
-            android:text="@string/asset_label" />
+            android:text="Lokacija" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/second"
-            android:text="@string/name_inventory" />
+            android:text="Naziv" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/third"
-            android:text="@string/location_label" />
+            android:text="Zadolženi" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/forth"
-            android:text="@string/code" />
+            android:text="EPC" />
 
     </LinearLayout>
 

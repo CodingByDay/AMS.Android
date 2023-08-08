@@ -321,6 +321,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ItemHo
         private TextView tbCode;
         private TextView tbQty;
 
+        private TextView tbUser;
+        private TextView tbPassword;
         private TextView tbEpc;
 
         private LinearLayout linearLayout;
@@ -348,8 +350,8 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ItemHo
                     boolean different = true;
                     tbItem = itemView.findViewById(R.id.tbItem);
                     tbName = itemView.findViewById(R.id.tbName);
-                    tbCode = itemView.findViewById(R.id.tbCode);
-                    tbQty =  itemView.findViewById(R.id.tbQty);
+                    tbName = itemView.findViewById(R.id.tbName);
+                    tbPassword =  itemView.findViewById(R.id.tbPassword);
                     break;
                 }
                 case "ListingAssetsFragment": {

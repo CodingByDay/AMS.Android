@@ -2621,6 +2621,8 @@
     <string name="url_riko">riko-inv.in-sist</string>
     <string name="url_riko_main">http://riko-inv.in-sist.si/</string>
     <string name="url_riko_hint_main">Naslov strežnika</string>
+    <string name="username_translation">Zadolženi</string>
+    <string name="password_translation">Šifra</string>
 
 
 </resources>

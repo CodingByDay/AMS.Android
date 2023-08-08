@@ -60,7 +60,7 @@ public class ItemLocationViewModel extends AndroidViewModel {
             if(item.name == null ) {
                 item.name = "";
             }
-            itemsLocations.add(new com.example.uhf.mvvm.Model.ItemLocation(item.item, item.code, item.location, item.ecd, item.name, timestamp.toString(), "", item.qid));
+            itemsLocations.add(new com.example.uhf.mvvm.Model.ItemLocation(item.item, item.code, item.location, item.ecd, item.name, timestamp.toString(), "", item.qid,  item.careTaker));
         }
         repository.insertItemsBatch(context, count, itemsLocations.toArray(new com.example.uhf.mvvm.Model.ItemLocation[0]));
     }

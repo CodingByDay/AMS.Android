@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ItemLocationAdapter extends RecyclerView.Adapter<ItemLocationAdapter.ItemHolder> {
-private List<ItemLocation> items = new ArrayList<ItemLocation>();
+public List<ItemLocation> items = new ArrayList<ItemLocation>();
 private final RecyclerViewInterface recyclerViewInterface;
     private static String calllerID;
 private final String caller;
@@ -95,9 +96,10 @@ private final String caller;
 
         switch (this.caller) {
             case "InventoryActivity": {
-                holder.tbItem.setText(current.getCode());
-                holder.tbName.setText(current.getName());
                 holder.tbLocation.setText(current.getLocation());
+                holder.tbUser.setText(current.getCaretaker());
+                holder.tbName.setText(current.getName());
+
                 if(current.getEcd().length()>=6) {
                     holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
                 } else {
@@ -106,9 +108,9 @@ private final String caller;
                 break;
             }
             case "ListingActivity": {
-                holder.tbItem.setText(current.getCode());
-                holder.tbName.setText(current.getName());
                 holder.tbLocation.setText(current.getLocation());
+                holder.tbUser.setText(current.getCaretaker());
+                holder.tbName.setText(current.getName());
                 if(current.getEcd().length()>=6) {
                     holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 6));
                 } else {
@@ -117,17 +119,18 @@ private final String caller;
                 break;
             }
             case "RegistrationActivity": {
-                holder.tbItem.setText(current.getCode());
+
+                holder.tbLocation.setText(current.getLocation());
                 holder.tbName.setText(current.getName());
-                holder.tbCode.setText(current.getCode());
+                holder.tbUser.setText(current.getCaretaker());
                 // Ask about this
-                holder.tbQty.setText("1");
+                holder.tbPassword.setText(current.getItem());
                 break;
             }
             case "ListingAssetsFragment": {
-                holder.tbItem.setText(current.getCode());
-                holder.tbName.setText(current.getName());
                 holder.tbLocation.setText(current.getLocation());
+                holder.tbUser.setText(current.getCaretaker());
+                holder.tbName.setText(current.getName());
                 if(current.getEcd()!=null) {
                 if(current.getEcd().length()>=6) {
                     holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
@@ -182,7 +185,17 @@ private final String caller;
                         if (item.getEcd().toLowerCase().contains(searchBy.toLowerCase())) {
                             sorted.add(item);
                         }
+                    case "Zadolženi":
+                        if (item.getCaretaker().toLowerCase().contains(searchBy.toLowerCase())) {
+                            sorted.add(item);
+                        }
                         break;
+                    case "Šifra":
+                        if (item.getItem().toLowerCase().contains(searchBy.toLowerCase())) {
+                            sorted.add(item);
+                        }
+                        break;
+
                 }
                 this.items = sorted;
                 notifyDataSetChanged();
@@ -271,6 +284,9 @@ private final String caller;
         private TextView tbCode;
         private TextView tbQty;
 
+        private TextView tbUser;
+
+        private TextView tbPassword;
         private TextView tbEpc;
 
         private LinearLayout linearLayout;
@@ -283,7 +299,9 @@ private final String caller;
                 case "InventoryActivity": {
                     tbItem = itemView.findViewById(R.id.tbItem);
                     tbName = itemView.findViewById(R.id.tbName);
-                    tbLocation = itemView.findViewById(R.id.tbLocation);
+                    tbUser = itemView.findViewById(R.id.tbUser);
+                    tbPassword =  itemView.findViewById(R.id.tbPassword);
+                    tbLocation= itemView.findViewById(R.id.tbLocation);
                     tbEpc = itemView.findViewById(R.id.tbEpc);
                     break;
                 }
@@ -298,13 +316,16 @@ private final String caller;
                     boolean different = true;
                     tbItem = itemView.findViewById(R.id.tbItem);
                     tbName = itemView.findViewById(R.id.tbName);
-                    tbCode = itemView.findViewById(R.id.tbCode);
-                    tbQty =  itemView.findViewById(R.id.tbQty);
+                    tbUser = itemView.findViewById(R.id.tbUser);
+                    tbPassword =  itemView.findViewById(R.id.tbPassword);
+                    tbLocation= itemView.findViewById(R.id.tbLocation);
+
                     break;
                 }
                 case "ListingAssetsFragment": {
                     tbItem = itemView.findViewById(R.id.tbItem);
                     tbName = itemView.findViewById(R.id.tbName);
+                    tbUser = itemView.findViewById(R.id.tbUser);
                     tbLocation= itemView.findViewById(R.id.tbLocation);
                     tbEpc = itemView.findViewById(R.id.tbEPC);
                 }
@@ -318,6 +339,8 @@ private final String caller;
                         int position = getAdapterPosition();
                         if(position!=RecyclerView.NO_POSITION) {
                             ItemLocationAdapter.this.recyclerViewInterface.onItemClick(position);
+
+
                         }
                     }
                 }

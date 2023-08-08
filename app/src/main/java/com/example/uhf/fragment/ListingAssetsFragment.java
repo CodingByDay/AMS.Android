@@ -1,5 +1,7 @@
 package com.example.uhf.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -133,6 +135,24 @@ public class ListingAssetsFragment extends KeyDwonFragment implements RecyclerVi
 
     @Override
     public void onItemClick(int position) {
+
+        ItemLocation item = adapter.items.get(position);
+        String message = "Lokacija: " + item.getLocation() + "\n"
+                + "Ime: " + item.getName() + "\n"
+                + "Zadolženi: " + item.getCaretaker() + "\n"
+                + "EPC: " + item.getEcd();
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Podatki");
+        builder.setMessage(message);
+
+
+        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
         if(selected==-1) {
             Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#C7E3E1"));
         } else {

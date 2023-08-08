@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/first"
-            android:text="@string/item_inventory" />
+            android:text="@string/location_inventory" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,14 +35,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/third"
-            android:text="@string/item_code" />
+            android:text="@string/username_translation" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/forth"
-            android:text="@string/qty" />
+            android:text="@string/password_translation" />
     </LinearLayout>
 
     <LinearLayout

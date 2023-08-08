@@ -1,6 +1,8 @@
 package com.example.uhf.mvvm.Model;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 
@@ -20,7 +22,11 @@ public class ItemLocationCache {
 
     private int qid;
 
+    @ColumnInfo(name = "caretaker")
+    private String caretaker;
 
+
+    @Ignore
     public ItemLocationCache(int ID, String item, String code, String location, String ecd, String name, String timestamp, String user, int qid) {
         this.ID = ID;
         this.item = item;
@@ -33,7 +39,25 @@ public class ItemLocationCache {
         this.qid = qid;
     }
 
+    public String getCaretaker() {
+        return caretaker;
+    }
 
+    public void setCaretaker(String caretaker) {
+        this.caretaker = caretaker;
+    }
+
+    public ItemLocationCache(String item, String code, String location, String ecd, String name, String timestamp, String user, int qid, String caretaker) {
+        this.item = item;
+        this.code = code;
+        this.location = location;
+        this.ecd = ecd;
+        this.name = name;
+        this.timestamp = timestamp;
+        this.user = user;
+        this.qid = qid;
+        this.caretaker = caretaker;
+    }
     public int getID() {
         return ID;
     }

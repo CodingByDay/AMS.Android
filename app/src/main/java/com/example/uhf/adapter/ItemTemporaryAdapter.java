@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdapter.ItemHolder> {
-    private List<ItemTemporary> items = new ArrayList<ItemTemporary>();
+    public List<ItemTemporary> items = new ArrayList<ItemTemporary>();
     private final RecyclerViewInterface recyclerViewInterface;
     private List<ItemTemporary> backupForSearching;
 
@@ -96,7 +96,7 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         ItemTemporary current = items.get(position);
-        holder.tbItem.setText(current.getCode());
+        holder.tbUser.setText(current.getCaretaker());
         holder.tbName.setText(current.getName());
         holder.tbLocation.setText(current.getLocation());
         holder.tbEpc.setText(current.getEcd().substring(current.getEcd().length() - 5));
@@ -122,6 +122,7 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
         private TextView tbLocation;
         private TextView tbQty;
 
+        private TextView tbUser;
         private TextView tbEpc;
 
         private LinearLayout linearLayout;
@@ -131,6 +132,7 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
             tbItem = (TextView) itemView.findViewById(R.id.tbItem);
             tbName = (TextView) itemView.findViewById(R.id.tbName);
             tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
+            tbUser = (TextView) itemView.findViewById(R.id.tbUser);
             tbEpc = (TextView) itemView.findViewById(R.id.tbEpc);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {

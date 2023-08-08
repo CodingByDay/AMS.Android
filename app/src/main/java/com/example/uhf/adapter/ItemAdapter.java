@@ -68,8 +68,9 @@ private final RecyclerViewInterface recyclerViewInterface;
             super(itemView);
             tbItem = (TextView) itemView.findViewById(R.id.tbItem);
             tbName = (TextView) itemView.findViewById(R.id.tbName);
-           // tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
-            tbCode = (TextView) itemView.findViewById(R.id.tbCode);
+            // tbLocation = (TextView) itemView.findViewById(R.id.tbLocation);
+
+          //  tbCode = (TextView) itemView.findViewById(R.id.tbCode);
             tbQty = (TextView) itemView.findViewById(R.id.tbQty);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {

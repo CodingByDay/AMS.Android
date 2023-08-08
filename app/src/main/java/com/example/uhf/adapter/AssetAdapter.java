@@ -54,6 +54,10 @@ public class AssetAdapter  extends RecyclerView.Adapter<AssetAdapter.ItemHolder>
         private TextView tbLocation;
         private TextView tbCode;
         private TextView tbQty;
+        
+        private TextView tbUser;
+
+        private TextView tbPassword;
         private TextView tbEpc;
         private LinearLayout linearLayout;
 
@@ -62,11 +66,11 @@ public class AssetAdapter  extends RecyclerView.Adapter<AssetAdapter.ItemHolder>
 
             tbItem = itemView.findViewById(R.id.tbItem);
             tbName = itemView.findViewById(R.id.tbName);
-            tbCode = itemView.findViewById(R.id.tbCode);
+            tbUser = itemView.findViewById(R.id.tbUser);
             tbQty = itemView.findViewById(R.id.tbQty);
             tbLocation = itemView.findViewById(R.id.tbLocation);
             tbEpc = itemView.findViewById(R.id.tbEpc);
-
+            tbPassword = itemView.findViewById(R.id.tbPassword);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

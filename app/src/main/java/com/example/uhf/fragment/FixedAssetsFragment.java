@@ -4,7 +4,9 @@ import static android.app.ProgressDialog.show;
 import static android.content.Context.AUDIO_SERVICE;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -125,15 +127,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     public ItemLocationAdapter adapterLocation;
     private boolean loopFlagStrongest;
     public ItemLocationAdapter adapterFinal;
+    private List<ItemLocation> dataClassLevel = new ArrayList<>();
 
     private void clearColors() {
         first.setBackgroundColor(Color.TRANSPARENT);
         second.setBackgroundColor(Color.TRANSPARENT);
         third.setBackgroundColor(Color.TRANSPARENT);
         forth.setBackgroundColor(Color.TRANSPARENT);
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -144,17 +145,17 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
         Bundle arguments = getArguments();
         assert arguments != null;
+
         callerID = arguments.getString("callerID");
         first = view.findViewById(R.id.first);
         second = view.findViewById(R.id.second);
         third = view.findViewById(R.id.third);
         forth = view.findViewById(R.id.forth);
 
+
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
 
                 clearColors();
                 currentSearchColumn = first.getText().toString();
@@ -200,17 +201,17 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 context = (InventoryActivity) getActivity();
                 initEmpty(view);
                 initListingForCheck(view);
-                first.setText("Sredstvo");
+                first.setText("Lokacija");
                 second.setText("Naziv");
-                third.setText("Lokacija");
+                third.setText("Zadolženi");
                 forth.setText("EPC");
                 break;
 
             case "ListingActivity":
                 initListing(view);
-                first.setText("Sredstvo");
+                first.setText("Lokacija");
                 second.setText("Naziv");
-                third.setText("Lokacija");
+                third.setText("Zadolženi");
                 forth.setText("EPC");
                 break;
 
@@ -233,13 +234,14 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 third.setText("Lokacija");
                 forth.setText("EPC");
                 break;
-            case "ListingActivity":
 
-                first.setText("Sredstvo");
-                second.setText("Naziv");
+            case "ListingActivity":
                 third.setText("Lokacija");
+                first.setText("Naziv");
+                second.setText("Zadolženi");
                 forth.setText("EPC");
                 break;
+
             case "RegistrationActivity":
                 break;
         }
@@ -249,21 +251,20 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-
-
-
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
         itemLocationViewModel.getItemsThatAreRegistered().observe(this, new Observer<List<ItemLocation>>() {
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;
+                dataClassLevel = items;
                 countList += 1;
                 if(countList == 2) {
                     countList = 0;
-                    List<ItemLocation> data = syncBothLists(itemsClassLevel, checkOuts);
+
+                    dataClassLevel = syncBothLists(itemsClassLevel, checkOuts);
                     adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
                     recycler.setAdapter(adapterFinal);
-                    adapterFinal.setItems(data);
+                    adapterFinal.setItems(dataClassLevel);
                     adapterFinal.notifyDataSetChanged();
 
                 }
@@ -313,7 +314,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;
-
             }
         });
     }
@@ -491,7 +491,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                         if(callerID.equals("RegistrationActivity")) {
                             // Logic for not registered items -- check in internal structure -- performance friendly
                             if(!checkifEPCisRegistered(info.getEPC())) {
-                                 temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "temp", "temp", "temp", 1, Instant.now().toString(), "Janko", info.getRssi(), -1));
+                                 temporaryViewModel.insert(new ItemTemporary(info.getEPC(), "temp", "temp", "temp", 1, Instant.now().toString(), "Janko", info.getRssi(), -1, "temp"));
                             }
 
                         } else if (callerID.equals("InventoryActivity")) {
@@ -502,17 +502,17 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                                 ItemLocation asset = checkExistence(info.getEPC());
                                 if(asset!=null ) {
                                     if(location == 0) {
-                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), item.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), item.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid(), asset.getCaretaker()));
                                 } else {
-                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid(),asset.getCaretaker()));
                                 }
                             } else {
                                 if(location == 0) {
                                     assert false;
-                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid(), asset.getCaretaker()));
                                 } else {
                                     assert false;
-                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid()));
+                                    temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid(), asset.getCaretaker()));
                                 }
                             }
                             } else {
@@ -682,6 +682,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         }
     }
     private void initEmpty(View view) {
+
         temporaryAdapter = new ItemTemporaryAdapter(this);
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -746,15 +747,82 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         selected = position;
 
         if(callerID.equals("RegistrationActivity") ) {
-            mContext.currentItem = itemsClassLevel.get(position);
-            itemLocationCurrent = itemsClassLevel.get(position);
+            ItemLocation location = adapterLocation.items.get(position);
+            mContext.currentItem = location;
+            itemLocationCurrent = location;
+            String message = "Lokacija: " + itemLocationCurrent.getLocation() + "\n"
+                    + "Ime: " + itemLocationCurrent.getName() + "\n"
+                    + "Zadolženi: " + itemLocationCurrent.getCaretaker() + "\n"
+                    + "Šifra: " + itemLocationCurrent.getItem();
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle("Podatki");
+            builder.setMessage(message);
+
+
+            builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+
+
         }
 
         if(callerID.equals("InventoryActivity")) {
 
-            itemsTemporaryCurrent = itemsTemporary.get(position);
-            context.current = itemsTemporary.get(position);
-            ItemTemporary tmp = itemsTemporary.get(position);
+            ItemTemporary location = temporaryAdapter.items.get(position);
+            itemsTemporaryCurrent = location;
+            context.current = location;
+            ItemTemporary tmp = location;
+
+            String message = "Lokacija: " + tmp.getLocation() + "\n"
+                    + "Ime: " + tmp.getName() + "\n"
+                    + "Zadolženi: " + tmp.getCaretaker() + "\n"
+                    + "EPC: " + tmp.getEcd();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle("Podatki");
+            builder.setMessage(message);
+
+
+            builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+
+
+        }
+
+        if(callerID.equals("ListingActivity")) {
+
+                ItemLocation item = adapterFinal.items.get(position);
+
+
+                String message = "Lokacija: " + item.getLocation() + "\n"
+                        + "Ime: " + item.getName() + "\n"
+                        + "Zadolženi: " + item.getCaretaker() + "\n"
+                        + "EPC: " + item.getEcd();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                        builder.setTitle("Podatki");
+                        builder.setMessage(message);
+
+
+                        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.create().show();
+
+
+
+
         }
         index = position;
     }

@@ -2,6 +2,7 @@ package com.example.uhf.mvvm.Model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -32,6 +33,10 @@ public class ItemLocation {
     @ColumnInfo(name = "qid")
     private int qid;
 
+    @ColumnInfo(name = "caretaker")
+    private String caretaker;
+
+    @Ignore
     public ItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user, int qid) {
         this.item = item;
         this.code = code;
@@ -43,6 +48,27 @@ public class ItemLocation {
         this.qid = qid;
     }
 
+
+    public ItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user, int qid, String caretaker) {
+        this.item = item;
+        this.code = code;
+        this.location = location;
+        this.ecd = ecd;
+        this.name = name;
+        this.timestamp = timestamp;
+        this.user = user;
+        this.qid = qid;
+        this.caretaker = caretaker;
+    }
+
+
+    public String getCaretaker() {
+        return caretaker;
+    }
+
+    public void setCaretaker(String caretaker) {
+        this.caretaker = caretaker;
+    }
 
     public int getID() {
         return ID;
