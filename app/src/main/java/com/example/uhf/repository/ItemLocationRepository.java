@@ -156,7 +156,7 @@ public class ItemLocationRepository {
         @Override
         protected Void doInBackground(ItemLocation... items) {
             ItemLocation item = items[0];
-            itemDAO.update(item.getItem(), item.getCode(), item.getLocation(), item.getEcd(), item.getName(), item.getTimestamp(), item.getQid());
+            itemDAO.update(item.getItem(), item.getCode(), item.getLocation(), item.getEcd(), item.getName(), item.getTimestamp(), item.getID());
             return null;
         }
     }

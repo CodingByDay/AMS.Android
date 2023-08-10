@@ -17,8 +17,11 @@ public interface ItemLocationDAO {
     void insert(ItemLocation location);
 
 
-    @Query("UPDATE item_location SET item = :item, code = :code, location = :location, ecd = :ecd, name = :name, timestamp = :timestamp WHERE qid = :qid")
-    void update(String item, String code, String location, String ecd, String name, String timestamp, int qid);
+
+   // @Query("INSERT INTO item_location (item, code, location, ecd, name, timestamp, user ) VALUES (:item, :location, :ecd)")
+  //  void insertItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user)
+    @Query("UPDATE item_location SET item = :item, code = :code, location = :location, ecd = :ecd, name = :name, timestamp = :timestamp WHERE id = :id")
+    void update(String item, String code, String location, String ecd, String name, String timestamp, int id);
     @Delete
     void delete(ItemLocation location);
     @Query("DELETE FROM item_location")
@@ -29,7 +32,7 @@ public interface ItemLocationDAO {
 
     @Query("select id, item, name, code, location, ecd, qid, caretaker from item_location where ifnull(ecd,'') = ''\n" +
             "union\n" +
-            "select a.id, a.item,a.name, '' as code, '' as location, '' as ecd, 0 as qid, '' as caretaker\n" +
+            "select 0 as id, a.item,a.name, '' as code, '' as location, '' as ecd, a.id as qid, '' as caretaker\n" +
             "from item a\n" +
             "left join item_location b on a.item = b.item\n" +
             "group by a.[item], a.[qty]\n" +

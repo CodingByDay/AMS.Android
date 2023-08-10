@@ -123,7 +123,6 @@ private final String caller;
                 holder.tbLocation.setText(current.getLocation());
                 holder.tbName.setText(current.getName());
                 holder.tbUser.setText(current.getCaretaker());
-                // Ask about this
                 holder.tbPassword.setText(current.getItem());
                 break;
             }
@@ -332,6 +331,22 @@ private final String caller;
             }
 
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
+
+
+           itemView.setOnLongClickListener(new View.OnLongClickListener() {
+               @Override
+               public boolean onLongClick(View view) {
+                   if (ItemLocationAdapter.this.recyclerViewInterface !=null) {
+                       int position = getAdapterPosition();
+                       if(position!=RecyclerView.NO_POSITION) {
+                           ItemLocationAdapter.this.recyclerViewInterface.onLongItemClick(position);
+
+
+                       }
+                   }
+                   return false;
+               }
+           });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

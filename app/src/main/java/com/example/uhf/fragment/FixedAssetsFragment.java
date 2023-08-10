@@ -255,12 +255,13 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             @Override
             public void onChanged(List<ItemLocation> items) {
                 itemsClassLevel = items;
+                adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
+
                 dataClassLevel = items;
                 countList += 1;
                 if(countList == 2) {
                     countList = 0;
                     dataClassLevel = syncBothLists(itemsClassLevel, checkOuts);
-                    adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
                     recycler.setAdapter(adapterFinal);
                     adapterFinal.setItems(dataClassLevel);
                     adapterFinal.notifyDataSetChanged();
@@ -320,12 +321,13 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler = (RecyclerView) view.findViewById(R.id.rwItems);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
-        adapterLocation = new ItemLocationAdapter(this, callerID);
-        recycler.setAdapter(adapterLocation);
+        adapterLocation = new ItemLocationAdapter(FixedAssetsFragment.this, callerID);
+
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
         itemLocationViewModel.getAllItemsNotRegistered().observe(this, new Observer<List<ItemLocation>>() {
             @Override
             public void onChanged(List<ItemLocation> items) {
+                recycler.setAdapter(adapterLocation);
                 itemsClassLevel = items;
 
                 List<ItemLocation> removeCached = new ArrayList<>();
@@ -745,6 +747,43 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         }
         selected = position;
 
+
+
+        if(callerID.equals("RegistrationActivity") ) {
+            ItemLocation location = adapterLocation.items.get(position);
+            mContext.currentItem = location;
+            itemLocationCurrent = location;
+
+
+        }
+
+        if(callerID.equals("InventoryActivity")) {
+
+            ItemTemporary location = temporaryAdapter.items.get(position);
+            itemsTemporaryCurrent = location;
+            context.current = location;
+            ItemTemporary tmp = location;
+
+
+
+        }
+
+        if(callerID.equals("ListingActivity")) {
+
+            ItemLocation item = adapterFinal.items.get(position);
+
+
+
+
+
+        }
+
+
+        index = position;
+    }
+
+    @Override
+    public void onLongItemClick(int position) {
         if(callerID.equals("RegistrationActivity") ) {
             ItemLocation location = adapterLocation.items.get(position);
             mContext.currentItem = location;
@@ -799,31 +838,30 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
         if(callerID.equals("ListingActivity")) {
 
-                ItemLocation item = adapterFinal.items.get(position);
+            ItemLocation item = adapterFinal.items.get(position);
 
 
-                String message = "Lokacija: " + item.getLocation() + "\n"
-                        + "Ime: " + item.getName() + "\n"
-                        + "Zadolženi: " + item.getCaretaker() + "\n"
-                        + "EPC: " + item.getEcd();
-                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                        builder.setTitle("Podatki");
-                        builder.setMessage(message);
+            String message = "Lokacija: " + item.getLocation() + "\n"
+                    + "Ime: " + item.getName() + "\n"
+                    + "Zadolženi: " + item.getCaretaker() + "\n"
+                    + "EPC: " + item.getEcd();
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle("Podatki");
+            builder.setMessage(message);
 
 
-                        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                        builder.create().show();
+            builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
 
 
 
 
         }
-        index = position;
     }
 
     private void findTheClosestEPC() {

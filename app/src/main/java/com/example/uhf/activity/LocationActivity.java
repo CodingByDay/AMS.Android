@@ -53,6 +53,7 @@ import com.rscja.team.qcom.deviceapi.P;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,6 +96,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
     private CheckOutViewModel checkOutViewModel;
     private List<CheckOut> checkOutItems;
+    private List<ItemLocation> registeredItems;
+    private AlertDialog alertClass;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -135,6 +138,15 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
      //   callerID =  extras.getString("callerID");
      //   resolveCaller(callerID);
 
+        itemLocationViewModel = ViewModelProviders.of((LocationActivity) this).get(ItemLocationViewModel.class);
+
+        itemLocationViewModel.getItemsThatAreRegistered().observe(this, new Observer<List<ItemLocation>>() {
+            @Override
+            public void onChanged(List<ItemLocation> items) {
+
+                registeredItems = items;
+            }
+        });
 
     }
 
@@ -167,7 +179,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             String strongest =  extras.getString("epc");
             id = extras.getInt("item_id");
             etEPC.setText(strongest);
-
+            startLocation();
         }
     }
 
@@ -301,16 +313,20 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                     ItemLocation item = fixedAssetsFragment.itemLocationCurrent;
 
-
+                    item.setQid(item.getQid());
                     item.setEcd(locationItem.getEcd());
                     item.setLocation(locationCurrent);
                     item.setTimestamp(date.toString());
                     item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
 
+                    ItemLocation itemSend = new ItemLocation(item.getItem(), item.getCode(), item.getLocation(), item.getEcd(), item.getName(), item.getTimestamp(), item.getUser(), item.getQid(), item.getCaretaker());
 
-                     itemLocationViewModel.update(item);
+                    if(item.getID() == 0) {
 
-
+                        itemLocationViewModel.insert(itemSend);
+                    } else {
+                        itemLocationViewModel.update(item);
+                    }
                     //itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"),locationItem.getQid()));
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
@@ -413,8 +429,17 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             @Override
 
             public void getLocationValue(int Value) {
+
+
                 llChart.setData(Value);
                 if(Value >= 90) {
+
+                    if(alertClass != null) {
+                        if (alertClass.isShowing()) {
+                            return;
+                        }
+                    }
+
                     stopLocation();
                     AlertDialog.Builder alert = new AlertDialog.Builder(LocationActivity.this);
                     alert.setTitle("Potrditev oznake");
@@ -464,19 +489,41 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 // Transfer location and make a new object
                                 dialog.dismiss();
                                 stopLocation();
-                                String item = LocationActivity.this.item.getItem();
-                                String code = LocationActivity.this.item.getCode();
-                                String name = LocationActivity.this.item.getName();
-                                int qid = LocationActivity.this.item.getQid();
+                                FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+
+                                String item = fixedAssetsFragment.itemLocationCurrent.getItem();
+                                String code = fixedAssetsFragment.itemLocationCurrent.getCode();
+                                String name = fixedAssetsFragment.itemLocationCurrent.getName();
+                                int qid =fixedAssetsFragment.itemLocationCurrent.getQid();
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                                 String location = "";
                                 String epc = etEPC.getText().toString();
                                 // TODO: Link item name here
-                                locationItem = new ItemLocation(item, code, location, epc, name, timestamp.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"), qid);
-                                LocationDialog alertLocation = new LocationDialog();
-                                alertLocation.showDialog(LocationActivity.this);
-                            }
+                                if(!checkifEPCisRegistered(epc)) {
+                                    locationItem = new ItemLocation(item, code, location, epc, name, timestamp.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"), qid);
+                                    LocationDialog alertLocation = new LocationDialog();
+                                    alertLocation.showDialog(LocationActivity.this);
+                                } else {
+                                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(LocationActivity.this);
+                                    builder.setTitle("Podatki");
+                                    builder.setMessage("EPC koda že registrirana");
 
+
+                                    builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            alertClass.dismiss();
+                                            dialog.dismiss();
+
+                                            mReader.stopLocation();
+                                            Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
+                                            startActivity(myIntent);
+
+                                        }
+                                    });
+                                    builder.create().show();
+                                }
+                            }
                         }
                     });
                     alert.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
@@ -494,7 +541,9 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
                         }
                     });
-                    alert.show();
+                    alertClass = alert.create();
+                    alertClass.show();
+
                 }
             }
         });
@@ -505,7 +554,14 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         etEPC.setEnabled(false);
 
     }
-
+    private boolean checkifEPCisRegistered(String epc) {
+        for(ItemLocation item: registeredItems) {
+            if (item.getEcd().equals(epc)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

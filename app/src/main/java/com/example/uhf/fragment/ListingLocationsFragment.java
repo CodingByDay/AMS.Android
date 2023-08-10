@@ -122,6 +122,8 @@ private RecyclerView rwItems;
         return view;
     }
 
+
+
     @Override
     public void onItemClick(int position) {
         if(selected==-1) {
@@ -131,5 +133,10 @@ private RecyclerView rwItems;
             Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#C7E3E1"));
         }
         selected = position;
+    }
+
+    @Override
+    public void onLongItemClick(int position) {
+
     }
 }
