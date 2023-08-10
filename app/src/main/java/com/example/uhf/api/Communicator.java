@@ -555,9 +555,6 @@ public class Communicator {
             String currentCorrectFormat = DateHelper.DateHelperClassStaticHelper.getCurrentDateWithT();
             String endpoint = "/insertCheckOut";
             com.example.uhf.api.CheckOut ck = new com.example.uhf.api.CheckOut();
-
-
-
             ck.token = token;
             ck.assetID = out.getAnAssetID();
             ck.dateCheck = currentCorrectFormat;
@@ -576,9 +573,6 @@ public class Communicator {
             ck.userCheck = out.getAnUserCheck();
             ck.userConfirm = out.getAnUserConfirm();
             ck.inventory = 1;
-
-
-
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(ck);
             String url = baseUrl + endpoint;

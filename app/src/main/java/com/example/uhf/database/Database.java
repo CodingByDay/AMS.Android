@@ -25,7 +25,7 @@ import com.example.uhf.mvvm.Model.LocationDAO;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.settings.SettingDAO;
 
-@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class, Location.class, ItemLocation.class, ItemLocationCache.class, Asset.class, CheckOut.class}, version = 27)
+@androidx.room.Database(entities = {Item.class, ItemTemporary.class, Setting.class, Location.class, ItemLocation.class, ItemLocationCache.class, Asset.class, CheckOut.class}, version = 28)
 public abstract class Database extends RoomDatabase {
 
     private static Database instance;

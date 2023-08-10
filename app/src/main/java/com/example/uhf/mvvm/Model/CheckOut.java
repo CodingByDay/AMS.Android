@@ -3,6 +3,7 @@ package com.example.uhf.mvvm.Model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 
@@ -49,6 +50,12 @@ public class CheckOut {
     @ColumnInfo( defaultValue = "empty")
     private String acNote;
 
+    @ColumnInfo( defaultValue = "empty")
+    private String acCareTaker;
+
+
+
+
     public CheckOut(int anInventory, int anAssetID, String acItem, String acLocation, String acCode, String acECD, String acName, String acName2, String adDateCheck, int anUserCheck, String adStringConfirm, int anUserConfirm, String adTimeIns, int anUserIns, String adTimeChg, int anUserChg, String acNote) {
         this.anInventory = anInventory;
         this.anAssetID = anAssetID;
@@ -69,6 +76,37 @@ public class CheckOut {
         this.acNote = acNote;
     }
 
+
+    @Ignore
+    public CheckOut(int anInventory, int anAssetID, String acItem, String acLocation, String acCode, String acECD, String acName, String acName2, String adDateCheck, int anUserCheck, String adStringConfirm, int anUserConfirm, String adTimeIns, int anUserIns, String adTimeChg, int anUserChg, String acNote, String acCareTaker) {
+        this.anInventory = anInventory;
+        this.anAssetID = anAssetID;
+        this.acItem = acItem;
+        this.acLocation = acLocation;
+        this.acCode = acCode;
+        this.acECD = acECD;
+        this.acName = acName;
+        this.acName2 = acName2;
+        this.adDateCheck = adDateCheck;
+        this.anUserCheck = anUserCheck;
+        this.adStringConfirm = adStringConfirm;
+        this.anUserConfirm = anUserConfirm;
+        this.adTimeIns = adTimeIns;
+        this.anUserIns = anUserIns;
+        this.adTimeChg = adTimeChg;
+        this.anUserChg = anUserChg;
+        this.acNote = acNote;
+        this.acCareTaker = acCareTaker;
+    }
+
+
+    public String getAcCareTaker() {
+        return acCareTaker;
+    }
+
+    public void setAcCareTaker(String acCareTaker) {
+        this.acCareTaker = acCareTaker;
+    }
 
     public int getAnQId() {
         return anQId;

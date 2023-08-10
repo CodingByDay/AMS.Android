@@ -23,4 +23,7 @@ public class CheckOut {
     public int userChg;
     public String note;
 
+
+
+
 }

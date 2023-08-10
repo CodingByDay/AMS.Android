@@ -163,7 +163,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ItemHo
             if(!isFound) {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 Date today = new Date();
-                items.add(new CheckOut(1, outer.getQid(), outer.getItem(), outer.getLocation(), outer.getCode(), outer.getEcd(), outer.getName(), "", formatter.format(today), 5, "", -1, today.toString(), 5, today.toString(), 5, ""));
+                items.add(new CheckOut(1, outer.getQid(), outer.getItem(), outer.getLocation(), outer.getCode(), outer.getEcd(), outer.getName(), "", formatter.format(today), 5, "", -1, today.toString(), 5, today.toString(), 5 , ""));
             }
         }
 

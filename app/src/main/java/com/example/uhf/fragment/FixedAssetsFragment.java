@@ -63,12 +63,12 @@ import java.util.Objects;
 
 public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerViewInterface {
     private ItemViewModel itemViewModel;
-    private ItemTemporaryViewModel temporaryViewModel;
+    public ItemTemporaryViewModel temporaryViewModel;
     private RecyclerView recycler;
     private int selected = -1;
 
     private int count = 0;
-    private List<ItemLocation> itemsClassLevel;
+    public List<ItemLocation> itemsClassLevel;
     private List<ItemLocation> itemsLocationsClassLevel;
     public CheckOutAdapter adapter;
     public ItemLocationAdapter locationAdapter;
@@ -104,7 +104,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
     public static final String TAG_RSSI = "tagRssi";
     private static FixedAssetsFragment instance;
     private RFIDWithUHFUART mReader;
-    private List<ItemTemporary> itemsTemporary;
+    public List<ItemTemporary> itemsTemporary;
     private String callerID;
     private ItemLocationViewModel itemLocationViewModel;
     private List<ItemLocation> itemsLocation = new ArrayList<ItemLocation>();
@@ -156,7 +156,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 clearColors();
                 currentSearchColumn = first.getText().toString();
                 first.setBackgroundColor(Color.parseColor("#C7E3E1"));
@@ -260,7 +259,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 countList += 1;
                 if(countList == 2) {
                     countList = 0;
-
                     dataClassLevel = syncBothLists(itemsClassLevel, checkOuts);
                     adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
                     recycler.setAdapter(adapterFinal);
@@ -336,6 +334,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                     removeCached = removeCached(items);
                 }
                 adapterLocation.setItems(removeCached);
+                adapterLocation.notifyDataSetChanged();
             }
         });
 

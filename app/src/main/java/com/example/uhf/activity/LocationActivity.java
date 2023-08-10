@@ -407,6 +407,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         if(etEPC.getText().toString().equals("")) {
             return;
         }
+
         String epc=etEPC.getText().toString();
         boolean result= mReader.startLocation(this,epc, IUHF.Bank_EPC,32, new IUHFLocationCallback(){
             @Override
@@ -431,22 +432,27 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 String epc = LocationActivity.this.epc;
                                 String location = LocationActivity.this.location;
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                                // Consider this
                                 ItemLocation item = findItemByEpc(epc);
                                 assert item != null;
+
+
                                 if(item.getCode()!=null) {
                                     String code = item.getCode();
                                 }
+
                                 String name = item.getName();
+
                                 int qid = item.getQid();
+
                                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+
                                 ItemLocation itemest = fixedAssetsFragment.itemLocationCurrent;
 
                                 LocalDate localDate = LocalDate.now();
 
                                 // itemLocationViewModel.update(item);
                                 CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), location,
-                                        item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(),  5,  "", -1, timestamp.toString(), 5, timestamp.toString(), 5, "");
+                                        item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(),  5,  "", -1, timestamp.toString(), 5, timestamp.toString(), 5,  "");
 
                                 checkOutViewModel.insert(checkOutItem);
 

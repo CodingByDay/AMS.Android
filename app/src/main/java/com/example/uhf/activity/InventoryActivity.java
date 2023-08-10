@@ -25,13 +25,18 @@ import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.custom.CustomSearchableSpinner;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.fragment.KeyDwonFragment;
+import com.example.uhf.mvvm.Model.CheckOut;
+import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.Location;
+import com.example.uhf.mvvm.ViewModel.CheckOutViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.LocationViewModel;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +56,8 @@ public RFIDWithUHFUART mReader;
     public ItemTemporary current;
     private SearchView swListing;
     private String location;
+    private CheckOutViewModel checkOutViewModel;
+    private List<CheckOut> checkOutItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +171,18 @@ public RFIDWithUHFUART mReader;
 
             }
         });
+
+        checkOutViewModel = ViewModelProviders.of(this).get(CheckOutViewModel.class);
+        checkOutViewModel.getAllItems().observe(this, new Observer<List<CheckOut>>() {
+            @Override
+            public void onChanged(List<CheckOut> checkOuts) {
+
+
+                checkOutItems = checkOuts;
+            }
+        });
+
+
         btConfirm = findViewById(R.id.btConfirm);
         tbLocation = findViewById(R.id.tbLocation);
 
@@ -208,24 +227,58 @@ public RFIDWithUHFUART mReader;
             public void onNothingSelected(AdapterView<?> adapterView) {
                 cbLocation.isSpinnerDialogOpen = false;
             }
+
+
+
+
+
         });
+
+
+
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                 fixedAssetsFragment.stopScanning();
-                // TODO add loader while data is being filtered
-                if(current!=null) {
-                    Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
-                    myIntent.putExtra("id", current.getID());
-                    myIntent.putExtra("epc", current.getEcd());
-                    myIntent.putExtra("callerID", "InventoryProcessLocation");
-                    String location = tbLocation.getText().toString();
-                    myIntent.putExtra("location", tbLocation.getText().toString());
 
-                    // Redirect to the location activity
-                    startActivity(myIntent);
+
+                List<ItemTemporary> scanned = fixedAssetsFragment.itemsTemporary;
+                List<ItemLocation> realItems = fixedAssetsFragment.itemsClassLevel;
+                LocalDate localDate = LocalDate.now();
+
+                for (int i = 0; i < scanned.size(); i++) {
+                    ItemLocation item = findItemByEpc(realItems, scanned.get(i).getEcd());
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+                    CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), currentLocation,
+                            item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(),  5,  "", -1, timestamp.toString(), 5, timestamp.toString(), 5,  "");
+                    checkOutViewModel.insert(checkOutItem);
+
                 }
+
+                Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
+                startActivity(myIntent);
+
+
+                /*
+
+                if(current!=null) {
+                Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
+                myIntent.putExtra("id", current.getID());
+                myIntent.putExtra("epc", current.getEcd());
+                myIntent.putExtra("callerID", "InventoryProcessLocation");
+                String location = tbLocation.getText().toString();
+                myIntent.putExtra("location", tbLocation.getText().toString());
+                // Redirect to the location activity
+                startActivity(myIntent);
+
+                } */
+
+
+
+
             }
         });
         btToggleScanning.setOnClickListener(new View.OnClickListener() {
@@ -259,6 +312,15 @@ public RFIDWithUHFUART mReader;
         if(location!=null) {
             cbLocation.setSelection(locationsAdapter.getPosition(location));
         }
+    }
+
+    private ItemLocation findItemByEpc(List<ItemLocation> items, String epc) {
+        for(ItemLocation item: items) {
+            if(item.getEcd().equals(epc)) {
+                return item;
+            }
+        }
+        return null;
     }
 
     private void initializeFragment() {
