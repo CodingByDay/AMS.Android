@@ -258,15 +258,10 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                 adapterFinal = new ItemLocationAdapter(FixedAssetsFragment.this, "ListingAssetsFragment");
 
                 dataClassLevel = items;
-                countList += 1;
-                if(countList == 2) {
-                    countList = 0;
-                    dataClassLevel = syncBothLists(itemsClassLevel, checkOuts);
-                    recycler.setAdapter(adapterFinal);
-                    adapterFinal.setItems(dataClassLevel);
-                    adapterFinal.notifyDataSetChanged();
 
-                }
+                recycler.setAdapter(adapterFinal);
+                adapterFinal.setItems(dataClassLevel);
+
             }
         });
 
@@ -275,7 +270,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         checkOutViewModel.getAllItems().observe(this, new Observer<List<CheckOut>>() {
             @Override
             public void onChanged(List<CheckOut> checkOutsInner) {
-                checkOuts = checkOutsInner;
+               /* checkOuts = checkOutsInner;
                 countList += 1;
                 if(countList == 2) {
                     countList = 0;
@@ -284,7 +279,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                     recycler.setAdapter(adapterFinal);
                     adapterFinal.setItems(data);
                     adapterFinal.notifyDataSetChanged();
-                }
+                } */
             }
         });
 
@@ -330,7 +325,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         itemLocationViewModel.getAllItemsNotRegistered().observe(this, new Observer<List<ItemLocation>>() {
             @Override
             public void onChanged(List<ItemLocation> items) {
-                Toast.makeText(requireContext(), "Init count: " + items.size(), Toast.LENGTH_SHORT).show();
+
                 itemsClassLevel = items;
                 adapterLocation.setItems(items);
                 adapterLocation.notifyDataSetChanged();

@@ -30,6 +30,7 @@ import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.ViewModel.CheckOutViewModel;
+import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.LocationViewModel;
 import com.microsoft.appcenter.analytics.Analytics;
@@ -58,6 +59,7 @@ public RFIDWithUHFUART mReader;
     private String location;
     private CheckOutViewModel checkOutViewModel;
     private List<CheckOut> checkOutItems;
+    private ItemLocationViewModel itemLocationViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +183,15 @@ public RFIDWithUHFUART mReader;
                 checkOutItems = checkOuts;
             }
         });
+        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
+        itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
+            @Override
+            public void onChanged(List<ItemLocation> checkOuts) {
 
+
+
+            }
+        });
 
         btConfirm = findViewById(R.id.btConfirm);
         tbLocation = findViewById(R.id.tbLocation);
@@ -256,6 +266,9 @@ public RFIDWithUHFUART mReader;
                             item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(),  5,  "", -1, timestamp.toString(), 5, timestamp.toString(), 5,  "");
                     checkOutViewModel.insert(checkOutItem);
 
+                    ItemLocation toUpdate = item;
+                    toUpdate.setLocation(currentLocation);
+                    itemLocationViewModel.update(toUpdate);
                 }
 
                 Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);

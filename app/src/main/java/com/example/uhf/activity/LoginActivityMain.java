@@ -118,16 +118,7 @@ private TextView login;
     private void initSynchronization() {
         itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
         // if cached table is not empty and there is internet sync the data
-        itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
-        itemLocationCacheViewModel.getAllItems().observe(this, new Observer<List<ItemLocationCache>>() {
-            @Override
-            public void onChanged(List<ItemLocationCache> items) {
-                 itemsLocationsCacheClassLevel = items;
-                 if(itemsLocationsCacheClassLevel.size() > 0) {
-                     syncDatabase(itemsLocationsCacheClassLevel);
-                 }
-            }
-        });
+
 
 
         itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
@@ -142,14 +133,6 @@ private TextView login;
 
     }
 
-    private void syncDatabase(List<ItemLocationCache> itemsLocationsCacheClassLevel) {
-        for (ItemLocationCache itemLocationCache: itemsLocationsCacheClassLevel) {
-            itemLocationViewModel.updateEPCByID(itemLocationCache.getID(), itemLocationCache.getEcd());
-            itemLocationCacheViewModel.delete(itemLocationCache);
-
-        }
-
-    }
 
     private void initSettings() {
         settingsView = ViewModelProviders.of(this).get(SettingsViewModel.class);
@@ -194,23 +177,7 @@ private TextView login;
         }
         return true;
     }
-    private void SyncData() throws JsonProcessingException {
-        boolean connected = client.isDeviceConnected(this);
-        if(!connected) {
-        Toast.makeText(this, "Ni povezave!", Toast.LENGTH_SHORT).show();
-         return;
-        }
-        mypDialog = new ProgressDialog(this);
-        mypDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        mypDialog.setMax(100);
-        mypDialog.setMessage("Pridobivanje podatkov...");
-        mypDialog.setCanceledOnTouchOutside(false);
-        mypDialog.show();
-        // Continue here
-        client.retrieveItems(LoginActivityMain.this, settingsList);
-        client.retrieveLocations(LoginActivityMain.this, settingsList);
-        client.retrieveAssets(LoginActivityMain.this, settingsList);
-    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         supportInvalidateOptionsMenu();

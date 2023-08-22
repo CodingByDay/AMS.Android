@@ -238,40 +238,9 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             }
         });
     }
-    private void initSynchronization() {
-        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
-        // if cached table is not empty and there is internet sync the data
-        itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
-        itemLocationCacheViewModel.getAllItems().observe(this, new Observer<List<ItemLocationCache>>() {
-            @Override
-            public void onChanged(List<ItemLocationCache> items) {
-                itemsLocationsCacheClassLevel = items;
-                if(itemsLocationsCacheClassLevel.size() > 0) {
-                    syncDatabase(itemsLocationsCacheClassLevel);
-                }
-            }
-        });
 
 
-        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
-        // if cached table is not empty and there is internet sync the data
-        itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
-        itemLocationViewModel.getAllItems().observe(this, new Observer<List<ItemLocation>>() {
-            @Override
-            public void onChanged(List<ItemLocation> items) {
-                int r = 9+9;
-            }
-        });
 
-    }
-    private void syncDatabase(List<ItemLocationCache> itemsLocationsCacheClassLevel) {
-        for (ItemLocationCache itemLocationCache: itemsLocationsCacheClassLevel) {
-            itemLocationViewModel.updateEPCByID(itemLocationCache.getID(), itemLocationCache.getEcd());
-            itemLocationCacheViewModel.delete(itemLocationCache);
-
-        }
-
-    }
 
 
     @Override
