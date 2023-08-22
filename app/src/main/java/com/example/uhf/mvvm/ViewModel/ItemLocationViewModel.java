@@ -41,7 +41,7 @@ public class ItemLocationViewModel extends AndroidViewModel {
         return allItems;
     }
     public LiveData<List<ItemLocation>> getAllItemsNotRegistered() {
-        return allItemsQuery;
+        return repository.getAllItemsNotRegistered();
     }
 
     public void updateEPCByID(int id, String epc) {

@@ -322,20 +322,17 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recycler.setHasFixedSize(true);
         adapterLocation = new ItemLocationAdapter(FixedAssetsFragment.this, callerID);
+        recycler.setAdapter(adapterLocation);
+        adapterLocation.setItems(new ArrayList<ItemLocation>());
+        adapterLocation.notifyDataSetChanged();
 
         itemLocationViewModel = ViewModelProviders.of((FragmentActivity) view.getContext()).get(ItemLocationViewModel.class);
         itemLocationViewModel.getAllItemsNotRegistered().observe(this, new Observer<List<ItemLocation>>() {
             @Override
             public void onChanged(List<ItemLocation> items) {
-                recycler.setAdapter(adapterLocation);
+                Toast.makeText(requireContext(), "Init count: " + items.size(), Toast.LENGTH_SHORT).show();
                 itemsClassLevel = items;
-
-                List<ItemLocation> removeCached = new ArrayList<>();
-
-                if(cached!=null) {
-                    removeCached = removeCached(items);
-                }
-                adapterLocation.setItems(removeCached);
+                adapterLocation.setItems(items);
                 adapterLocation.notifyDataSetChanged();
             }
         });
@@ -401,8 +398,9 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
         @Override
         protected Boolean doInBackground(String... params) {
-            // TODO Auto-generated method stub
+
             mReader.free();
+
             return mReader.init();
         }
 
@@ -470,24 +468,32 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         }
         return false;
     }
-
     private boolean preventDuplicateUse = true;
     // TODO: Handlers should be static lest they can have leaks.
+
+
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
+
+
             if (preventDuplicateUse) {
             preventDuplicateUse = false;
             preventDuplicate = true;
+
             UHFTAGInfo info = (UHFTAGInfo) msg.obj;
+
+
+
+
             // Binary search check for duplicates
             if(!StringUtils.isEmpty(info.getEPC())) {
                 int index = checkIfExist(info.getEPC());
                 if(index == -1) {
                     playSound(1);
-                    // TODO fix date time to work with earlier versions
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         if(callerID.equals("RegistrationActivity")) {
                             // Logic for not registered items -- check in internal structure -- performance friendly
@@ -739,13 +745,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
     @Override
     public void onItemClick(int position) {
-        if(selected==-1) {
-            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#969595"));
-        } else {
-            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(selected)).setBackgroundColor(Color.TRANSPARENT);
-            Objects.requireNonNull(Objects.requireNonNull(recycler.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#969595"));
-        }
-        selected = position;
 
 
 
@@ -771,9 +770,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         if(callerID.equals("ListingActivity")) {
 
             ItemLocation item = adapterFinal.items.get(position);
-
-
-
 
 
         }
@@ -824,16 +820,22 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             builder.setTitle("Podatki");
             builder.setMessage(message);
 
-
-            builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
+
+            builder.setNegativeButton("Pobriši", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    temporaryAdapter.items.remove(location);
+                    temporaryAdapter.notifyDataSetChanged();
+                }
+            });
             builder.create().show();
-
-
         }
 
         if(callerID.equals("ListingActivity")) {

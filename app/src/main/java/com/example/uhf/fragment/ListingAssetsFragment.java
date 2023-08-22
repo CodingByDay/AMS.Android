@@ -154,12 +154,7 @@ public class ListingAssetsFragment extends KeyDwonFragment implements RecyclerVi
             }
         });
         builder.create().show();
-        if(selected==-1) {
-            Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#C7E3E1"));
-        } else {
-            Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(selected)).setBackgroundColor(Color.TRANSPARENT);
-            Objects.requireNonNull(Objects.requireNonNull(rwItems.getLayoutManager()).findViewByPosition(position)).setBackgroundColor(Color.parseColor("#C7E3E1"));
-        }
+
         selected = position;
     }
 

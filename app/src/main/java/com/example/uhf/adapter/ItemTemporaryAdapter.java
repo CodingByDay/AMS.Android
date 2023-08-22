@@ -1,5 +1,6 @@
 package com.example.uhf.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
     public List<ItemTemporary> items = new ArrayList<ItemTemporary>();
     private final RecyclerViewInterface recyclerViewInterface;
     private List<ItemTemporary> backupForSearching;
-
+    View previous = null;
 
     public ItemTemporaryAdapter(RecyclerViewInterface recyclerViewInterface) {
         this.recyclerViewInterface = recyclerViewInterface;
@@ -135,6 +136,21 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
             tbUser = (TextView) itemView.findViewById(R.id.tbUser);
             tbEpc = (TextView) itemView.findViewById(R.id.tbEpc);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (ItemTemporaryAdapter.this.recyclerViewInterface !=null) {
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION) {
+                            ItemTemporaryAdapter.this.recyclerViewInterface.onLongItemClick(position);
+
+
+                        }
+                    }
+                    return false;
+                }
+            });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -142,6 +158,13 @@ public class ItemTemporaryAdapter extends RecyclerView.Adapter<ItemTemporaryAdap
                         int position = getAdapterPosition();
                         if(position!=RecyclerView.NO_POSITION) {
                             ItemTemporaryAdapter.this.recyclerViewInterface.onItemClick(position);
+                            if(previous!=null) {
+                                previous.setBackgroundColor(Color.TRANSPARENT);
+                                view.setBackgroundColor(Color.parseColor("#969595"));
+                            } else {
+                                view.setBackgroundColor(Color.parseColor("#969595"));
+                            }
+                            previous = view;
                         }
                     }
                 }

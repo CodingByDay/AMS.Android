@@ -204,6 +204,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             public void onClick(View view) {
                 Intent myIntent = new Intent(getApplicationContext(), ListingLocationsActivity.class);
                 startActivity(myIntent);
+
             }
         });
         btListingItems.setOnClickListener(new View.OnClickListener() {

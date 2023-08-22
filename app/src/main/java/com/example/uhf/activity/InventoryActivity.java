@@ -244,7 +244,7 @@ public RFIDWithUHFUART mReader;
                 fixedAssetsFragment.stopScanning();
 
 
-                List<ItemTemporary> scanned = fixedAssetsFragment.itemsTemporary;
+                List<ItemTemporary> scanned = fixedAssetsFragment.temporaryAdapter.items;
                 List<ItemLocation> realItems = fixedAssetsFragment.itemsClassLevel;
                 LocalDate localDate = LocalDate.now();
 

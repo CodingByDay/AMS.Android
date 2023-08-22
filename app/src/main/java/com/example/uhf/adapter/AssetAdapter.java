@@ -1,5 +1,6 @@
 package com.example.uhf.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import java.util.List;
 public class AssetAdapter  extends RecyclerView.Adapter<AssetAdapter.ItemHolder> {
     private List<Asset> items = new ArrayList<Asset>();
     private final RecyclerViewInterface recyclerViewInterface;
+    private View previous = null;
+
     public AssetAdapter(RecyclerViewInterface recyclerViewInterface) {
         this.recyclerViewInterface = recyclerViewInterface;
     }
@@ -79,6 +82,18 @@ public class AssetAdapter  extends RecyclerView.Adapter<AssetAdapter.ItemHolder>
                         int position = getAdapterPosition();
                         if(position!=RecyclerView.NO_POSITION) {
                             AssetAdapter.this.recyclerViewInterface.onItemClick(position);
+
+
+                            if(previous!=null) {
+
+                                previous.setBackgroundColor(Color.TRANSPARENT);
+                                view.setBackgroundColor(Color.parseColor("#969595"));
+                            } else {
+
+                                view.setBackgroundColor(Color.parseColor("#969595"));
+                            }
+                            previous = view;
+
                         }
                     }
                 }

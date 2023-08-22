@@ -1,5 +1,6 @@
 package com.example.uhf.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import java.util.List;
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHolder> {
     private List<Location> items = new ArrayList<Location>();
     private final RecyclerViewInterface recyclerViewInterface;
-
+    private View previous;
 
 
     public LocationAdapter(RecyclerViewInterface recyclerViewInterface) {
@@ -150,6 +151,15 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ItemHo
                         int position = getAdapterPosition();
                         if(position!=RecyclerView.NO_POSITION) {
                             LocationAdapter.this.recyclerViewInterface.onItemClick(position);
+                            if(previous!=null) {
+
+                                previous.setBackgroundColor(Color.TRANSPARENT);
+                                view.setBackgroundColor(Color.parseColor("#969595"));
+                            } else {
+
+                                view.setBackgroundColor(Color.parseColor("#969595"));
+                            }
+                            previous = view;
                         }
                     }
                 }

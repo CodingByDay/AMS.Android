@@ -56,7 +56,7 @@ public class ItemLocationRepository {
 
 
     public LiveData<List<ItemLocation>> getAllItemsNotRegistered() {
-        return allItemsNotRegistered;
+        return itemDAO.getAllItemsThatAreNotRegistered();
     }
 
 

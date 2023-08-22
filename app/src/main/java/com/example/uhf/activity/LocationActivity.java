@@ -322,7 +322,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     ItemLocation itemSend = new ItemLocation(item.getItem(), item.getCode(), item.getLocation(), item.getEcd(), item.getName(), item.getTimestamp(), item.getUser(), item.getQid(), item.getCaretaker());
 
                     if(item.getID() == 0) {
-
                         itemLocationViewModel.insert(itemSend);
                     } else {
                         itemLocationViewModel.update(item);
@@ -332,6 +331,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     dialog.dismiss();       // dismiss
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
                     startActivity(myIntent);
+                    finish();
                 }
             });
             btNo.setOnClickListener(new View.OnClickListener() {
@@ -342,19 +342,17 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     Date date = new Date(System.currentTimeMillis());
                     // Add the cached item here
                     FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-
                     item.setEcd(locationItem.getEcd());
                     item.setLocation("");
                     item.setTimestamp(date.toString());
                     item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
-
-
                     itemLocationViewModel.update(item);
-
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
                     startActivity(myIntent);
+                    finish();
+
                 }
             });
 
@@ -487,7 +485,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                 // Continues here
                             } else {
                                 // Transfer location and make a new object
-                                dialog.dismiss();
+
                                 stopLocation();
                                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
 
@@ -517,6 +515,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
                                             mReader.stopLocation();
                                             Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
+
                                             startActivity(myIntent);
 
                                         }
@@ -524,6 +523,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                                     builder.create().show();
                                 }
                             }
+                            dialog.dismiss();
                         }
                     });
                     alert.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
