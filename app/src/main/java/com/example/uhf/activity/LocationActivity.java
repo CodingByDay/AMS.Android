@@ -47,6 +47,7 @@ import com.example.uhf.tools.SettingsHelper;
 import com.example.uhf.tools.UIHelper;
 import com.example.uhf.view.UhfLocationCanvasView;
 import com.rscja.deviceapi.RFIDWithUHFUART;
+import com.rscja.deviceapi.interfaces.ConnectionStatus;
 import com.rscja.deviceapi.interfaces.IUHF;
 import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
 import com.rscja.team.qcom.deviceapi.P;
@@ -147,6 +148,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 registeredItems = items;
             }
         });
+
 
     }
 

@@ -270,7 +270,7 @@ public RFIDWithUHFUART mReader;
                     toUpdate.setLocation(currentLocation);
                     itemLocationViewModel.update(toUpdate);
                 }
-
+                mReader.free();
                 Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
                 startActivity(myIntent);
 

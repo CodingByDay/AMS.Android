@@ -31,7 +31,10 @@ import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.view.UhfLocationCanvasView;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.rscja.deviceapi.RFIDWithUHFUART;
+import com.rscja.deviceapi.entity.UHFTAGInfo;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -137,34 +140,36 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                     Toast.makeText(RegistrationActivity.this, "Sredstvo ni izbrano?!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                mypDialog = new ProgressDialog(RegistrationActivity.this);
-                mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                mypDialog.setMessage("Iskanje najmočnejšega signala. Počakajte...");
-                mypDialog.setCanceledOnTouchOutside(false);
-                mypDialog.show();
-                fixedAssetsFragment.startScanningStrongest();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        fixedAssetsFragment.stopScanningStrongest();
+                Toast.makeText(RegistrationActivity.this, "Približite tag", Toast.LENGTH_SHORT).show();
+
+                boolean doWhile = true;
+                while (doWhile) {
+                    UHFTAGInfo tag = mReader.inventorySingleTag();
+                    DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+                    float floatValue = -1000;
+                    try {
+                        Number parsedNumber = decimalFormat.parse(tag.getRssi());
+                        floatValue = parsedNumber.floatValue();
+                        System.out.println("Parsed float value: " + floatValue);
+                    } catch (ParseException e) {
+
+                    }
+                    if (floatValue > - 33) {
+
+
                         Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
-                        String strongest = fixedAssetsFragment.strongestRssi.getEcd();
-                        if(strongest!=null) {
-                        myIntent.putExtra("epc", strongest);
+
+                        myIntent.putExtra("epc", tag.getEPC());
                         myIntent.putExtra("callerID", "Registration");
                         myIntent.putExtra("item_id", currentItem.getID());
-                        mypDialog.cancel();
-                        mReader.stopLocation();
 
+                        mReader.stopLocation();
                         startActivity(myIntent);
                         finish();
+                        break;
                         // Comment
-                        } else {
-                            mypDialog.cancel();
-                            Toast.makeText(RegistrationActivity.this, "V bližini ni signala", Toast.LENGTH_SHORT).show();
-                        }
                     }
-                }, 3000);
+                }
             }
         });
     }
