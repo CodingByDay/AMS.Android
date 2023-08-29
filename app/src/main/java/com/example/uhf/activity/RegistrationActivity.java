@@ -151,10 +151,10 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                         Number parsedNumber = decimalFormat.parse(tag.getRssi());
                         floatValue = parsedNumber.floatValue();
                         System.out.println("Parsed float value: " + floatValue);
-                    } catch (ParseException e) {
+                    } catch (ParseException ignored) {
 
                     }
-                    if (floatValue > - 33) {
+                    if (floatValue > - 30) {
 
 
                         Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
