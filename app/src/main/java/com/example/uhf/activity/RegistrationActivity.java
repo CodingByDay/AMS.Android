@@ -154,7 +154,7 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                     } catch (ParseException ignored) {
 
                     }
-                    if (floatValue > - 30) {
+                    if (floatValue > - 31) {
 
 
                         Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
