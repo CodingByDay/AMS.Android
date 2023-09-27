@@ -250,6 +250,13 @@ public RFIDWithUHFUART mReader;
             @Override
             public void onClick(View view) {
 
+
+                if(tbLocation.getText().toString().equals("")) {
+                    Toast.makeText(InventoryActivity.this, "Lokacija mora biti izbrana", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                 fixedAssetsFragment.stopScanning();
 
@@ -262,7 +269,7 @@ public RFIDWithUHFUART mReader;
                     ItemLocation item = findItemByEpc(realItems, scanned.get(i).getEcd());
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-                    CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), currentLocation,
+                    CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), tbLocation.getText().toString(),
                             item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(),  5,  "", -1, timestamp.toString(), 5, timestamp.toString(), 5,  "");
                     checkOutViewModel.insert(checkOutItem);
 
@@ -270,8 +277,9 @@ public RFIDWithUHFUART mReader;
                     toUpdate.setLocation(currentLocation);
                     itemLocationViewModel.update(toUpdate);
                 }
-                mReader.free();
+
                 Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
+                myIntent.putExtra("location", tbLocation.getText().toString()); // Add the "location" parameter with the value "P01"
                 startActivity(myIntent);
 
 
@@ -325,6 +333,28 @@ public RFIDWithUHFUART mReader;
         if(location!=null) {
             cbLocation.setSelection(locationsAdapter.getPosition(location));
         }
+        Intent intent = getIntent();
+
+        if (intent.hasExtra("location")) {
+            // Get the value of the "location" parameter
+            String location = intent.getStringExtra("location");
+            // Initialize the spinner and text field
+            EditText tbLocation = findViewById(R.id.tbLocation);
+            // Check if the location value exists in the spinner items
+            boolean locationFound = false;
+            for (int i = 0; i < locations.size(); i++) {
+                if (locations.get(i).equals(location)) {
+                    cbLocation.setSelection(i); // Set the selected item in the spinner
+                    locationFound = true;
+                    break;
+                }
+            }
+            // If the location was not found in the spinner, set it to the text field
+            if (!locationFound) {
+                tbLocation.setText(location);
+            }
+        }
+
     }
 
     private ItemLocation findItemByEpc(List<ItemLocation> items, String epc) {

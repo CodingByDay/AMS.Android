@@ -56,7 +56,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     private ItemLocationViewModel itemLocationViewModel;
     private ItemLocationCacheViewModel itemLocationCacheViewModel;
     private List<ItemLocationCache> itemsLocationsCacheClassLevel;
-
+    private int counter = 0;
     private CheckOutViewModel checkOutViewModel;
     private List<CheckOut> checkOutItems;
 
@@ -223,10 +223,13 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
                         client.checkOutCommit(EntryActivity.this, settingsList, co);
                         Toast.makeText(EntryActivity.this, "Stanje posodobljeno.", Toast.LENGTH_SHORT).show();
                         // Delete all data from commit table after the state has been updated.
-                        checkOutViewModel.deleteAll();
+
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
+
+
+
                 }
             }
         });
@@ -243,9 +246,22 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
 
 
 
+
     @Override
     public void setResult(Boolean result) {
-        
+        if(result) {
+            checkOutViewModel.delete(checkOutItems.get(counter));
+        }
+        counter += 1;
+
+        if(counter == checkOutItems.size()) {
+            if(checkOutItems.size() != 0) {
+                Toast.makeText(this, "Prišlo je do napake, poskusite še enkrat.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Stanje je posodobljeno", Toast.LENGTH_SHORT).show();
+            }
+            counter = 0;
+        }
     }
 
     @Override
