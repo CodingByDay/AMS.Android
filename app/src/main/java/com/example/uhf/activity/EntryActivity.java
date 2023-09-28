@@ -61,6 +61,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     private int counter = 0;
     private CheckOutViewModel checkOutViewModel;
     private List<CheckOut> checkOutItems;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,12 +215,20 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btExportListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(checkOutItems.size() > 0) {
+                    progressDialog = new ProgressDialog(EntryActivity.this);
+                    progressDialog.setMessage("Prosimo počakajte..."); // Set your message here
+                    progressDialog.setIndeterminate(true); // Use an indeterminate style spinner
+                    progressDialog.setCancelable(false); // Make it non-cancelable
+                    progressDialog.show();
+                }
                 for(CheckOut co : checkOutItems) {
                     try {
                         client.checkOutCommit(EntryActivity.this, settingsList, co);
                         // Delete all data from commit table after the state has been updated.
                     } catch (JsonProcessingException e) {
-                        throw new RuntimeException(e);
+
                     }
                 }
             }
@@ -241,6 +250,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         }
         counter += 1;
         if(counter == checkOutItems.size()) {
+            progressDialog.dismiss();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Stanje posodobljeno");
             builder.setMessage("Število uspešnih prenosov: " + correctTransfers + "/" + checkOutItems.size());

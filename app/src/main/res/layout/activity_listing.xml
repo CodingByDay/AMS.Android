@@ -70,23 +70,16 @@
             android:textColor="@color/white"
             android:text="@string/exit_inventory_navigation" />
 
-        <ImageButton
-            android:id="@+id/btSearch"
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:backgroundTint="@color/main_color_riko"
-            android:src="@drawable/search" />
-
-
-
-
         <Button
-            android:id="@+id/btRequest"
+            android:id="@+id/btSearch"
             android:layout_width="0dp"
-            android:layout_height="80dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/main_color_riko"
+            android:layout_height="80dp"
             android:textColor="@color/white"
-            android:text="@string/registration_navigation2" />
+            android:backgroundTint="@color/main_color_riko"
+            android:text="@string/listing_search" />
+
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

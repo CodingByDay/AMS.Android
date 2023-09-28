@@ -8,8 +8,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import java.util.Optional;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +29,7 @@ import com.example.uhf.R;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.fragment.FixedAssetsFragment;
+import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.rscja.deviceapi.RFIDWithUHFUART;
@@ -63,7 +67,7 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
             }
             case KeyEvent.KEYCODE_F2:
             {
-                registration.performClick();
+                btSearch.performClick();
                 return true;
             }
             case KeyEvent.KEYCODE_F3:
@@ -146,6 +150,7 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(ListingActivity.this,"Približite tag", Toast.LENGTH_SHORT).show();
                 boolean doWhile = true;
                 while (doWhile) {
                     UHFTAGInfo tag = mReader.inventorySingleTag();
@@ -159,12 +164,39 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
 
                     }
                     if (floatValue > - 33) {
-
-
                         Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
-
-
                         // Comment
+                        // Getting the corresponding object
+                        FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                        Optional<ItemLocation> firstMatch = fixedAssetsFragment.adapterFinal.items.stream()
+                                .filter(item -> item.getEcd().equals(tag.getEPC())).findFirst();
+
+                        if (firstMatch.isPresent()) {
+                            ItemLocation matchingItem = firstMatch.get();
+                            // Do something with the matchingItem
+                            // Show the alert message
+                            String message = "Lokacija: " + matchingItem.getLocation() + "\n"
+                                    + "Ime: " + matchingItem.getName() + "\n"
+                                    + "Zadolženi: " + matchingItem.getCaretaker() + "\n"
+                                    + "Šifra: " + matchingItem.getItem();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ListingActivity.this);
+                            builder.setTitle("Podatki");
+                            builder.setMessage(message);
+
+
+                            builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+
+
+                                }
+                            });
+                            builder.create().show();
+                        }
+
+                        doWhile = false;
+
                     }
                 }
             }
@@ -240,15 +272,9 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
   
 
     private void initializeButtonEvents() {
-        registration = findViewById(R.id.btRequest);
+
         logout = findViewById(R.id.btExit);
-        registration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
-                startActivity(myIntent);
-            }
-        });
+
 
 
         logout.setOnClickListener(new View.OnClickListener() {
