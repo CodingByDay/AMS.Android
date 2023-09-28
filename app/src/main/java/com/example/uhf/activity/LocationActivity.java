@@ -237,10 +237,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         });
         itemLocationCacheViewModel = ViewModelProviders.of(this).get(ItemLocationCacheViewModel.class);
         // ItemLocation view model
-
-
-
-
         checkOutViewModel = ViewModelProviders.of(this).get(CheckOutViewModel.class);
         checkOutViewModel.getAllItems().observe(this, new Observer<List<CheckOut>>() {
             @Override
@@ -312,7 +308,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             btYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    dontShowTwice = false;
                     Date date = new Date(System.currentTimeMillis());
 
                     // Add the cached item here
@@ -352,6 +348,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             btNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    dontShowTwice = false;
+
                     // Save the item to the
                     locationItem.setLocation("");
                     Date date = new Date(System.currentTimeMillis());
@@ -440,6 +438,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         }
         return null;
     }
+
+    private boolean dontShowTwice = false;
     private void startLocation(){
         if(etEPC.getText().toString().equals("")) {
             return;
@@ -451,9 +451,12 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
             public void getLocationValue(int Value) {
 
+                if(dontShowTwice) {
+                    return;
+                }
 
-                llChart.setData(Value);
                 if(Value >= 90) {
+                    dontShowTwice = true;
 
                     if(alertClass != null) {
                         if (alertClass.isShowing()) {
@@ -552,7 +555,9 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     alert.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            dontShowTwice = false;
                             if(callerID.equals("InventoryProcessLocation")) {
+
                                 mReader.stopLocation();
                                 Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
                                 startActivity(myIntent);
