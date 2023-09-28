@@ -9,7 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +19,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.uhf.R;
 import com.example.uhf.barcode.Barcode;
@@ -24,7 +28,11 @@ import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
+import com.rscja.deviceapi.RFIDWithUHFUART;
+import com.rscja.deviceapi.entity.UHFTAGInfo;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,11 +48,14 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
     private Setting token;
     private EditText tbBarcodeScan;
     private BarcodeUtility barcodeUtility;
+    private View btSearch;
+    private RFIDWithUHFUART mReader;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         switch (keyCode) {
+        
             case KeyEvent.KEYCODE_F1:
             {
                 logout.performClick();
@@ -85,12 +96,79 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
         }
         return super.onKeyDown(keyCode, event);
     }
+    private void initUHF() {
+        try {
+            mReader = RFIDWithUHFUART.getInstance();
+        } catch (Exception ex) {
+            return;
+        }
+        if (mReader != null) {
+            new InitTask().execute();
+        }
+    }
+
+    public class InitTask extends AsyncTask<String, Integer, Boolean> {
+        ProgressDialog mypDialog;
+        @Override
+        protected Boolean doInBackground(String... params) {
+            // TODO Auto-generated method stub
+            mReader.free();
+            return mReader.init();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            mypDialog.cancel();
+            if (!result) {
+                Toast.makeText(ListingActivity.this, "init fail", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+            mypDialog = new ProgressDialog(ListingActivity.this);
+            mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mypDialog.setMessage("init...");
+            mypDialog.setCanceledOnTouchOutside(false);
+            mypDialog.show();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.riko_toolbar);
         setContentView(R.layout.activity_listing);
+        btSearch = findViewById(R.id.btSearch);
+        btSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean doWhile = true;
+                while (doWhile) {
+                    UHFTAGInfo tag = mReader.inventorySingleTag();
+                    DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+                    float floatValue = -1000;
+                    try {
+                        Number parsedNumber = decimalFormat.parse(tag.getRssi());
+                        floatValue = parsedNumber.floatValue();
+                        System.out.println("Parsed float value: " + floatValue);
+                    } catch (ParseException ignored) {
+
+                    }
+                    if (floatValue > - 33) {
+
+
+                        Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
+
+
+                        // Comment
+                    }
+                }
+            }
+        });
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -135,6 +213,7 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
                         initializeFragment();
                         initializeButtonEvents();
                         initSettings();
+                        initUHF();
                     }
                 });
             }
@@ -157,6 +236,8 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
         });
     }
 
+ 
+  
 
     private void initializeButtonEvents() {
         registration = findViewById(R.id.btRequest);

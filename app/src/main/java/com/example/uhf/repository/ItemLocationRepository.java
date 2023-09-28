@@ -95,7 +95,6 @@ public class ItemLocationRepository {
                     publishProgress(progress);
                     counter = 0;
                 }
-
             }
             return null;
         }

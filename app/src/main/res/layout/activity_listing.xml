@@ -70,6 +70,16 @@
             android:textColor="@color/white"
             android:text="@string/exit_inventory_navigation" />
 
+        <ImageButton
+            android:id="@+id/btSearch"
+            android:layout_width="50dp"
+            android:layout_height="80dp"
+            android:backgroundTint="@color/main_color_riko"
+            android:src="@drawable/search" />
+
+
+
+
         <Button
             android:id="@+id/btRequest"
             android:layout_width="0dp"
