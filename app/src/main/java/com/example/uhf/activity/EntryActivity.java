@@ -5,7 +5,9 @@ import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -125,7 +127,6 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             client.retrieveItems(EntryActivity.this, settingsList);
             client.retrieveAssets(EntryActivity.this, settingsList);
         }
-
     }
 
 
@@ -176,9 +177,6 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btListingItems = findViewById(R.id.listingItems);
         btExportListing = findViewById(R.id.exportListing);
         btTransferListing = findViewById(R.id.transferListing);
-
-
-
         btTransferLocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,7 +202,6 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             public void onClick(View view) {
                 Intent myIntent = new Intent(getApplicationContext(), ListingLocationsActivity.class);
                 startActivity(myIntent);
-
             }
         });
         btListingItems.setOnClickListener(new View.OnClickListener() {
@@ -218,18 +215,12 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             @Override
             public void onClick(View view) {
                 for(CheckOut co : checkOutItems) {
-
                     try {
                         client.checkOutCommit(EntryActivity.this, settingsList, co);
-                        Toast.makeText(EntryActivity.this, "Stanje posodobljeno.", Toast.LENGTH_SHORT).show();
                         // Delete all data from commit table after the state has been updated.
-
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
-
-
-
                 }
             }
         });
@@ -242,25 +233,28 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         });
     }
 
-
-
-
-
-
+    private int correctTransfers = 0;
     @Override
     public void setResult(Boolean result) {
         if(result) {
-            checkOutViewModel.delete(checkOutItems.get(counter));
+            correctTransfers += 1;
         }
         counter += 1;
-
         if(counter == checkOutItems.size()) {
-            if(checkOutItems.size() != 0) {
-                Toast.makeText(this, "Prišlo je do napake, poskusite še enkrat.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Stanje je posodobljeno", Toast.LENGTH_SHORT).show();
-            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Stanje posodobljeno");
+            builder.setMessage("Število uspešnih prenosov: " + correctTransfers + "/" + checkOutItems.size());
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss(); // Dismiss the dialog.
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
             counter = 0;
+            correctTransfers = 0;
+            checkOutViewModel.deleteAll();
         }
     }
 
@@ -283,12 +277,6 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         ImportExportData importExportData = new ImportExportData(this);
         importExportData.commitToLocalStorageLocations(rootLocation);
     }
-
-
-
-
-
-
 
     @Override
     public void setResultRootStatus(RootStatus status) {

@@ -87,6 +87,7 @@ public class ItemLocationRepository {
                 try {
                     itemDAO.insert(item);
                 } catch (SQLiteConstraintException ignored) {
+
                     itemDAO.update(item.getItem(), item.getCode(), item.getLocation(), item.getEcd(), item.getName(), item.getTimestamp(), item.getQid());
                 }
                 if(counter == breakPoint) {

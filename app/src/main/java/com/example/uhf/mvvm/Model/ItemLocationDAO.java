@@ -20,9 +20,14 @@ public interface ItemLocationDAO {
 
    // @Query("INSERT INTO item_location (item, code, location, ecd, name, timestamp, user ) VALUES (:item, :location, :ecd)")
   //  void insertItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user)
-    @Query("UPDATE item_location SET item = :item, code = :code, location = :location, ecd = :ecd, name = :name, timestamp = :timestamp WHERE id = :id")
-    void update(String item, String code, String location, String ecd, String name, String timestamp, int id);
-    @Delete
+   @Query("UPDATE item_location SET item = :item, code = :code, location = :location, "
+           + "name = :name, timestamp = :timestamp "
+           + "WHERE id = :id "
+           + "AND (:ecd IS NULL OR :ecd = '' OR ecd = :ecd)")
+   void update(String item, String code, String location, String ecd, String name, String timestamp, int id);
+
+
+ @Delete
     void delete(ItemLocation location);
     @Query("DELETE FROM item_location")
     void deleteAllItems();

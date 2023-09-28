@@ -307,16 +307,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             cbLocation.setPositiveButton("Potrdi");
             Button btYes = (Button) dialog.findViewById(R.id.btYes);
             Button btNo = (Button) dialog.findViewById(R.id.btNo);
-            if (!savedLocation.equals("")) {
 
-                int spinnerPosition = locationsAdapter.getPosition(savedLocation);
-                if(spinnerPosition != -1) {
-                    cbLocation.setSelection(spinnerPosition);
-                } else {
-                    tbLocationScan.setText(savedLocation);
-                }
-
-            }
             // dialog dismiss
             btYes.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -400,6 +391,19 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                         locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
                         SearchableSpinner cbLocation = dialog.findViewById(R.id.cbLocation);
                         cbLocation.setAdapter(locationsAdapter);
+
+                        if (!savedLocation.equals("")) {
+
+                            int spinnerPosition = locationsAdapter.getPosition(savedLocation);
+                            if(spinnerPosition != -1) {
+                                cbLocation.setSelection(spinnerPosition);
+                            } else {
+                                tbLocationScan.setText(savedLocation);
+                            }
+
+                        }
+
+
                     }
                 }
             });

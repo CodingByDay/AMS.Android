@@ -259,8 +259,6 @@ public RFIDWithUHFUART mReader;
 
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                 fixedAssetsFragment.stopScanning();
-
-
                 List<ItemTemporary> scanned = fixedAssetsFragment.temporaryAdapter.items;
                 List<ItemLocation> realItems = fixedAssetsFragment.itemsClassLevel;
                 LocalDate localDate = LocalDate.now();
@@ -282,23 +280,20 @@ public RFIDWithUHFUART mReader;
                 myIntent.putExtra("location", tbLocation.getText().toString()); // Add the "location" parameter with the value "P01"
                 startActivity(myIntent);
 
+                /*
 
-                /* Old process with the locator currently obsolete.
-
-                if(current!=null) {
-                Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
-                myIntent.putExtra("id", current.getID());
-                myIntent.putExtra("epc", current.getEcd());
-                myIntent.putExtra("callerID", "InventoryProcessLocation");
-                String location = tbLocation.getText().toString();
-                myIntent.putExtra("location", tbLocation.getText().toString());
-                // Redirect to the location activity
-                startActivity(myIntent);
+                    Old process with the locator currently obsolete.
+                    if(current!=null) {
+                    Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
+                    myIntent.putExtra("id", current.getID());
+                    myIntent.putExtra("epc", current.getEcd());
+                    myIntent.putExtra("callerID", "InventoryProcessLocation");
+                    String location = tbLocation.getText().toString();
+                    myIntent.putExtra("location", tbLocation.getText().toString());
+                    // Redirect to the location activity
+                    startActivity(myIntent);
 
                 } */
-
-
-
 
             }
         });

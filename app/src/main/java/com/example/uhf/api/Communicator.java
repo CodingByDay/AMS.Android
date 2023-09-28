@@ -23,7 +23,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
+import com.microsoft.appcenter.distribute.Distribute;
+import com.microsoft.appcenter.distribute.DistributeListener;
+import com.microsoft.appcenter.distribute.ReleaseDetails;
+import com.microsoft.appcenter.distribute.UpdateAction;
 public class Communicator {
 
     public class CommitCheckOut extends AsyncTask<String, Void, Boolean> {
@@ -77,7 +83,11 @@ public class Communicator {
 
 
                     String json_c = response.toString();
-                    return true;
+                    Analytics.trackEvent(json_c);
+                    if(json_c.contains("\"success\":true")) {
+                        return true;
+                    }
+                    return false;
 
                 }
             } catch (Exception e) {
