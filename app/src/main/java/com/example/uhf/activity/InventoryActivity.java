@@ -283,7 +283,7 @@ public RFIDWithUHFUART mReader;
                 startActivity(myIntent);
 
 
-                /*
+                /* Old process with the locator currently obsolete.
 
                 if(current!=null) {
                 Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
@@ -333,6 +333,7 @@ public RFIDWithUHFUART mReader;
         if(location!=null) {
             cbLocation.setSelection(locationsAdapter.getPosition(location));
         }
+        /* If there is a need for the location saving in this flow
         Intent intent = getIntent();
 
         if (intent.hasExtra("location")) {
@@ -354,6 +355,7 @@ public RFIDWithUHFUART mReader;
                 tbLocation.setText(location);
             }
         }
+        */
 
     }
 

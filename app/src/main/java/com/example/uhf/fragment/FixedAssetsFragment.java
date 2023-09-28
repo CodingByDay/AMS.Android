@@ -480,9 +480,6 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
             UHFTAGInfo info = (UHFTAGInfo) msg.obj;
 
-
-
-
             // Binary search check for duplicates
             if(!StringUtils.isEmpty(info.getEPC())) {
                 int index = checkIfExist(info.getEPC());

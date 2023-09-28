@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -275,6 +276,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private String locationCurrent;
     public class LocationDialog {
         public void showDialog(AppCompatActivity activity) {
+            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            String savedLocation = sharedPreferences.getString("location", "");
             dialog = new Dialog(activity);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
@@ -304,6 +307,16 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             cbLocation.setPositiveButton("Potrdi");
             Button btYes = (Button) dialog.findViewById(R.id.btYes);
             Button btNo = (Button) dialog.findViewById(R.id.btNo);
+            if (!savedLocation.equals("")) {
+
+                int spinnerPosition = locationsAdapter.getPosition(savedLocation);
+                if(spinnerPosition != -1) {
+                    cbLocation.setSelection(spinnerPosition);
+                } else {
+                    tbLocationScan.setText(savedLocation);
+                }
+
+            }
             // dialog dismiss
             btYes.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -331,6 +344,15 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     //itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"),locationItem.getQid()));
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
+
+
+                    // Shared preferences implementation 28.09.2023
+                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("location", locationCurrent);
+                    editor.apply();
+
+
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
                     startActivity(myIntent);
                     finish();
