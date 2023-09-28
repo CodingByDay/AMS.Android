@@ -391,19 +391,14 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                         locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
                         SearchableSpinner cbLocation = dialog.findViewById(R.id.cbLocation);
                         cbLocation.setAdapter(locationsAdapter);
-
                         if (!savedLocation.equals("")) {
-
                             int spinnerPosition = locationsAdapter.getPosition(savedLocation);
                             if(spinnerPosition != -1) {
                                 cbLocation.setSelection(spinnerPosition);
                             } else {
                                 tbLocationScan.setText(savedLocation);
                             }
-
                         }
-
-
                     }
                 }
             });
