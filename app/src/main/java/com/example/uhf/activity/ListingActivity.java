@@ -150,53 +150,55 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ListingActivity.this,"Približite tag", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListingActivity.this,"Približajte nalepko", Toast.LENGTH_SHORT).show();
                 boolean doWhile = true;
                 while (doWhile) {
                     UHFTAGInfo tag = mReader.inventorySingleTag();
-                    DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-                    float floatValue = -1000;
-                    try {
-                        Number parsedNumber = decimalFormat.parse(tag.getRssi());
-                        floatValue = parsedNumber.floatValue();
-                        System.out.println("Parsed float value: " + floatValue);
-                    } catch (ParseException ignored) {
+                    if(tag!=null) {
+                        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+                        float floatValue = -1000;
+                        try {
+                            Number parsedNumber = decimalFormat.parse(tag.getRssi());
+                            floatValue = parsedNumber.floatValue();
+                            System.out.println("Parsed float value: " + floatValue);
+                        } catch (ParseException ignored) {
 
-                    }
-                    if (floatValue > - 33) {
-                        Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
-                        // Comment
-                        // Getting the corresponding object
-                        FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                        Optional<ItemLocation> firstMatch = fixedAssetsFragment.adapterFinal.items.stream()
-                                .filter(item -> item.getEcd().equals(tag.getEPC())).findFirst();
-
-                        if (firstMatch.isPresent()) {
-                            ItemLocation matchingItem = firstMatch.get();
-                            // Do something with the matchingItem
-                            // Show the alert message
-                            String message = "Lokacija: " + matchingItem.getLocation() + "\n"
-                                    + "Ime: " + matchingItem.getName() + "\n"
-                                    + "Zadolženi: " + matchingItem.getCaretaker() + "\n"
-                                    + "Šifra: " + matchingItem.getItem();
-                            AlertDialog.Builder builder = new AlertDialog.Builder(ListingActivity.this);
-                            builder.setTitle("Podatki");
-                            builder.setMessage(message);
-
-
-                            builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-
-
-                                }
-                            });
-                            builder.create().show();
                         }
+                        if (floatValue > -33) {
+                            Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
+                            // Comment
+                            // Getting the corresponding object
+                            FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                            Optional<ItemLocation> firstMatch = fixedAssetsFragment.adapterFinal.items.stream()
+                                    .filter(item -> item.getEcd().equals(tag.getEPC())).findFirst();
 
-                        doWhile = false;
+                            if (firstMatch.isPresent()) {
+                                ItemLocation matchingItem = firstMatch.get();
+                                // Do something with the matchingItem
+                                // Show the alert message
+                                String message = "Lokacija: " + matchingItem.getLocation() + "\n"
+                                        + "Ime: " + matchingItem.getName() + "\n"
+                                        + "Zadolženi: " + matchingItem.getCaretaker() + "\n"
+                                        + "Šifra: " + matchingItem.getItem();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ListingActivity.this);
+                                builder.setTitle("Podatki");
+                                builder.setMessage(message);
 
+
+                                builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+
+
+                                    }
+                                });
+                                builder.create().show();
+                            }
+
+                            doWhile = false;
+
+                        }
                     }
                 }
             }

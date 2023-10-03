@@ -15,8 +15,8 @@ android {
         applicationId "com.example.uhf"
         minSdkVersion 28
         targetSdkVersion 33
-        versionCode 6
-        versionName "0.0.6"
+        versionCode 8
+        versionName "0.0.8"
         multiDexEnabled true
     }
     signingConfigs {
@@ -59,7 +59,6 @@ dependencies {
 
     def appCenterSdkVersion = '4.4.5'
     implementation 'com.airbnb.android:paris:2.0.0'
-
     implementation "androidx.core:core-splashscreen:1.0.0"
     implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"

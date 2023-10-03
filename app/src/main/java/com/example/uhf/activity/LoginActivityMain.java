@@ -233,6 +233,9 @@ private TextView login;
                 settingsView.insert(new Setting("token", token));
                 settingsView.insert(new Setting("user", tbUname.getText().toString()));
             }
+
+            Analytics.trackEvent("Login " + tbUname.getText().toString());
+
             Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
             startActivity(myIntent);
         } else {
@@ -278,7 +281,7 @@ private TextView login;
 
         // Build our own dialog title and message
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
-        dialogBuilder.setTitle("Version " + versionName + " available!"); // you should use a string resource instead, this is just a simple example
+        dialogBuilder.setTitle("Version " + versionName + " available!");
         dialogBuilder.setMessage("Please update the application.");
 
 
