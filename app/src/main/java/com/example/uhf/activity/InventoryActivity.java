@@ -296,6 +296,10 @@ public RFIDWithUHFUART mReader;
                 } */
 
             }
+
+
+
+
         });
         btToggleScanning.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,12 +327,12 @@ public RFIDWithUHFUART mReader;
 
 
 
-        int postest = locationsAdapter.getPosition(location);
+
 
         if(location!=null) {
             cbLocation.setSelection(locationsAdapter.getPosition(location));
         }
-        /* If there is a need for the location saving in this flow
+
         Intent intent = getIntent();
 
         if (intent.hasExtra("location")) {
@@ -350,8 +354,6 @@ public RFIDWithUHFUART mReader;
                 tbLocation.setText(location);
             }
         }
-        */
-
     }
 
     private ItemLocation findItemByEpc(List<ItemLocation> items, String epc) {

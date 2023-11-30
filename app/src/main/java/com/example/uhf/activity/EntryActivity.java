@@ -215,21 +215,57 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btExportListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                BaseApplicationClass baseApp = (BaseApplicationClass) getApplication();
+                boolean isConnected = baseApp.isConnection();
+                if(isConnected) {
+                    if (checkOutItems.size() > 0) {
+                        progressDialog = new ProgressDialog(EntryActivity.this);
+                        progressDialog.setMessage("Prosimo počakajte..."); // Set your message here
+                        progressDialog.setIndeterminate(true); // Use an indeterminate style spinner
+                        progressDialog.setCancelable(false); // Make it non-cancelable
+                        progressDialog.show();
 
-                if(checkOutItems.size() > 0) {
-                    progressDialog = new ProgressDialog(EntryActivity.this);
-                    progressDialog.setMessage("Prosimo počakajte..."); // Set your message here
-                    progressDialog.setIndeterminate(true); // Use an indeterminate style spinner
-                    progressDialog.setCancelable(false); // Make it non-cancelable
-                    progressDialog.show();
-                }
-                for(CheckOut co : checkOutItems) {
-                    try {
-                        client.checkOutCommit(EntryActivity.this, settingsList, co);
-                        // Delete all data from commit table after the state has been updated.
-                    } catch (JsonProcessingException e) {
-
+                    for (CheckOut co : checkOutItems) {
+                        try {
+                            client.checkOutCommit(EntryActivity.this, settingsList, co);
+                            // Delete all data from commit table after the state has been updated.
+                        } catch (JsonProcessingException e) {
+                            continue;
+                        }
                     }
+
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(EntryActivity.this);
+                        builder.setTitle("Ni podatkov.");
+                        builder.setMessage("Ni podatkov za sinhronizacijo.");
+                        // Add a button to dismiss the dialog
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Close the dialog
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        // Create and show the AlertDialog
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                } else {
+                        // Means there is no internet notify the user and abort.
+                        AlertDialog.Builder builder = new AlertDialog.Builder(EntryActivity.this);
+                        builder.setTitle("Ni povezave.");
+                        builder.setMessage("Žal internetna povezava ni na voljo.");
+                        // Add a button to dismiss the dialog
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Close the dialog
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        // Create and show the AlertDialog
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                 }
             }
         });
