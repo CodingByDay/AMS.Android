@@ -7,22 +7,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.uhf.R;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
-import com.example.uhf.custom.CustomSearchableSpinner;
+import com.example.uhf.custom.CustomAutocompleteAdapter;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.fragment.KeyDwonFragment;
 import com.example.uhf.mvvm.Model.CheckOut;
@@ -45,13 +40,13 @@ public class InventoryActivity extends FragmentActivity implements Barcode {
 private ItemViewModel itemViewModel;
 private Button btConfirm;
 public KeyDwonFragment currentFragment=null;
-public EditText tbLocation;
-public CustomSearchableSpinner cbLocation;
+public AutoCompleteTextView tbLocation;
+
 public String currentLocation;
 private Button btToggleScanning;
 public RFIDWithUHFUART mReader;
     private BarcodeUtility barcodeUtility;
-    private ArrayAdapter locationsAdapter;
+    private CustomAutocompleteAdapter locationsAdapter;
     private LocationViewModel locationsViewModel;
     private Button btExit;
     public ItemTemporary current;
@@ -194,18 +189,16 @@ public RFIDWithUHFUART mReader;
         });
 
         btConfirm = findViewById(R.id.btConfirm);
-        tbLocation = findViewById(R.id.tbLocation);
+        tbLocation = findViewById(R.id.atbLocation);
 
         btToggleScanning = findViewById(R.id.btToggleScanning);
-        cbLocation = findViewById(R.id.cbLocation);
-        cbLocation.setTitle("Izberite lokacijo");
-        cbLocation.setPositiveButton("Potrdi");
+
         List<String> locations = new ArrayList<String>();
-        locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
+        locationsAdapter = new CustomAutocompleteAdapter(getBaseContext(),locations);
         locationsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         locationsViewModel = ViewModelProviders.of(InventoryActivity.this).get(LocationViewModel.class);
-        cbLocation.setAdapter(locationsAdapter);
+        tbLocation.setAdapter(locationsAdapter);
         locationsViewModel.getAllItems().observe(InventoryActivity.this, new Observer<List<Location>>() {
             @Override
             public void onChanged(List<Location> items) {
@@ -216,33 +209,12 @@ public RFIDWithUHFUART mReader;
                 }
 
 
-                locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
-                cbLocation.setAdapter(locationsAdapter);
+                locationsAdapter = new CustomAutocompleteAdapter(getBaseContext(),locations);
+                tbLocation.setAdapter(locationsAdapter);
 
             }
         });
-        cbLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                cbLocation.isSpinnerDialogOpen = false;
 
-                // Change the location text
-                if(helpCounter != 0) {
-                    tbLocation.setText(cbLocation.getSelectedItem().toString());
-                    currentLocation = tbLocation.getText().toString();
-                }
-                helpCounter += 1;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                cbLocation.isSpinnerDialogOpen = false;
-            }
-
-
-
-
-
-        });
 
 
 
@@ -326,33 +298,13 @@ public RFIDWithUHFUART mReader;
         tbLocation.requestFocus();
 
 
-
-
-
-        if(location!=null) {
-            cbLocation.setSelection(locationsAdapter.getPosition(location));
-        }
-
         Intent intent = getIntent();
 
         if (intent.hasExtra("location")) {
             // Get the value of the "location" parameter
             String location = intent.getStringExtra("location");
             // Initialize the spinner and text field
-            EditText tbLocation = findViewById(R.id.tbLocation);
-            // Check if the location value exists in the spinner items
-            boolean locationFound = false;
-            for (int i = 0; i < locations.size(); i++) {
-                if (locations.get(i).equals(location)) {
-                    cbLocation.setSelection(i); // Set the selected item in the spinner
-                    locationFound = true;
-                    break;
-                }
-            }
-            // If the location was not found in the spinner, set it to the text field
-            if (!locationFound) {
-                tbLocation.setText(location);
-            }
+            tbLocation.setText(location);
         }
         tbLocation.clearFocus();
     }

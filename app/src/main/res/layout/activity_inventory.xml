@@ -33,9 +33,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal">
-            <EditText
-                android:layout_weight="1.5"
-                android:id="@+id/tbLocation"
+            <com.example.uhf.custom.CustomAutoCompleteTextView
+                android:layout_weight="2"
+                android:id="@+id/atbLocation"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:hint="Lokacija"
@@ -45,14 +45,6 @@
                 android:inputType="textPersonName"
                 />
 
-                <com.example.uhf.custom.CustomSearchableSpinner
-                    android:layout_weight="0.3"
-                    android:id="@+id/cbLocation"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-
-
-                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
