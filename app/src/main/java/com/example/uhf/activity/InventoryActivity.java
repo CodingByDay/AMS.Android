@@ -354,6 +354,7 @@ public RFIDWithUHFUART mReader;
                 tbLocation.setText(location);
             }
         }
+        tbLocation.clearFocus();
     }
 
     private ItemLocation findItemByEpc(List<ItemLocation> items, String epc) {

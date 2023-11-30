@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.uhf.R;
 import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.mvvm.Model.ItemLocation;
+import com.microsoft.appcenter.crashes.Crashes;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -160,48 +161,52 @@ private final String caller;
     }
 
     public void searchByField(String field, String searchBy) {
-        List<ItemLocation> sorted = new ArrayList<>();
-        if(this.backupForSearching!=null) {
-            for (ItemLocation item : this.backupForSearching) {
-                switch (field) {
-                    case "Sredstvo":
-                        if (item.getItem().toLowerCase().contains(searchBy.toLowerCase())) {
-                            sorted.add(item);
-                        }
-                        break;
-                    case "Naziv":
-                        if (item.getName().toLowerCase().contains(searchBy.toLowerCase())) {
-                            sorted.add(item);
-                        }
-                        break;
-                    case "Ident":
-                        if (item.getCode().toLowerCase().contains(searchBy.toLowerCase())) {
-                            sorted.add(item);
-                        }
-                    case "Lokacija":
-                        if (item.getLocation().toLowerCase().contains(searchBy.toLowerCase())) {
-                            sorted.add(item);
-                        }
-                        break;
-                    case "EPC":
-                        if (item.getEcd().toLowerCase().contains(searchBy.toLowerCase())) {
-                            sorted.add(item);
-                        }
-                    case "Zadolženi":
-                        if (item.getCaretaker().toLowerCase().contains(searchBy.toLowerCase())) {
-                            sorted.add(item);
-                        }
-                        break;
-                    case "Šifra":
-                        if (item.getItem().toLowerCase().contains(searchBy.toLowerCase())) {
-                            sorted.add(item);
-                        }
-                        break;
+        try {
+            List<ItemLocation> sorted = new ArrayList<>();
+            if (this.backupForSearching != null) {
+                for (ItemLocation item : this.backupForSearching) {
+                    switch (field) {
+                        case "Sredstvo":
+                            if (item.getItem().toLowerCase().contains(searchBy.toLowerCase())) {
+                                sorted.add(item);
+                            }
+                            break;
+                        case "Naziv":
+                            if (item.getName().toLowerCase().contains(searchBy.toLowerCase())) {
+                                sorted.add(item);
+                            }
+                            break;
+                        case "Ident":
+                            if (item.getCode().toLowerCase().contains(searchBy.toLowerCase())) {
+                                sorted.add(item);
+                            }
+                        case "Lokacija":
+                            if (item.getLocation().toLowerCase().contains(searchBy.toLowerCase())) {
+                                sorted.add(item);
+                            }
+                            break;
+                        case "EPC":
+                            if (item.getEcd().toLowerCase().contains(searchBy.toLowerCase())) {
+                                sorted.add(item);
+                            }
+                        case "Zadolženi":
+                            if (item.getCaretaker().toLowerCase().contains(searchBy.toLowerCase())) {
+                                sorted.add(item);
+                            }
+                            break;
+                        case "Šifra":
+                            if (item.getItem().toLowerCase().contains(searchBy.toLowerCase())) {
+                                sorted.add(item);
+                            }
+                            break;
 
+                    }
+                    this.items = sorted;
+                    notifyDataSetChanged();
                 }
-                this.items = sorted;
-                notifyDataSetChanged();
             }
+        } catch (Exception e) {
+            Crashes.trackError(e);
         }
     }
 
