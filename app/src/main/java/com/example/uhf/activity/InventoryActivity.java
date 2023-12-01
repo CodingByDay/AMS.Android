@@ -247,13 +247,10 @@ public RFIDWithUHFUART mReader;
                     toUpdate.setLocation(currentLocation);
                     itemLocationViewModel.update(toUpdate);
                 }
-
                 Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
                 myIntent.putExtra("location", tbLocation.getText().toString()); // Add the "location" parameter with the value "P01"
                 startActivity(myIntent);
-
                 /*
-
                     Old process with the locator currently obsolete.
                     if(current!=null) {
                     Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);

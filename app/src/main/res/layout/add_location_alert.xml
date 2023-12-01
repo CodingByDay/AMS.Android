@@ -35,10 +35,10 @@
             android:orientation="horizontal"
             android:weightSum="3">
 
-        <EditText
+        <com.example.uhf.custom.CustomAutoCompleteTextView
             android:id="@+id/tbLocationScan"
             android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:layout_height="wrap_content"
             android:ems="10"
 
@@ -48,11 +48,7 @@
 
             android:importantForAutofill="no" />
 
-        <com.example.uhf.custom.CustomSearchableSpinner
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:id="@+id/cbLocation"
-            android:layout_height="wrap_content" />
+
         </LinearLayout>
         <LinearLayout
             android:layout_weight="2"

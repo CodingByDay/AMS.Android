@@ -73,4 +73,13 @@ public class Location {
     public void setDept(String dept) {
         this.dept = dept;
     }
+
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Location{" +
+                "location='" + location + '\'' +
+                '}';
+    }
 }

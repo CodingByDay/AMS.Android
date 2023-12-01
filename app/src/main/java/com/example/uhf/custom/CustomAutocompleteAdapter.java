@@ -18,23 +18,24 @@ import com.example.uhf.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class CustomAutocompleteAdapter extends ArrayAdapter<String> {
-    private List<String> originalList;
-    private List<String> filteredList;
+public class CustomAutocompleteAdapter<T> extends ArrayAdapter<T> {
+    private List<T> originalList;
+    private List<T> filteredList;
     private final Object lock = new Object();
-    private List<String> items;
+    private List<T> items;
     private LayoutInflater inflater;
     private AutoCompleteTextView autoCompleteTextView;
 
-
-    public CustomAutocompleteAdapter(Context context, List<String> items, AutoCompleteTextView autoCompleteTextView) {
-        super(context, R.layout.custom_dropdown_item, items); // Replace with your custom layout
+    public CustomAutocompleteAdapter(Context context, List<T> items, AutoCompleteTextView autoCompleteTextView) {
+        super(context, R.layout.custom_dropdown_item, items);
         this.originalList = new ArrayList<>(items);
         this.filteredList = new ArrayList<>();
         this.items = items;
-        this.inflater = LayoutInflater.from(context); // Initialize the inflater
+        this.inflater = LayoutInflater.from(context);
         this.autoCompleteTextView = autoCompleteTextView;
+
         // Add TextWatcher to AutoCompleteTextView
         this.autoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -44,7 +45,6 @@ public class CustomAutocompleteAdapter extends ArrayAdapter<String> {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 getFilter().filter(charSequence);
-
             }
 
             @Override
@@ -59,14 +59,14 @@ public class CustomAutocompleteAdapter extends ArrayAdapter<String> {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.custom_dropdown_item, parent, false);
         }
-
         TextView textView = convertView.findViewById(R.id.custom_dropdown_item_text); // Replace with your TextView ID
-        textView.setText(getItem(position));
-
+        if(getItem(position)!=null) {
+            textView.setText(Objects.requireNonNull(getItem(position)).toString());
+        } else {
+            textView.setText("");
+        }
         return convertView;
     }
-
-
 
     @NonNull
     @Override
@@ -85,8 +85,8 @@ public class CustomAutocompleteAdapter extends ArrayAdapter<String> {
                         filteredList.addAll(originalList);
                     } else {
                         String filterPattern = constraint.toString().toLowerCase().trim();
-                        for (String item : originalList) {
-                            if (item.toLowerCase().contains(filterPattern)) {
+                        for (T item : originalList) {
+                            if (item.toString().toLowerCase().contains(filterPattern)) {
                                 filteredList.add(item);
                             }
                         }
@@ -103,12 +103,11 @@ public class CustomAutocompleteAdapter extends ArrayAdapter<String> {
             if (results != null && results.count > 0) {
                 clear();
                 //noinspection unchecked
-                addAll((List<String>) results.values);
+                addAll((List<T>) results.values);
                 notifyDataSetChanged();
             } else {
                 notifyDataSetInvalidated();
             }
-
 
             // Show dropdown after each filtering operation
             if (autoCompleteTextView != null) {

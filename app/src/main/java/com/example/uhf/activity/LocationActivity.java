@@ -2,11 +2,9 @@ package com.example.uhf.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -19,8 +17,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,13 +26,12 @@ import android.widget.Toast;
 import com.example.uhf.R;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
-import com.example.uhf.custom.CustomSearchableSpinner;
+import com.example.uhf.custom.CustomAutoCompleteTextView;
+import com.example.uhf.custom.CustomAutocompleteAdapter;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
-import com.example.uhf.mvvm.Model.ItemLocationCache;
-import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.mvvm.Model.Location;
 import com.example.uhf.mvvm.ViewModel.CheckOutViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationCacheViewModel;
@@ -45,22 +41,16 @@ import com.example.uhf.mvvm.ViewModel.LocationViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.tools.SettingsHelper;
-import com.example.uhf.tools.UIHelper;
 import com.example.uhf.view.UhfLocationCanvasView;
 import com.rscja.deviceapi.RFIDWithUHFUART;
-import com.rscja.deviceapi.interfaces.ConnectionStatus;
 import com.rscja.deviceapi.interfaces.IUHF;
 import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
-import com.rscja.team.qcom.deviceapi.P;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class LocationActivity extends AppCompatActivity implements Barcode {
 
@@ -81,7 +71,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private LocationViewModel locationsViewModel;
     private ItemLocationCacheViewModel itemLocationCacheViewModel;
     private List<Location> locations;
-    private ArrayAdapter locationsAdapter;
+    private CustomAutocompleteAdapter locationsAdapter;
     private ItemLocation item;
     private ItemLocation locationItem;
 
@@ -278,8 +268,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.add_location_alert);
-            EditText tbLocationScan = (EditText) dialog.findViewById(R.id.tbLocationScan);
-            tbLocationScan.setShowSoftInputOnFocus(false);
+            CustomAutoCompleteTextView tbLocationScan = (CustomAutoCompleteTextView) dialog.findViewById(R.id.tbLocationScan);
+
             tbLocationScan.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -298,9 +288,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
                 }
             });
-            CustomSearchableSpinner cbLocation = (CustomSearchableSpinner) dialog.findViewById(R.id.cbLocation);
-            cbLocation.setTitle("Izberite lokaciju");
-            cbLocation.setPositiveButton("Potrdi");
+
             Button btYes = (Button) dialog.findViewById(R.id.btYes);
             Button btNo = (Button) dialog.findViewById(R.id.btNo);
 
@@ -371,11 +359,11 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
             dialog.show();
             locations = new ArrayList<>();
-            locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
+            locationsAdapter = new CustomAutocompleteAdapter(getBaseContext(),locations, tbLocationScan);
             locationsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             //Setting the ArrayAdapter data on the Spinner
             locationsViewModel = ViewModelProviders.of(LocationActivity.this).get(LocationViewModel.class);
-            cbLocation.setAdapter(locationsAdapter);
+            tbLocationScan.setAdapter(locationsAdapter);
             locationsViewModel.getAllItems().observe(LocationActivity.this, new Observer<List<Location>>() {
                 @Override
                 public void onChanged(List<Location> items) {
@@ -386,33 +374,16 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     }
 
                     if (dialog!=null && dialog.isShowing()) {
-                        locationsAdapter = new ArrayAdapter(getBaseContext(),android.R.layout.simple_spinner_item,locations);
-                        SearchableSpinner cbLocation = dialog.findViewById(R.id.cbLocation);
-                        cbLocation.setAdapter(locationsAdapter);
+                        locationsAdapter = new CustomAutocompleteAdapter(getBaseContext(),locations, tbLocationScan);
+
+                        tbLocationScan.setAdapter(locationsAdapter);
                         if (!savedLocation.equals("")) {
-                            int spinnerPosition = locationsAdapter.getPosition(savedLocation);
-                            if(spinnerPosition != -1) {
-                                cbLocation.setSelection(spinnerPosition);
-                            } else {
                                 tbLocationScan.setText(savedLocation);
-                            }
                         }
                     }
                 }
             });
-            cbLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    // Change the location text
-                    cbLocation.isSpinnerDialogOpen = false;
-                    tbLocationScan.setText(cbLocation.getSelectedItem().toString());
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-                    cbLocation.isSpinnerDialogOpen = false;
 
-                }
-            });
         }
     }
 
