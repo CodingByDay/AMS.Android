@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uhf.R;
+import com.example.uhf.api.Communicator;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.custom.CustomAutoCompleteTextView;
@@ -90,6 +91,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
     private List<CheckOut> checkOutItems;
     private List<ItemLocation> registeredItems;
     private AlertDialog alertClass;
+    private Communicator client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +99,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         setContentView(R.layout.activity_location);
         initUHF();
         initSettings();
-
+        client = new Communicator();
         barcodeUtility = new BarcodeUtility(this, this);
         llChart=findViewById(R.id.llChart);
         etEPC=findViewById(R.id.etEPC);
@@ -126,9 +128,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
         });
         llChart.setData(1);
         llChart.clean();
-      //  Bundle extras = getIntent().getExtras();
-     //   callerID =  extras.getString("callerID");
-     //   resolveCaller(callerID);
+
 
         itemLocationViewModel = ViewModelProviders.of((LocationActivity) this).get(ItemLocationViewModel.class);
 
@@ -333,7 +333,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     finish();
                 }
             });
-            btNo.setOnClickListener(new View.OnClickListener() {
+
+           /* btNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     dontShowTwice = false;
@@ -356,7 +357,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
                 }
             });
-
+            */ /* Currently obsolete, only one choice is needed. */
             dialog.show();
             locations = new ArrayList<>();
             locationsAdapter = new CustomAutocompleteAdapter(getBaseContext(),locations, tbLocationScan);

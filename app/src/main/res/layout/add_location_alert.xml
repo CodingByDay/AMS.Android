@@ -22,7 +22,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/prompt_location"
+            android:text="Dodavanje lokacije"
             tools:layout_editor_absoluteX="120dp"
             tools:layout_editor_absoluteY="25dp" />
 
@@ -61,6 +61,7 @@
 >
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/btNo"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -88,7 +89,7 @@
                 android:enabled="true"
                 android:backgroundTint="@color/main_color_riko"
                 android:textColor="@color/white"
-                android:text="@string/button_yes"
+                android:text="OK"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
