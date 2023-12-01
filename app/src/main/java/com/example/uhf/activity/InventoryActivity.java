@@ -194,7 +194,7 @@ public RFIDWithUHFUART mReader;
         btToggleScanning = findViewById(R.id.btToggleScanning);
 
         List<String> locations = new ArrayList<String>();
-        locationsAdapter = new CustomAutocompleteAdapter(getBaseContext(),locations);
+        locationsAdapter = new CustomAutocompleteAdapter(getBaseContext(),locations, tbLocation);
         locationsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         locationsViewModel = ViewModelProviders.of(InventoryActivity.this).get(LocationViewModel.class);
@@ -209,7 +209,7 @@ public RFIDWithUHFUART mReader;
                 }
 
 
-                locationsAdapter = new CustomAutocompleteAdapter(getBaseContext(),locations);
+                locationsAdapter = new CustomAutocompleteAdapter(getBaseContext(),locations, tbLocation);
                 tbLocation.setAdapter(locationsAdapter);
 
             }
