@@ -270,24 +270,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             dialog.setContentView(R.layout.add_location_alert);
             CustomAutoCompleteTextView tbLocationScan = (CustomAutoCompleteTextView) dialog.findViewById(R.id.tbLocationScan);
 
-            tbLocationScan.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if(!charSequence.equals("") ) {
-                        locationCurrent = charSequence.toString();
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
+            tbLocationScan.setText(savedLocation);
 
             Button btYes = (Button) dialog.findViewById(R.id.btYes);
             Button btNo = (Button) dialog.findViewById(R.id.btNo);
@@ -305,7 +288,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
 
                     item.setQid(item.getQid());
                     item.setEcd(locationItem.getEcd());
-                    item.setLocation(locationCurrent);
+                    item.setLocation(tbLocationScan.getText().toString());
                     item.setTimestamp(date.toString());
                     item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
 
@@ -316,7 +299,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     } else {
                         itemLocationViewModel.update(item);
                     }
-                    //itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"),locationItem.getQid()));
+                    // itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"),locationItem.getQid()));
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
 
@@ -324,7 +307,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     // Shared preferences implementation 28.09.2023
                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("location", locationCurrent);
+                    editor.putString("location", tbLocationScan.getText().toString());
                     editor.apply();
 
 

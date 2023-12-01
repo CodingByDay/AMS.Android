@@ -258,34 +258,36 @@ private TextView login;
 
     @Override
     public boolean onReleaseAvailable(Activity activity, ReleaseDetails releaseDetails) {
+
         // Look at releaseDetails public methods to get version information, release notes text or release notes URL
         String versionName = releaseDetails.getShortVersion();
         int versionCode = releaseDetails.getVersion();
         String releaseNotes = releaseDetails.getReleaseNotes();
         Uri releaseNotesUrl = releaseDetails.getReleaseNotesUrl();
+
         // Build our own dialog title and message
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
-        dialogBuilder.setTitle("Posodobitev, verzija: " + versionName);
-        dialogBuilder.setMessage(releaseNotes);
-        dialogBuilder.setPositiveButton("Posodobi", new DialogInterface.OnClickListener() {
+        dialogBuilder.setTitle("Version " + versionName + " available!");
+        dialogBuilder.setMessage("Please update the application.");
+
+
+        // This is the update text to
+
+        // Mimic default SDK buttons
+        dialogBuilder.setPositiveButton(com.microsoft.appcenter.distribute.R.string.appcenter_distribute_update_dialog_download, new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivityMain.this);
-                alert.setTitle("Obvestilo o deljenju podatkov");
-                alert.setMessage("Aplikacija pošilja diagnostične podatke za izboljšanje uporabniške izkušnje.");
-                alert.setPositiveButton("V redu", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Distribute.notifyUpdateAction(UpdateAction.UPDATE);
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog notice = alert.create();
-                notice.show();
+
+                // This method is used to tell the SDK what button was clicked
+                Distribute.notifyUpdateAction(UpdateAction.UPDATE);
             }
         });
+
+
         dialogBuilder.setCancelable(false); // if it's cancelable you should map cancel to postpone, but only for optional updates
         dialogBuilder.create().show();
+
         // Return true if you're using your own dialog, false otherwise
         return true;
     }

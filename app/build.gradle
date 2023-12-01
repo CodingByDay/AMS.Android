@@ -15,10 +15,11 @@ android {
         applicationId "com.example.uhf"
         minSdkVersion 28
         targetSdkVersion 33
-        versionCode 8
-        versionName "0.0.8"
+        versionCode 9
+        versionName "0.0.9"
         multiDexEnabled true
     }
+
     signingConfigs {
         debug {
             File strFile = new File("/uhf-serial_release.jks")

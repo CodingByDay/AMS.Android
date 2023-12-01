@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.example.uhf.R;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
+import com.example.uhf.custom.CustomAutoCompleteTextView;
 import com.example.uhf.custom.CustomAutocompleteAdapter;
 import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.fragment.KeyDwonFragment;
@@ -40,7 +42,7 @@ public class InventoryActivity extends FragmentActivity implements Barcode {
 private ItemViewModel itemViewModel;
 private Button btConfirm;
 public KeyDwonFragment currentFragment=null;
-public AutoCompleteTextView tbLocation;
+public CustomAutoCompleteTextView tbLocation;
 
 public String currentLocation;
 private Button btToggleScanning;
@@ -248,8 +250,16 @@ public RFIDWithUHFUART mReader;
                     itemLocationViewModel.update(toUpdate);
                 }
                 Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
-                myIntent.putExtra("location", tbLocation.getText().toString()); // Add the "location" parameter with the value "P01"
+                // Shared preferences implementation 28.09.2023
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("location_inventory", tbLocation.getText().toString());
+                editor.apply();
                 startActivity(myIntent);
+
+
+
+
                 /*
                     Old process with the locator currently obsolete.
                     if(current!=null) {
@@ -293,16 +303,9 @@ public RFIDWithUHFUART mReader;
 
         tbLocation.setText("");
         tbLocation.requestFocus();
-
-
-        Intent intent = getIntent();
-
-        if (intent.hasExtra("location")) {
-            // Get the value of the "location" parameter
-            String location = intent.getStringExtra("location");
-            // Initialize the spinner and text field
-            tbLocation.setText(location);
-        }
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String savedLocation = sharedPreferences.getString("location_inventory", "");
+        tbLocation.setText(savedLocation);
         tbLocation.clearFocus();
     }
 
