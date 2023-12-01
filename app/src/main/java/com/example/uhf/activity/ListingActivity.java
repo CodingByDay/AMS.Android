@@ -32,6 +32,8 @@ import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
 
@@ -52,8 +54,9 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
     private Setting token;
     private EditText tbBarcodeScan;
     private BarcodeUtility barcodeUtility;
-    private View btSearch;
+    private Button btSearch;
     private RFIDWithUHFUART mReader;
+    private boolean doWhile = false;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -150,57 +153,77 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ListingActivity.this,"Približajte nalepko", Toast.LENGTH_SHORT).show();
-                boolean doWhile = true;
-                while (doWhile) {
-                    UHFTAGInfo tag = mReader.inventorySingleTag();
-                    if(tag!=null) {
-                        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-                        float floatValue = -1000;
-                        try {
-                            Number parsedNumber = decimalFormat.parse(tag.getRssi());
-                            floatValue = parsedNumber.floatValue();
-                            System.out.println("Parsed float value: " + floatValue);
-                        } catch (ParseException ignored) {
+                if(!doWhile) {
+                    Toast.makeText(ListingActivity.this, "Približajte nalepko", Toast.LENGTH_SHORT).show();
+                    doWhile = true;
+                    btSearch.setText("PREKINITEV - F2");
+                } else {
+                    doWhile = false;
+                    btSearch.setText("ISKANJE - F2");
+                    // Stop the loop.
+                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (doWhile) {
+                            try {
+                            UHFTAGInfo tag = mReader.inventorySingleTag();
+                            if (tag != null) {
+                                DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+                                float floatValue = -1000;
+                                try {
+                                    Number parsedNumber = decimalFormat.parse(tag.getRssi());
+                                    assert parsedNumber != null;
+                                    floatValue = parsedNumber.floatValue();
+                                } catch (ParseException ignored) {
+                                }
+                                if (floatValue > -33) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
+                                            // Comment
+                                            // Getting the corresponding object
+                                            FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
+                                            Optional<ItemLocation> firstMatch = fixedAssetsFragment.adapterFinal.items.stream()
+                                                    .filter(item -> item.getEcd().equals(tag.getEPC())).findFirst();
 
-                        }
-                        if (floatValue > -33) {
-                            Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
-                            // Comment
-                            // Getting the corresponding object
-                            FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-                            Optional<ItemLocation> firstMatch = fixedAssetsFragment.adapterFinal.items.stream()
-                                    .filter(item -> item.getEcd().equals(tag.getEPC())).findFirst();
+                                            if (firstMatch.isPresent()) {
 
-                            if (firstMatch.isPresent()) {
-                                ItemLocation matchingItem = firstMatch.get();
-                                // Do something with the matchingItem
-                                // Show the alert message
-                                String message = "Lokacija: " + matchingItem.getLocation() + "\n"
-                                        + "Ime: " + matchingItem.getName() + "\n"
-                                        + "Zadolženi: " + matchingItem.getCaretaker() + "\n"
-                                        + "Šifra: " + matchingItem.getItem();
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ListingActivity.this);
-                                builder.setTitle("Podatki");
-                                builder.setMessage(message);
+                                                ItemLocation matchingItem = firstMatch.get();
+                                                // Do something with the matchingItem
+                                                // Show the alert message
+                                                String message = "Lokacija: " + matchingItem.getLocation() + "\n"
+                                                        + "Ime: " + matchingItem.getName() + "\n"
+                                                        + "Zadolženi: " + matchingItem.getCaretaker() + "\n"
+                                                        + "Šifra: " + matchingItem.getItem();
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(ListingActivity.this);
+                                                builder.setTitle("Podatki");
+                                                builder.setMessage(message);
 
+                                                builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                        doWhile = false; // Set flag to exit the loop
+                                                    }
+                                                });
+                                                builder.create().show();
+                                                doWhile = false;
+                                                btSearch.setText("ISKANJE - F2");
+                                            }
+                                        }
 
-                                builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-
-
-                                    }
-                                });
-                                builder.create().show();
+                                    });
+                                }
+                              }
+                            } catch (Exception e) {
+                                Crashes.trackError(e);
+                                continue;
                             }
-
-                            doWhile = false;
-
                         }
                     }
-                }
+                }).start();
             }
         });
         new Thread(new Runnable() {

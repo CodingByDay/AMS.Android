@@ -62,7 +62,6 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/bus"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/transfer_locations_navigation"
                             android:textSize="12sp"
                             android:textColor="@color/white"
@@ -94,7 +93,6 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/imageView3"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/transfer_objects_navigation"
                             android:textSize="12sp"
                             android:textColor="@color/white"
@@ -140,7 +138,6 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/bus1"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
                             android:textColor="@color/white"
                             android:text="@string/location_listing_navigation"
                             android:textSize="12sp"
@@ -171,7 +168,6 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/train"                            android:textColor="@color/white"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
                             android:text="@string/objects_listing_navigation"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -214,7 +210,6 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/cycle"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
                             android:textColor="@color/white"
                             android:text="@string/export_inventory_navigation"
                             android:textSize="12sp"
@@ -236,7 +231,6 @@
                         android:layout_width="match_parent"
                         android:layout_gravity="center_vertical"
                         android:background="@color/main_color_riko"
-
                         android:gravity="center_vertical"
                         android:layout_height="match_parent">
 
@@ -246,12 +240,10 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/airplane"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
                             android:textColor="@color/white"
                             android:text="@string/transfer_inventory_sync_navigation"
                             android:textSize="12sp"
                             android:textStyle="bold" />
-
 
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
