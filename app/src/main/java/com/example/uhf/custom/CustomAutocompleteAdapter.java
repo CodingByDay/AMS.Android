@@ -114,7 +114,10 @@ public class CustomAutocompleteAdapter<T> extends ArrayAdapter<T> {
                 autoCompleteTextView.post(new Runnable() {
                     @Override
                     public void run() {
-                        autoCompleteTextView.showDropDown();
+                        assert results != null;
+                        if(results.count > 1) {
+                            autoCompleteTextView.showDropDown();
+                        }
                     }
                 });
             }

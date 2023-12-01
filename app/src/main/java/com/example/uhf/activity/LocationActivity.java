@@ -379,6 +379,8 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                         tbLocationScan.setAdapter(locationsAdapter);
                         if (!savedLocation.equals("")) {
                                 tbLocationScan.setText(savedLocation);
+                                tbLocationScan.clearFocus();
+                                tbLocationScan.dismissDropDown();
                         }
                     }
                 }

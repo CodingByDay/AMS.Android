@@ -3,15 +3,9 @@ package com.example.uhf.custom;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
 public class CustomAutoCompleteTextView extends AppCompatAutoCompleteTextView {
@@ -34,20 +28,26 @@ public class CustomAutoCompleteTextView extends AppCompatAutoCompleteTextView {
     @SuppressLint("ClickableViewAccessibility")
     private void initialize() {
         setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus && getAdapter() != null && getAdapter().getCount() > 0) {
-                showDropDown();
+            if (hasFocus) {
+                showDropDownIfMultipleItems();
             }
         });
-
     }
+
+    private void showDropDownIfMultipleItems() {
+        ListAdapter adapter = getAdapter();
+        if (adapter != null && adapter.getCount() > 1) {
+            showDropDown();
+        } else {
+            dismissDropDown();
+        }
+    }
+
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
         if (focused) {
-            if (getAdapter() != null && getAdapter().getCount() > 0) {
-                showDropDown();
-            }
+            showDropDownIfMultipleItems();
         }
     }
-
 }
