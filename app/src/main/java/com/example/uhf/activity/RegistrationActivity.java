@@ -30,6 +30,7 @@ import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.view.UhfLocationCanvasView;
 import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
 
@@ -55,6 +56,7 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
     private EditText tbBarcodeScan;
     private SearchView swListing;
     private BarcodeUtility barcodeUtility;
+    private boolean doWhile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,37 +137,58 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
             @Override
             public void onClick(View view) {
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
-
                 if(currentItem == null) {
                     Toast.makeText(RegistrationActivity.this, "Sredstvo ni izbrano?!", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                Toast.makeText(RegistrationActivity.this, "Približajte nalepko", Toast.LENGTH_SHORT).show();
-
-                boolean doWhile = true;
-                while (doWhile) {
-                    UHFTAGInfo tag = mReader.inventorySingleTag();
-                    if (tag != null) {
-                        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-                        float floatValue = -1000;
-                        try {
-                            Number parsedNumber = decimalFormat.parse(tag.getRssi());
-                            floatValue = parsedNumber.floatValue();
-                        } catch (ParseException ignored) {
-
-                        }
-                        if (floatValue > -33) {
-                            Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
-                            myIntent.putExtra("epc", tag.getEPC());
-                            myIntent.putExtra("callerID", "Registration");
-                            myIntent.putExtra("item_id", currentItem.getID());
-                            mReader.stopLocation();
-                            startActivity(myIntent);
-                            finish();
-                            break;
-                        }
+                } else {
+                    if(!doWhile) {
+                        Toast.makeText(RegistrationActivity.this, "Približajte nalepko", Toast.LENGTH_SHORT).show();
+                        doWhile = true;
+                        btRequest.setText("PREKINITEV - F2");
+                    } else {
+                        doWhile = false;
+                        btRequest.setText("REGISTRACIJA - F2");
                     }
                 }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (doWhile) {
+                            try {
+                                UHFTAGInfo tag = mReader.inventorySingleTag();
+                                if (tag != null) {
+                                    DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+                                    float floatValue = -1000;
+                                    try {
+                                        Number parsedNumber = decimalFormat.parse(tag.getRssi());
+                                        floatValue = parsedNumber.floatValue();
+                                    } catch (ParseException ignored) {
+
+                                    }
+                                    if (floatValue > -33) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
+                                                myIntent.putExtra("epc", tag.getEPC());
+                                                myIntent.putExtra("callerID", "Registration");
+                                                myIntent.putExtra("item_id", currentItem.getID());
+                                                mReader.stopLocation();
+                                                startActivity(myIntent);
+                                                finish();
+                                                doWhile = false;
+                                            }
+                                        });
+
+                                    }
+                                }
+                            } catch (Exception error) {
+                                Crashes.trackError(error);
+                            }
+                        }
+                    }
+                }).start();
+
             }
         });
     }
