@@ -3,8 +3,10 @@ package com.example.uhf.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -210,12 +212,15 @@ private TextView login;
         mypDialog.cancel();
         if(result) {
             if(!token.equals("")) {
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("token", token);
+                editor.putString("user", tbUname.getText().toString());
+                editor.apply();
                 settingsView.insert(new Setting("token", token));
                 settingsView.insert(new Setting("user", tbUname.getText().toString()));
             }
-
             Analytics.trackEvent("Login " + tbUname.getText().toString());
-
             Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
             startActivity(myIntent);
         } else {

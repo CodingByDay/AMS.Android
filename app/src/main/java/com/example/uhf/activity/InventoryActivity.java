@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 import com.example.uhf.R;
+import com.example.uhf.api.Communicator;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.custom.CustomAutoCompleteTextView;
@@ -223,6 +226,14 @@ public RFIDWithUHFUART mReader;
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                String url = sharedPreferences.getString("url", "");
+                String token = sharedPreferences.getString("url", "");
+                String value = sharedPreferences.getString("url", "");
+                Communicator communicator = new Communicator();
+                // Continue here
+
 
 
                 if(tbLocation.getText().toString().equals("")) {

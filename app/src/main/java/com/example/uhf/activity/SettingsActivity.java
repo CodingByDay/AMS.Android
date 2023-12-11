@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,6 +34,7 @@ import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.settings.SettingsHelper;
+import com.microsoft.appcenter.crashes.Crashes;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -109,10 +112,15 @@ private TextView btSave;
             @Override
             public void onClick(View view) {
                 try {
+                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("url", tbUrl.getText().toString());
+                    editor.putString("company", tbCompany.getText().toString());
+                    editor.apply();
                     settingsView.insert(new Setting("url", tbUrl.getText().toString()));
                     settingsView.insert(new Setting("company", tbCompany.getText().toString()));
                 } catch (Exception e) {
-                    // TODO application wide logging
+                    Crashes.trackError(e);
                 } finally {
                     Intent myIntent = new Intent(getApplicationContext(), LoginActivityMain.class);
                     startActivity(myIntent);
@@ -121,8 +129,11 @@ private TextView btSave;
         });
     }
     private void updateUI(List<Setting> settings) {
-        tbUrl.setText(SettingsHelper.Helper.findSetting(settings, "url").getValue());
-        tbCompany.setText(SettingsHelper.Helper.findSetting(settings, "company").getValue());
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String url = sharedPreferences.getString("url", "");
+        String company = sharedPreferences.getString("company", "");
+        tbUrl.setText(url);
+        tbCompany.setText(company);
     }
     private void initActivity() {
         settingsView = ViewModelProviders.of(this).get(SettingsViewModel.class);

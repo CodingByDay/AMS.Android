@@ -1,6 +1,7 @@
 package com.example.uhf.api;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -23,6 +25,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import com.google.gson.Gson;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
@@ -30,6 +34,13 @@ import com.microsoft.appcenter.distribute.Distribute;
 import com.microsoft.appcenter.distribute.DistributeListener;
 import com.microsoft.appcenter.distribute.ReleaseDetails;
 import com.microsoft.appcenter.distribute.UpdateAction;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class Communicator {
 
     public class CommitCheckOut extends AsyncTask<String, Void, Boolean> {
@@ -101,8 +112,55 @@ public class Communicator {
         }
     }
 
+    public class DuplicateStructure {
+        String token;
+        String epc;
+
+        public DuplicateStructure(String token, String epc) {
+            this.token = token;
+            this.epc = epc;
+        }
+    }
+
+    public void checkDuplicate(String url, String token, String epc) {
 
 
+        OkHttpClient client = new OkHttpClient();
+
+        // JSON data
+        DuplicateStructure check = new DuplicateStructure(token, epc);
+        Gson gson = new Gson();
+        String json = gson.toJson(check);
+        // Create a request body with the JSON data
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(json, JSON);
+
+        // Create a request to the specified URL with the POST method
+        Request request = new Request.Builder()
+                .url(url + "/checkDuplicate")
+                .post(requestBody)
+                .build();
+
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+                // Handle failure
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
+                // Handle success
+                if (response.isSuccessful()) {
+                    String responseData = response.body().string();
+                    // Process the response data here
+                } else {
+                    // Handle unsuccessful response
+                }
+            }
+        });
+    }
 
 
 
