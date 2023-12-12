@@ -305,14 +305,14 @@ public RFIDWithUHFUART mReader;
             editor.putString("location_inventory", tbLocation.getText().toString());
             editor.apply();
             startActivity(myIntent);
-        }
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String url = sharedPreferences.getString("url", "");
-        String token = sharedPreferences.getString("token", "");
-        LocalDate localDate = LocalDate.now();
-        Communicator communicator = new Communicator();
-        ItemLocation item = findItemByEpc(realItems, scanned.get(scannedIndex).getEcd());
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        } else {
+            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            String url = sharedPreferences.getString("url", "");
+            String token = sharedPreferences.getString("token", "");
+            LocalDate localDate = LocalDate.now();
+            Communicator communicator = new Communicator();
+            ItemLocation item = findItemByEpc(realItems, scanned.get(scannedIndex).getEcd());
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Thread backgroundThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -334,7 +334,7 @@ public RFIDWithUHFUART mReader;
             if (duplicate.isSuccess() && !duplicate.getLocation().isEmpty()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Izbirnik lokacije");
-                builder.setMessage("Sredstvo: \n Naziv: "+item.getName()+"\nZadolžen: " + item.getCaretaker() + "\nČas: "+item.getTimestamp() +"" +
+                builder.setMessage("Sredstvo: \nNaziv: "+item.getName()+"\nZadolžen: " + item.getCaretaker()  +
                         "\nJe bilo skenirano na lokaciji: " + duplicate.getLocation() + ". \nKatera lokacija je prava?");
                 builder.setPositiveButton(tbLocation.getText().toString(), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -366,6 +366,8 @@ public RFIDWithUHFUART mReader;
             }
         } catch (InterruptedException e) {
             Crashes.trackError(e);
+        }
+
         }
     }
 
