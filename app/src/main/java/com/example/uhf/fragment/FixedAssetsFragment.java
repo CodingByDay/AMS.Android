@@ -777,7 +777,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             mContext.currentItem = location;
             itemLocationCurrent = location;
             String message = "Lokacija: " + itemLocationCurrent.getLocation() + "\n"
-                    + "Ime: " + itemLocationCurrent.getName() + "\n"
+                    + "Naziv: " + itemLocationCurrent.getName() + "\n"
                     + "Zadolženi: " + itemLocationCurrent.getCaretaker() + "\n"
                     + "Šifra: " + itemLocationCurrent.getItem();
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -804,7 +804,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
             ItemTemporary tmp = location;
 
             String message = "Lokacija: " + tmp.getLocation() + "\n"
-                    + "Ime: " + tmp.getName() + "\n"
+                    + "Naziv: " + tmp.getName() + "\n"
                     + "Zadolženi: " + tmp.getCaretaker() + "\n"
                     + "EPC: " + tmp.getEcd();
 
@@ -836,7 +836,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
 
 
             String message = "Lokacija: " + item.getLocation() + "\n"
-                    + "Ime: " + item.getName() + "\n"
+                    + "Naziv: " + item.getName() + "\n"
                     + "Zadolženi: " + item.getCaretaker() + "\n"
                     + "EPC: " + item.getEcd();
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());

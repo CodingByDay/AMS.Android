@@ -8,7 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.uhf.R;
 import com.example.uhf.api.Communicator;
+import com.example.uhf.api.Duplicate;
 import com.example.uhf.barcode.Barcode;
 import com.example.uhf.barcode.BarcodeUtility;
 import com.example.uhf.custom.CustomAutoCompleteTextView;
@@ -34,8 +37,10 @@ import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.LocationViewModel;
 import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -60,6 +65,11 @@ public RFIDWithUHFUART mReader;
     private CheckOutViewModel checkOutViewModel;
     private List<CheckOut> checkOutItems;
     private ItemLocationViewModel itemLocationViewModel;
+    private String locationOfficial;
+    private Duplicate duplicate;
+    private List<ItemTemporary> scanned;
+    private int scannedIndex = 0;
+    private List<ItemLocation> realItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,77 +229,44 @@ public RFIDWithUHFUART mReader;
 
             }
         });
-
-
-
-
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 String url = sharedPreferences.getString("url", "");
-                String token = sharedPreferences.getString("url", "");
-                String value = sharedPreferences.getString("url", "");
+                String token = sharedPreferences.getString("token", "");
                 Communicator communicator = new Communicator();
-                // Continue here
-
-
-
                 if(tbLocation.getText().toString().equals("")) {
                     Toast.makeText(InventoryActivity.this, "Lokacija mora biti izbrana", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                 fixedAssetsFragment.stopScanning();
-                List<ItemTemporary> scanned = fixedAssetsFragment.temporaryAdapter.items;
-                List<ItemLocation> realItems = fixedAssetsFragment.itemsClassLevel;
+                scanned = fixedAssetsFragment.temporaryAdapter.items;
+                realItems = fixedAssetsFragment.itemsClassLevel;
                 LocalDate localDate = LocalDate.now();
-
-                for (int i = 0; i < scanned.size(); i++) {
-                    ItemLocation item = findItemByEpc(realItems, scanned.get(i).getEcd());
-                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-                    CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), tbLocation.getText().toString(),
-                            item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(),  5,  "", -1, timestamp.toString(), 5, timestamp.toString(), 5,  "");
-                    checkOutViewModel.insert(checkOutItem);
-
-                    ItemLocation toUpdate = item;
-                    toUpdate.setLocation(currentLocation);
-                    itemLocationViewModel.update(toUpdate);
-                }
-                Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
-                // Shared preferences implementation 28.09.2023
-                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("location_inventory", tbLocation.getText().toString());
-                editor.apply();
-                startActivity(myIntent);
-
-
-
-
-                /*
-                    Old process with the locator currently obsolete.
-                    if(current!=null) {
-                    Intent myIntent = new Intent(getApplicationContext(), LocationActivity.class);
-                    myIntent.putExtra("id", current.getID());
-                    myIntent.putExtra("epc", current.getEcd());
-                    myIntent.putExtra("callerID", "InventoryProcessLocation");
-                    String location = tbLocation.getText().toString();
-                    myIntent.putExtra("location", tbLocation.getText().toString());
-                    // Redirect to the location activity
+                BaseApplicationClass baseApp = (BaseApplicationClass) getApplication();
+                boolean isConnected = baseApp.isConnection();
+                if(!isConnected) {
+                    for (int i = 0; i < scanned.size(); i++) {
+                        ItemLocation item = findItemByEpc(realItems, scanned.get(i).getEcd());
+                        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                        CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), tbLocation.getText().toString(),
+                                item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(), 5, "", -1, timestamp.toString(), 5, timestamp.toString(), 5, "");
+                        checkOutViewModel.insert(checkOutItem);
+                        ItemLocation toUpdate = item;
+                        toUpdate.setLocation(currentLocation);
+                        itemLocationViewModel.update(toUpdate);
+                    }
+                    Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("location_inventory", tbLocation.getText().toString());
+                    editor.apply();
                     startActivity(myIntent);
-
-                } */
-
+                } else {
+                    checkLocationsServer();
+                }
             }
-
-
-
-
         });
         btToggleScanning.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -318,6 +295,78 @@ public RFIDWithUHFUART mReader;
         String savedLocation = sharedPreferences.getString("location_inventory", "");
         tbLocation.setText(savedLocation);
         tbLocation.clearFocus();
+    }
+
+    private void checkLocationsServer() {
+        if(scannedIndex == scanned.size()) {
+            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            Intent myIntent = new Intent(getApplicationContext(), InventoryActivity.class);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("location_inventory", tbLocation.getText().toString());
+            editor.apply();
+            startActivity(myIntent);
+        }
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String url = sharedPreferences.getString("url", "");
+        String token = sharedPreferences.getString("token", "");
+        LocalDate localDate = LocalDate.now();
+        Communicator communicator = new Communicator();
+        ItemLocation item = findItemByEpc(realItems, scanned.get(scannedIndex).getEcd());
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Thread backgroundThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    duplicate = communicator.checkDuplicate(url, token, item.getEcd());
+                } catch (final IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Crashes.trackError(e);
+                        }
+                    });
+                }
+            }
+        });
+        backgroundThread.start(); // Start the thread
+        try {
+            backgroundThread.join(); // Wait for the thread to finish
+            if (duplicate.isSuccess() && !duplicate.getLocation().isEmpty()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Izbirnik lokacije");
+                builder.setMessage("Sredstvo: \n Naziv: "+item.getName()+"\nZadolžen: " + item.getCaretaker() + "\nČas: "+item.getTimestamp() +"" +
+                        "\nJe bilo skenirano na lokaciji: " + duplicate.getLocation() + ". \nKatera lokacija je prava?");
+                builder.setPositiveButton(tbLocation.getText().toString(), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), tbLocation.getText().toString(),
+                                item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(), 5, "", -1, timestamp.toString(), 5, timestamp.toString(), 5, "");
+                        checkOutViewModel.insert(checkOutItem);
+                        ItemLocation toUpdate = item;
+                        toUpdate.setLocation(currentLocation);
+                        itemLocationViewModel.update(toUpdate);
+                        scannedIndex +=1;
+                        checkLocationsServer();
+                    }
+                });
+                builder.setNegativeButton(duplicate.getLocation().toString(), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), duplicate.getLocation().toString(),
+                                item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(), 5, "", -1, timestamp.toString(), 5, timestamp.toString(), 5, "");
+                        checkOutViewModel.insert(checkOutItem);
+                        ItemLocation toUpdate = item;
+                        toUpdate.setLocation(currentLocation);
+                        itemLocationViewModel.update(toUpdate);
+                        scannedIndex +=1;
+                        checkLocationsServer();
+                    }
+                });
+                // Display the dialog for the current item
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        } catch (InterruptedException e) {
+            Crashes.trackError(e);
+        }
     }
 
     private ItemLocation findItemByEpc(List<ItemLocation> items, String epc) {

@@ -114,19 +114,16 @@ public class Communicator {
 
     public class DuplicateStructure {
         String token;
-        String epc;
+        String eCD;
 
         public DuplicateStructure(String token, String epc) {
             this.token = token;
-            this.epc = epc;
+            this.eCD = epc;
         }
     }
 
-    public void checkDuplicate(String url, String token, String epc) {
-
-
+    public Duplicate checkDuplicate(String url, String token, String epc) throws IOException {
         OkHttpClient client = new OkHttpClient();
-
         // JSON data
         DuplicateStructure check = new DuplicateStructure(token, epc);
         Gson gson = new Gson();
@@ -141,31 +138,17 @@ public class Communicator {
                 .post(requestBody)
                 .build();
 
+        // Perform the request synchronously
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+            String responseData = response.body().string();
 
-        client.newCall(request).enqueue(new okhttp3.Callback() {
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-                // Handle failure
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(okhttp3.Call call, Response response) throws IOException {
-                // Handle success
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-                    // Process the response data here
-                } else {
-                    // Handle unsuccessful response
-                }
-            }
-        });
+            return gson.fromJson(responseData, Duplicate.class);
+        } else {
+            // Handle unsuccessful response
+            return new Duplicate(false,"", "Error occurred.");
+        }
     }
-
-
-
-
-
 
 
     public class RetrieveLogingInformation extends AsyncTask<String, Void, Boolean> {
