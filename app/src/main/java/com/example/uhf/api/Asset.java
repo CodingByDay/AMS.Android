@@ -48,4 +48,5 @@ public class Asset{
     public Object active;
     public Object seqID;
     public String insertedFrom;
+    public boolean writeOff;
 }

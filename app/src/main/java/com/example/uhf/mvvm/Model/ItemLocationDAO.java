@@ -21,11 +21,11 @@ public interface ItemLocationDAO {
 
    // @Query("INSERT INTO item_location (item, code, location, ecd, name, timestamp, user ) VALUES (:item, :location, :ecd)")
   //  void insertItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user)
-   @Query("UPDATE item_location SET item = :item, code = :code, location = :location, "
+   @Query("UPDATE item_location SET item = :item, code = :code, writeOff = :writeOff, location = :location, "
            + "ecd = CASE WHEN :ecd <> '' THEN :ecd ELSE ecd END, "
            + "name = :name, timestamp = :timestamp "
            + "WHERE id = :id")
-   void update(String item, String code, String location, String ecd, String name, String timestamp, int id);
+   void update(String item, String code, String location, String ecd, String name, String timestamp, int id, int writeOff);
 
 
 
@@ -37,9 +37,9 @@ public interface ItemLocationDAO {
 
     LiveData<List<ItemLocation>> getAllItems();
 
-    @Query("select id, item, name, code, location, ecd, qid, caretaker from item_location where ifnull(ecd,'') = ''\n" +
+    @Query("select id, item, name, code, location, ecd, qid, caretaker, writeOff from item_location where ifnull(ecd,'') = ''\n" +
             "union\n" +
-            "select 0 as id, a.item,a.name, '' as code, '' as location, '' as ecd, a.id as qid, '' as caretaker\n" +
+            "select 0 as id, a.item,a.name, '' as code, '' as location, '' as ecd, a.id as qid, '' as caretaker, 0 as writeOff\n" +
             "from item a\n" +
             "left join item_location b on a.item = b.item\n" +
             "group by a.[item], a.[qty]\n" +
@@ -51,7 +51,7 @@ public interface ItemLocationDAO {
     @Query("update item_location set ecd = :edc where ID = :id ")
     void updateByID(int id, String edc);
 
-    @Query("select id, item, name, code, location, ecd, qid, caretaker from item_location where ecd != ''")
+    @Query("select id, item, name, code, location, ecd, qid, caretaker, writeOff from item_location where ecd != ''")
     LiveData<List<ItemLocation>> getAllItemsThatAreRegistered();
 
     @Query ("select * from item_location where ecd is :ecd")

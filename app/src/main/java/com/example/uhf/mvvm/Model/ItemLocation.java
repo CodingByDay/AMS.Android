@@ -36,6 +36,9 @@ public class ItemLocation {
     @ColumnInfo(name = "caretaker")
     private String caretaker;
 
+    @ColumnInfo(name = "writeOff")
+    private int writeOff;
+
     @Ignore
     public ItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user, int qid) {
         this.item = item;
@@ -49,7 +52,7 @@ public class ItemLocation {
     }
 
 
-    public ItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user, int qid, String caretaker) {
+    public ItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user, int qid, String caretaker, int writeOff) {
         this.item = item;
         this.code = code;
         this.location = location;
@@ -59,8 +62,16 @@ public class ItemLocation {
         this.user = user;
         this.qid = qid;
         this.caretaker = caretaker;
+        this.writeOff = writeOff;
     }
 
+    public int getWriteOff() {
+        return writeOff;
+    }
+
+    public void setWriteOff(int writeOff) {
+        this.writeOff = writeOff;
+    }
 
     public String getCaretaker() {
         return caretaker;

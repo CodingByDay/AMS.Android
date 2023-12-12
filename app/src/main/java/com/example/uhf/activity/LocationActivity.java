@@ -281,19 +281,15 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                 public void onClick(View view) {
                     dontShowTwice = false;
                     Date date = new Date(System.currentTimeMillis());
-
                     // Add the cached item here
                     FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                     ItemLocation item = fixedAssetsFragment.itemLocationCurrent;
-
                     item.setQid(item.getQid());
                     item.setEcd(locationItem.getEcd());
                     item.setLocation(tbLocationScan.getText().toString());
                     item.setTimestamp(date.toString());
                     item.setUser(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"));
-
-                    ItemLocation itemSend = new ItemLocation(item.getItem(), item.getCode(), item.getLocation(), item.getEcd(), item.getName(), item.getTimestamp(), item.getUser(), item.getQid(), item.getCaretaker());
-
+                    ItemLocation itemSend = new ItemLocation(item.getItem(), item.getCode(), item.getLocation(), item.getEcd(), item.getName(), item.getTimestamp(), item.getUser(), item.getQid(), item.getCaretaker(), item.getWriteOff());
                     if(item.getID() == 0) {
                         itemLocationViewModel.insert(itemSend);
                     } else {
@@ -302,15 +298,11 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     // itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"),locationItem.getQid()));
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss
-
-
                     // Shared preferences implementation 28.09.2023
                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("location", tbLocationScan.getText().toString());
                     editor.apply();
-
-
                     Intent myIntent = new Intent(getApplicationContext(), RegistrationActivity.class);
                     startActivity(myIntent);
                     finish();
