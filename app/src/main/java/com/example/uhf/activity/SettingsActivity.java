@@ -18,6 +18,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.settings.SettingsHelper;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.microsoft.appcenter.crashes.Crashes;
 
 import java.sql.Timestamp;
@@ -50,6 +52,7 @@ private TextView btSave;
     private SettingsHelper settingsHelper = new SettingsHelper();
     private EditText tbCompany;
 
+    private SwitchMaterial switchChecking;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,25 @@ private TextView btSave;
         tbUrl = (EditText) findViewById(R.id.tbUrl);
         tbCompany = (EditText) findViewById(R.id.tbCompany);
         delete = (ImageView) findViewById(R.id.deleteDatabase);
+        switchChecking = (SwitchMaterial) findViewById(R.id.extraChecking);
+        switchChecking.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+                if(isChecked) {
+                    editor.putString("checking", "1");
+                } else {
+                    editor.putString("checking", "0");
+                }
+
+
+                editor.apply();
+
+            }
+        });
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,6 +152,19 @@ private TextView btSave;
     }
     private void updateUI(List<Setting> settings) {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String checking = sharedPreferences.getString("checking", "");
+        if(checking.equals("")) {
+            editor.putString("checking", "1");
+            editor.apply();
+        }
+        String check = sharedPreferences.getString("checking", "");
+        if(check.equals("1")) {
+            switchChecking.setChecked(true);
+        } else {
+            switchChecking.setChecked(false);
+        }
         String url = sharedPreferences.getString("url", "");
         String company = sharedPreferences.getString("company", "");
         tbUrl.setText(url);

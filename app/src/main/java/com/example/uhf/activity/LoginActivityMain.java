@@ -216,6 +216,11 @@ private TextView login;
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("token", token);
                 editor.putString("user", tbUname.getText().toString());
+                String checking = sharedPreferences.getString("checking", "");
+                if(checking.equals("")) {
+                    editor.putString("checking", "1");
+                }
+
                 editor.apply();
                 settingsView.insert(new Setting("token", token));
                 settingsView.insert(new Setting("user", tbUname.getText().toString()));

@@ -235,6 +235,7 @@ public RFIDWithUHFUART mReader;
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 String url = sharedPreferences.getString("url", "");
                 String token = sharedPreferences.getString("token", "");
+                String checking = sharedPreferences.getString("checking", "");
                 Communicator communicator = new Communicator();
                 if(tbLocation.getText().toString().equals("")) {
                     Toast.makeText(InventoryActivity.this, "Lokacija mora biti izbrana", Toast.LENGTH_SHORT).show();
@@ -247,7 +248,7 @@ public RFIDWithUHFUART mReader;
                 LocalDate localDate = LocalDate.now();
                 BaseApplicationClass baseApp = (BaseApplicationClass) getApplication();
                 boolean isConnected = baseApp.isConnection();
-                if(!isConnected) {
+                if(!isConnected || checking.equals("0")) {
                     for (int i = 0; i < scanned.size(); i++) {
                         ItemLocation item = findItemByEpc(realItems, scanned.get(i).getEcd());
                         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -263,7 +264,7 @@ public RFIDWithUHFUART mReader;
                     editor.putString("location_inventory", tbLocation.getText().toString());
                     editor.apply();
                     startActivity(myIntent);
-                } else {
+                } else if (isConnected && checking.equals("1")) {
                     checkLocationsServer();
                 }
             }
