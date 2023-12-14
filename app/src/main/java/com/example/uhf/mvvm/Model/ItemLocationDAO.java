@@ -37,7 +37,7 @@ public interface ItemLocationDAO {
 
     LiveData<List<ItemLocation>> getAllItems();
 
-    @Query("select id, item, name, code, location, ecd, qid, caretaker, writeOff from item_location where ifnull(ecd,'') = ''\n" +
+    @Query("select id, item, name, code, location, ecd, qid, caretaker, writeOff from item_location where ifnull(ecd,'') = '' and writeOff = 0\n" +
             "union\n" +
             "select 0 as id, a.item,a.name, '' as code, '' as location, '' as ecd, a.id as qid, '' as caretaker, 0 as writeOff\n" +
             "from item a\n" +
