@@ -36,7 +36,9 @@ import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.microsoft.appcenter.crashes.Crashes;
 
+import java.io.IOException;
 import java.util.List;
 
 public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
@@ -272,8 +274,30 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         btTransferListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {mypDialog = new ProgressDialog(EntryActivity.this);
-
-                Toast.makeText(EntryActivity.this, "Funkcionalnost še ni podprta!", Toast.LENGTH_SHORT).show();            
+                BaseApplicationClass baseApp = (BaseApplicationClass) getApplication();
+                boolean isConnected = baseApp.isConnection();
+                if(isConnected) {
+                    try {
+                        baseApp.synchronizeAssets();
+                    } catch (IOException e) {
+                        Crashes.trackError(e);
+                    }
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(EntryActivity.this);
+                    builder.setTitle("Ni povezave.");
+                    builder.setMessage("Žal internetna povezava ni na voljo.");
+                    // Add a button to dismiss the dialog
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // Close the dialog
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    // Create and show the AlertDialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
             }
         });
     }

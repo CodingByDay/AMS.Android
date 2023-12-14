@@ -1,14 +1,12 @@
 package com.example.uhf.api;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
 import com.example.uhf.activity.LoginActivityMain;
 import com.example.uhf.mvvm.Model.CheckOut;
-import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.tools.DateHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,18 +20,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
-import com.microsoft.appcenter.distribute.Distribute;
-import com.microsoft.appcenter.distribute.DistributeListener;
-import com.microsoft.appcenter.distribute.ReleaseDetails;
-import com.microsoft.appcenter.distribute.UpdateAction;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -150,6 +141,33 @@ public class Communicator {
         }
     }
 
+
+
+    public boolean syncRegistrations(String url, String data) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        String json = data;
+        // Create a request body with the JSON data
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(json, JSON);
+
+        // Create a request to the specified URL with the POST method
+        Request request = new Request.Builder()
+                .url(url + "/syncAssets")
+                .post(requestBody)
+                .build();
+
+        // Perform the request synchronously
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+            String responseData = response.body().string();
+
+        }
+
+
+
+        return true;
+    }
 
     public class RetrieveLogingInformation extends AsyncTask<String, Void, Boolean> {
         private LoginActivityMain login;
