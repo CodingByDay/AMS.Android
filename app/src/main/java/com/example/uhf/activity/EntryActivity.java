@@ -226,7 +226,6 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
                         progressDialog.setIndeterminate(true); // Use an indeterminate style spinner
                         progressDialog.setCancelable(false); // Make it non-cancelable
                         progressDialog.show();
-
                     for (CheckOut co : checkOutItems) {
                         try {
                             client.checkOutCommit(EntryActivity.this, settingsList, co);
@@ -235,7 +234,6 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
                             continue;
                         }
                     }
-
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(EntryActivity.this);
                         builder.setTitle("Ni podatkov.");
@@ -273,7 +271,8 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
         });
         btTransferListing.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {mypDialog = new ProgressDialog(EntryActivity.this);
+            public void onClick(View view) {
+                mypDialog = new ProgressDialog(EntryActivity.this);
                 BaseApplicationClass baseApp = (BaseApplicationClass) getApplication();
                 boolean isConnected = baseApp.isConnection();
                 if(isConnected) {

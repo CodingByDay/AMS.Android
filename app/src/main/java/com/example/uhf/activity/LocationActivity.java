@@ -279,6 +279,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             btYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    BaseApplicationClass baseApp = (BaseApplicationClass) getApplication();
                     dontShowTwice = false;
                     Date date = new Date(System.currentTimeMillis());
                     // Add the cached item here
@@ -295,6 +296,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     } else {
                         itemLocationViewModel.update(item);
                     }
+                    baseApp.addRegistrationItem(itemSend);
                     // itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"),locationItem.getQid()));
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss

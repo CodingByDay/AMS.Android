@@ -8,9 +8,12 @@ import com.example.uhf.api.Communicator;
 import com.example.uhf.api.RegistrationAssets;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.tools.NetworkMonitor;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.microsoft.appcenter.crashes.Crashes;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +35,7 @@ public class BaseApplicationClass extends Application {
         token = sharedPreferences.getString("token", "");
         communicator = new Communicator();
         // Perform initialization tasks or setup here
+        loadRegisteredItems();
     }
     public boolean isConnection() {
         return connection;
@@ -43,11 +47,34 @@ public class BaseApplicationClass extends Application {
 
     public void addRegistrationItem(ItemLocation asset) {
         try {
-            registeredItems.add(asset);
+            if(registeredItems!=null) {
+                registeredItems.add(asset);
+            } else {
+                registeredItems = new ArrayList<ItemLocation>();
+                registeredItems.add(asset);
+            }
         } catch (Exception e) {
             Crashes.trackError(e);
+        } finally {
+             saveRegisteredItems();
         }
     }
+    private void saveRegisteredItems() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(registeredItems);
+        editor.putString("registeredItems", json);
+        editor.apply();
+    }
+    private void loadRegisteredItems() {
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("registeredItems", "");
+        Type type = new TypeToken<ArrayList<ItemLocation>>(){}.getType();
+        this.registeredItems = gson.fromJson(json, type);
+    }
+
+
+
 
     public List<ItemLocation> getRegisteredItems() {
         return registeredItems;

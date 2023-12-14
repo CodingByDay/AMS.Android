@@ -2,6 +2,7 @@ package com.example.uhf.api;
 
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microsoft.appcenter.crashes.Crashes;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class RegistrationAssets {
         try {
             json = mapper.writeValueAsString(this);
         } catch (IOException e) {
-            e.printStackTrace();
+            Crashes.trackError(e);
         }
         return json;
     }
