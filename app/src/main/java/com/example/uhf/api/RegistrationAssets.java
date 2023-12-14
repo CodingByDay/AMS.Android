@@ -2,19 +2,42 @@ package com.example.uhf.api;
 
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.microsoft.appcenter.crashes.Crashes;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 
-public class RegistrationAssets {
+
+public class RegistrationAssets  {
     private String token;
     private List<AssetRegistration> assets;
     public RegistrationAssets(String token) {
         this.token = token;
         this.assets = new ArrayList<>();
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public List<AssetRegistration> getAssets() {
+        return assets;
+    }
+
+    public void setAssets(List<AssetRegistration> assets) {
+        this.assets = assets;
+    }
+
 
     public static class AssetRegistration {
 
@@ -49,13 +72,9 @@ public class RegistrationAssets {
 
 
     public String toJson() {
-        ObjectMapper mapper = new ObjectMapper();
-        String json = "";
-        try {
-            json = mapper.writeValueAsString(this);
-        } catch (IOException e) {
-            Crashes.trackError(e);
-        }
+        // Convert to JSON
+        Gson gson = new Gson();
+        String json = gson.toJson(this);
         return json;
     }
 
