@@ -364,11 +364,20 @@ public RFIDWithUHFUART mReader;
                 // Display the dialog for the current item
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            } else {
+                // In the case there is no other location just save the asset.
+                CheckOut checkOutItem = new CheckOut(-1, item.getQid(), item.getItem(), tbLocation.getText().toString(),
+                        item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(), 5, "", -1, timestamp.toString(), 5, timestamp.toString(), 5, "");
+                checkOutViewModel.insert(checkOutItem);
+                ItemLocation toUpdate = item;
+                toUpdate.setLocation(currentLocation);
+                itemLocationViewModel.update(toUpdate);
+                scannedIndex +=1;
+                checkLocationsServer();
             }
         } catch (InterruptedException e) {
-            Crashes.trackError(e);
-        }
-
+               Crashes.trackError(e);
+            }
         }
     }
 
