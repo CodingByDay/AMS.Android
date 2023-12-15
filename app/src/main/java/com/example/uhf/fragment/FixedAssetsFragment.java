@@ -144,9 +144,11 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         View view = inflater.inflate(R.layout.fragment_fixed_assets, container, false);
 
         Bundle arguments = getArguments();
-        assert arguments != null;
+
 
         callerID = arguments.getString("callerID");
+
+
         first = view.findViewById(R.id.first);
         second = view.findViewById(R.id.second);
         third = view.findViewById(R.id.third);
@@ -507,10 +509,10 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
                                 }
                             } else {
                                 if(location == 0) {
-                                    assert false;
+
                                     temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid(), asset.getCaretaker()));
                                 } else {
-                                    assert false;
+
                                     temporaryViewModel.insert(new ItemTemporary(asset.getEcd(), asset.getName(), asset.getCode(), asset.getLocation(), 1, Instant.now().toString(), "Janko", info.getRssi(), asset.getQid(), asset.getCaretaker()));
                                 }
                             }

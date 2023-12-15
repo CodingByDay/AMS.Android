@@ -221,15 +221,18 @@ public class Communicator {
                         login.token = token;
                     }
 
-                    assert success != null;
-                    if (!success.equals("true")) return false;
-                    assert token != null;
-                    return !token.isEmpty();
+                    if(success!=null) {
+                        if (!success.equals("true")) return false;
+                    }
+                    if(token!=null) {
+
+                        return !token.isEmpty();
+                    }
                 }
             } catch (Exception e) {
                 return false;
             }
-
+            return false;
         }
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);

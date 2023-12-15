@@ -62,8 +62,6 @@ private TextView login;
     private Root root;
     private RootLocation rootLocation;
     private RootAsset rootAsset;
-
-
     private ItemLocationViewModel itemLocationViewModel;
     private ItemLocationCacheViewModel itemLocationCacheViewModel;
     private List<ItemLocationCache> itemsLocationsCacheClassLevel;
@@ -83,9 +81,6 @@ private TextView login;
         initPageViews();
         initSynchronization();
         boolean start = Distribute.isEnabled().get();
-
-
-
     }
 
 
@@ -97,13 +92,9 @@ private TextView login;
             settingsView.insert(new Setting("device", guid));
        }
     }
-
     private void initSynchronization() {
         itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
         // if cached table is not empty and there is internet sync the data
-
-
-
         itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
         // if cached table is not empty and there is internet sync the data
         itemLocationViewModel = ViewModelProviders.of(this).get(ItemLocationViewModel.class);
@@ -176,6 +167,7 @@ private TextView login;
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
                 mypDialog = new ProgressDialog(LoginActivityMain.this);
                 mypDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -184,10 +176,9 @@ private TextView login;
                 mypDialog.show();
                 // Data
                 if(SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "company")!=null) {
-                String company = SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "company");
+                String company = sharedPreferences.getString("company", "");;
                 String uname = tbUname.getText().toString();
                 String password = tbPassword.getText().toString();
-                    assert company != null;
                     if(company.isEmpty()||uname.isEmpty()||password.isEmpty()) {
                     return;
                 }
@@ -268,21 +259,15 @@ private TextView login;
 
     @Override
     public boolean onReleaseAvailable(Activity activity, ReleaseDetails releaseDetails) {
-
         // Look at releaseDetails public methods to get version information, release notes text or release notes URL
         String versionName = releaseDetails.getShortVersion();
         int versionCode = releaseDetails.getVersion();
         String releaseNotes = releaseDetails.getReleaseNotes();
         Uri releaseNotesUrl = releaseDetails.getReleaseNotesUrl();
-
         // Build our own dialog title and message
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
         dialogBuilder.setTitle("Version " + versionName + " available!");
         dialogBuilder.setMessage("Please update the application.");
-
-
-        // This is the update text to
-
         // Mimic default SDK buttons
         dialogBuilder.setPositiveButton(com.microsoft.appcenter.distribute.R.string.appcenter_distribute_update_dialog_download, new DialogInterface.OnClickListener() {
 

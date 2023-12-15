@@ -173,9 +173,13 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
                                 float floatValue = -1000;
                                 try {
                                     Number parsedNumber = decimalFormat.parse(tag.getRssi());
-                                    assert parsedNumber != null;
-                                    floatValue = parsedNumber.floatValue();
+                                    if (parsedNumber != null) {
+                                        floatValue = parsedNumber.floatValue();
+                                    } else {
+                                        floatValue = -10000;
+                                    }
                                 } catch (ParseException ignored) {
+                                    floatValue = -10000;
                                 }
                                 if (floatValue > -33) {
                                     runOnUiThread(new Runnable() {
