@@ -25,6 +25,9 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
+
+import org.json.JSONException;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -133,7 +136,6 @@ public class Communicator {
         Response response = client.newCall(request).execute();
         if (response.isSuccessful()) {
             String responseData = response.body().string();
-
             return gson.fromJson(responseData, Duplicate.class);
         } else {
             // Handle unsuccessful response
@@ -141,32 +143,28 @@ public class Communicator {
         }
     }
 
-
-
-    public boolean syncRegistrations(String url, String data) throws IOException {
+    public SyncResponse syncRegistrations(String url, String data) throws IOException {
+        SyncResponse responseServer = new SyncResponse();
         OkHttpClient client = new OkHttpClient();
-
         String json = data;
-        // Create a request body with the JSON data
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(json, JSON);
-
         // Create a request to the specified URL with the POST method
         Request request = new Request.Builder()
                 .url(url + "/syncAssets")
                 .post(requestBody)
                 .build();
-
         // Perform the request synchronously
         Response response = client.newCall(request).execute();
         if (response.isSuccessful()) {
             String responseData = response.body().string();
-
+            try {
+                responseServer = SyncResponse.fromJson(responseData);
+            } catch (JSONException e) {
+                Crashes.trackError(e);
+            }
         }
-
-
-
-        return true;
+        return responseServer;
     }
 
     public class RetrieveLogingInformation extends AsyncTask<String, Void, Boolean> {

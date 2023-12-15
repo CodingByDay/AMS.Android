@@ -1,11 +1,18 @@
 package com.example.uhf.activity;
 
+import static com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread;
+
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.example.uhf.api.Communicator;
 import com.example.uhf.api.RegistrationAssets;
+import com.example.uhf.api.SyncResponse;
+import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.tools.NetworkMonitor;
 import com.google.gson.Gson;
@@ -25,6 +32,8 @@ public class BaseApplicationClass extends Application {
     private String url;
     private String token;
     Communicator communicator;
+    private SyncResponse response;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -73,22 +82,45 @@ public class BaseApplicationClass extends Application {
         this.registeredItems = gson.fromJson(json, type);
     }
 
-
-
-
     public List<ItemLocation> getRegisteredItems() {
         return registeredItems;
     }
-
     public void clearAllRegisteredItems() {
         registeredItems.clear();
     }
-
     public void synchronizeAssets() throws IOException {
+        response = new SyncResponse();
         RegistrationAssets registration = new RegistrationAssets(token);
         registration.addAssets(this.registeredItems);
         String toJson = registration.toJson();
-        communicator.syncRegistrations(url, toJson);
+        Thread backgroundThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    response = communicator.syncRegistrations(url, toJson);
+                } catch (final IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Crashes.trackError(e);
+                        }
+                    });
+                }
+            }
+        });
+        backgroundThread.start();
+        try {
+            backgroundThread.join();
+        } catch (InterruptedException e) {
+            Crashes.trackError(e);
+        } finally {
+            if(response.isSuccess()) {
+                Toast.makeText(this, "Sinhronizacija se je končala brez napak.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Prišlo je do napake, nekateri podatki registracije so izgubljeni.", Toast.LENGTH_SHORT).show();
+            }
+            this.clearAllRegisteredItems();
+        }
     }
 
 }
