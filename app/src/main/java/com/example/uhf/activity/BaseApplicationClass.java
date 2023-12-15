@@ -34,6 +34,8 @@ public class BaseApplicationClass extends Application {
     Communicator communicator;
     private SyncResponse response;
 
+    private int currentUser = 0;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -82,6 +84,9 @@ public class BaseApplicationClass extends Application {
         this.registeredItems = gson.fromJson(json, type);
     }
 
+    public void setCurrentUser(int currentUser) {
+        this.currentUser = currentUser;
+    }
     public List<ItemLocation> getRegisteredItems() {
         return registeredItems;
     }
@@ -89,9 +94,10 @@ public class BaseApplicationClass extends Application {
         registeredItems.clear();
     }
     public void synchronizeAssets() throws IOException {
+
         response = new SyncResponse();
         RegistrationAssets registration = new RegistrationAssets(token);
-        registration.addAssets(this.registeredItems);
+        registration.addAssets(this.registeredItems, this.currentUser);
         String toJson = registration.toJson();
         Thread backgroundThread = new Thread(new Runnable() {
             @Override

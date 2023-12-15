@@ -1,10 +1,12 @@
 package com.example.uhf.api;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
+import com.example.uhf.activity.BaseApplicationClass;
 import com.example.uhf.activity.LoginActivityMain;
 import com.example.uhf.mvvm.Model.CheckOut;
 import com.example.uhf.settings.Setting;
@@ -181,6 +183,8 @@ public class Communicator {
         @Override protected Boolean doInBackground(String... args) {
             int responseCode;
             try {
+
+
                 URL url = new URL("http://riko-inv.in-sist.si");
                 String json = new String("");
                 for(String ar: args) {
@@ -213,10 +217,14 @@ public class Communicator {
                     String json_c = response.toString();
                     HashMap<String, String> myMap = mapper.readValue(json_c, new TypeReference<HashMap<String, String>>() {
                     });
+
                     String success = myMap.get("success");
                     String token = myMap.get("result");
                     String error = myMap.get("error");
-
+                    int userId = Integer.parseInt(myMap.get("userID"));
+                    if(userId != 0) {
+                     login.setCurrentUser(userId);
+                    }
                     if(token!=null) {
                         login.token = token;
                     }
@@ -225,7 +233,6 @@ public class Communicator {
                         if (!success.equals("true")) return false;
                     }
                     if(token!=null) {
-
                         return !token.isEmpty();
                     }
                 }

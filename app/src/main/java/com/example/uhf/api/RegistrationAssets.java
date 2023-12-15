@@ -1,5 +1,6 @@
 package com.example.uhf.api;
 
+import com.example.uhf.activity.BaseApplicationClass;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -63,10 +64,12 @@ public class RegistrationAssets  {
 
     }
 
-    public void addAssets(List<ItemLocation> items) {
+    public void addAssets(List<ItemLocation> items, int user) {
+
+
         for (ItemLocation item : items)
         {
-            this.assets.add(new AssetRegistration(item.getID(), "", item.getItem(), item.getLocation(), item.getEcd(), item.getName(), 0, 0));
+            this.assets.add(new AssetRegistration(item.getID(), "", item.getItem(), item.getLocation(), item.getEcd(), item.getName(), user, user));
         }
     }
 

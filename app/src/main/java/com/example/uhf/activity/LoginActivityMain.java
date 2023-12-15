@@ -198,6 +198,11 @@ private TextView login;
         });
     }
 
+    public void setCurrentUser(int userId) {
+        BaseApplicationClass baseApp = (BaseApplicationClass) getApplication();
+        baseApp.setCurrentUser(userId);
+    }
+
     @Override
     public void setResult(Boolean result) {
         mypDialog.cancel();
