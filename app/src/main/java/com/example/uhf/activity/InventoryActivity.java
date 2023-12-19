@@ -370,7 +370,7 @@ public RFIDWithUHFUART mReader;
                         item.getCode(), item.getEcd(), item.getName(), "", localDate.toString(), 5, "", -1, timestamp.toString(), 5, timestamp.toString(), 5, "");
                 checkOutViewModel.insert(checkOutItem);
                 ItemLocation toUpdate = item;
-                toUpdate.setLocation(currentLocation);
+                toUpdate.setLocation(tbLocation.getText().toString());
                 itemLocationViewModel.update(toUpdate);
                 scannedIndex +=1;
                 checkLocationsServer();

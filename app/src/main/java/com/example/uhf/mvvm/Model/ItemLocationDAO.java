@@ -25,8 +25,8 @@ public interface ItemLocationDAO {
    @Query("UPDATE item_location SET item = :item, code = :code, writeOff = :writeOff, location = :location, "
            + "ecd = :ecd, "
            + "name = :name, timestamp = :timestamp "
-           + "WHERE qid = :id")
-   int update(String item, String code, int writeOff, String location, String ecd, String name, String timestamp, int id);
+           + "WHERE qid = :qid")
+   int update(String item, String code, int writeOff, String location, String ecd, String name, String timestamp, int qid);
 
 
 
