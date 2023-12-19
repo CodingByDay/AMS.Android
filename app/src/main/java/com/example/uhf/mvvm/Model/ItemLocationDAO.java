@@ -33,7 +33,7 @@ public interface ItemLocationDAO {
     void delete(ItemLocation location);
     @Query("DELETE FROM item_location")
     void deleteAllItems();
-    @Query("SELECT * FROM item_location")
+    @Query("SELECT * FROM item_location WHERE writeOff = 0")
 
     LiveData<List<ItemLocation>> getAllItems();
 
@@ -51,9 +51,9 @@ public interface ItemLocationDAO {
     @Query("update item_location set ecd = :edc where ID = :id ")
     void updateByID(int id, String edc);
 
-    @Query("select id, item, name, code, location, ecd, qid, caretaker, writeOff from item_location where ecd != ''")
+    @Query("select id, item, name, code, location, ecd, qid, caretaker, writeOff from item_location where ecd != '' and writeOff = 0")
     LiveData<List<ItemLocation>> getAllItemsThatAreRegistered();
 
-    @Query ("select * from item_location where ecd is :ecd")
+    @Query ("select * from item_location where ecd is :ecd and writeOff = 0")
     ItemLocation getItemByEcd(String ecd);
 }

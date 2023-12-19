@@ -274,6 +274,10 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
             public void onClick(View view) {
                 mypDialog = new ProgressDialog(EntryActivity.this);
                 BaseApplicationClass baseApp = (BaseApplicationClass) getApplication();
+                if(baseApp.getRegisteredItems().size() == 0) {
+                    Toast.makeText(EntryActivity.this, "Ni sredstev za registracijo.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 boolean isConnected = baseApp.isConnection();
                 if(isConnected) {
                     try {

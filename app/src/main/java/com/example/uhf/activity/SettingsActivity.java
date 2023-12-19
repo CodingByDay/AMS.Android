@@ -110,6 +110,8 @@ private TextView btSave;
                                     public void run() {
                                         Database db = Database.getInstance(SettingsActivity.this);
                                         db.clearAllTables();
+                                        BaseApplicationClass baseApp = (BaseApplicationClass) getApplication();
+                                        baseApp.clearAllRegisteredItems();
 
                                     }
 

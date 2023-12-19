@@ -32,14 +32,11 @@ public class ImportExportData {
     Context context;
 
     public ImportExportData(FragmentActivity context) {
-
         itemViewModel = ViewModelProviders.of(context).get(ItemViewModel.class);
         itemLocationViewModel = ViewModelProviders.of(context).get(ItemLocationViewModel.class);
         locationViewModel = ViewModelProviders.of(context).get(LocationViewModel.class);
-
         this.context = context;
         callBack = (AsyncCallBack) context;
-
     }
     public void commitToLocalStorageLocations(RootLocation rootLocations) {
         Context inner = this.context;
@@ -47,11 +44,9 @@ public class ImportExportData {
     }
 
     public void commitToLocalStorageMaterial(Root rootItems,  RootAsset rootAssets) {
-
         int count = rootItems.items.size() + rootAssets.assets.size();
         itemViewModel.insertBatch(this.context, rootItems.items, count);
         itemLocationViewModel.insertBatch(this.context, rootAssets.assets, count);
-
     }
 
 }

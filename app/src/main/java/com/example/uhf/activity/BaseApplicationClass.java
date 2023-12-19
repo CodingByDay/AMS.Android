@@ -92,6 +92,11 @@ public class BaseApplicationClass extends Application {
     }
     public void clearAllRegisteredItems() {
         registeredItems.clear();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(registeredItems);
+        editor.putString("registeredItems", json);
+        editor.apply();
     }
     public void synchronizeAssets() throws IOException {
 
@@ -125,7 +130,7 @@ public class BaseApplicationClass extends Application {
             } else {
                 Toast.makeText(this, "Prišlo je do napake, nekateri podatki registracije so izgubljeni.", Toast.LENGTH_SHORT).show();
             }
-            this.clearAllRegisteredItems();
+            clearAllRegisteredItems();
         }
     }
 

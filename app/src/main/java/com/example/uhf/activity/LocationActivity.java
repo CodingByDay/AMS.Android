@@ -293,10 +293,12 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
                     ItemLocation itemSend = new ItemLocation(item.getItem(), item.getCode(), item.getLocation(), item.getEcd(), item.getName(), item.getTimestamp(), item.getUser(), item.getQid(), item.getCaretaker(), item.getWriteOff());
                     if(item.getID() == 0) {
                         itemLocationViewModel.insert(itemSend);
+                        baseApp.addRegistrationItem(itemSend);
                     } else {
                         itemLocationViewModel.update(item);
+                        baseApp.addRegistrationItem(item);
                     }
-                    baseApp.addRegistrationItem(itemSend);
+
                     // itemLocationCacheViewModel.insert(new ItemLocationCache(fixedAssetsFragment.itemLocationCurrent.getID(), locationItem.getItem(), locationItem.getCode(), locationItem.getLocation(), locationItem.getEcd(), locationItem.getName(), date.toString(), SettingsHelper.SettingsHelp.returnSettingValue(settingsList, "user"),locationItem.getQid()));
                     // Return back to the list - Registration activity
                     dialog.dismiss();       // dismiss

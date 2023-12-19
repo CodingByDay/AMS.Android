@@ -67,9 +67,15 @@ public class RegistrationAssets  {
     public void addAssets(List<ItemLocation> items, int user) {
 
 
+
+
         for (ItemLocation item : items)
         {
-            this.assets.add(new AssetRegistration(item.getID(), "", item.getItem(), item.getLocation(), item.getEcd(), item.getName(), user, user));
+            int qid = 0;
+            if(item.getID() != 0 && item.getQid() != 0) {
+                qid = item.getQid();
+            }
+            this.assets.add(new AssetRegistration(qid, "", item.getItem(), item.getLocation(), item.getEcd(), item.getName(), user, user));
         }
     }
 
