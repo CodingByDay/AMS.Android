@@ -564,12 +564,10 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             }
             case KeyEvent.KEYCODE_F3:
             {
-
                 return true;
             }
             case KeyEvent.KEYCODE_F4:
             {
-
                 return true;
             }
             case KeyEvent.KEYCODE_F5:
@@ -589,7 +587,6 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             }
             case KeyEvent.KEYCODE_F8:
             {
-
                 return true;
             }
         }
