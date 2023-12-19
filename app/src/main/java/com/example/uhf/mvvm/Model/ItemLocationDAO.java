@@ -20,12 +20,13 @@ public interface ItemLocationDAO {
 
 
    // @Query("INSERT INTO item_location (item, code, location, ecd, name, timestamp, user ) VALUES (:item, :location, :ecd)")
-  //  void insertItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user)
+   //  void insertItemLocation(String item, String code, String location, String ecd, String name, String timestamp, String user)
+
    @Query("UPDATE item_location SET item = :item, code = :code, writeOff = :writeOff, location = :location, "
-           + "ecd = CASE WHEN :ecd <> '' THEN :ecd ELSE ecd END, "
+           + "ecd = :ecd, "
            + "name = :name, timestamp = :timestamp "
-           + "WHERE id = :id")
-   void update(String item, String code, String location, String ecd, String name, String timestamp, int id, int writeOff);
+           + "WHERE qid = :id")
+   int update(String item, String code, int writeOff, String location, String ecd, String name, String timestamp, int id);
 
 
 

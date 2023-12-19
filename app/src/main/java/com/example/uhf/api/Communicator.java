@@ -464,7 +464,6 @@ public class Communicator {
                     // Converting to response object
                     ObjectMapper om = new ObjectMapper();
                     RootAsset root = om.readValue(response.toString(), RootAsset.class);
-                    int result = 7 + 3;
                     return root;
                 }
             } catch (Exception e) {

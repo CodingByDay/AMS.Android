@@ -63,7 +63,6 @@ public abstract class Database extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             new PopulateDbAsyncTask(instance).execute();
-
         }
     };
 
@@ -75,7 +74,6 @@ public abstract class Database extends RoomDatabase {
 
         private AssetDAO assetDAO;
         private ItemLocationCacheDAO itemLocationCacheDAO;
-
         private CheckOutDAO checkOutDAO;
         private PopulateDbAsyncTask(Database db) {
 
