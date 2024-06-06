@@ -36,12 +36,14 @@ import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.settings.SettingsHelper;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.microsoft.appcenter.crashes.Crashes;
+
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.sentry.Sentry;
 
 public class SettingsActivity extends AppCompatActivity {
 private SettingsViewModel settingsView;
@@ -144,7 +146,7 @@ private TextView btSave;
                     settingsView.insert(new Setting("url", tbUrl.getText().toString()));
                     settingsView.insert(new Setting("company", tbCompany.getText().toString()));
                 } catch (Exception e) {
-                    Crashes.trackError(e);
+                    Sentry.captureException(e);
                 } finally {
                     Intent myIntent = new Intent(getApplicationContext(), LoginActivityMain.class);
                     startActivity(myIntent);

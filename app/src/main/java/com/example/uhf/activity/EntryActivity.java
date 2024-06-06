@@ -36,10 +36,12 @@ import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.microsoft.appcenter.crashes.Crashes;
+
 
 import java.io.IOException;
 import java.util.List;
+
+import io.sentry.Sentry;
 
 public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
     private CardView btTransferLocations;
@@ -283,7 +285,7 @@ public class EntryActivity extends AppCompatActivity implements AsyncCallBack {
                     try {
                         baseApp.synchronizeAssets();
                     } catch (IOException e) {
-                        Crashes.trackError(e);
+                        Sentry.captureException(e);
                     }
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(EntryActivity.this);

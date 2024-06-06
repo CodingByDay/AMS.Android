@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.uhf.R;
 import com.example.uhf.interfaces.RecyclerViewInterface;
 import com.example.uhf.mvvm.Model.ItemLocation;
-import com.microsoft.appcenter.crashes.Crashes;
+
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+
+import io.sentry.Sentry;
 
 public class ItemLocationAdapter extends RecyclerView.Adapter<ItemLocationAdapter.ItemHolder> {
 public List<ItemLocation> items = new ArrayList<ItemLocation>();
@@ -206,7 +208,7 @@ private final String caller;
                 }
             }
         } catch (Exception e) {
-            Crashes.trackError(e);
+            Sentry.captureException(e);
         }
     }
 

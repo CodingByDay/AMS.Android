@@ -26,11 +26,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
+
+
 
 import org.json.JSONException;
 
+import io.sentry.Sentry;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -90,7 +91,7 @@ public class Communicator {
 
 
                     String json_c = response.toString();
-                    Analytics.trackEvent(json_c);
+
                     if(json_c.contains("\"success\":true")) {
                         return true;
                     }
@@ -163,7 +164,7 @@ public class Communicator {
             try {
                 responseServer = SyncResponse.fromJson(responseData);
             } catch (JSONException e) {
-                Crashes.trackError(e);
+                Sentry.captureException(e);
             }
         }
         return responseServer;

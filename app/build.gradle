@@ -1,3 +1,8 @@
+plugins {
+    id("com.android.application")
+    id("io.sentry.android.gradle") version "4.7.1"
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -57,13 +62,9 @@ android {
 }
 
 dependencies {
-    def appCenterSdkVersion = '4.4.5'
     implementation 'com.airbnb.android:paris:2.0.0'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation "androidx.core:core-splashscreen:1.0.0"
-    implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
-    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
-    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.4'
     implementation 'one.util:streamex:0.8.1'
     implementation 'com.android.support:multidex:1.0.3'
@@ -91,4 +92,5 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:2.4.1"
+    implementation 'io.sentry:sentry-android:7.8.0'
 }

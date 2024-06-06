@@ -29,8 +29,8 @@ import com.example.uhf.mvvm.Model.Item;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.Model.ItemTemporary;
 import com.example.uhf.view.UhfLocationCanvasView;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
+
+
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
 
@@ -39,6 +39,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import io.sentry.Sentry;
 
 public class RegistrationActivity extends AppCompatActivity implements Barcode {
     private Button btExit;
@@ -97,7 +99,7 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                 FixedAssetsFragment fixedAssetsFragment = FixedAssetsFragment.getInstance();
                 fixedAssetsFragment.adapterLocation.findIdent(charSequence.toString());
                 } catch (Exception err) {
-                    Analytics.trackEvent(err.getLocalizedMessage());
+                    Sentry.captureException(err);
                 }
             }
             @Override
@@ -183,7 +185,7 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
                                     }
                                 }
                             } catch (Exception error) {
-                                Crashes.trackError(error);
+                                Sentry.captureException(error);
                             }
                         }
                     }

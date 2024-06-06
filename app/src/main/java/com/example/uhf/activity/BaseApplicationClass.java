@@ -1,6 +1,5 @@
 package com.example.uhf.activity;
 
-import static com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread;
 
 import android.app.AlertDialog;
 import android.app.Application;
@@ -17,12 +16,13 @@ import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.tools.NetworkMonitor;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.microsoft.appcenter.crashes.Crashes;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.sentry.Sentry;
 
 
 public class BaseApplicationClass extends Application {
@@ -65,7 +65,7 @@ public class BaseApplicationClass extends Application {
                 registeredItems.add(asset);
             }
         } catch (Exception e) {
-            Crashes.trackError(e);
+            Sentry.captureException(e);
         } finally {
              saveRegisteredItems();
         }
@@ -110,12 +110,7 @@ public class BaseApplicationClass extends Application {
                 try {
                     response = communicator.syncRegistrations(url, toJson);
                 } catch (final IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Crashes.trackError(e);
-                        }
-                    });
+                    Sentry.captureException(e);
                 }
             }
         });
@@ -123,7 +118,7 @@ public class BaseApplicationClass extends Application {
         try {
             backgroundThread.join();
         } catch (InterruptedException e) {
-            Crashes.trackError(e);
+            Sentry.captureException(e);
         } finally {
             if(response.isSuccess()) {
                 Toast.makeText(this, "Sinhronizacija se je končala brez napak.", Toast.LENGTH_SHORT).show();

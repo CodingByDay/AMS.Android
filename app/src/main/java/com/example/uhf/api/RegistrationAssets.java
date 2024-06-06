@@ -4,7 +4,7 @@ import com.example.uhf.activity.BaseApplicationClass;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.microsoft.appcenter.crashes.Crashes;
+
 
 import java.io.IOException;
 import java.io.Serializable;

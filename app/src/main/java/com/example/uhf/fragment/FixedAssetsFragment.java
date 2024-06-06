@@ -51,7 +51,7 @@ import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemTemporaryViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.tools.StringUtils;
-import com.microsoft.appcenter.analytics.Analytics;
+
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
 
@@ -60,6 +60,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import io.sentry.Sentry;
 
 public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerViewInterface {
     private ItemViewModel itemViewModel;
@@ -873,7 +875,7 @@ public class FixedAssetsFragment extends KeyDwonFragment implements RecyclerView
         try {
             temporaryAdapter.sortBasedOnLocation(itemsTemporary, location);
         } catch (Exception err) {
-            Analytics.trackEvent(err.getLocalizedMessage());
+            Sentry.captureException(err);
         }
     }
 

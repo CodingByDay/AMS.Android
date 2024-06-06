@@ -13,6 +13,8 @@ import android.os.Bundle;
 
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,18 +39,14 @@ import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
 import com.example.uhf.tools.SettingsHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.microsoft.appcenter.AppCenter;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
-import com.microsoft.appcenter.distribute.Distribute;
-import com.microsoft.appcenter.distribute.DistributeListener;
-import com.microsoft.appcenter.distribute.ReleaseDetails;
-import com.microsoft.appcenter.distribute.UpdateAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginActivityMain extends AppCompatActivity implements AsyncCallBack, DistributeListener {
+import io.sentry.Sentry;
+
+
+public class LoginActivityMain extends AppCompatActivity implements AsyncCallBack/*, DistributeListener*/ {
 private TextView login;
     private ProgressDialog mypDialog;
     private EditText tbCompany;
@@ -69,8 +67,6 @@ private TextView login;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        AppCenter.start(getApplication(), "9997086a-90d2-4150-b81a-4cd67bc6c2b1",
-                Analytics.class, Crashes.class, Distribute.class);
         // Distribute.setEnabledForDebuggableBuild(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
@@ -80,9 +76,7 @@ private TextView login;
         initSettings();
         initPageViews();
         initSynchronization();
-        boolean start = Distribute.isEnabled().get();
     }
-
 
 
     private void checkIdCreateIfNecessary() {
@@ -188,7 +182,7 @@ private TextView login;
                 } catch (JsonProcessingException e) {
                     Toast.makeText(LoginActivityMain.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     JsonProcessingException error = e;
-                    Analytics.trackEvent(e.getLocalizedMessage());
+                    Sentry.captureException(e);
                 }
                 }  else {
                     Toast.makeText(LoginActivityMain.this, "Ni podatka o podjetju", Toast.LENGTH_SHORT).show();
@@ -221,7 +215,6 @@ private TextView login;
                 settingsView.insert(new Setting("token", token));
                 settingsView.insert(new Setting("user", tbUname.getText().toString()));
             }
-            Analytics.trackEvent("Login " + tbUname.getText().toString());
             Intent myIntent = new Intent(getApplicationContext(), EntryInitialActivity.class);
             startActivity(myIntent);
         } else {
@@ -261,7 +254,7 @@ private TextView login;
 
     }
 
-
+    /*
     @Override
     public boolean onReleaseAvailable(Activity activity, ReleaseDetails releaseDetails) {
         // Look at releaseDetails public methods to get version information, release notes text or release notes URL
@@ -296,5 +289,5 @@ private TextView login;
     public void onNoReleaseAvailable(Activity activity) {
         Toast.makeText(activity, activity.getString(R.string.no_updates_available), Toast.LENGTH_LONG).show();
     }
-
+*/
 }

@@ -32,8 +32,8 @@ import com.example.uhf.fragment.FixedAssetsFragment;
 import com.example.uhf.mvvm.Model.ItemLocation;
 import com.example.uhf.mvvm.ViewModel.SettingsViewModel;
 import com.example.uhf.settings.Setting;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
+
+
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
 
@@ -41,6 +41,8 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Objects;
+
+import io.sentry.Sentry;
 
 public class ListingActivity extends AppCompatActivity implements Barcode {
 
@@ -222,7 +224,7 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
                                 }
                               }
                             } catch (Exception e) {
-                                Crashes.trackError(e);
+                                Sentry.captureException(e);
                                 continue;
                             }
                         }

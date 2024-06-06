@@ -36,8 +36,8 @@ import com.example.uhf.mvvm.ViewModel.CheckOutViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemLocationViewModel;
 import com.example.uhf.mvvm.ViewModel.ItemViewModel;
 import com.example.uhf.mvvm.ViewModel.LocationViewModel;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
+
+
 import com.rscja.deviceapi.RFIDWithUHFUART;
 
 import java.io.IOException;
@@ -45,6 +45,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.sentry.Sentry;
 
 public class InventoryActivity extends FragmentActivity implements Barcode {
 private ItemViewModel itemViewModel;
@@ -95,7 +97,7 @@ public RFIDWithUHFUART mReader;
         try {
         barcodeUtility.unregister();
         } catch(Exception e) {
-            Analytics.trackEvent(e.getLocalizedMessage());
+            Sentry.captureException(e);
         }
     }
 
@@ -323,7 +325,7 @@ public RFIDWithUHFUART mReader;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Crashes.trackError(e);
+                            Sentry.captureException(e);
                         }
                     });
                 }
@@ -376,7 +378,7 @@ public RFIDWithUHFUART mReader;
                 checkLocationsServer();
             }
         } catch (InterruptedException e) {
-               Crashes.trackError(e);
+               Sentry.captureException(e);
             }
         }
     }
