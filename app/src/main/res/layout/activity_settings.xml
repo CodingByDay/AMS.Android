@@ -99,7 +99,8 @@
                         android:text="http://riko-inv.in-sist.si"
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="12sp"
-
+                        android:textColor="?android:textColorPrimaryInverse"
+                        android:textColorHint="@color/hintTextColor"
                         />
 
 
@@ -132,7 +133,8 @@
                         android:text="insist"
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="12sp"
-
+                        android:textColor="?android:textColorPrimaryInverse"
+                        android:textColorHint="@color/hintTextColor"
                         />
 
 

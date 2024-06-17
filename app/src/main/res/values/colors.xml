@@ -51,6 +51,8 @@
     <color name="sliding_menu_item_pressed">#ff39393b</color>
     <color name="sliding_menu_item">#00000000</color>
 
+    <color name="hintTextColor">#808080</color>
+
     <!--zxing start-->
     <color name="contents_text">#ff000000</color>
     <color name="encode_view">#ffffffff</color>
