@@ -277,7 +277,7 @@ public class RegistrationActivity extends AppCompatActivity implements Barcode {
             super.onPostExecute(result);
             mypDialog.cancel();
             if (!result) {
-                Toast.makeText(RegistrationActivity.this, "init fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationActivity.this, "RFID module not present", Toast.LENGTH_SHORT).show();
             }
         }
 

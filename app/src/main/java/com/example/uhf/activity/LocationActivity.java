@@ -617,7 +617,7 @@ public class LocationActivity extends AppCompatActivity implements Barcode {
             super.onPostExecute(result);
             mypDialog.cancel();
             if (!result) {
-                Toast.makeText(LocationActivity.this, "init fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LocationActivity.this, "RFID module not present", Toast.LENGTH_SHORT).show();
             } else {
                 Bundle extras = getIntent().getExtras();
                 callerID =  extras.getString("callerID");

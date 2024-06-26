@@ -149,7 +149,7 @@ public class UHFLocationFragment extends KeyDwonFragment {
             super.onPostExecute(result);
             mypDialog.cancel();
             if (!result) {
-                Toast.makeText(getActivity(), "init fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "RFID module not present", Toast.LENGTH_SHORT).show();
             }
         }
 

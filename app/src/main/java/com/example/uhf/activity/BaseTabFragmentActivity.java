@@ -130,7 +130,7 @@ public class BaseTabFragmentActivity extends FragmentActivity {
 			super.onPostExecute(result);
 			mypDialog.cancel();
 			if (!result) {
-				Toast.makeText(BaseTabFragmentActivity.this, "init fail", Toast.LENGTH_SHORT).show();
+				Toast.makeText(BaseTabFragmentActivity.this, "RFID module not present", Toast.LENGTH_SHORT).show();
 			}
 		}
 

@@ -130,7 +130,7 @@ public class ListingActivity extends AppCompatActivity implements Barcode {
             super.onPostExecute(result);
             mypDialog.cancel();
             if (!result) {
-                Toast.makeText(ListingActivity.this, "init fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListingActivity.this, "RFID module not present", Toast.LENGTH_SHORT).show();
             }
         }
 
