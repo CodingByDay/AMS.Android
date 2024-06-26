@@ -21,44 +21,48 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/first"
-            android:text="@string/location_inventory" />
+            android:text="@string/location_inventory"
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/second"
-            android:text="@string/name_inventory" />
+            android:text="@string/name_inventory"
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/third"
-            android:text="@string/username_translation" />
+            android:text="@string/username_translation"
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/forth"
-            android:text="@string/password_translation" />
+            android:text="@string/password_translation"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/riko_dark_gray"
-        app:layout_constraintTop_toBottomOf="@+id/header"/>
-
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/rwItems"
+        android:id="@+id/rwItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/item">
 

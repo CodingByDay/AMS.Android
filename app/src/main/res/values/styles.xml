@@ -84,6 +84,12 @@
      <!-- 下拉导航内部按钮的样式 -->  
       <style name="MyDropDownListView" parent="android:style/Widget.Holo.ListView.DropDown">  
          <!-- <item name="android:listSelector">@color/blue2</item>  -->
-    </style> 
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="colorControlNormal">@color/hintTextColor</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/hintTextColor</item>
+    </style>
 
 </resources>

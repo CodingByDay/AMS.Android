@@ -43,7 +43,8 @@
                 android:background="@drawable/back"
                 android:ems="10"
                 android:inputType="textPersonName"
-                />
+                android:textColor="@color/black"
+                android:textColorHint="@color/hintTextColor"/>
 
             </LinearLayout>
             <LinearLayout
@@ -64,7 +65,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:iconifiedByDefault="false"
-                    android:queryHint="Iskanje" />
+                    android:queryHint="Iskanje"
+                    app:theme="@style/SearchViewStyle" />
+
             </LinearLayout>
 
         </LinearLayout>
@@ -118,7 +121,6 @@
             android:textColor="@color/white"
             android:text="@string/confirm_inventory_navigation" />
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

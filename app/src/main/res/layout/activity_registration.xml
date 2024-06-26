@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/riko_color_gray"
     tools:context=".activity.RegistrationActivity">
     <LinearLayout
         android:id="@+id/header"
@@ -23,12 +24,12 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.SearchView
-
                 android:id="@+id/swListing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:iconifiedByDefault="false"
-                android:queryHint="Iskanje" />
+                android:queryHint="Iskanje"
+                app:theme="@style/SearchViewStyle"/>
 
             <EditText
                 android:layout_marginStart="0dp"
@@ -37,6 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:textColor="?android:textColorPrimaryInverse"
+                android:textColorHint="@color/hintTextColor"
                 android:hint="Skeniranje črtne kode"
                 android:background="@drawable/back"
                 android:inputType="textPersonName"

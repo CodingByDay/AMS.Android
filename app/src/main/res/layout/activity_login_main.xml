@@ -78,7 +78,7 @@
                     android:paddingBottom="15dp"
                     android:selectAllOnFocus="true"
                     android:text=""
-                    android:textColor="?android:textColorPrimaryInverse"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/hintTextColor"
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="12sp" />
@@ -118,7 +118,7 @@
                     android:paddingBottom="15dp"
                     android:selectAllOnFocus="true"
                     android:text=""
-                    android:textColor="?android:textColorPrimaryInverse"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/hintTextColor"
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="12sp" />
